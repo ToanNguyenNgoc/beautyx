@@ -2,9 +2,6 @@ yarn.lock
 package-lock.json
 node_modules/
 *.cache
-
-package.json
-
 dist/
 .history
 .prettierrc
