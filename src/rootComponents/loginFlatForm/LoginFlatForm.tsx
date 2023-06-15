@@ -21,7 +21,7 @@ function LoginFlatForm(props: any) {
         try {
             // alert('onLoginFlatFormMomo')
             momoApi.initApp();
-            MOMO.showLoading([""]);
+            MOMO.showLoading();
             MOMO.getUserConsents({
                 "permissions": [
                     {
@@ -59,7 +59,7 @@ function LoginFlatForm(props: any) {
         // }
     };
     const requestUserConsents = () => {
-        MOMO.showLoading([""]);
+        MOMO.showLoading();
         MOMO.requestUserConsents(
             {
                 permissions: [

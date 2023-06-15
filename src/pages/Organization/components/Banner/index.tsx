@@ -26,8 +26,10 @@ export const Banner = () => {
     .concat(servicesSpecial.map(i => i.image_url))
     .concat(productsSpecial.map(i => i.image_url))
     .filter(Boolean)
-  const galleriesList = galleries.map(i => i.images)?.flat()?.map(i => i.image_url)
+  const galleriesList = [galleries[0]?.image_url]
+    .concat(galleries.map(i => i.images)?.flat()?.map(i => i.image_url))
     ?.concat(servicesList).slice(0, 5)
+    .filter(Boolean)
   const [oImg, setOImg] = useState(false)
   const [map, setMap] = useState(false)
   const [share, setShare] = useState(false)
@@ -103,18 +105,18 @@ export const Banner = () => {
                   icon={favoriteSt.is_favorite ? icon.heart : icon.unHeart}
                   title={favoriteSt.is_favorite ? 'Đã thích' : 'Yêu thích'}
                 />
-                <XButton
+                {/* <XButton
                   iconSize={mb ? 18 : 16}
                   icon={icon.chatSquare}
                   title='Tư vấn'
                   onClick={onChat}
-                />
-                <XButton
+                /> */}
+                {/* <XButton
                   onClick={() => setShare(true)}
                   iconSize={mb ? 18 : 16}
                   icon={icon.share}
                   title='Chia sẻ'
-                />
+                /> */}
                 <SharePopup open={share} onClose={() => setShare(false)} />
               </div>
               <div className={style.head_right_time}>

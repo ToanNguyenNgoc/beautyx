@@ -13,7 +13,7 @@ export const getUserConsents = async (callBack?: any, loading?: any) => {
 
         momoApi.getLocation();
         momoApi.showToast("truy cập momo", "success");
-        MOMO.showLoading([""]);
+        MOMO.showLoading();
 
         MOMO.getUserConsents({
             "permissions": [
@@ -51,7 +51,7 @@ export const getUserConsents = async (callBack?: any, loading?: any) => {
 };
 export const requestUserConsents = (callBack?: any, loading?: any) => {
     alert('requestUserConsents')
-    MOMO.showLoading([""]);
+    MOMO.showLoading();
     MOMO.requestUserConsents({
         "permissions": [
             {
