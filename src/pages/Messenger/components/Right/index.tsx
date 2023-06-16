@@ -69,7 +69,7 @@ export const Right = () => {
           })
           chat.listenForWhisper('typing', (u: any) => {
             setIsTyping(u?.user?.isTyping)
-         })
+          })
         })
         .listen('MessagePosted', (u: IMessage) => {
           if (user.id !== u.user_id) {
@@ -81,7 +81,8 @@ export const Right = () => {
               return prev
             })
           }
-        })
+        }
+        )
     }
     return () => {
       setMsges([])
