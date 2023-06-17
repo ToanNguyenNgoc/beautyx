@@ -7,10 +7,12 @@ interface LoginSocialProps {
     params: any
 }
 interface ResponseAccessToken {
-    access_token: string,
-    expires_in: string,
-    refresh_token: string,
-    refresh_token_expires_in: string
+    data: {
+        access_token: string,
+        expires_in: string,
+        refresh_token: string,
+        refresh_token_expires_in: string
+    }
 }
 
 function LoginSocial(props: LoginSocialProps) {
@@ -32,18 +34,18 @@ function LoginSocial(props: LoginSocialProps) {
                     }
                 }
             )
-            if (response?.access_token) {
+            if (response?.data?.access_token) {
                 const responseUser = await axios.get(
                     'https://graph.zalo.me/v2.0/me?fields=id,name,picture',
                     {
                         headers: {
                             "Accept": "application/json",
                             "Content-Type": "application/json",
-                            "access_token": response.access_token
+                            "access_token": response?.data?.access_token
                         }
                     }
                 )
-                console.log(responseUser)
+                console.log(responseUser.data)
                 history.replace('/')
             }
         }

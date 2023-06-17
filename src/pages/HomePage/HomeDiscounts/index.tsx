@@ -33,7 +33,7 @@ function HomeDiscount() {
         queryFn: ({ pageParam = 1 }) => axios
             .get(`${baseURL}discounts`, { params: pickBy({ ...newParams, page: pageParam }, identity) })
             .then(res => res.data.context),
-        getNextPageParam: (page: any) => console.log(page)
+        getNextPageParam: (page: any) => {}
     })
     const discounts: IDiscountPar[] = data?.pages.map(i => i.data).flat() ?? []
     return (
