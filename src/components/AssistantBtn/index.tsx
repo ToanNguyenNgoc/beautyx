@@ -57,123 +57,120 @@ export default function AssistantBtn() {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [overLay]);
     const checkoutPageSearch = location.pathname === "/ket-qua-tim-kiem/";
-    // return disable === true ? (
-    //     <></>
-    // ) : (
-    //     <>
-    //         <div
-    //             ref={refOverLay}
-    //             onTouchStart={() => handleClickOverlay()}
-    //             className="assistantBtn"
-    //         >
-    //             <div
-    //                 onMouseEnter={() => handleHover()}
-    //                 onMouseLeave={() => handleHoverLeave()}
-    //                 ref={refAssisBtn}
-    //                 className="assistantBtn-wrap"
-    //             >
-    //                 {is_mb === true ? (
-    //                     <div
-    //                         onTouchStart={() => handleChat()}
-    //                         className="btn1 buttons"
-    //                     >
-    //                         <div className="btn-img">
-    //                             <img
-    //                                 style={{ width: "20px" }}
-    //                                 src={icon.chatWhite}
-    //                                 alt=""
-    //                             />
-    //                         </div>
-    //                     </div>
-    //                 ) : (
-    //                     <div
-    //                         onClick={() => handleChat()}
-    //                         className="btn1 buttons"
-    //                     >
-    //                         <div className="btn-img">
-    //                             <img
-    //                                 style={{ width: "20px" }}
-    //                                 src={icon.chatWhite}
-    //                                 alt=""
-    //                             />
-    //                         </div>
-    //                     </div>
-    //                 )}
-    //                 {is_mb === true ? (
-    //                     <button
-    //                         onTouchStart={(e) => {
-    //                             handleCallingPhone();
-    //                             e.preventDefault();
-    //                             e.stopPropagation();
-    //                         }}
-    //                         className="btn2 buttons"
-    //                     >
-    //                         <div className="btn-img">
-    //                             <img
-    //                                 style={{ width: "20px" }}
-    //                                 src={icon.phoneWhiteBold}
-    //                                 alt=""
-    //                             />
-    //                         </div>
-    //                     </button>
-    //                 ) : (
-    //                     <div
-    //                         onClick={(e) => {
-    //                             handleCallingPhone();
-    //                             e.preventDefault();
-    //                             e.stopPropagation();
-    //                         }}
-    //                         className="btn2 buttons"
-    //                     >
-    //                         <div className="btn-img">
-    //                             <img
-    //                                 style={{ width: "20px" }}
-    //                                 src={icon.phoneWhiteBold}
-    //                                 alt=""
-    //                             />
-    //                         </div>
-    //                     </div>
-    //                 )}
-
-    //                 {is_mb === true ? (
-    //                     <div
-    //                         style={
-    //                             checkoutPageSearch ? { bottom: "192px" } : {}
-    //                         }
-    //                         onTouchStart={handleGoToHome}
-    //                         className="btn3 buttons"
-    //                     >
-    //                         <div className="btn-img">
-    //                             <img
-    //                                 style={{ width: "20px" }}
-    //                                 src={icon.homeWhite}
-    //                                 alt=""
-    //                             />
-    //                         </div>
-    //                     </div>
-    //                 ) : (
-    //                     <div onClick={handleGoToHome} className="btn3 buttons">
-    //                         <div className="btn-img">
-    //                             <img
-    //                                 style={{ width: "20px" }}
-    //                                 src={icon.homeWhite}
-    //                                 alt=""
-    //                             />
-    //                         </div>
-    //                     </div>
-    //                 )}
-    //                 <div id="floating-button">
-    //                     <div className="plus">
-    //                         <img src={img.beautyx} alt="" />{" "}
-    //                     </div>
-    //                     <img alt="" className="edit" src={icon.xWhite}></img>
-    //                 </div>
-    //             </div>
-    //         </div>
-    //         {/* <Search /> */}
-    //     </>
-    // );
-    return (
+    return disable === true ? (
         <></>
-    )
+    ) : (
+        <>
+            <div
+                ref={refOverLay}
+                onTouchStart={() => handleClickOverlay()}
+                className="assistantBtn"
+            >
+                <div
+                    onMouseEnter={() => handleHover()}
+                    onMouseLeave={() => handleHoverLeave()}
+                    ref={refAssisBtn}
+                    className="assistantBtn-wrap"
+                >
+                    {is_mb === true ? (
+                        <div
+                            onTouchStart={() => handleChat()}
+                            className="btn1 buttons"
+                        >
+                            <div className="btn-img">
+                                <img
+                                    style={{ width: "20px" }}
+                                    src={icon.chatWhite}
+                                    alt=""
+                                />
+                            </div>
+                        </div>
+                    ) : (
+                        <div
+                            onClick={() => handleChat()}
+                            className="btn1 buttons"
+                        >
+                            <div className="btn-img">
+                                <img
+                                    style={{ width: "20px" }}
+                                    src={icon.chatWhite}
+                                    alt=""
+                                />
+                            </div>
+                        </div>
+                    )}
+                    {is_mb === true ? (
+                        <button
+                            onTouchStart={(e) => {
+                                handleCallingPhone();
+                                e.preventDefault();
+                                e.stopPropagation();
+                            }}
+                            className="btn2 buttons"
+                        >
+                            <div className="btn-img">
+                                <img
+                                    style={{ width: "20px" }}
+                                    src={icon.phoneWhiteBold}
+                                    alt=""
+                                />
+                            </div>
+                        </button>
+                    ) : (
+                        <div
+                            onClick={(e) => {
+                                handleCallingPhone();
+                                e.preventDefault();
+                                e.stopPropagation();
+                            }}
+                            className="btn2 buttons"
+                        >
+                            <div className="btn-img">
+                                <img
+                                    style={{ width: "20px" }}
+                                    src={icon.phoneWhiteBold}
+                                    alt=""
+                                />
+                            </div>
+                        </div>
+                    )}
+
+                    {is_mb === true ? (
+                        <div
+                            style={
+                                checkoutPageSearch ? { bottom: "192px" } : {}
+                            }
+                            onTouchStart={handleGoToHome}
+                            className="btn3 buttons"
+                        >
+                            <div className="btn-img">
+                                <img
+                                    style={{ width: "20px" }}
+                                    src={icon.homeWhite}
+                                    alt=""
+                                />
+                            </div>
+                        </div>
+                    ) : (
+                        <div onClick={handleGoToHome} className="btn3 buttons">
+                            <div className="btn-img">
+                                <img
+                                    style={{ width: "20px" }}
+                                    src={icon.homeWhite}
+                                    alt=""
+                                />
+                            </div>
+                        </div>
+                    )}
+                    <div id="floating-button">
+                        <div className="plus">
+                            <img src={img.beautyx} alt="" />{" "}
+                        </div>
+                        <img alt="" className="edit" src={icon.xWhite}></img>
+                    </div>
+                </div>
+            </div>
+            {/* <Search /> */}
+        </>
+    );
 }
