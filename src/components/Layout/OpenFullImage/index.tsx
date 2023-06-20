@@ -14,7 +14,7 @@ interface FullImageProps {
     index?: number
 }
 export function FullImage(props: FullImageProps) {
-    const { open, setOpen, src, content, index = 0 } = props;
+    const { open, setOpen, src = [], content, index = 0 } = props;
     const settings = {
         canAutoPlay: false,
         hasSizeButton: false,

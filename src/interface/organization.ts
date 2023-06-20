@@ -30,6 +30,7 @@ export interface IOrganization {
     branches: IBranch[];
     opening_time: any;
     description: string;
+    content:string;
     favorites_count: number;
     is_favorite: boolean;
     favorites: IFavorite[];

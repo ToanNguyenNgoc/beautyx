@@ -14,7 +14,7 @@ import "./style.css";
 import { EXTRA_FLAT_FORM } from "api/extraFlatForm";
 import axios from "axios";
 import { useInfiniteQuery } from "@tanstack/react-query";
-import { baseURL } from "config";
+import { STALE_TIME, baseURL } from "config";
 import { identity, pickBy } from "lodash";
 
 function HomeDiscount() {
@@ -33,7 +33,8 @@ function HomeDiscount() {
         queryFn: ({ pageParam = 1 }) => axios
             .get(`${baseURL}discounts`, { params: pickBy({ ...newParams, page: pageParam }, identity) })
             .then(res => res.data.context),
-        getNextPageParam: (page: any) => {}
+        getNextPageParam: (page: any) => {},
+        staleTime:STALE_TIME
     })
     const discounts: IDiscountPar[] = data?.pages.map(i => i.data).flat() ?? []
     return (

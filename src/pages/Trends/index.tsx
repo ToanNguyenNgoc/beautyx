@@ -82,6 +82,8 @@ const VideoItemThumb = (props: VideoItemThumbProps) => {
     const onOrgDetail = () => {
         history.push(formatRouterLinkOrg(item.organization_id))
     }
+    let autoplay = 0
+    if (isVisible && IS_MB) { autoplay = 1 }
     return (
         <>
             <div

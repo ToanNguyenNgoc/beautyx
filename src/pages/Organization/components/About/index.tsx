@@ -20,7 +20,7 @@ export const About = () => {
           <div
             className={style.description}
             dangerouslySetInnerHTML={{
-              __html: org.description || `
+              __html: org.content || org.description || `
               <p>&emsp;Chào mừng bạn đến với ${org.name} - nơi mang đến sự thư giãn và chăm sóc toàn diện cho cơ thể và tâm hồn của bạn. Tại ${org.name}, chúng tôi tạo ra một không gian yên tĩnh và sang trọng, nơi bạn có thể tránh xa cuộc sống bận rộn và thả mình vào không gian tuyệt vời của sự thư thái.</p>
               </br>
               <p>Với đội ngũ chuyên gia làm đẹp giàu kinh nghiệm, chúng tôi cam kết mang đến cho bạn những trải nghiệm làm đẹp tốt nhất. Từ dịch vụ chăm sóc da mặt chuyên sâu, liệu pháp massage thư giãn đến các liệu trình làm đẹp độc đáo, chúng tôi sẽ giúp bạn tìm thấy sự cân bằng và sự tự tin trong vẻ ngoài của mình.</p>
@@ -97,7 +97,7 @@ export const About = () => {
           setOpen={setMap}
           org={org}
         />
-        <div style={{marginTop:'16px'}} className={style.section}>
+        <div style={{ marginTop: '16px' }} className={style.section}>
           <Comment
             org_id={org.id}
             commentable_id={org.id}

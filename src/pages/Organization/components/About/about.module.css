@@ -29,6 +29,10 @@
   border-radius: 6px;
   object-fit: cover;
 }
+.description h2,.description h3,.description h1{
+  margin: 16px 0px 8px 0px;
+  font-size: 18px;
+}
 
 .map_cnt {
   margin-top: 12px;

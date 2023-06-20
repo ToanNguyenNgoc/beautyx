@@ -1,4 +1,4 @@
-import  { lazy, Suspense } from "react";
+import { lazy, Suspense } from "react";
 import AuthRoute from "./AuthRoute";
 import {
   BrowserRouter as Router,
@@ -11,7 +11,6 @@ import CartPaymentStatus from "../pages/CartPaymentStatus";
 import PageNotFound from "../components/PageNotFound";
 import HomePage from "pages/HomePage";
 import ExtraFlatForm from "rootComponents/extraFlatForm";
-import AssistantBtn from "../components/AssistantBtn";
 import PaymentStatus from "rootComponents/momo/PaymentStatus";
 import SerProCoDetail from "pages/_SerProCoDetail";
 import Footer from "components/Footer";
@@ -31,6 +30,7 @@ import Cart from "pages/Cart";
 import SignPage from "pages/SignPage";
 import Bottom from "components/Bottom";
 import Head from "components/Head";
+import { AssistantButton } from "components/Layout"
 import CateTree from "pages/CateTree";
 
 //community page
@@ -293,8 +293,8 @@ function RouterConfig() {
       component: <Rewards />,
     },
     {
-      path:"/messages",
-      component:<Messenger/>
+      path: "/messages",
+      component: <Messenger />
     }
   ];
   logEvent(analytics, "page_view", {
@@ -310,7 +310,7 @@ function RouterConfig() {
           <Redirect exact from="/" to="homepage" />
           {routes.map((item, index: number) => (
             <Route key={index} path={item.path}>
-              <Suspense fallback={<LoadProgress/>}>
+              <Suspense fallback={<LoadProgress />}>
                 {item.component}
               </Suspense>
             </Route>
@@ -325,7 +325,7 @@ function RouterConfig() {
           <Redirect exact from="*" to="error" />
         </Switch>
         <ExtraFlatForm />
-        <AssistantBtn />
+        <AssistantButton />
         <Footer />
         <Bottom />
       </Router>

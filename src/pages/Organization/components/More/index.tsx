@@ -121,7 +121,7 @@ const ServicePage = ({ type }: Page) => {
     url: API_ROUTE.ORG_SERVICES(subdomain),
     params: {
       ...paramsServicesOrg,
-      "limit":20,
+      "limit": 20,
       "filter[service_group_id]": queryParams.cate_id,
     },
     paramsCate: paramServiceCatesOrg
@@ -132,16 +132,25 @@ const ServicePage = ({ type }: Page) => {
       url: API_ROUTE.ORG_PRODUCTS(org?.id),
       params: {
         ...paramsProductsOrg,
-        "limit":20,
+        "limit": 20,
         "filter[product_category_id]": queryParams.cate_id,
       },
       paramsCate: paramProductCatesOrg
     }
   }
+  if (type === 'COMBO') {
+    API = {
+      url: API_ROUTE.ORG_COMBOS(org?.id),
+      params: {
+        "limit": 20,
+        "filter[is_momo_ecommerce_enable]": true
+      }
+    }
+  }
   //--
   const { resData: resCates } = useSwrInfinite({
     API_URL: API.url_cate,
-    enable: org,
+    enable: (org && type !== 'COMBO'),
     params: API.paramsCate
   })
   const categories: CateType[] = [
