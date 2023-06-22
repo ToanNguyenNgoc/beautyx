@@ -40,7 +40,8 @@ export const orgPageApi = createApi({
                 params: pickBy(
                     {
                         ...paramDiscounts,
-                        'filter[organization_id]': org_id
+                        'filter[organization_id]': org_id,
+                        'append':''
                     },
                     identity
                 )

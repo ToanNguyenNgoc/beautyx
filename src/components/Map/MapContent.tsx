@@ -312,7 +312,7 @@ const MapContent = (props: IProps) => {
                             ))}
                         </InfiniteScroll>
                     </div>
-                    {openDetail.open === true ? (
+                    {(openDetail.open === true && org) ? (
                         <MapOrgItemDetail
                             org={org}
                             setOpenDetail={setOpenDetail}

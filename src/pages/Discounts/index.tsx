@@ -27,7 +27,7 @@ function Discounts() {
         "sort": PLAT_FORM === "TIKI" ? "-priority" : ""
     }
     const { data, fetchNextPage } = useInfiniteQuery({
-        queryKey: ['DISCOUNTS'],
+        queryKey: ['DISCOUNTS', newParams],
         queryFn: ({ pageParam = 1 }) => axios
             .get(`${baseURL}discounts`, { params: pickBy({ ...newParams, page: pageParam }, identity) })
             .then(res => res.data.context),
