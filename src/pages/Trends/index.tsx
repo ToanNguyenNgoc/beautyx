@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import API_3RD from "api/3rd-api";
-import React, { useRef, useState } from "react";
-import { useDeviceMobile, useElementOnScreen, useFetch } from "hooks";
+import { useRef, useState } from "react";
+import { useDeviceMobile, useElementOnScreen } from "hooks";
 import { ITrend } from "./trend.interface";
 import { Container } from "@mui/system";
 import style from "./trends.module.css";
@@ -14,21 +14,24 @@ import { formatRouterLinkOrg } from "utils/formatRouterLink/formatRouter";
 import TrendDetailDia from "./TrendDetailDia";
 import ReactPlayer from "react-player/lazy";
 import HeadMobile from "features/HeadMobile";
+import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
+import { STALE_TIME } from "config";
 dayjs.extend(relativeTime)
 
 function Trends() {
     const history = useHistory()
     const IS_MB = useDeviceMobile()
-    const { response } = useFetch(
-        true,
-        `${API_3RD.API_NODE}/trends`,
-        {
-            'limit': '20',
-            'include': 'services|tiktok'
-        }
-    );
-
-    const trends: ITrend[] = response?.context?.data ?? [];
+    const params = {
+        'limit': '20',
+        'include': 'services|tiktok'
+    }
+    const { data } = useQuery({
+        queryKey: ['TRENDS', params],
+        queryFn: () => axios.get(`${API_3RD.API_NODE}/trends`, { params }),
+        staleTime: STALE_TIME
+    })
+    const trends: ITrend[] = data?.data?.data?.context?.data ?? []
     return (
         <>
             {IS_MB && <HeadMobile onBackFunc={() => history.push('/homepage')} title="Xu hướng" />}
@@ -82,8 +85,6 @@ const VideoItemThumb = (props: VideoItemThumbProps) => {
     const onOrgDetail = () => {
         history.push(formatRouterLinkOrg(item.organization_id))
     }
-    let autoplay = 0
-    if (isVisible && IS_MB) { autoplay = 1 }
     return (
         <>
             <div

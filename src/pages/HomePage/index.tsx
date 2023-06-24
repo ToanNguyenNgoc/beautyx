@@ -18,11 +18,10 @@ import HomeDownApp from "./HomeDownApp";
 import HomeWhyNot from "./HomeWhyNot";
 import HomePartners from "./HomePartners";
 import HomeCate from "./HomeCate";
-// import HomeRecommend from "./HomeRecommend";
 import HomeProvince from "./HomeProvince";
 import style from "./home.module.css";
 import HomeCurrentLocation from "./HomeCurrentLocation";
-// import HomeTrends from "./HomeTrends";
+import HomeTrends from "./HomeTrends";
 
 
 export default function HomePage() {
@@ -59,7 +58,7 @@ export default function HomePage() {
                     <HomeWhyNot />
                     {/* {USER.USER && <HomeRecommend />} */}
                     <HomeProvince />
-                    {/* {IS_MB ? <></> : <HomeTrends />} */}
+                    {IS_MB ? <></> : <HomeTrends />}
                     <HomePartners />
                 </Container>
                 <OpenApp type="none" />
