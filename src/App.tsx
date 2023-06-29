@@ -4,6 +4,7 @@ import "./utils/protoType";
 import "react-loading-skeleton/dist/skeleton.css";
 import AppProvider from "context/AppProvider";
 import { MessengerProvider } from "context"
+import * as Sentry from "@sentry/react";
 
 
 function App() {
@@ -18,4 +19,5 @@ function App() {
     );
 }
 
-export default App;
+// export default App;
+export default Sentry.withProfiler(App)

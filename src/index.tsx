@@ -9,18 +9,12 @@ import { Provider } from "react-redux";
 import store from "./redux/store";
 import { SWRConfig } from "swr";
 import { PlashScreen } from "components/Layout";
-import { axiosClient, queryClient } from "config";
+import { axiosClient, queryClient, sentry } from "config";
 import { QueryClientProvider } from "@tanstack/react-query";
+// import * as Sentry from "@sentry/react";
 
-// Sentry.init({
-//     dsn: "https://38eb6d00469546558bd815998210f77f@o1108259.ingest.sentry.io/6554425",
-//     integrations: [new BrowserTracing()],
+sentry()
 
-//     // Set tracesSampleRate to 1.0 to capture 100%
-//     // of transactions for performance monitoring.
-//     // We recommend adjusting this value in production
-//     tracesSampleRate: 1.0,
-// });
 
 ReactDOM.render(
     <React.StrictMode>

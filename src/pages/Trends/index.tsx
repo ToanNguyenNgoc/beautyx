@@ -114,7 +114,7 @@ const VideoItemThumb = (props: VideoItemThumbProps) => {
                         playing={isVisible && IS_MB}
                         muted={true}
                         playsinline={true}
-                        controls
+                        // controls
                     />
                 </div>
                 <div className={style.trend_item_bot}>

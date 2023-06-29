@@ -1,6 +1,8 @@
 import { CACHE_TIME } from "common";
 import { identity, pickBy } from "lodash";
-import useSWR, { SWRResponse } from "swr"
+import useSWR, { SWRResponse } from "swr";
+import * as Sentry from "@sentry/react"
+import { useEffect } from "react";
 
 export type SWROptions<Data = any, Error = any> = {
     API_URL: string;
@@ -37,7 +39,7 @@ export function useSwr(options: SWROptions) {
     } = useSWR(enable && `${API_URL}${paramsURL}`, {
         revalidateOnFocus: revalidateOnFocus ?? false,
         refreshInterval: refreshInterval,
-        dedupingInterval: dedupingInterval === 0 ? 0 : CACHE_TIME
+        dedupingInterval: dedupingInterval === 0 ? 0 : CACHE_TIME,
     })
     if (data) {
         response = data.data?.context ?? data
@@ -45,6 +47,11 @@ export function useSwr(options: SWROptions) {
         totalItem = data?.data?.context?.total
         result = data
     }
+    useEffect(() => {
+        if (error) {
+            Sentry.captureException(error)
+        }
+    }, [error])
     return {
         result,
         response,

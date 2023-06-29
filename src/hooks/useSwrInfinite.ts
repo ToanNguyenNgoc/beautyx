@@ -1,6 +1,8 @@
 import { useSWRInfinite } from "swr";
-import { pickBy, identity } from "lodash"
-import { SWROptions } from './useSwr'
+import { pickBy, identity } from "lodash";
+import { SWROptions } from './useSwr';
+import * as Sentry from "@sentry/react"
+import { useEffect } from "react";
 
 interface SWRInOptions extends SWROptions {
     keyPage?: 'p' | 'page'
@@ -24,14 +26,22 @@ export function useSwrInfinite(options: SWRInOptions) {
 
         }
     }
-    const { data, isValidating, size, setSize, mutate } = useSWRInfinite(
+    const { data, isValidating, size, setSize, mutate, error } = useSWRInfinite(
         (index) => enable && `${API_URL}?${keyPage}=${index + 1}${paramsURL}`,
         {
             ...newOptions, onSuccess(data, key, config) {
                 onSuccess && onSuccess(data, key)
             },
+            onError(err) {
+                Sentry.captureException(err)
+            },
         }
     );
+    useEffect(() => {
+        if (error) {
+            Sentry.captureException(error)
+        }
+    }, [error])
     let resData: any[] = [];
     let originData: any[] = []
     let totalItem = 1;

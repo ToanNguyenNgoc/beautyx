@@ -28,7 +28,7 @@ export const homeApi = createApi({
                 params: pickBy(params, identity)
             }),
             keepUnusedDataFor: 60 * 60,
-            transformResponse: (response: ResponseType) => response?.context?.data ?? []
+            transformResponse: (response: ResponseType) => response?.context?.data ?? [],
         }),
         serviceCatesChild: builder.query({
             query: (parent_id: number | string) => API_ROUTE.TAGS_ID(parent_id),
