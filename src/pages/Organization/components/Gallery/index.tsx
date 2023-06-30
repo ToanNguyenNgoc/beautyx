@@ -4,6 +4,7 @@ import { FullImage, XButton } from "components/Layout"
 import icon from "constants/icon"
 import { useContext, useState } from "react"
 import { OrgContext, OrgContextType } from "context"
+import OrgGalleriesDialog from "pages/MerchantDetail/components/OrgPages/OrgGalleries/OrgGalleriesDialog"
 
 interface GalleryProps {
   open: boolean,
@@ -11,7 +12,7 @@ interface GalleryProps {
 }
 
 export const Gallery = ({ open, onClose }: GalleryProps) => {
-  const { galleries } = useContext(OrgContext) as OrgContextType
+  const { galleries} = useContext(OrgContext) as OrgContextType;
   const [tab, setTab] = useState(galleries[0])
   const [fullImg, setFullImg] = useState(false)
   const [index, setIndex] = useState(1)
@@ -19,15 +20,14 @@ export const Gallery = ({ open, onClose }: GalleryProps) => {
     setFullImg(true)
     setIndex(i)
   }
+  const galleriesLists = tab.images.map(item => item.image_url).concat(tab.image_url).reverse()
   return (
-    <Dialog
-      open={open}
-      fullScreen
-    >
+    <Dialog open={open} fullScreen>
       <FullImage
         index={index}
-        open={fullImg} setOpen={setFullImg}
-        src={tab?.images?.map(i => i.image_url)}
+        open={fullImg}
+        setOpen={setFullImg}
+        src={galleriesLists}
       />
       <div className={style.head}>
         <XButton
@@ -41,37 +41,38 @@ export const Gallery = ({ open, onClose }: GalleryProps) => {
       <Container>
         <div className={style.body}>
           <ul className={style.list_thumb}>
-            {
-              galleries?.map(item => (
-                <li
-                  onClick={() => setTab(item)}
-                  key={item.id} className={style.thumb_item}
-                >
-                  <div className={style.thumb_item_img}>
-                    <img src={item.image_url} alt="" />
-                  </div>
-                  <div className={style.thumb_item_detail}>
-                    <p>{item.name}</p>
-                    <p>{item.images?.length} hình</p>
-                  </div>
-                </li>
-              ))
-            }
+            {galleries?.map((item) => (
+              <li
+                onClick={() => setTab(item)}
+                key={item.id}
+                className={style.thumb_item}
+              >
+                <div className={style.thumb_item_img}>
+                  <img src={item.image_url} alt="" />
+                </div>
+                <div className={style.thumb_item_detail}>
+                  <p>{item.name}</p>
+                  <p>{item.images?.length} hình</p>
+                </div>
+              </li>
+            ))}
           </ul>
           <div className={style.tab_cnt}>
             <span className={style.tab_name}>{tab?.name}</span>
             <ul className={style.tab_image_list}>
-              {
-                tab?.images?.map((item, index) => (
-                  <li onClick={() => onOpenFull(index)} key={item.id} className={style.tab_image_item}>
-                    <img src={item.image_url} alt="" />
-                  </li>
-                ))
-              }
+              {galleriesLists.map((item, index) => (
+                <li
+                  onClick={() => onOpenFull(index)}
+                  key={index}
+                  className={style.tab_image_item}
+                >
+                  <img src={item} alt="" />
+                </li>
+              ))}
             </ul>
           </div>
         </div>
       </Container>
     </Dialog>
-  )
+  );
 }
