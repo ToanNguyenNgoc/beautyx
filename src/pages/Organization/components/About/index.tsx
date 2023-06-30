@@ -168,26 +168,28 @@ interface PreviewMediaProps {
 }
 
 const PreviewMedia: FC<PreviewMediaProps> = ({ openTrends, setOpenTrends }) => {
-  const {trends} = useContext(OrgContext) as OrgContextType
+  const { trends } = useContext(OrgContext) as OrgContextType
   return (
-  <Dialog open={openTrends} fullScreen>
-    <XButton
-      className={style.about_popup_btn_cancel}
-      onClick={() => setOpenTrends(false)}
-      icon={icon.chevronRightBlack}
-      iconSize={20}
-   />
-  <div className={style.about_popup}>
-    <div className={style.about_pop_video}>
-      <video
-        controls={true}
-        autoPlay={true}
-        className={style.about_trends_video}
-       >
-        <source type="video/mp4" src={trends[0]?.media_url} />
-      </video>
-    </div>
-  </div>
-  </Dialog>
+    <Dialog open={openTrends} fullScreen>
+      <XButton
+        className={style.about_popup_btn_cancel}
+        onClick={() => setOpenTrends(false)}
+        icon={icon.chevronRightBlack}
+        iconSize={20}
+      />
+      <div className={style.about_popup}>
+        <div className={style.about_pop_video}>
+          <video
+            controls={true}
+            autoPlay={true}
+            className={style.about_trends_video}
+            webkit-playsinline="webkit-playsinline"
+            playsInline={true}
+          >
+            <source type="video/mp4" src={`${trends[0]?.media_url}#t=0.001`} />
+          </video>
+        </div>
+      </div>
+    </Dialog>
   )
 }
