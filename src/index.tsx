@@ -13,7 +13,7 @@ import { axiosClient, queryClient, sentry } from "config";
 import { QueryClientProvider } from "@tanstack/react-query";
 // import * as Sentry from "@sentry/react";
 
-sentry()
+// sentry()
 
 
 ReactDOM.render(
