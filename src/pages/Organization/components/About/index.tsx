@@ -170,7 +170,7 @@ const PreviewMedia: FC = () => {
   };
 
   return (
-    <>
+    <div className={style.about_trends}>
       <span className={style.section_title}>Review làm đẹp</span>
       <ul className={style.about_trends_lists}>
         {trends.slice(0, 5).map((item: ITrend, index: number) => (
@@ -254,7 +254,7 @@ const PreviewMedia: FC = () => {
           />
         </div>
       </Dialog>
-    </>
+    </div>
   );
 };
 
@@ -332,6 +332,8 @@ const Video: FC<VideoProps> = ({ trend, org }) => {
           </div>
         </div>
         <video
+          webkit-playsinline="webkit-playsinline"
+          playsInline={true}
           ref={videoRef}
           key={trend._id}
           controls={true}
