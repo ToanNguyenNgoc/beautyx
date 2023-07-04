@@ -13,7 +13,7 @@ import { Dialog } from "@mui/material";
 import { PopupMessage } from "components/Notification";
 import { useDeviceMobile } from "hooks";
 import { AppContext } from "context/AppProvider";
-import {bannersHard} from '../data'
+import { bannersHard } from '../data'
 import { EXTRA_FLAT_FORM } from "api/extraFlatForm";
 
 interface PopupProps {
@@ -141,9 +141,9 @@ function HomeBanner2() {
         }
     };
     const banners2 = bannersHard(PLAT_FORM)
-    const banners1 = banners.slice(0,1)
+    const banners1 = banners.slice(0, 1)
     const bannersLast = banners.slice(1, banners.length)
-    const BANNERS = [...banners1,...banners2,...bannersLast]
+    const BANNERS = [...banners1, ...banners2, ...bannersLast]
 
     return (
         <div className={style.container}>

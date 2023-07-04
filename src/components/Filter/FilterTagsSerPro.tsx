@@ -20,6 +20,7 @@ export function FilterTagsSerPro(props: FilterTagsSerProProps) {
     const onChangeTagPar = (tagName: string) => {
         if (onChange) onChange(tagName)
     }
+    console.log(result.media[0])
 
     return (
         <div className={style.tag_ser_container}>
@@ -36,9 +37,9 @@ export function FilterTagsSerPro(props: FilterTagsSerProProps) {
                                 <img src={icon.checkWhite} alt="" />
                             </div>
                         }
-                        <div className={style.tag_ser_item_img}>
+                        {/* <div className={style.tag_ser_item_img}>
                             <img src={result?.media[0]?.original_url} alt="" />
-                        </div>
+                        </div> */}
                         <span className={style.tag_ser_item_text}>Tất cả</span>
                     </li>
                     {
@@ -105,6 +106,9 @@ const TagSerItem = (props: TagSerItemProps) => {
 const useFindTagByName = (keyword: string) => {
     const { tags } = useSelector((state: any) => state.HOME)
     let result = []
+    if(keyword.trim().length === 0){
+        return result = tags[0]
+    }
     if (!keyword || keyword === "") return result = []
     result = tags?.filter((item: { [x: string]: { toString: () => string; }; }) => {
         return Object.keys(item).some(key =>
