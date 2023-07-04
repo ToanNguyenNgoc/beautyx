@@ -1,5 +1,5 @@
 /* eslint-disable dot-location */
-import React, { useRef, useState } from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Masonry } from "@mui/lab"
 import style from "./home-cate.module.css"
@@ -9,23 +9,23 @@ import { formatRouterCateResult } from 'utils/formatRouterLink/formatRouter';
 import { useTags } from 'hooks';
 
 function HomeCate() {
-    const { tagsProductLevel1, tagsServiceLevel1 } = useTags()
+    const {  tagsServiceLevel1 } = useTags()
     // handle UI
-    const refCatePar = useRef<any>();
+    // const refCatePar = useRef<any>();
 
-    const onToggleCatePar = (open: boolean) => {
-        if (open) refCatePar?.current?.classList?.add(style.cate_par_cnt_show)
-        if (!open) refCatePar?.current?.classList?.remove(style.cate_par_cnt_show)
-    }
+    // const onToggleCatePar = (open: boolean) => {
+    //     if (open) refCatePar?.current?.classList?.add(style.cate_par_cnt_show)
+    //     if (!open) refCatePar?.current?.classList?.remove(style.cate_par_cnt_show)
+    // }
     //--
-    const [tagsChild, setTagsChild] = useState<ITag[]>([])
-    const onHoverParentItem = (id: number) => {
-        setTagsChild(tagsProductLevel1?.find((i: ITag) => i.id === id)?.children ?? [])
-    }
+    // const [tagsChild, setTagsChild] = useState<ITag[]>([])
+    // const onHoverParentItem = (id: number) => {
+    //     setTagsChild(tagsProductLevel1?.find((i: ITag) => i.id === id)?.children ?? [])
+    // }
 
     return (
         <div className={style.container}>
-            <button
+            {/* <button
                 className={style.btn_cnt}
                 onFocus={() => onToggleCatePar(true)}
                 onBlur={() => onToggleCatePar(false)}
@@ -52,7 +52,7 @@ function HomeCate() {
                         <CateChildHover parent={tagsChild} />
                     </ul>
                 </div>
-            </button>
+            </button> */}
             {
                 tagsServiceLevel1
                     ?.sort((a, b) => (b.children?.length ?? 0) - (a.children?.length ?? 0))
@@ -68,41 +68,41 @@ export default HomeCate;
 
 
 
-const CateChildHover = ({ parent }: { parent: ITag[] }) => {
-    return (
-        <div className={style.item_child_cnt}>
-            <ul className={style.child_list}>
-                {
-                    parent?.map((i: ITag, index: number) => (
-                        <li key={index} className={style.child_list_cnt}>
-                            <Link
-                                to={{ pathname: formatRouterCateResult(i.id, i.name, "PRODUCT") }}
-                            >
-                                <span className={style.child_list_name}>
-                                    <img src={i?.media[0]?.original_url} alt="" />
-                                    {i?.name}
-                                </span>
-                            </Link>
-                            <ul className={style.child_child_list}>
-                                {
-                                    i.children?.map((child: ITag, i_child: number) => (
-                                        <li key={i_child} className={style.child_child_item}>
-                                            <Link
-                                                to={{ pathname: formatRouterCateResult(child.id, child.name, "PRODUCT") }}
-                                            >
-                                                {child.name}
-                                            </Link>
-                                        </li>
-                                    ))
-                                }
-                            </ul>
-                        </li>
-                    ))
-                }
-            </ul>
-        </div>
-    )
-}
+// const CateChildHover = ({ parent }: { parent: ITag[] }) => {
+//     return (
+//         <div className={style.item_child_cnt}>
+//             <ul className={style.child_list}>
+//                 {
+//                     parent?.map((i: ITag, index: number) => (
+//                         <li key={index} className={style.child_list_cnt}>
+//                             <Link
+//                                 to={{ pathname: formatRouterCateResult(i.id, i.name, "PRODUCT") }}
+//                             >
+//                                 <span className={style.child_list_name}>
+//                                     <img src={i?.media[0]?.original_url} alt="" />
+//                                     {i?.name}
+//                                 </span>
+//                             </Link>
+//                             <ul className={style.child_child_list}>
+//                                 {
+//                                     i.children?.map((child: ITag, i_child: number) => (
+//                                         <li key={i_child} className={style.child_child_item}>
+//                                             <Link
+//                                                 to={{ pathname: formatRouterCateResult(child.id, child.name, "PRODUCT") }}
+//                                             >
+//                                                 {child.name}
+//                                             </Link>
+//                                         </li>
+//                                     ))
+//                                 }
+//                             </ul>
+//                         </li>
+//                     ))
+//                 }
+//             </ul>
+//         </div>
+//     )
+// }
 const TagItemService = ({ tag }: { tag: ITag }) => {
     const [openChild, setOpenChild] = useState(false)
     const onBlurTagItem = () => {
