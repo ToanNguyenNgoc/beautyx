@@ -8,5 +8,5 @@ class ApointmentApi {
     return axiosClient.post(url, params);
   };
 }
-const apointmentApi = new ApointmentApi();
+export const apointmentApi = new ApointmentApi();
 export default apointmentApi;

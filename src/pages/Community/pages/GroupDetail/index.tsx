@@ -91,7 +91,7 @@ function GroupDetail() {
                                     {
                                         postList?.map((post, index: number) => (
                                             <li key={index} className={style.post_list_item}>
-                                                <PostCard post={post} />
+                                                {/* <PostCard post={post} /> */}
                                             </li>
                                         ))
                                     }

@@ -1,33 +1,29 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { Masonry } from '@mui/lab';
 import { Container } from '@mui/system';
 import { XButton } from 'components/Layout';
 import icon from 'constants/icon';
-import dayjs from 'dayjs';
 import HeadTitle from 'features/HeadTitle';
-import IStore from 'interface/IStore';
-import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import { useParams, useHistory, Link } from 'react-router-dom';
-import { onFavorite } from 'redux/community';
-import { IPost } from '../../data'
 import style from './post-detail.module.css'
+import { useQuery } from '@tanstack/react-query';
+import { QR_KEY } from 'config';
+import { postApi } from 'api';
+import { formatDateFromNow } from 'utils';
+import { Images } from 'pages/Community/components';
 
 function PostDetail() {
     const { id } = useParams() as any
     const history = useHistory()
-    const dispatch = useDispatch()
-    const { posts } = useSelector((state: IStore) => state.COMMUNITY)
-    const post = posts.find((i: IPost) => i.id === parseInt(id))
-    useEffect(() => {
-        if (!id || !post) history.replace('/error')
-    }, [])
-    let column = 3
-    if (post?.medias?.length === 1) column = 1
-    if (post?.medias?.length === 2) column = 2
+    const { data } = useQuery({
+        queryKey: [QR_KEY.POSTS, id],
+        queryFn: () => postApi.post(id),
+        enabled: id ? true : false,
+        onError: () => history.replace('/error')
+    })
+    const post = data?.context
     return (
         <>
-            <HeadTitle title={post?.group?.name} />
+            <HeadTitle title={'post?.group?.name'} />
             <Container>
                 <div className={style.container}>
                     <div className={style.head}>
@@ -45,34 +41,26 @@ function PostDetail() {
                         <div className={style.head_right}>
                             <p className={style.user_name}>{post?.user?.fullname}</p>
                             <p className={style.post_group_name}>
-                                Trong nhóm <Link to={{ pathname: '/' }} >{post?.group?.name}</Link>
+                                Trong nhóm <Link to={{ pathname: '/' }} >{'post?.group?.name'}</Link>
                             </p>
-                            <p className={style.created_add}>{dayjs(post?.created_at).format('DD-MM-YYYY')}</p>
+                            <p className={style.created_add}>
+                                {formatDateFromNow(post?.created_at ?? '')}
+                            </p>
                         </div>
                     </div>
                     <div className={style.content}>{post?.content}</div>
                     <div className={style.images_cont}>
                         {
-                            post?.medias &&
-                            <Masonry
-                                style={{ alignContent: 'center' }}
-                                columns={column}
-                                spacing={1}
-                            >
-                                {
-                                    post?.medias?.map((media_url: string, index: number) => (
-                                        <img key={index} src={media_url} alt="" />
-                                    ))
-                                }
-                            </Masonry>
+                            (post?.media_url && post?.media_url?.length > 0) &&
+                            <Images images={post.media_url} />
                         }
                     </div>
                     <div className={style.interactive}>
                         <div className={style.interactive_item}>
                             <XButton
-                                onClick={() => dispatch(onFavorite({ id: post?.id, isFavorite: !post?.isFavorite }))}
+                                // onClick={() => dispatch(onFavorite({ id: post?.id, isFavorite: !post?.isFavorite }))}
                                 iconSize={28}
-                                icon={post?.isFavorite ? icon.thumbUpPurple : icon.thumbUp}
+                                icon={post?.is_favorite ? icon.thumbUpPurple : icon.thumbUp}
                             />
                             <span>{post?.favorite_count}</span>
                         </div>

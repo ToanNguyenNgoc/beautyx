@@ -20,7 +20,7 @@ export const homeApi = createApi({
                 params:{'include':'images|videos'}
             }),
             keepUnusedDataFor: 60 * 60, // default 60 seconds
-            transformResponse: (response: ResponseType) => response?.context?.data ?? []
+            transformResponse: (response: ResponseType<any>) => response?.context?.data ?? []
         }),
         orgsDistance: builder.query({
             query: (params) => ({
@@ -28,17 +28,17 @@ export const homeApi = createApi({
                 params: pickBy(params, identity)
             }),
             keepUnusedDataFor: 60 * 60,
-            transformResponse: (response: ResponseType) => response?.context?.data ?? [],
+            transformResponse: (response: ResponseType<any>) => response?.context?.data ?? [],
         }),
         serviceCatesChild: builder.query({
             query: (parent_id: number | string) => API_ROUTE.TAGS_ID(parent_id),
             keepUnusedDataFor: 3600,
-            transformResponse: (response: ResponseType) => response?.context ?? {}
+            transformResponse: (response: ResponseType<any>) => response?.context ?? {}
         }),
         getPaymentMethod: builder.query<IPaymentMethod[], void>({
             query: () => API_ROUTE.PAYMENT_METHOD,
             keepUnusedDataFor: 3600,
-            transformResponse: (response: ResponseType) => response?.context?.data
+            transformResponse: (response: ResponseType<any>) => response?.context?.data
         })
     })
 })

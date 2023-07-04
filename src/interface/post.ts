@@ -1,0 +1,21 @@
+import { IOrganization, ITag, User, Service } from "interface";
+
+export interface IPost {
+  id: number,
+  content: string,
+  status: number,
+  organization_id: number,
+  tag_id: number,
+  user_id: number,
+  created_at: string,
+  updated_at: string,
+  is_favorite: boolean,
+  list_service: Service[],
+  media_url: string[],
+  tag?: ITag,
+  user: User,
+  organization?: IOrganization,
+  media: any[],
+  favorite_count:number,
+  comment_count:number
+}

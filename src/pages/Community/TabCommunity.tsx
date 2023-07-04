@@ -4,11 +4,23 @@ import { Link } from 'react-router-dom';
 import { Avatar, AvatarGroup } from '@mui/material';
 import imgC from './assets'
 import { PostCard } from './components';
-import { useSelector } from 'react-redux';
-import IStore from 'interface/IStore';
+import { useInfiniteQuery } from '@tanstack/react-query';
+import { QR_KEY } from 'config';
+import { postApi } from 'api';
 
 function TabCommunity() {
-    const { posts } = useSelector((state: IStore) => state.COMMUNITY)
+    // const { posts } = useSelector((state: IStore) => state.COMMUNITY)
+    const {data, isLoading, fetchNextPage} = useInfiniteQuery({
+        queryKey:[QR_KEY.POSTS],
+        queryFn:({pageParam=1})=> postApi.posts({
+            "page":pageParam,
+            "limit":10,
+            "append":"media_url",
+            "sort":"-created_at"
+        }),
+        getNextPageParam:(page)=>console.log(page) 
+    })
+    const posts = data?.pages.map(i => i.context.data).flat() ?? []
     return (
         <>
             <div className={style.com_container}>
