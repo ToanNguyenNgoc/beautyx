@@ -46,7 +46,7 @@ export const Tab = ({ refDealHot, refService, refProduct, refCombo, refDetail }:
     },
     {
       open: trends.length > 0 ? true : false,
-      id: 6, title: 'Review', path: 'thong-tin',
+      id: 6, title: 'Review', path: 'review',
       ref: refDetail
     },
   ]

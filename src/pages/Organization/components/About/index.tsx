@@ -162,15 +162,14 @@ const PreviewMedia: FC = () => {
     ],
   };
   const handleOpenTrends = (i: number) => {
-    setOpenTrends(true);
-    console.log(slider);
+    setOpenTrends(true)
     setTimeout(() => {
       slider.current?.slickGoTo(i);
     }, 100);
   };
 
   return (
-    <>
+    <div className={style.about_trends}>
       <span className={style.section_title}>Review làm đẹp</span>
       <ul className={style.about_trends_lists}>
         {trends.slice(0, 5).map((item: ITrend, index: number) => (
@@ -223,7 +222,7 @@ const PreviewMedia: FC = () => {
           </li>
         ))}
       </ul>
-      <Dialog open={openTrends} fullScreen>
+      <Dialog className={style.dialog_video} open={openTrends} fullScreen>
         <XButton
           className={style.about_popup_btn_cancel}
           onClick={() => setOpenTrends(false)}
@@ -254,7 +253,7 @@ const PreviewMedia: FC = () => {
           />
         </div>
       </Dialog>
-    </>
+    </div>
   );
 };
 
@@ -332,6 +331,8 @@ const Video: FC<VideoProps> = ({ trend, org }) => {
           </div>
         </div>
         <video
+          webkit-playsinline="webkit-playsinline"
+          playsInline={true}
           ref={videoRef}
           key={trend._id}
           controls={true}
