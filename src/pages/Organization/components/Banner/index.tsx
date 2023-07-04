@@ -16,7 +16,7 @@ import { useHistory } from 'react-router-dom'
 import { chatApi } from 'api'
 
 export const Banner = () => {
-  const { galleries, org, loadGalleries, discounts, servicesSpecial, productsSpecial } =
+  const { galleries, org, loadGalleries, discounts, servicesSpecial, productsSpecial} =
     useContext(OrgContext) as OrgContextType
   const { currTopic } = useContext(MessengerContext) as MessengerCtxType
   const history = useHistory()
@@ -87,8 +87,7 @@ export const Banner = () => {
                 </span>
                 <div className={style.head_left_rate}>
                   <div className={style.head_left_rate_item}>
-                    <img src={icon.star} alt="" />
-                    5
+                    <img src={icon.star} alt="" />5
                   </div>
                   <div className={style.head_left_rate_item}>
                     <img src={icon.heart} alt="" />
@@ -103,7 +102,7 @@ export const Banner = () => {
                   onClick={onToggleFavorite}
                   iconSize={mb ? 18 : 16}
                   icon={favoriteSt.is_favorite ? icon.heart : icon.unHeart}
-                  title={favoriteSt.is_favorite ? 'Đã thích' : 'Yêu thích'}
+                  title={favoriteSt.is_favorite ? "Đã thích" : "Yêu thích"}
                 />
                 {/* <XButton
                   iconSize={mb ? 18 : 16}
@@ -122,71 +121,79 @@ export const Banner = () => {
               <div className={style.head_right_time}>
                 <div className={style.head_right_time_left}>
                   <img src={icon.clockGray} alt="" />
-                  {mb ? `Thời gian làm việc ${orgTimeToday?.day_week}` : 'Hôm nay'}
+                  {mb
+                    ? `Thời gian làm việc ${orgTimeToday?.day_week}`
+                    : "Hôm nay"}
                 </div>
                 <div
                   onClick={(e) => {
                     e.stopPropagation();
-                    onToggleTime()
+                    onToggleTime();
                   }}
                   className={style.head_right_time_right}
                 >
                   <div className={style.time_tody}>
-                    {orgTimeToday?.from_time_opening}{" "}-{" "}
+                    {orgTimeToday?.from_time_opening} -{" "}
                     {orgTimeToday?.to_time_opening}
-                    <img className={style.time_tody_icon} ref={refIcon} src={icon.arrowDownPurple} alt="" />
+                    <img
+                      className={style.time_tody_icon}
+                      ref={refIcon}
+                      src={icon.arrowDownPurple}
+                      alt=""
+                    />
                   </div>
                 </div>
-                <ul onClick={(e) => e.stopPropagation()} ref={refTime} className={style.time_list_cnt}>
-                  {
-                    orgTimes.map(i => (
-                      <li style={i.todayAct ? { color: 'var(--pr-green)' } : {}}
-                        key={i.day_week}
-                        className={style.time_work_item}
-                      >
-                        {i.day_week}
-                        <span>{i.from_time_opening}-{i.to_time_opening}</span>
-                      </li>
-                    ))
-                  }
+                <ul
+                  onClick={(e) => e.stopPropagation()}
+                  ref={refTime}
+                  className={style.time_list_cnt}
+                >
+                  {orgTimes.map((i) => (
+                    <li
+                      style={i.todayAct ? { color: "var(--pr-green)" } : {}}
+                      key={i.day_week}
+                      className={style.time_work_item}
+                    >
+                      {i.day_week}
+                      <span>
+                        {i.from_time_opening}-{i.to_time_opening}
+                      </span>
+                    </li>
+                  ))}
                 </ul>
               </div>
             </div>
           </div>
         </div>
         <div className={style.image_cnt}>
-          {
-            mb ?
-              <SliderGallery />
-              :
-              galleriesList.map(url => (
-                <div key={url}>
-                  <img src={url} alt="" />
-                </div>
-              ))
-          }
-          <XButton
-            onClick={() => setOImg(true)}
-            className={style.open_image_btn}
-            title={mb ? '' : 'Hiển thị tất cả hình'}
-            icon={mb ? icon.expend : ''}
-          />
+          {mb ? (
+            <SliderGallery />
+          ) : (
+            galleriesList.map((url) => (
+              <div key={url}>
+                <img src={url} alt="" />
+              </div>
+            ))
+          )}
+
+          {galleries.length === 0 ? (
+            <></>
+          ) : (
+            <XButton
+              onClick={() => setOImg(true)}
+              className={style.open_image_btn}
+              title={mb ? "" : "Hiển thị tất cả hình"}
+              icon={mb ? icon.expend : ""}
+            />
+          )}
         </div>
-        {
-          (!loadGalleries && oImg) &&
-          <Gallery
-            open={oImg}
-            onClose={() => setOImg(false)}
-          />
-        }
+        {!loadGalleries && oImg && (
+          <Gallery open={oImg} onClose={() => setOImg(false)} />
+        )}
       </div>
-      <OrgItemMap
-        open={map}
-        setOpen={setMap}
-        org={org}
-      />
+      <OrgItemMap open={map} setOpen={setMap} org={org} />
     </>
-  )
+  );
 }
 const SliderGallery = () => {
   const { galleries } = useContext(OrgContext) as OrgContextType

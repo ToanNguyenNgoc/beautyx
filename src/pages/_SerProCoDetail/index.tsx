@@ -32,6 +32,11 @@ import HomeWatched from 'pages/HomePage/HomeWatched';
 import style from './detail.module.css'
 import { useGetByOrgIdCateIdQuery } from 'redux-toolkit-query/hook-detail';
 import { AppContext } from 'context/AppProvider';
+import { useQuery } from '@tanstack/react-query';
+import axios from 'axios';
+import API_3RD from 'api/3rd-api';
+import { CACHE_TIME } from 'common';
+import { ITrend } from 'pages/Trends/trend.interface';
 
 interface RouteType {
     path: string,
@@ -299,6 +304,18 @@ function SerProCoDetail() {
 export default SerProCoDetail
 
 export const SliderImage = ({ detail, org }: { detail: DetailProp, org: IOrganization }) => {
+    const { data: dataTrends } = useQuery({
+        queryKey: ['VIDEO', org?.id],
+        queryFn: () => axios.get(`${API_3RD.API_NODE}/trends`, {
+            params: { "filter[organization_id]": org?.id },
+        }),
+        enabled: org?.id ? true : false,
+        cacheTime: CACHE_TIME,
+    });
+    const trends = dataTrends?.data.data.context.data ?? []
+    const trend_videos_url = trends.filter((i: ITrend) => i.services.map(s => s.id)
+        .includes(`${detail.id}`))
+        .map((i: ITrend) => i.media_url)
     const IS_MB = useDeviceMobile()
     const [index, setIndex] = useState(0)
     const [open, setOpen] = useState(false)
@@ -318,6 +335,7 @@ export const SliderImage = ({ detail, org }: { detail: DetailProp, org: IOrganiz
             if (currentIndex % 5 === 0 && refThumb.current) refThumb.current.slickGoTo(currentIndex)
         }
     }
+
     const settingsThumb: Settings = {
         dots: false,
         infinite: true,
@@ -328,7 +346,7 @@ export const SliderImage = ({ detail, org }: { detail: DetailProp, org: IOrganiz
         prevArrow: <XButton />,
         nextArrow: <XButton />
     }
-    const images = [detail.video_url, detail.image_url || org.image_url]
+    const images = [...trend_videos_url, detail.video_url, detail.image_url || org.image_url]
         .concat(extractImageUrls(detail.description))
         .filter(Boolean)
     const onSlickGoto = (i: number) => {

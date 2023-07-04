@@ -20,7 +20,7 @@ export const Gallery = ({ open, onClose }: GalleryProps) => {
     setFullImg(true)
     setIndex(i)
   }
-  const galleriesLists = tab.images.map(item => item.image_url).concat(tab.image_url).reverse()
+  const galleriesLists = [tab?.image_url].concat(tab?.images.map((item) => item?.image_url))
   return (
     <Dialog open={open} fullScreen>
       <FullImage
