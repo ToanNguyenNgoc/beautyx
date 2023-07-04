@@ -1,14 +1,6 @@
 import { Container, Dialog } from "@mui/material";
 import style from "./about.module.css";
-import {
-  useContext,
-  useState,
-  useRef,
-  FC,
-  Dispatch,
-  SetStateAction,
-  useEffect,
-} from "react";
+import { useContext, useState, useRef, FC, useEffect } from "react";
 import { OrgContext, OrgContextType } from "context";
 import MapGL, { Marker, NavigationControl } from "react-map-gl";
 import icon from "constants/icon";
@@ -17,67 +9,21 @@ import Comment from "components/Comment";
 import { ITrend } from "pages/Trends/trend.interface";
 import { XButton } from "components/Layout/XButton";
 import Slider from "react-slick";
-import useDeviceMobile from "hooks/useDeviceMobile";
 import { useElementOnScreen } from "hooks/useElementOnScreen";
-import ReactPlayer from "react-player/lazy";
+import formatPrice from "utils/formatPrice";
+import { formatRouterLinkService } from "utils/formatRouterLink/formatRouter";
+import { useHistory } from "react-router-dom";
+import { IOrganization } from "interface";
 
 export const About = () => {
   const { org, trends } = useContext(OrgContext) as OrgContextType;
   const [map, setMap] = useState(false);
-  const [openTrends, setOpenTrends] = useState(false);
-  const videoRef = useRef<HTMLVideoElement>(null);
-  const IS_MB = useDeviceMobile();
-  // const onTogglePlayVideo = (play: boolean) => {
-  //   if (!IS_MB) {
-  //     if (play) return videoRef.current?.play();
-  //     if (!play) return videoRef.current?.pause();
-  //   }
-  // };
   return (
     <Container>
       {trends.length !== 0 && (
         <div className={style.container}>
           <div className={style.section}>
-            <span className={style.section_title}>
-              Xu hướng làm đẹp tại doanh nghiệp
-            </span>
-            <ul className={style.about_trends_lists}>
-              {trends.slice(0, 5).map((item: ITrend, index: number) => (
-                <li
-                  onClick={() => setOpenTrends(true)}
-                  key={index}
-                  className={style.about_trends_item}
-                >
-                  <div className={style.about_trends_org}>
-                    <img
-                      className={style.about_trends_org_img}
-                      src={item.organization_image}
-                      alt=""
-                    />
-                    <p className={style.about_trends_org_name}>
-                      {item.organization_name}
-                    </p>
-                  </div>
-                  <video
-                    // onMouseEnter={() => onTogglePlayVideo(true)}
-                    // onMouseLeave={() => onTogglePlayVideo(false)}
-                    ref={videoRef}
-                    webkit-playsinline="webkit-playsinline"
-                    playsInline={IS_MB ? false : true}
-                    className={style.about_trends_video}
-                  >
-                    <source
-                      type="video/mp4"
-                      src={`${item.media_url}#t=0.001`}
-                    />
-                  </video>
-                </li>
-              ))}
-            </ul>
-            <PreviewMedia
-              openTrends={openTrends}
-              setOpenTrends={setOpenTrends}
-            />
+            <PreviewMedia />
           </div>
         </div>
       )}
@@ -177,24 +123,21 @@ export const About = () => {
   );
 };
 
-interface PreviewMediaProps {
-  openTrends: boolean;
-  setOpenTrends: Dispatch<SetStateAction<boolean>>;
-}
-
-const PreviewMedia: FC<PreviewMediaProps> = ({ openTrends, setOpenTrends }) => {
-  const { trends } = useContext(OrgContext) as OrgContextType;
+const PreviewMedia: FC = () => {
+  const { trends, org } = useContext(OrgContext) as OrgContextType;
+  const [openTrends, setOpenTrends] = useState(false);
   const [currentSlide, setCurrentSlide] = useState(0);
   const slider = useRef<Slider | null>(null);
-  const videoRef = useRef<HTMLVideoElement>(null);
-  const itemRef = useRef<HTMLDivElement>(null);
-  const IS_MB = useDeviceMobile();
-  const options = {
-    root: null,
-    rootMargin: "0px",
-    threshold: 0.3,
+  const history = useHistory();
+  const handleGotoSer = (item: ITrend) => {
+    history.push(
+      formatRouterLinkService(
+        item.services[0].id,
+        org.id,
+        item.services[0].service_name
+      )
+    );
   };
-  const isVisible = useElementOnScreen(options, itemRef);
 
   const settings = {
     dots: false,
@@ -202,20 +145,8 @@ const PreviewMedia: FC<PreviewMediaProps> = ({ openTrends, setOpenTrends }) => {
     slidesToShow: 1,
     slidesToScroll: 1,
     arrows: true,
-    beforeChange: function (currentSlide: any, nextSlide: any) {
-      // Pause the currently playing video
-      // const currentVideo = document.getElementById(`video-${currentSlide}`);
-      // if (currentVideo) {
-      //   (currentVideo as HTMLVideoElement).pause();
-      // }
-    },
     afterChange: function (currentSlide: any) {
-      // Play the newly visible video
-      // setCurrentSlide(currentSlide);
-      // const newVideo = document.getElementById(`video-${currentSlide}`);
-      // if (newVideo) {
-      //   (newVideo as HTMLVideoElement).play();
-      // }
+      setCurrentSlide(currentSlide);
     },
     responsive: [
       {
@@ -230,61 +161,186 @@ const PreviewMedia: FC<PreviewMediaProps> = ({ openTrends, setOpenTrends }) => {
       },
     ],
   };
-
-  useEffect(() => {
-    // videoRef;
-  }, []);
+  const handleOpenTrends = (i: number) => {
+    setOpenTrends(true);
+    console.log(slider);
+    setTimeout(() => {
+      slider.current?.slickGoTo(i);
+    }, 100);
+  };
 
   return (
-    <Dialog open={openTrends} fullScreen>
-      <XButton
-        className={style.about_popup_btn_cancel}
-        onClick={() => setOpenTrends(false)}
-        icon={icon.chevronRightBlack}
-        iconSize={20}
-      />
-      <div className={style.about_popup}>
-        <div ref={itemRef} className={style.trend_item_center}></div>
-        <Slider ref={slider} {...settings}>
-          {trends.map((item, index) => (
-            <div className={style.about_popup_videos}>
-              {/* <video
-                className={style.about_popup_video}
-                key={item._id}
-                id={`video-${index}`}
-                controls={true}
-                autoPlay={false}
-              >
-                <source type="video/mp4" src={`${item?.media_url}#t=0.001`} />
-              </video> */}
-              <ReactPlayer
-                className={style.trend_item_video_thumb}
-                url={`${item.media_url}#t=0.001`}
-                width={"100%"}
-                height={"100%"}
-                playing={isVisible && IS_MB}
-                muted={false}
-                playsinline={true}
-                controls={true}
+    <>
+      <span className={style.section_title}>Review làm đẹp</span>
+      <ul className={style.about_trends_lists}>
+        {trends.slice(0, 5).map((item: ITrend, index: number) => (
+          <li
+            onClick={() => handleOpenTrends(index)}
+            key={index}
+            className={style.about_trends_item}
+          >
+            <div
+              onClick={(e) => {
+                handleGotoSer(item);
+                e.stopPropagation();
+              }}
+              className={style.about_trends_org}
+            >
+              <img
+                className={style.about_trends_org_img}
+                src={item.organization_image}
+                alt=""
               />
+              <div className={style.about_trend_service}>
+                <p className={style.about_trends_ser_name}>
+                  {item?.services[0].service_name}
+                </p>
+                <div className={style.about_trends_ser_prices}>
+                  {item?.services[0].special_price > 0 ? (
+                    <>
+                      <span className={style.about_trends_ser_special}>
+                        {formatPrice(item.services[0].special_price)}đ
+                      </span>
+                      <span className={style.about_trends_ser_price}>
+                        {formatPrice(item.services[0].price)}đ
+                      </span>
+                    </>
+                  ) : (
+                    <span className={style.about_trends_ser_price}>
+                      {formatPrice(item.services[0].price)}đ
+                    </span>
+                  )}
+                </div>
+              </div>
             </div>
-          ))}
-        </Slider>
+            <video
+              poster={item?.image_thumb}
+              webkit-playsinline="webkit-playsinline"
+              className={style.about_trends_video}
+            >
+              <source type="video/mp4" src={`${item?.media_url}#t=0.001`} />
+            </video>
+          </li>
+        ))}
+      </ul>
+      <Dialog open={openTrends} fullScreen>
         <XButton
-          style={currentSlide === 0 ? { display: "none" } : {}}
-          className={style.about_btn_arr1}
-          onClick={() => slider?.current?.slickPrev()}
+          className={style.about_popup_btn_cancel}
+          onClick={() => setOpenTrends(false)}
           icon={icon.chevronRightBlack}
           iconSize={20}
         />
-        <XButton
-          style={trends.length - 1 === currentSlide ? { display: "none" } : {}}
-          className={style.about_btn_arr2}
-          onClick={() => slider?.current?.slickNext()}
-          icon={icon.chevronRightBlack}
-          iconSize={20}
-        />
+        <div className={style.about_popup}>
+          <Slider ref={slider} {...settings}>
+            {trends.map((item, index) => (
+              <Video org={org} key={index} trend={item} />
+            ))}
+          </Slider>
+          <XButton
+            style={currentSlide === 0 ? { display: "none" } : {}}
+            className={style.about_btn_arr1}
+            onClick={() => slider?.current?.slickPrev()}
+            icon={icon.chevronRightBlack}
+            iconSize={20}
+          />
+          <XButton
+            style={
+              trends.length - 1 === currentSlide ? { display: "none" } : {}
+            }
+            className={style.about_btn_arr2}
+            onClick={() => slider?.current?.slickNext()}
+            icon={icon.chevronRightBlack}
+            iconSize={20}
+          />
+        </div>
+      </Dialog>
+    </>
+  );
+};
+
+interface VideoProps {
+  trend: ITrend;
+  org: IOrganization;
+}
+const Video: FC<VideoProps> = ({ trend, org }) => {
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const options = {
+    root: null,
+    rootMargin: "0px",
+    threshold: 0.3,
+  };
+  const isVisible = useElementOnScreen(options, videoRef);
+  const onVideoPress = () => {
+    if (isVisible) {
+      videoRef.current?.play();
+    } else {
+      videoRef.current?.pause();
+    }
+  };
+  const history = useHistory();
+
+  const handleGotoSer = (item: ITrend) => {
+    history.push(
+      formatRouterLinkService(
+        item.services[0].id,
+        org.id,
+        item.services[0].service_name
+      )
+    );
+  };
+  useEffect(() => {
+    onVideoPress();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    return () => videoRef.current?.pause();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isVisible]);
+  return (
+    <div key={trend._id} className={style.about_popup_videos}>
+      <div className={style.about_popup_video}>
+        <div
+          onClick={(e) => {
+            handleGotoSer(trend);
+            e.stopPropagation();
+          }}
+          className={style.about_trends_org}
+        >
+          <img
+            className={style.about_trends_org_img}
+            src={trend.organization_image}
+            alt=""
+          />
+          <div className={style.about_trend_service}>
+            <p className={style.about_trends_ser_name}>
+              {trend?.services[0].service_name}
+            </p>
+            <div className={style.about_trends_ser_prices}>
+              {trend?.services[0].special_price > 0 ? (
+                <>
+                  <span className={style.about_trends_ser_special}>
+                    {formatPrice(trend.services[0].special_price)}đ
+                  </span>
+                  <span className={style.about_trends_ser_price}>
+                    {formatPrice(trend.services[0].price)}đ
+                  </span>
+                </>
+              ) : (
+                <span className={style.about_trends_ser_price}>
+                  {formatPrice(trend.services[0].price)}đ
+                </span>
+              )}
+            </div>
+          </div>
+        </div>
+        <video
+          ref={videoRef}
+          key={trend._id}
+          controls={true}
+          loop
+          poster={trend.image_thumb}
+        >
+          <source type="video/mp4" src={`${trend?.media_url}#t=0.001`} />
+        </video>
       </div>
-    </Dialog>
+    </div>
   );
 };

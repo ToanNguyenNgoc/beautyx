@@ -134,6 +134,8 @@
   align-items: center;
   gap: 10px;
   z-index: 2;
+  transition: all 0.3s ease;
+  cursor: pointer;
 }
 .about_trends_org_img {
   width: 40px;
@@ -142,7 +144,7 @@
   border-radius: 100%;
   flex-shrink: 0;
 }
-.about_trends_org_name {
+.about_trends_ser_name {
   color: var(--white);
   display: -webkit-box;
   -webkit-line-clamp: 2;
@@ -160,8 +162,9 @@
 }
 .about_popup_btn_cancel {
   z-index: 3;
-  background-color: #ccc;
+  background-color: #fff;
   position: absolute;
+  border-radius: 100px;
   top: 10px;
   left: 10px;
   transform: rotate(180deg);
@@ -170,7 +173,6 @@
 .about_popup_btn_cancel:hover {
   background-color: var(--bg-color);
 }
-
 .about_btn_arr1,
 .about_btn_arr2 {
   position: absolute;
@@ -190,10 +192,17 @@
   right: 20px;
 }
 .about_popup_videos {
-  text-align: center;
+  height: 100vh;
+  position: relative;
 }
 .about_popup_video {
-  width: 30%;
+  height: 100%;
+  width: max-content;
+  position: relative;
+  margin: 0 auto;
+}
+.about_popup_video > video {
+  height: 100%;
 }
 .trend_item_center {
   position: absolute;
@@ -202,9 +211,33 @@
   height: 40px;
   top: 50%;
   width: 100%;
-  margin-left: -12px;
   display: flex;
   justify-content: center;
+}
+.about_trends_ser_price {
+  background-color: var(--orange);
+  color: var(--white);
+  font-size: 12px;
+  padding: 2px 4px;
+  border-radius: 4px;
+  overflow: hidden;
+  font-weight: bold;
+}
+.about_trends_ser_prices {
+  margin-top: 2px;
+}
+.about_popup_video:hover > .about_trends_org {
+  transform: translateY(-50px);
+  transition: all 0.3s ease;
+}
+.about_popup .about_trends_org {
+  bottom: 20px;
+  left: 20px;
+  right: 20px;
+}
+.about_popup .about_trends_org_img {
+  width: 50px;
+  height: 50px;
 }
 /* close trends */
 
@@ -230,10 +263,10 @@
     border-radius: 8px;
   }
   .about_trends_org_img {
-    width: 24px;
-    height: 24px;
+    width: 36px;
+    height: 36px;
   }
-  .about_trends_org_name {
+  .about_trends_ser_name {
     font-size: 12px;
   }
   .about_popup_videos {
@@ -246,5 +279,10 @@
   .about_btn_arr1,
   .about_btn_arr2 {
     display: none;
+  }
+  .about_trends_org {
+    right: 4px;
+    left: 4px;
+    bottom: 8px;
   }
 }
