@@ -1,24 +1,38 @@
-import { Container, Dialog } from "@mui/material"
-import style from "./about.module.css"
-import { useContext, useState, useRef, FC, Dispatch, SetStateAction } from "react";
-import { OrgContext, OrgContextType } from "context"
-import MapGL, { Marker, NavigationControl } from 'react-map-gl';
+import { Container, Dialog } from "@mui/material";
+import style from "./about.module.css";
+import {
+  useContext,
+  useState,
+  useRef,
+  FC,
+  Dispatch,
+  SetStateAction,
+  useEffect,
+} from "react";
+import { OrgContext, OrgContextType } from "context";
+import MapGL, { Marker, NavigationControl } from "react-map-gl";
 import icon from "constants/icon";
 import { OrgItemMap } from "components/Layout/OrgItemMap";
 import Comment from "components/Comment";
 import { ITrend } from "pages/Trends/trend.interface";
 import { XButton } from "components/Layout/XButton";
+import Slider from "react-slick";
+import useDeviceMobile from "hooks/useDeviceMobile";
+import { useElementOnScreen } from "hooks/useElementOnScreen";
+import ReactPlayer from "react-player/lazy";
 
 export const About = () => {
-  const { org, trends } = useContext(OrgContext) as OrgContextType
-  console.log(trends)
-  const [map, setMap] = useState(false)
-  const [openTrends, setOpenTrends] = useState(false)
+  const { org, trends } = useContext(OrgContext) as OrgContextType;
+  const [map, setMap] = useState(false);
+  const [openTrends, setOpenTrends] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
-  const onTogglePlayVideo = (play: boolean) => {
-    if (play) return videoRef.current?.play();
-    if (!play) return videoRef.current?.pause();
-  };
+  const IS_MB = useDeviceMobile();
+  // const onTogglePlayVideo = (play: boolean) => {
+  //   if (!IS_MB) {
+  //     if (play) return videoRef.current?.play();
+  //     if (!play) return videoRef.current?.pause();
+  //   }
+  // };
   return (
     <Container>
       {trends.length !== 0 && (
@@ -45,11 +59,11 @@ export const About = () => {
                     </p>
                   </div>
                   <video
+                    // onMouseEnter={() => onTogglePlayVideo(true)}
+                    // onMouseLeave={() => onTogglePlayVideo(false)}
                     ref={videoRef}
-                    onMouseEnter={() => onTogglePlayVideo(true)}
-                    onMouseLeave={() => onTogglePlayVideo(false)}
                     webkit-playsinline="webkit-playsinline"
-                    playsInline={true}
+                    playsInline={IS_MB ? false : true}
                     className={style.about_trends_video}
                   >
                     <source
@@ -143,9 +157,11 @@ export const About = () => {
                 ))}
             </MapGL>
           </div>
+
           <div onClick={() => setMap(true)} className={style.more_map}>
             Hiển thị thêm {">"}
           </div>
+
           <OrgItemMap open={map} setOpen={setMap} org={org} />
         </div>
 
@@ -159,16 +175,66 @@ export const About = () => {
       </div>
     </Container>
   );
-}
+};
 
 interface PreviewMediaProps {
   openTrends: boolean;
   setOpenTrends: Dispatch<SetStateAction<boolean>>;
-  // item: ITrend;
 }
 
 const PreviewMedia: FC<PreviewMediaProps> = ({ openTrends, setOpenTrends }) => {
-  const { trends } = useContext(OrgContext) as OrgContextType
+  const { trends } = useContext(OrgContext) as OrgContextType;
+  const [currentSlide, setCurrentSlide] = useState(0);
+  const slider = useRef<Slider | null>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const itemRef = useRef<HTMLDivElement>(null);
+  const IS_MB = useDeviceMobile();
+  const options = {
+    root: null,
+    rootMargin: "0px",
+    threshold: 0.3,
+  };
+  const isVisible = useElementOnScreen(options, itemRef);
+
+  const settings = {
+    dots: false,
+    infinite: false,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    arrows: true,
+    beforeChange: function (currentSlide: any, nextSlide: any) {
+      // Pause the currently playing video
+      // const currentVideo = document.getElementById(`video-${currentSlide}`);
+      // if (currentVideo) {
+      //   (currentVideo as HTMLVideoElement).pause();
+      // }
+    },
+    afterChange: function (currentSlide: any) {
+      // Play the newly visible video
+      // setCurrentSlide(currentSlide);
+      // const newVideo = document.getElementById(`video-${currentSlide}`);
+      // if (newVideo) {
+      //   (newVideo as HTMLVideoElement).play();
+      // }
+    },
+    responsive: [
+      {
+        breakpoint: 1023,
+        settings: {
+          dots: false,
+          arrows: false,
+          vertical: true,
+          verticalSwiping: true,
+          swipeToSlide: true,
+        },
+      },
+    ],
+  };
+
+  useEffect(() => {
+    // videoRef;
+  }, []);
+
   return (
     <Dialog open={openTrends} fullScreen>
       <XButton
@@ -178,18 +244,47 @@ const PreviewMedia: FC<PreviewMediaProps> = ({ openTrends, setOpenTrends }) => {
         iconSize={20}
       />
       <div className={style.about_popup}>
-        <div className={style.about_pop_video}>
-          <video
-            controls={true}
-            autoPlay={true}
-            className={style.about_trends_video}
-            webkit-playsinline="webkit-playsinline"
-            playsInline={true}
-          >
-            <source type="video/mp4" src={`${trends[0]?.media_url}#t=0.001`} />
-          </video>
-        </div>
+        <div ref={itemRef} className={style.trend_item_center}></div>
+        <Slider ref={slider} {...settings}>
+          {trends.map((item, index) => (
+            <div className={style.about_popup_videos}>
+              {/* <video
+                className={style.about_popup_video}
+                key={item._id}
+                id={`video-${index}`}
+                controls={true}
+                autoPlay={false}
+              >
+                <source type="video/mp4" src={`${item?.media_url}#t=0.001`} />
+              </video> */}
+              <ReactPlayer
+                className={style.trend_item_video_thumb}
+                url={`${item.media_url}#t=0.001`}
+                width={"100%"}
+                height={"100%"}
+                playing={isVisible && IS_MB}
+                muted={false}
+                playsinline={true}
+                controls={true}
+              />
+            </div>
+          ))}
+        </Slider>
+        <XButton
+          style={currentSlide === 0 ? { display: "none" } : {}}
+          className={style.about_btn_arr1}
+          onClick={() => slider?.current?.slickPrev()}
+          icon={icon.chevronRightBlack}
+          iconSize={20}
+        />
+        <XButton
+          style={trends.length - 1 === currentSlide ? { display: "none" } : {}}
+          className={style.about_btn_arr2}
+          onClick={() => slider?.current?.slickNext()}
+          icon={icon.chevronRightBlack}
+          iconSize={20}
+        />
       </div>
     </Dialog>
-  )
-}
+  );
+};
