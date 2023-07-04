@@ -16,7 +16,7 @@ export function HomeTitle(props: IProps) {
   const onSeeMoreClick = () => {
     if (url) {
       history.push(url)
-      scrollTop()
+      scrollTop('auto')
     }
     if (onClick) onClick()
   }

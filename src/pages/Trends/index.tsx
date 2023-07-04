@@ -1,34 +1,33 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import API_3RD from "api/3rd-api";
-import React, { useRef, useState } from "react";
-import { useDeviceMobile, useElementOnScreen, useFetch } from "hooks";
+import { useEffect, useRef, useState } from "react";
+import { useDeviceMobile, useElementOnScreen } from "hooks";
 import { ITrend } from "./trend.interface";
 import { Container } from "@mui/system";
 import style from "./trends.module.css";
-import dayjs from "dayjs";
-// import locate from 'dayjs/locale/vi'
-import relativeTime from 'dayjs/plugin/relativeTime'
 import icon from "constants/icon";
 import { useHistory } from "react-router-dom";
 import { formatRouterLinkOrg } from "utils/formatRouterLink/formatRouter";
 import TrendDetailDia from "./TrendDetailDia";
-import ReactPlayer from "react-player/lazy";
 import HeadMobile from "features/HeadMobile";
-dayjs.extend(relativeTime)
+import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
+import { STALE_TIME } from "config";
+import { formatDateFromNow } from "utils";
 
 function Trends() {
     const history = useHistory()
     const IS_MB = useDeviceMobile()
-    const { response } = useFetch(
-        true,
-        `${API_3RD.API_NODE}/trends`,
-        {
-            'limit': '20',
-            'include': 'services|tiktok'
-        }
-    );
-
-    const trends: ITrend[] = response?.context?.data ?? [];
+    const params = {
+        'limit': '20',
+        'include': 'services|tiktok'
+    }
+    const { data } = useQuery({
+        queryKey: ['TRENDS', params],
+        queryFn: () => axios.get(`${API_3RD.API_NODE}/trends`, { params }),
+        staleTime: STALE_TIME
+    })
+    const trends: ITrend[] = data?.data?.data?.context?.data ?? []
     return (
         <>
             {IS_MB && <HeadMobile onBackFunc={() => history.push('/homepage')} title="Xu hướng" />}
@@ -79,12 +78,32 @@ const VideoItemThumb = (props: VideoItemThumbProps) => {
         threshold: 0.3,
     };
     const isVisible = useElementOnScreen(options, itemRef);
+    const onVideoPress = () => {
+        if (isVisible) {
+            videoRef.current?.play();
+        } else {
+            videoRef.current?.pause();
+        }
+    };
+    useEffect(() => {
+        if (IS_MB) { onVideoPress() }
+        return () => videoRef.current?.pause()
+    }, [isVisible])
+
     const onOrgDetail = () => {
         history.push(formatRouterLinkOrg(item.organization_id))
+    }
+    const onTriggerPlay = (play: boolean) => {
+        if (!IS_MB) {
+            if (play) { videoRef.current?.play() }
+            if (!play) { videoRef.current?.pause() }
+        }
     }
     return (
         <>
             <div
+                onMouseEnter={() => onTriggerPlay(true)}
+                onMouseLeave={() => onTriggerPlay(false)}
                 onClick={!IS_MB ? () => onDetail() : () => { }}
                 className={style.video_item_cnt}
             >
@@ -99,20 +118,23 @@ const VideoItemThumb = (props: VideoItemThumbProps) => {
                     </div>
                     <div className={style.trend_item_head_name}>
                         <p className={style.org_name}>{item.organization_name}</p>
-                        {/* <p className={style.create_at}>{dayjs(item.createdAt).locale(locate.name).fromNow()}</p> */}
+                        <p className={style.create_at}>
+                            {formatDateFromNow(item.createdAt)}
+                        </p>
                     </div>
                 </div>
                 <div className={style.trend_item_body}>
-                    <ReactPlayer
+                    <video
+                        ref={videoRef}
                         className={style.trend_item_video_thumb}
-                        url={`${item.media_url}#t=0.001`}
-                        width={'100%'}
-                        height={'100%'}
-                        playing={isVisible && IS_MB}
                         muted={true}
-                        playsinline={true}
-                        controls
-                    />
+                        controls={IS_MB}
+                        webkit-playsinline="webkit-playsinline"
+                        playsInline={true}
+                        poster={item.image_thumb}
+                    >
+                        <source src={item.media_url} />
+                    </video>
                 </div>
                 <div className={style.trend_item_bot}>
                     <div onClick={onDetail} className={style.trend_item_bot_ex}>

@@ -1,19 +1,23 @@
-import React, { } from "react";
 import "./App.css";
 import RouterConfig from "./route/index";
-import AppProvider from "./context/AppProvider";
 import "./utils/protoType";
 import "react-loading-skeleton/dist/skeleton.css";
+import AppProvider from "context/AppProvider";
+import { MessengerProvider } from "context"
+import * as Sentry from "@sentry/react";
 
 
 function App() {
     return (
         <div>
             <AppProvider>
-                <RouterConfig />
+                <MessengerProvider>
+                    <RouterConfig />
+                </MessengerProvider>
             </AppProvider>
         </div>
     );
 }
 
-export default App;
+// export default App;
+export default Sentry.withProfiler(App)

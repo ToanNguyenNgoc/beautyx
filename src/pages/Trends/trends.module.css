@@ -31,7 +31,17 @@
     position: relative;
     border-radius: 8px;
 }
-
+.trend_item_body iframe{
+    position: absolute;
+}
+.trend_item_img_thumb{
+    width: 100%;
+    height: 100%;
+    border-radius: 8px;
+    position: absolute;
+    z-index: 1;
+    object-fit: cover; 
+}
 .trend_item_video_thumb {
     width: 100%;
     height: 100%;

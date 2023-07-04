@@ -1,6 +1,6 @@
 import { useContext, useEffect } from 'react';
 import { ParamOrg } from 'params-query/param.interface';
-import { formatDistance, onErrorImg } from 'utils';
+import { formatDistance, onErrorImg, scrollTop } from 'utils';
 import style from './home-distance.style.module.css';
 import { IOrganization, IOrgMobaGalleries, ITag } from 'interface';
 import { Link } from 'react-router-dom';
@@ -40,6 +40,7 @@ function HomeOrgDistance() {
         "sort": ""
     }
     const { data, isFetching } = useOrgsDistanceQuery(params)
+
     const orgs: IOrganization[] = data ?? []
 
     const onViewMore = () => {
@@ -111,6 +112,7 @@ const OrgDistanceItem = ({ org }: { org: IOrganization }) => {
     const galleries: IOrgMobaGalleries[] = data ?? []
     return (
         <Link
+            onClick={() => scrollTop('auto')}
             className={style.org_card_item}
             to={{ pathname: formatRouterLinkOrg(org.subdomain) }}
         >

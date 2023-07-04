@@ -1,4 +1,3 @@
-import React from 'react';
 import { groupCates, groups } from './data'
 import style from './community.module.css'
 import { Link } from 'react-router-dom';

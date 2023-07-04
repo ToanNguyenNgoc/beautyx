@@ -12,10 +12,10 @@ import { useDeviceMobile } from "hooks";
 // import TabService from "./TabService";
 // import TabServiceGroup from "./TabServiceGroup";
 import TabProductProductable from "./TabProductProductable";
-import TabBranch from "./TabBranch";
+// import TabBranch from "./TabBranch";
 import TabServiceProductable from "./TabServiceProductable";
 import { BackTopButton } from "components/Layout";
-// import TabOrg from "./TabOrg";
+import TabOrg from "./TabOrg";
 
 function SearchResults() {
     const { t } = useContext(AppContext) as any
@@ -80,8 +80,8 @@ function SearchResults() {
                     <div className={style.right_cnt}>
                         {tab === "dich-vu" && <>{tabService}</>}
                         {tab === "san-pham" && <TabProductProductable keyword={keyword} />}
-                        {/* {tab === "cua-hang" && <TabOrg keyword={keyword} />} */}
-                        {tab === "cua-hang" && <TabBranch keyword={keyword} />}
+                        {tab === "cua-hang" && <TabOrg keyword={keyword} />}
+                        {/* {tab === "cua-hang" && <TabBranch keyword={keyword} />} */}
                     </div>
                 </div>
             </Container>

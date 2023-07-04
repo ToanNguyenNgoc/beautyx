@@ -37,7 +37,7 @@ export interface ParamBranchV3 {
 export interface ParamDiscounts {
     "page"?: number,
     "limit"?: number,
-    "filter[platform]": "" | "MOMO" | "MOBA" | "BEAUTYX" | "TIKI",
+    "filter[platform]": "" | "MOMO" | "MOBA" | "BEAUTYX" | "TIKI" | string,
     "filter[discount_type]"?: "" | "SUB_TOTAL" | "FINAL_PRICE" | "PRODUCT",
     "filter[organization_id]"?: "" | number,
     "filter[location]"?: string,
@@ -102,5 +102,5 @@ export interface ParamsProductable {
     "discount_max_price_ecommerce"?: "" | number,
     "province_code"?: string | number,
     "district_code"?: string | number,
-    "is_demo"?:boolean|'false'|'true'
+    "is_demo"?: boolean | 'false' | 'true'
 }

@@ -1,20 +1,27 @@
 import API_3RD from 'api/3rd-api';
-import { useDeviceMobile, useFetch } from 'hooks';
+import { useDeviceMobile } from 'hooks';
 import { ITrend } from 'pages/Trends/trend.interface';
 import TrendDetailDia from 'pages/Trends/TrendDetailDia';
-import  { useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { formatRouterLinkOrg } from 'utils/formatRouterLink/formatRouter';
 import style from './home-trends.module.css'
 import { HomeTitle } from 'components/Layout';
+import { useQuery } from '@tanstack/react-query';
+import axios from 'axios';
+import { STALE_TIME } from 'config';
 
 function HomeTrends() {
-    const { response } = useFetch(
-        true,
-        `${API_3RD.API_NODE}/trends`,
-        { page: 1, limit: 6 }
-    );
-    const trends: ITrend[] = response?.context?.data ?? []
+    const params = {
+        'limit': '20',
+        'include': 'services|tiktok'
+    }
+    const { data } = useQuery({
+        queryKey: ['TRENDS', params],
+        queryFn: () => axios.get(`${API_3RD.API_NODE}/trends`, { params }),
+        staleTime: STALE_TIME
+    })
+    const trends: ITrend[] = data?.data?.data?.context?.data ?? []
     return (
         <div className={style.container}>
             <HomeTitle
@@ -24,7 +31,7 @@ function HomeTrends() {
             <div className={style.trends_list_cnt}>
                 <ul className={style.trends_list}>
                     {
-                        trends.map((item: ITrend, index: number) => (
+                        trends.slice(0, 6).map((item: ITrend, index: number) => (
                             <li key={index} className={style.trends_list_item}>
                                 <Video
                                     item={item}

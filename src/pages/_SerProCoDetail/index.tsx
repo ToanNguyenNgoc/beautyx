@@ -12,7 +12,7 @@ import { Container } from '@mui/system';
 import { Drawer, Rating } from '@mui/material';
 import Slider, { Settings } from 'react-slick';
 import icon from 'constants/icon';
-import { checkMediaType, clst, extraParamsUrl, extractImageUrls, formatDistance, onErrorImg, scrollTop } from 'utils';
+import { checkMediaType, clst, extractImageUrls, formatDistance, onErrorImg, scrollTop } from 'utils';
 import { formatRouterLinkOrg } from 'utils/formatRouterLink/formatRouter';
 import { AUTH_LOCATION } from 'api/authLocation';
 import { formatAddCart } from 'utils/cart/formatAddCart';
@@ -63,7 +63,7 @@ const routeType: RouteType[] = [
 function SerProCoDetail() {
     const { t } = useContext(AppContext) as any
     const match = useRouteMatch()
-    const paramsOld: any = extraParamsUrl();
+    // const paramsOld: any = extraParamsUrl();
     const history = useHistory()
     const LOCATION = AUTH_LOCATION()
     const location = useLocation()
@@ -73,16 +73,16 @@ function SerProCoDetail() {
     const paramsArr = useGetParamUrl();
     let redirectPageError = false
     const params = {
-        org: paramsOld ? parseInt(paramsOld?.org) : parseInt(paramsArr[1]),
-        id: paramsOld ? parseInt(paramsOld?.id) : parseInt(paramsArr[0])
+        org: parseInt(paramsArr[1]),
+        id: parseInt(paramsArr[0])
     }
     if (!params.id || !params.org) redirectPageError = true
     if (!currentRouteType) redirectPageError = true
-    const { response, error } = useSwr(
-        `/organizations/${params.org}/${currentRouteType?.api}/${params.id}`,
-        (params.id && params.org && currentRouteType),
-        currentRouteType?.params ?? {}
-    )
+    const { response, error } = useSwr({
+        API_URL: `/organizations/${params.org}/${currentRouteType?.api}/${params.id}`,
+        enable: (params.id && params.org && currentRouteType),
+        params: currentRouteType?.params ?? {}
+    })
     if (error) redirectPageError = true
     useEffect(() => {
         if (redirectPageError) {
@@ -97,8 +97,10 @@ function SerProCoDetail() {
         ...response
     }
     const PERCENT = Math.ceil(100 - DETAIL.SPECIAL_PRICE / DETAIL.PRICE * 100)
-    const org: IOrganization = useSwr(API_ROUTE.ORG(params.org), params.org, {
-        'filter[location]': LOCATION
+    const org: IOrganization = useSwr({
+        API_URL: API_ROUTE.ORG(params.org),
+        enable: params.org,
+        params: { 'filter[location]': LOCATION }
     }).response
     const discounts: IDiscountPar[] = []
     const { favoriteSt, onToggleFavorite } = useFavorite({

@@ -1,0 +1,36 @@
+MOMO.init({
+  appId: process.env.REACT_APP_MOMO_APP_ID,
+  parnerCode: process.env.REACT_APP_MOMO_PARTNER_CODE,
+});
+------------------------------------------------------
+MOMO.showLoading([""]);
+------------------------------------------------------
+MOMO.requestUserConsents(
+  {
+    permissions: [
+      {
+        role: "name",
+        require: true,
+      },
+      {
+        role: "phone",
+        require: true,
+      },
+      {
+        role: "email",
+      },
+    ],
+  },
+)
+------------------------------------------------------
+MOMO.showToast({
+  description: "có lỗi khi nhận thông tin từ momo",
+  type: "failure",
+  duration: 2000,
+});
+------------------------------------------------------
+MOMO.hideLoading();
+------------------------------------------------------
+MOMO.getLocation((data: any) => {
+  return { data: data };
+});

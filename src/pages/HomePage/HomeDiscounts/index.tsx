@@ -1,9 +1,8 @@
-import React from "react";
 import { Container } from "@mui/material";
 import { IDiscountPar, IITEMS_DISCOUNT } from "interface";
 import { useDeviceMobile } from "hooks";
 import DiscountItem from "./DiscountItem";
-import { useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 import scrollTop from "utils/scrollTop";
 import { useContext } from "react";
 import { AppContext } from "context/AppProvider";
@@ -13,7 +12,10 @@ import { AUTH_LOCATION } from "api/authLocation";
 import { paramsDiscounts } from "params-query"
 import "./style.css";
 import { EXTRA_FLAT_FORM } from "api/extraFlatForm";
-import { useHomeDiscountsQuery } from "redux-toolkit-query/hook-home";
+import axios from "axios";
+import { useInfiniteQuery } from "@tanstack/react-query";
+import { STALE_TIME, baseURL } from "config";
+import { identity, pickBy } from "lodash";
 
 function HomeDiscount() {
     const { t } = useContext(AppContext) as any;
@@ -22,29 +24,30 @@ function HomeDiscount() {
     const LOCATION = AUTH_LOCATION();
     const newParams = {
         ...paramsDiscounts,
-        page: 1,
-        limit: 10,
+        limit: 15,
         "filter[location]": PLAT_FORM === "TIKI" ? "" : LOCATION,
         "sort": PLAT_FORM === "TIKI" ? "-priority" : ""
     }
-    const { data, isLoading } = useHomeDiscountsQuery(newParams)
-    const discounts: IDiscountPar[] = data ?? []
-    const history = useHistory();
-    const onViewMore = () => {
-        history.push("/giam-gia");
-        scrollTop();
-    };
+    const { data } = useInfiniteQuery({
+        queryKey: ['DISCOUNTS', newParams],
+        queryFn: ({ pageParam = 1 }) => axios
+            .get(`${baseURL}discounts`, { params: pickBy({ ...newParams, page: pageParam }, identity) })
+            .then(res => res.data.context),
+        getNextPageParam: (page: any) => {},
+        staleTime:STALE_TIME
+    })
+    const discounts: IDiscountPar[] = data?.pages.map(i => i.data).flat() ?? []
     return (
         <div className="home-discounts">
             <Container>
                 <div className="flex-row-sp home-discounts__title">
                     <h2>{t("home_2.hot_promotion")}</h2>
-                    <span onClick={onViewMore}>
+                    <Link onClick={() => scrollTop('auto')} to={{ pathname: '/giam-gia' }} >
                         {t("trending.watch_all")} {">"}
-                    </span>
+                    </Link>
                 </div>
                 <div className="home-discounts__list-wrap">
-                    {isLoading && <LoadGrid item_count={5} grid={5} />}
+                    {(discounts.length === 0) && <LoadGrid item_count={5} grid={5} />}
                     <ul className="home-discounts__list">
                         {discounts
                             ?.filter((i: IDiscountPar) =>

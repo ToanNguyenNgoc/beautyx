@@ -5,7 +5,7 @@ import { useDeviceMobile } from 'hooks';
 import IStore from 'interface/IStore';
 import { paramOrgs } from 'params-query';
 import { ParamOrg } from 'params-query/param.interface';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { clst, extraParamsUrl } from 'utils';
 import { onChangeFilterOrg } from 'redux/filter-result';
@@ -15,8 +15,9 @@ import { Drawer } from '@mui/material';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { IOrganization } from 'interface';
 import { LoadGrid } from 'components/LoadingSketion';
+import { useHistory, useLocation } from 'react-router-dom';
+import queryString from 'query-string'
 import style from './search-result.module.css'
-import { useHistory } from 'react-router-dom';
 
 function TabOrg({ keyword }: { keyword: string }) {
     const history = useHistory()
@@ -24,7 +25,7 @@ function TabOrg({ keyword }: { keyword: string }) {
     const [openFilter, setOpenFilter] = useState(false)
     const { tags } = useSelector((state: any) => state.HOME)
     const resultTag = handlePassTagKeyword(keyword, tags)
-
+    const location = useLocation()
     const IS_MB = useDeviceMobile()
     const dispatch = useDispatch()
     const { ORG_PR } = useSelector((state: IStore) => state.FILTER_RESULT)
@@ -48,7 +49,13 @@ function TabOrg({ keyword }: { keyword: string }) {
             onLoadMoreOrg()
         }
     }
+
     const onFilterLocation = (e: EventLocation) => {
+        const newQr = { ...params, keyword: e.province?.name, province:e.district?.province_code }
+        history.push({
+            pathname: location.pathname,
+            search: queryString.stringify(newQr)
+        })
         dispatch(onChangeFilterOrg({
             ...ORG_PR,
             "filter[location]": e.coords,

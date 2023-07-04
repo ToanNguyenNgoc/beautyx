@@ -54,7 +54,7 @@ class MOMO_API {
         });
     };
     requestUserConsents = () => {
-        MOMO.showLoading([""]);
+        MOMO.showLoading();
         MOMO.requestUserConsents(
             {
                 permissions: [
@@ -90,7 +90,7 @@ class MOMO_API {
         );
     };
     getUserConsents = async () => {
-        MOMO.showLoading([""]);
+        MOMO.showLoading();
         const res = await MOMO.getUserConsents(
             {
                 permissions: [

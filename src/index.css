@@ -4,6 +4,7 @@
 :root {
     --bg-white: rgb(255, 255, 255);
     --bg-gray-dark: #e5e5e5;
+    --bg-gray-1:#F5F5F5;
     --bg-gray: #f5f5f7;
     --purple: #7161ba;
     --red-cl: #ee6955;
@@ -133,7 +134,7 @@ body > iframe {
 
 html {
     box-sizing: border-box;
-    scroll-behavior: smooth;
+    /* scroll-behavior: smooth; */
     background: #f5f5f7;
 }
 

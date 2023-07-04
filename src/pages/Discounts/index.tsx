@@ -1,28 +1,45 @@
 import React from 'react';
 import { Container } from '@mui/material';
-import { useDeviceMobile, useSwrInfinite } from 'hooks';
+import { useDeviceMobile } from 'hooks';
 import { IDiscountPar, IITEMS_DISCOUNT } from 'interface/discount';
 import HeadTitle from 'features/HeadTitle';
 import HeadMobile from 'features/HeadMobile';
 import DiscountItem from 'pages/HomePage/HomeDiscounts/DiscountItem';
 import { LoadGrid } from 'components/LoadingSketion';
 import InfiniteScroll from 'react-infinite-scroll-component';
-import { ParamDiscounts } from 'params-query/param.interface';
 import style from './discounts.module.css'
+import { EXTRA_FLAT_FORM } from 'api/extraFlatForm';
+import { AUTH_LOCATION } from 'api/authLocation';
+import { paramsDiscounts } from 'params-query';
+import { useInfiniteQuery } from '@tanstack/react-query';
+import axios from 'axios';
+import { identity, pickBy } from 'lodash';
+import { STALE_TIME, baseURL } from 'config';
 
 function Discounts() {
-    const paramsDiscounts: ParamDiscounts = {
-        "append": "user_available_purchase_count",
-        "filter[platform]": "MOMO",
-        "limit": 18,
-        "sort": "-priority|-created_at|discount_value"
-    }
     const IS_MB = useDeviceMobile();
-    const { resData, totalItem, onLoadMore } = useSwrInfinite(true, "/discounts", paramsDiscounts)
-    const discounts: IDiscountPar[] = resData
+    const PLAT_FORM = EXTRA_FLAT_FORM();
+    const LOCATION = AUTH_LOCATION();
+    const newParams = {
+        ...paramsDiscounts,
+        limit: 15,
+        "filter[location]": PLAT_FORM === "TIKI" ? "" : LOCATION,
+        "sort": PLAT_FORM === "TIKI" ? "-priority" : ""
+    }
+    const { data, fetchNextPage } = useInfiniteQuery({
+        queryKey: ['DISCOUNTS', newParams],
+        queryFn: ({ pageParam = 1 }) => axios
+            .get(`${baseURL}discounts`, { params: pickBy({ ...newParams, page: pageParam }, identity) })
+            .then(res => res.data.context),
+        getNextPageParam: (page: any) => page.current_page + 1,
+        staleTime: STALE_TIME
+    })
+    const discounts: IDiscountPar[] = data?.pages.map(i => i.data).flat() ?? []
+    const totalItem = data?.pages[0]?.total ?? 1
     const onViewMore = () => {
         if (discounts?.length < totalItem) {
-            onLoadMore()
+            console.log('call')
+            fetchNextPage()
         }
     }
     return (
@@ -59,7 +76,7 @@ function Discounts() {
                                 ))
                             }
                         </ul>
-                        {discounts.length < totalItem && <LoadGrid item_count={IS_MB ? 6 : 12} />}
+                        {discounts.length < totalItem && <LoadGrid grid={IS_MB ? 2 : 5} item_count={IS_MB ? 6 : 10} />}
                     </InfiniteScroll>
                 </div>
             </Container>
