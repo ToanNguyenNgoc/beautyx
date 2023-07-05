@@ -159,6 +159,7 @@ function Head(props: IProps) {
                         <div className={style.head_wrapper}>
                             <div className={style.head_top}>
                                 <div className={style.head_top_left}>
+                                    <div className={style.head_top_left_icon}>
                                     <Link to={{ pathname: "/" }}>
                                         <img
                                             className={style.head_top_left_img}
@@ -166,6 +167,8 @@ function Head(props: IProps) {
                                             alt=""
                                         />
                                     </Link>
+                                    <Link className={style.head_top_left_seller} to={'/seller'} >Kênh người bán</Link>
+                                    </div>
                                     <BackContainer iconBack={iconBack} changeStyle={changeStyle} />
                                     <button
                                         className={style.head_top_left_search}
