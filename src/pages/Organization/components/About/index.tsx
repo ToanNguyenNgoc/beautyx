@@ -148,21 +148,21 @@ const PreviewMedia: FC = () => {
     afterChange: function (currentSlide: any) {
       setCurrentSlide(currentSlide);
     },
-    responsive: [
-      {
-        breakpoint: 1023,
-        settings: {
-          dots: false,
-          arrows: false,
-          vertical: true,
-          verticalSwiping: true,
-          swipeToSlide: true,
-        },
-      },
-    ],
+    // responsive: [
+    //   {
+    //     breakpoint: 1023,
+    //     settings: {
+    //       dots: false,
+    //       arrows: false,
+    //       vertical: true,
+    //       verticalSwiping: true,
+    //       swipeToSlide: true,
+    //     },
+    //   },
+    // ],
   };
   const handleOpenTrends = (i: number) => {
-    setOpenTrends(true)
+    setOpenTrends(true);
     setTimeout(() => {
       slider.current?.slickGoTo(i);
     }, 100);
@@ -336,6 +336,7 @@ const Video: FC<VideoProps> = ({ trend, org }) => {
           ref={videoRef}
           key={trend._id}
           controls={true}
+          autoPlay={true}
           loop
           poster={trend.image_thumb}
         >

@@ -1,7 +1,7 @@
 .home_partners {
     display: flex;
     grid-gap: 0 26px;
-    margin: 86px 0 142px 0;
+    margin: 24px 0;
 }
 .home_partner,
 .home_blog {

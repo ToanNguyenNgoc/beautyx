@@ -1,0 +1,115 @@
+.home_trafficData {
+  margin: 24px 0 48px 0;
+  padding: 24px;
+  background-color: var(--bg-white);
+  border-radius: 14px;
+}
+.home_trafficData_title {
+  text-align: center;
+  font-size: 24px;
+  margin-bottom: 24px;
+  font-weight: bold;
+}
+.home_trafficData_wrap {
+  display: flex;
+  gap: 24px;
+}
+.home_trafficData_left ,.home_trafficData_right{
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+  padding: 16px;
+  border-radius: 14px;
+}
+.home_trafficData_left {
+  width: 33.33%;
+}
+.home_trafficData_right {
+  width: 66.66%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+.home_trafficData_left_title {
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 14px;
+}
+.home_trafficData_left_item:first-child {
+  padding-top: 0;
+}
+.home_trafficData_left_item:last-child {
+  border-bottom: unset;
+  padding-bottom: 0;
+}
+.home_trafficData_left_item {
+  padding: 8px 0;
+  border-bottom: 1px solid #ccc;
+}
+.home_trafficData_left_count {
+  font-weight: bold;
+}
+.home_trafficData_left_desc {
+  font-size: 14px;
+  color: gray;
+  font-weight: 500;
+}
+.home_trafficData_right_content {
+  width: 50%;
+  height: 100%;
+  display: flex;
+  gap: 32px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.home_trafficData_right_buttons {
+  display: flex;
+  gap: 14px;
+}
+.home_trafficData_right_button {
+  background-color: unset;
+  max-width: 150px;
+  padding: 0;
+}
+.home_trafficData_right_desc {
+  font-size: 32px;
+  color: var(--purple);
+  font-weight: bold;
+}
+.home_trafficData_right_desc span {
+  color: #fff;
+}
+@media screen and (max-width: 767.98px) {
+  .home_trafficData{
+    padding: 0 15px;
+    margin: 24px 0 48px 0;
+  }
+  .home_trafficData_wrap {
+    flex-direction: column;
+    gap: 15px
+  }
+  .home_trafficData_left , .home_trafficData_right{
+    width: 100%;
+  }
+  .home_trafficData_right_desc {
+    font-size: 16px;
+  }
+  .home_trafficData_right_content{
+    gap: 14px;
+  }
+  .home_trafficData_title{
+    font-size: 18px;
+    text-align: left;
+  }
+  .home_trafficData_left_title {
+    font-size: 14px;
+    margin-bottom: 12px;
+  }
+  .home_trafficData_left_count{
+    font-size: 12px;
+  }
+  .home_trafficData_left_desc{
+    font-size: 10px;
+  }
+
+}
+
