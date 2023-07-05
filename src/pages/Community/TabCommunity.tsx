@@ -18,7 +18,7 @@ function TabCommunity() {
             "append":"media_url",
             "sort":"-created_at"
         }),
-        getNextPageParam:(page)=>console.log(page) 
+        // getNextPageParam:(page)=>console.log(page) 
     })
     const posts = data?.pages.map(i => i.context.data).flat() ?? []
     return (

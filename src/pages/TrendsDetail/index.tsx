@@ -1,7 +1,7 @@
 import API_3RD from 'api/3rd-api';
 import { Input, XButton, XButtonFile } from 'components/Layout';
 import icon from 'constants/icon';
-import { useComment, useFavorite, useFetch, useFetchInfinite, useSwr } from 'hooks';
+import { useComment, useFavorite, useFetch, useFetchInfinite, usePostMedia, useSwr } from 'hooks';
 import { ITrend } from 'pages/Trends/trend.interface';
 import { Link, useParams, useHistory } from 'react-router-dom';
 import {
@@ -16,8 +16,7 @@ import { IOrganization } from 'interface';
 import API_ROUTE from 'api/_api';
 import { useSelector } from 'react-redux';
 import IStore from 'interface/IStore';
-import { postMediaMulti } from 'hooks'
-import { useRef, useState } from 'react';
+import { ChangeEvent, useRef, useState } from 'react';
 import { ParamComment } from 'params-query/param.interface';
 import { paramsComment } from 'params-query';
 
@@ -32,8 +31,8 @@ function TrendsDetail({ id, onClose }: { id?: string, onClose?: () => void }) {
     ).response?.context
 
     const org: IOrganization = useSwr({
-        API_URL:API_ROUTE.ORG(trend?.organization_id),
-        enable:trend?.organization_id
+        API_URL: API_ROUTE.ORG(trend?.organization_id),
+        enable: trend?.organization_id
     }).response
 
     const { onToggleFavorite, favoriteSt } = useFavorite({
@@ -212,6 +211,7 @@ interface Model { model_id: number, original_url: string }
 
 const TrendsDetailComment = (props: TrendsDetailCommentProps) => {
     const { loadPost, postComment } = props
+    const { handlePostMedia } = usePostMedia()
     const org_id = props.org_id
     const refCommentCnt = useRef<HTMLUListElement>(null)
     const initialBody = {
@@ -226,11 +226,10 @@ const TrendsDetailComment = (props: TrendsDetailCommentProps) => {
     const onInputChange = (e: any) => {
         setBody({ ...body, body: e.target.value })
     }
-    const onChangeInputMedia = async (e: any) => {
-        const { mediaList } = await postMediaMulti(e)
-        setBody({
-            ...body,
-            models: mediaList
+    const onChangeInputMedia = (e: ChangeEvent<HTMLInputElement>) => {
+        handlePostMedia({
+            e,
+            callBack: (data) => setBody({ ...body, models: data })
         })
     }
     const onRemoveImg = (id: number) => {

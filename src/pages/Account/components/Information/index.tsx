@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { ChangeEvent, useContext } from 'react';
 import { HeadTitle } from 'pages/Account';
 import style from './info.module.css'
 import { useFormik } from 'formik';
@@ -8,12 +8,11 @@ import { User } from 'interface';
 import * as Yup from "yup";
 import { Input, XButton } from 'components/Layout'
 import { clst } from 'utils';
-import { useNoti } from 'hooks'
+import { useNoti, usePostMedia } from 'hooks'
 import { PopupNotification } from 'components/Notification'
 import authentication from 'api/authApi';
 import { AxiosError } from 'axios';
 import { putUser, updateAsyncUser } from 'redux/profile/userSlice'
-import { postMedia } from 'hooks'
 import validateForm from 'utils/validateForm'
 import icon from 'constants/icon';
 import { EXTRA_FLAT_FORM } from 'api/extraFlatForm';
@@ -21,7 +20,7 @@ import { FLAT_FORM_TYPE } from 'rootComponents/flatForm';
 import { AppContext } from 'context/AppProvider';
 
 function Information() {
-  const {t} = useContext(AppContext) as any
+  const { t } = useContext(AppContext) as any
   const { USER } = useSelector((state: IStore) => state.USER)
   return (
     <>
@@ -40,7 +39,7 @@ interface IValues {
 }
 
 const Form = ({ USER }: { USER: User }) => {
-  const {t} = useContext(AppContext) as any
+  const { t } = useContext(AppContext) as any
   const dispatch = useDispatch()
   const { noti, firstLoad, resultLoad, onCloseNoti } = useNoti()
   const PLAT_FORM = EXTRA_FLAT_FORM()
@@ -84,9 +83,15 @@ const Form = ({ USER }: { USER: User }) => {
       }
     }
   }
-  const onChangeAvatar = async (e: any) => {
-    const { model_id } = await postMedia(e)
-    await dispatch(updateAsyncUser({model_id}))
+  const { handlePostMedia } = usePostMedia()
+  const onChangeAvatar = (e: ChangeEvent<HTMLInputElement>) => {
+    handlePostMedia({
+      e,
+      callBack: (data) => {
+        const model_id = data[0].model_id
+        dispatch(updateAsyncUser({ model_id }))
+      }
+    })
   }
   const onNavigateChangePass = () => {
     window.location.assign('/tai-khoan/doi-mat-khau')

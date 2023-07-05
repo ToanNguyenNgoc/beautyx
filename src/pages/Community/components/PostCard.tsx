@@ -5,8 +5,16 @@ import style from './com-cpn.module.css'
 import { IPost } from 'interface';
 import { formatDateFromNow } from 'utils';
 import { Images } from './Images'
+import { useFavorite } from 'hooks';
 
 export function PostCard({ post }: { post: IPost }) {
+    const { favoriteSt, onToggleFavorite } = useFavorite({
+        id: post.id,
+        org_id: post.organization_id,
+        type: 'POST',
+        count: 10,
+        favorite: post.is_favorite
+    })
     return (
         <>
             <div className={style.post_item}>
@@ -40,11 +48,11 @@ export function PostCard({ post }: { post: IPost }) {
                 <div className={style.post_item_interactive}>
                     <div className={style.interactive_item}>
                         <XButton
-                            // onClick={toggleFavorite}
+                            onClick={onToggleFavorite}
                             iconSize={28}
-                            icon={post.is_favorite ? icon.thumbUpPurple : icon.thumbUp}
+                            icon={favoriteSt.is_favorite ? icon.thumbUpPurple : icon.thumbUp}
                         />
-                        <span>{post.favorite_count}</span>
+                        <span>{favoriteSt.favorite_count}</span>
                     </div>
                     <div className={style.interactive_item}>
                         <XButton

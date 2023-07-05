@@ -4,7 +4,7 @@ import style from "./comment.module.css"
 import IStore from 'interface/IStore';
 import { IComment } from 'interface';
 import { paramsComment } from 'params-query';
-import { postMedia, useCheckUserBought, useNoti, useSwrInfinite } from 'hooks';
+import { useCheckUserBought, useNoti, usePostMedia, useSwrInfinite } from 'hooks';
 import { useHistory } from 'react-router-dom';
 import commentsApi from 'api/commentsApi';
 import { Input, XButton } from 'components/Layout';
@@ -31,6 +31,7 @@ function Comment(props: CommentProps) {
     const { commentable_type, commentable_id, org_id } = props;
     const { USER } = useSelector((state: IStore) => state.USER);
     const { bought } = useCheckUserBought({ commentable_type, commentable_id, org_id })
+    const { handlePostMedia } = usePostMedia()
     const { firstLoad, resultLoad, noti } = useNoti()
     const history = useHistory()
     const [tempCmt, setTempCmt] = useState<TempCmt>(tempCmtInit)
@@ -38,7 +39,7 @@ function Comment(props: CommentProps) {
     const cntRef = useRef(null)
     const params = {
         ...paramsComment,
-        "filter[commentable_type]": commentable_type === "COMBO" ? "TREATMENT_COMBO":commentable_type,
+        "filter[commentable_type]": commentable_type === "COMBO" ? "TREATMENT_COMBO" : commentable_type,
         "filter[commentable_id]": commentable_id,
         "filter[organization_id]": commentable_type !== "ORGANIZATION" ? org_id : ""
     }
@@ -55,7 +56,7 @@ function Comment(props: CommentProps) {
     const paramPost = {
         "body": `${tempCmt.body}${bought ? `‭` : ''}`,
         "commentable_id": commentable_id,
-        "commentable_type": commentable_type === "COMBO" ? "TREATMENT_COMBO":commentable_type,
+        "commentable_type": commentable_type === "COMBO" ? "TREATMENT_COMBO" : commentable_type,
         "organization_id": org_id,
         "media_ids": tempCmt.media_ids,
         // "rate": 5,
@@ -80,12 +81,16 @@ function Comment(props: CommentProps) {
             }
         }
     }
-    const onChangeMedia = async (e: any) => {
-        const { model_id, original_url } = await postMedia(e)
-        setTempCmt({
-            ...tempCmt,
-            media_url: [original_url, ...tempCmt.media_url],
-            media_ids: [model_id, ...tempCmt.media_ids]
+    const onChangeMedia = (e: any) => {
+        handlePostMedia({
+            e: e,
+            callBack: (data) => {
+                setTempCmt({
+                    ...tempCmt,
+                    media_url: [...data.map(i => i.original_url), ...tempCmt.media_url],
+                    media_ids: [...data.map(i => i.model_id), ...tempCmt.media_ids]
+                })
+            },
         })
     }
     const onRemoveImageTemple = (url: string) => {
@@ -127,7 +132,7 @@ function Comment(props: CommentProps) {
                                         width={20} height={20}
                                     />
                                 </label>
-                                <input onChange={onChangeMedia} type="file" id='file_par' hidden />
+                                <input onChange={onChangeMedia} multiple type="file" id='file_par' hidden />
                                 <XButton
                                     onClick={handlePostCmt}
                                     className={style.btn_cmt}

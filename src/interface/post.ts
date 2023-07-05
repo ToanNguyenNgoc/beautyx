@@ -1,5 +1,14 @@
 import { IOrganization, ITag, User, Service } from "interface";
 
+export interface ReqPost {
+  content: string;
+  organization_id: number;
+  media_ids: number[];
+  status?: number;
+  tag_id?: number;
+  service_ids: number[]
+}
+
 export interface IPost {
   id: number,
   content: string,
@@ -16,6 +25,6 @@ export interface IPost {
   user: User,
   organization?: IOrganization,
   media: any[],
-  favorite_count:number,
-  comment_count:number
+  favorite_count: number,
+  comment_count: number
 }

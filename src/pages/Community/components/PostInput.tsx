@@ -2,10 +2,10 @@ import { Dialog } from '@mui/material';
 import { XButton } from 'components/Layout';
 import icon from 'constants/icon';
 import HeadMobile from 'features/HeadMobile';
-import { postMediaMulti, useDeviceMobile } from 'hooks';
+import { useDeviceMobile, usePostMedia } from 'hooks';
 import { User } from 'interface';
 import IStore from 'interface/IStore';
-import React, { useRef, useState } from 'react';
+import  { useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { IGroup, IPost } from '../data';
@@ -17,6 +17,7 @@ import { addPost } from 'redux/community';
 export function PostInput({ group }: { group: IGroup }) {
     const history = useHistory()
     const [open, setOpen] = useState(false)
+    const {handlePostMedia} = usePostMedia()
     const { USER } = useSelector((state: IStore) => state.USER)
     const handleOpenPostForm = () => {
         if (!USER) return history.push('/sign-in?1')
@@ -71,25 +72,29 @@ const PostFormCnt = (props: PostFormCntProps) => {
     const [values, setValues] = useState<IValues>({ body: '', media: [] })
     const refText = useRef<HTMLTextAreaElement>(null)
     const dispatch = useDispatch()
-    const onChangeMedia = async (e: any) => {
-        // console.log(e)
-        const tempMedia: any[] = []
-        for (var i = 0; i < e.target.files.length; i++) {
-            const tempMediaItem = {
-                original_url: '',
-                model_id: i
-            }
-            tempMedia.push(tempMediaItem)
-        }
+    const onChangeMedia = (e: any) => {
+        console.log(URL.createObjectURL(e.target.files[0]))
+        const tempMedia: IMedia[] = [{
+            original_url: URL.createObjectURL(e.target.files[0]),
+            model_id:1
+        }]
+        // for (var i = 0; i < e.target.files.length; i++) {
+        //     const tempMediaItem = {
+        //         original_url: '',
+        //         model_id: i
+        //     }
+        //     tempMedia.push(tempMediaItem)
+        // }
         setValues({
             ...values,
             media: [...values.media, ...tempMedia]
         })
-        const { mediaList } = await postMediaMulti(e)
-        setValues({
-            ...values,
-            media: [...values.media, ...mediaList]
-        })
+        // const { mediaList } = await postMediaMulti(e)
+        // ha
+        // setValues({
+        //     ...values,
+        //     media: [...values.media, ...mediaList]
+        // })
     }
     const onRemoveImg = (model_id: number) => {
         setValues({
