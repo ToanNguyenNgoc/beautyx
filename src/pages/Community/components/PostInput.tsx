@@ -5,7 +5,7 @@ import HeadMobile from 'features/HeadMobile';
 import { useDeviceMobile, usePostMedia } from 'hooks';
 import { User } from 'interface';
 import IStore from 'interface/IStore';
-import  { useRef, useState } from 'react';
+import { ChangeEvent, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { IGroup, IPost } from '../data';
@@ -17,7 +17,6 @@ import { addPost } from 'redux/community';
 export function PostInput({ group }: { group: IGroup }) {
     const history = useHistory()
     const [open, setOpen] = useState(false)
-    const {handlePostMedia} = usePostMedia()
     const { USER } = useSelector((state: IStore) => state.USER)
     const handleOpenPostForm = () => {
         if (!USER) return history.push('/sign-in?1')
@@ -67,34 +66,24 @@ interface IValues {
 
 const PostFormCnt = (props: PostFormCntProps) => {
     const IS_MB = useDeviceMobile()
+    const { handlePostMedia, medias } = usePostMedia()
+    console.log(medias)
     const { posts } = useSelector((state: IStore) => state.COMMUNITY)
     const { open, setOpen, USER, group } = props;
     const [values, setValues] = useState<IValues>({ body: '', media: [] })
     const refText = useRef<HTMLTextAreaElement>(null)
     const dispatch = useDispatch()
-    const onChangeMedia = (e: any) => {
-        console.log(URL.createObjectURL(e.target.files[0]))
-        const tempMedia: IMedia[] = [{
-            original_url: URL.createObjectURL(e.target.files[0]),
-            model_id:1
-        }]
-        // for (var i = 0; i < e.target.files.length; i++) {
-        //     const tempMediaItem = {
-        //         original_url: '',
-        //         model_id: i
-        //     }
-        //     tempMedia.push(tempMediaItem)
-        // }
-        setValues({
-            ...values,
-            media: [...values.media, ...tempMedia]
+    const onChangeMedia = (e: ChangeEvent<HTMLInputElement>) => {
+        console.log(typeof e.target.files)
+        handlePostMedia({
+            e,
+            callBack: (data) => {
+                setValues({
+                    ...values,
+                    media: [...values.media, ...data]
+                })
+            }
         })
-        // const { mediaList } = await postMediaMulti(e)
-        // ha
-        // setValues({
-        //     ...values,
-        //     media: [...values.media, ...mediaList]
-        // })
     }
     const onRemoveImg = (model_id: number) => {
         setValues({
@@ -116,7 +105,7 @@ const PostFormCnt = (props: PostFormCntProps) => {
             favorite_count: 0,
             created_at: dayjs().format('YYYY-MM-DD HH:mm:ss'),
             comment_count: 0,
-            isFavorite:false
+            isFavorite: false
         }
         dispatch(addPost(params))
         setOpen(false)
