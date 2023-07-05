@@ -1,10 +1,10 @@
-import React, { useContext, useState, KeyboardEvent } from 'react';
-import img from '../../constants/img';
-import './style.css'
-import { AppContext } from '../../context/AppProvider';
+import { useContext, useState, KeyboardEvent } from 'react';
 import { Container } from '@mui/material';
 import { useHistory } from 'react-router-dom';
-import icon from '../../constants/icon';
+import './style.css'
+import { AppContext } from 'context';
+import img from 'constants/img';
+import icon from 'constants/icon';
 
 const onDropList = () => {
     document.querySelector('.sel-cent-cnt__form .inp-right')?.classList.toggle('drop')
@@ -34,7 +34,7 @@ function SellerCenter() {
             <div
                 className='sel-cent-cnt'
             >
-                <div className="sel-cent-cnt__head">
+                {/* <div className="sel-cent-cnt__head">
                     <Container>
                         <div className="flex-row-sp cnt">
                             <img
@@ -49,7 +49,7 @@ function SellerCenter() {
                             </button>
                         </div>
                     </Container>
-                </div>
+                </div> */}
                 <img src={img.sellerCenterImg} alt="" />
                 <div className="sel-cent-cnt__form">
                     <div className="container">
