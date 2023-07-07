@@ -1,3 +1,4 @@
-export * from './PostCard'
+export * from './Post'
 export * from './PostInput'
-export * from './Images'
+export * from './Post/Images'
+export * from './Input'

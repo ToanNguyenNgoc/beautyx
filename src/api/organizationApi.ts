@@ -32,5 +32,5 @@ class Organization {
     return axiosClient.get(url, { params: pickBy(paramsOb, identity) })
   };
 }
-const orgApi = new Organization();
+export const orgApi = new Organization();
 export default orgApi;

@@ -7,7 +7,7 @@ import HeadTitle from 'features/HeadTitle';
 import { useDeviceMobile } from 'hooks';
 import IStore from 'interface/IStore';
 import imgC from 'pages/Community/assets';
-import { PostCard, PostInput } from 'pages/Community/components';
+import { PostInput } from 'pages/Community/components';
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useHistory, useParams } from 'react-router-dom';
@@ -25,7 +25,7 @@ function GroupDetail() {
     useEffect(() => {
         if (!id || !group) history.replace('/error')
     }, [])
-    const {posts} = useSelector((state:IStore) => state.COMMUNITY)
+    const { posts } = useSelector((state: IStore) => state.COMMUNITY)
     const postList = posts.filter((i: IPost) => i.group.id === parseInt(id))
 
     window.addEventListener('scroll', () => {

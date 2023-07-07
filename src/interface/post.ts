@@ -6,7 +6,7 @@ export interface ReqPost {
   media_ids: number[];
   status?: number;
   tag_id?: number;
-  service_ids: number[]
+  service_ids?: number[]
 }
 
 export interface IPost {

@@ -95,8 +95,7 @@ function HomeBanner2() {
                     );
                 case "SEARCH_RESULT":
                     return history.push({
-                        pathname: `/landingpage/${slugify(item.name)}?id=${item.id
-                            }`,
+                        pathname: `/landingpage/${slugify(item.name)}?id=${item.id}`,
                     });
                 case "PROMOTION":
                     return console.log("PROMOTION");

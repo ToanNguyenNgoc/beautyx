@@ -5,6 +5,7 @@ import { ChangeEvent, useState } from "react";
 type Media = {
   model_id: number;
   original_url: string;
+  model_type: string
 }
 
 type PostType = {
@@ -18,6 +19,16 @@ export function usePostMedia() {
   const [isLoading, setIsLoading] = useState(false)
   const handlePostMedia = async ({ e, callBack, onError }: PostType) => {
     if (e.target.files) {
+      let tempImages: Media[] = []
+      for (var j = 0; j < e.target.files?.length; j++) {
+        const item = {
+          model_id: -j,
+          original_url: URL.createObjectURL(e.target.files[j]),
+          model_type: e.target.files[j].type
+        }
+        tempImages.push(item)
+      }
+      if (callBack) { callBack(tempImages) }
       setIsLoading(true)
       try {
         const mediaList: Media[] = []
@@ -25,25 +36,21 @@ export function usePostMedia() {
           const fileItem = e.target.files[i]
           let formData = new FormData()
           let resMedia = {
-            original_url: '',
-            model_id: i
+            original_url: URL.createObjectURL(fileItem),
+            model_id: i,
+            model_type: e.target.files[i].type
           }
           formData.append('file', fileItem)
           let res: any
           res = await mediaApi.postMedia(formData).then(res => res.data.context)
           if (res) {
-            resMedia = {
-              original_url: res.original_url,
-              model_id: res.model_id
-            }
+            resMedia = { ...resMedia, model_id: res.model_id }
           }
           mediaList.push(resMedia)
         }
         setMedias(mediaList)
         setIsLoading(false)
-        if (callBack) {
-          callBack(mediaList)
-        }
+        if (callBack) { callBack(mediaList) }
       } catch (error) {
         const err = error as AxiosError
         if (onError) {
