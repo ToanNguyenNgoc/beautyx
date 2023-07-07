@@ -22,6 +22,7 @@ import HomeProvince from "./HomeProvince";
 import style from "./home.module.css";
 import HomeCurrentLocation from "./HomeCurrentLocation";
 import HomeTrends from "./HomeTrends";
+import TrafficData from "pages/HomePage/HomeTrafficData";
 
 
 export default function HomePage() {
@@ -54,12 +55,13 @@ export default function HomePage() {
                     <HomeOrgDistance />
                     <HomeTopic />
                     <HomeProducts />
-                    <HomeDownApp />
+                    {/* <HomeDownApp /> */}
                     <HomeWhyNot />
                     {/* {USER.USER && <HomeRecommend />} */}
                     <HomeProvince />
                     {IS_MB ? <></> : <HomeTrends />}
                     <HomePartners />
+                    <TrafficData/>
                 </Container>
                 <OpenApp type="none" />
             </div>
