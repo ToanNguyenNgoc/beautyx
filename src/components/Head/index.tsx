@@ -167,7 +167,7 @@ function Head(props: IProps) {
                                             alt=""
                                         />
                                     </Link>
-                                    <Link className={style.head_top_left_seller} to={'/seller'} >Kênh người bán</Link>
+                                    {/* <Link className={style.head_top_left_seller} to={'/seller'} >Kênh người bán</Link> */}
                                     </div>
                                     <BackContainer iconBack={iconBack} changeStyle={changeStyle} />
                                     <button

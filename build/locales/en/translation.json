@@ -122,7 +122,20 @@
         "a_beautyX_partner": "a BeautyX partner",
         "discover": "Discover",
         "choose_a_location": "Choose a location",
-        "search_area": "Search area"
+        "search_area": "Search area",
+        "traffic_title": "Find a beauty spot near you? Download the BeautyX app now!",
+        "traffic_statistical": "Statistics",
+        "traffic_detect": "Discover",
+        "traffic_beauty_place":"beauty place",
+        "traffic_downapp": "Get the app now!",
+        "traffic_enterprise": "Enterprise",
+        "traffic_nationwide": "Nationwide",
+        "traffic_user": "User",
+        "traffic_domestically_and_internationally": "Domestically and internationally",
+        "traffic_evaluate": "Evaluate",
+        "traffic_share": "Shared",
+        "traffic_appointment_bookings": "Appointment bookings",
+        "traffic_accomplished": "Accomplished"
     },
     "Search_result": {
         "text_result": "search results",
