@@ -23,6 +23,7 @@ import style from "./home.module.css";
 import HomeCurrentLocation from "./HomeCurrentLocation";
 import HomeTrends from "./HomeTrends";
 import TrafficData from "pages/HomePage/HomeTrafficData";
+import PortDeal from "components/PortalDeal";
 
 
 export default function HomePage() {
@@ -32,7 +33,7 @@ export default function HomePage() {
         tracking.HOME_LOAD();
     }, []);
     return (
-        <>
+        <>  
             <div className={style.container}>
                 <div className="home_container_par">
                     <Container>

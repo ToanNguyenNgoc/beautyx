@@ -116,7 +116,20 @@
         "a_beautyX_partner": "Đối tác BeautyX",
         "discover": "Khám phá",
         "choose_a_location": "Chọn vị trí",
-        "search_area": "Tìm kiếm khu vực"
+        "search_area": "Tìm kiếm khu vực",
+        "traffic_title": "Tìm địa điểm làm đẹp gần bạn? Tải app BeautyX ngay!",
+        "traffic_statistical": "Thống kê",
+        "traffic_beauty_place":"địa điểm làm đẹp",
+        "traffic_downapp": "Tải App ngay!",
+        "traffic_enterprise": "doanh nghiệp",
+        "traffic_nationwide": "toàn quốc",
+        "traffic_user": "người sử dụng",
+        "traffic_domestically_and_internationally": "trong & ngoài nước",
+        "traffic_evaluate": "đánh giá",
+        "traffic_share": "đã chia sẻ",
+        "traffic_appointment_bookings": "lượt đặt hẹn",
+        "traffic_accomplished": "đã hoàn thành"
+
     },
     "Search_result": {
         "text_result": "kết quả tìm kiếm",
