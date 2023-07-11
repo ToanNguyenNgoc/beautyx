@@ -15,17 +15,17 @@ export default function TrafficData() {
     },
     {
       id: 2,
-      count: `38,630,265 ${t("Home.traffic_user")}`,
-      desc: `${t("Home.traffic_domestically_and_internationally")}`,
+      count: `+386,305 ${t("Mer_de.services")}`,
+      desc: `${t("Home.comprehensive_beauty")}`,
     },
     {
       id: 3,
-      count: `48,841 ${t("Home.traffic_evaluate")}`,
+      count: `+48,841 ${t("Home.traffic_evaluate")}`,
       desc: `${t("Home.traffic_share")}`,
     },
     {
       id: 4,
-      count: `65,121 ${t("Home.traffic_appointment_bookings")}`,
+      count: `+65,121 ${t("Home.traffic_appointment_bookings")}`,
       desc: `${t("Home.traffic_accomplished")}`,
     },
   ];

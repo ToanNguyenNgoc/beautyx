@@ -125,11 +125,11 @@
         "traffic_nationwide": "toàn quốc",
         "traffic_user": "người sử dụng",
         "traffic_domestically_and_internationally": "trong & ngoài nước",
-        "traffic_evaluate": "đánh giá",
+        "traffic_evaluate": "bình luận",
         "traffic_share": "đã chia sẻ",
         "traffic_appointment_bookings": "lượt đặt hẹn",
-        "traffic_accomplished": "đã hoàn thành"
-
+        "traffic_accomplished": "đã hoàn thành",
+        "comprehensive_beauty":"làm đẹp toàn diện"
     },
     "Search_result": {
         "text_result": "kết quả tìm kiếm",
@@ -152,7 +152,7 @@
         "flow": "Theo dõi",
         "flowing": "Đang theo dõi",
         "about": "Về chúng tôi",
-        "services": "Dịch vụ",
+        "services": "dịch vụ",
         "services_name": "Tên dịch vụ",
         "products": "Sản phẩm",
         "combo":"Gói dịch vụ",

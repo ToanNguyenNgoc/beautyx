@@ -135,7 +135,8 @@
         "traffic_evaluate": "Evaluate",
         "traffic_share": "Shared",
         "traffic_appointment_bookings": "Appointment bookings",
-        "traffic_accomplished": "Accomplished"
+        "traffic_accomplished": "Accomplished",
+        "comprehensive_beauty":"comprehensive beauty"
     },
     "Search_result": {
         "text_result": "search results",
