@@ -7,13 +7,33 @@ import icon from "constants/icon";
 import { OrgItemMap } from "components/Layout/OrgItemMap";
 import Comment from "components/Comment";
 import { ITrend } from "pages/Trends/trend.interface";
-import { XButton } from "components/Layout/XButton";
 import Slider from "react-slick";
 import { useElementOnScreen } from "hooks/useElementOnScreen";
 import formatPrice from "utils/formatPrice";
 import { formatRouterLinkService } from "utils/formatRouterLink/formatRouter";
-import { useHistory } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { IOrganization } from "interface";
+import Drawer from "@mui/material/Drawer";
+import useDeviceMobile from "hooks/useDeviceMobile";
+import styleTrends from "./aboutComment.module.css";
+import { formatDateFromNow, onErrorImg, formatCountTrends } from "utils";
+import {
+  postMediaMulti,
+  useComment,
+  useFavorite,
+  useFetchInfinite,
+} from "hooks";
+import { ParamComment } from "params-query/param.interface";
+import { paramsComment } from "params-query";
+import API_3RD from "api/3rd-api";
+import Skeleton from "react-loading-skeleton";
+import {
+  ITrendComment,
+  ITrendCommentChild,
+} from "pages/TrendsDetail/interface";
+import { useSelector } from "react-redux";
+import IStore from "interface/IStore";
+import { Input, XButton, XButtonFile } from "components/Layout";
 
 export const About = () => {
   const { org, trends } = useContext(OrgContext) as OrgContextType;
@@ -144,7 +164,7 @@ const PreviewMedia: FC = () => {
     infinite: false,
     slidesToShow: 1,
     slidesToScroll: 1,
-    arrows: true,
+    arrows: false,
     afterChange: function (currentSlide: any) {
       setCurrentSlide(currentSlide);
     },
@@ -212,6 +232,7 @@ const PreviewMedia: FC = () => {
                 </div>
               </div>
             </div>
+
             <video
               poster={item?.image_thumb}
               webkit-playsinline="webkit-playsinline"
@@ -261,14 +282,42 @@ interface VideoProps {
   trend: ITrend;
   org: IOrganization;
 }
+interface TrendsDetailCommentProps {
+  comments: ITrendComment[];
+  org_id: string | number;
+  postComment: (body?: any) => void;
+  loadPost: boolean;
+}
+interface Model {
+  model_id: number;
+  original_url: string;
+}
+interface InitialBody {
+  commentable_type: string;
+  commentable_id: number | string;
+  organization_id: number | string;
+  models: Model[];
+  body: string;
+}
+
 const Video: FC<VideoProps> = ({ trend, org }) => {
+  console.log(trend);
   const videoRef = useRef<HTMLVideoElement>(null);
+  const history = useHistory();
+  const [openDrawer, setOpenDrawer] = useState(false);
+  const { onToggleFavorite, favoriteSt } = useFavorite({
+    org_id: org?.id,
+    type: "ORG",
+    count: org?.favorites_count,
+    favorite: org?.is_favorite,
+  });
   const options = {
     root: null,
     rootMargin: "0px",
     threshold: 0.3,
   };
   const isVisible = useElementOnScreen(options, videoRef);
+
   const onVideoPress = () => {
     if (isVisible) {
       videoRef.current?.play();
@@ -276,8 +325,6 @@ const Video: FC<VideoProps> = ({ trend, org }) => {
       videoRef.current?.pause();
     }
   };
-  const history = useHistory();
-
   const handleGotoSer = (item: ITrend) => {
     history.push(
       formatRouterLinkService(
@@ -287,21 +334,31 @@ const Video: FC<VideoProps> = ({ trend, org }) => {
       )
     );
   };
+
+  const param: ParamComment = {
+    ...paramsComment,
+    "filter[commentable_type]": "ORGANIZATION",
+    "filter[commentable_id]": org?.id,
+    limit: 10,
+  };
+  const { totalComment } = useComment(param);
+
   useEffect(() => {
     onVideoPress();
     // eslint-disable-next-line react-hooks/exhaustive-deps
     return () => videoRef.current?.pause();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isVisible]);
+
   return (
     <div key={trend._id} className={style.about_popup_videos}>
       <div className={style.about_popup_video}>
-        <div
+
+        <div className={style.about_trends_org}
           onClick={(e) => {
             handleGotoSer(trend);
             e.stopPropagation();
           }}
-          className={style.about_trends_org}
         >
           <img
             className={style.about_trends_org_img}
@@ -330,6 +387,59 @@ const Video: FC<VideoProps> = ({ trend, org }) => {
             </div>
           </div>
         </div>
+
+        <div className={style.about_popup_videos_btns}>
+          <div className={style.about_popup_videos_btn}>
+            <XButton
+              onClick={onToggleFavorite}
+              icon={
+                favoriteSt.is_favorite
+                  ? icon.heartBoldRed
+                  : icon.heartSolidWhite
+              }
+              iconSize={28}/>
+            <p className={style.about_popup_videos_count}>
+              {formatCountTrends(
+                trend?.tiktok?.digg_count + (favoriteSt.favorite_count ?? 0)
+              )}
+            </p>
+          </div>
+          <div className={style.about_popup_videos_btn}>
+            <XButton icon={icon.eyeWhite} iconSize={28}/>
+            <p className={style.about_popup_videos_count}>
+              {formatCountTrends(trend?.tiktok?.play_count)}
+            </p>
+          </div>
+          <div className={style.about_popup_videos_btn}>
+            <XButton
+              icon={icon.chatWhite}
+              iconSize={28}
+              onClick={(e) => {
+                setOpenDrawer(true);
+                e.stopPropagation();
+              }}
+            />
+            <p className={style.about_popup_videos_count}>
+              {formatCountTrends(trend?.tiktok?.comment_count +  totalComment)}
+            </p>
+          </div>
+          <div className={style.about_popup_videos_btn}>
+            <XButton icon={icon.shareWhiteArrow} iconSize={28}/>
+            <p className={style.about_popup_videos_count}>
+              {formatCountTrends(trend?.tiktok?.share_count)}
+            </p>
+          </div>
+        </div>
+
+        <DrawerAbout
+          openDrawer={openDrawer}
+          org={org}
+          trend={trend}
+          setOpenDrawer={setOpenDrawer}
+          onToggleFavorite={onToggleFavorite}
+          favoriteSt={favoriteSt}
+        />
+
         <video
           webkit-playsinline="webkit-playsinline"
           playsInline={true}
@@ -344,5 +454,366 @@ const Video: FC<VideoProps> = ({ trend, org }) => {
         </video>
       </div>
     </div>
+  );
+};
+
+const TrendsDetailComment = (props: TrendsDetailCommentProps) => {
+  const { loadPost, postComment } = props;
+  const org_id = props.org_id;
+  const refCommentCnt = useRef<HTMLUListElement>(null);
+  const initialBody = {
+    commentable_type: "ORGANIZATION",
+    commentable_id: org_id,
+    organization_id: org_id,
+    models: [],
+    body: "",
+  };
+  const { USER } = useSelector((state: IStore) => state.USER);
+  const [body, setBody] = useState<InitialBody>(initialBody);
+  const onInputChange = (e: any) => {
+    setBody({ ...body, body: e.target.value });
+  };
+  const onChangeInputMedia = async (e: any) => {
+    const { mediaList } = await postMediaMulti(e);
+    setBody({
+      ...body,
+      models: mediaList,
+    });
+  };
+  const onRemoveImg = (id: number) => {
+    setBody({
+      ...body,
+      models: body.models.filter((i) => i.model_id !== id),
+    });
+  };
+  const onSubmitComment = async () => {
+    if (body.body !== "" || body.models.length > 0) {
+      await postComment({
+        ...body,
+        media_ids: body.models.map((i) => i.model_id),
+      });
+      setBody(initialBody);
+      if (refCommentCnt) {
+        refCommentCnt.current?.scrollIntoView({ behavior: "smooth" });
+      }
+    }
+  };
+
+  return (
+    <>
+      <div className={styleTrends.comment_container}>
+        <ul ref={refCommentCnt} className={styleTrends.comment_list}>
+          {props.comments?.map((item: ITrendComment, index: number) => (
+            <li key={index} className={styleTrends.comment_list_item}>
+              <CommentItem comment={item} />
+            </li>
+          ))}
+        </ul>
+      </div>
+      <div className={styleTrends.comment_input}>
+        <div className={styleTrends.comment_user_avatar}>
+          <img
+            src={USER?.avatar ?? icon.userCircle}
+            alt=""
+            onError={(e) => onErrorImg(e)}
+          />
+        </div>
+        <div className={styleTrends.comment_input_cnt}>
+          <div className={styleTrends.comment_img_thumb}>
+            <ul className={styleTrends.img_thumb_list}>
+              {body.models.map((i) => (
+                <li
+                  key={i.model_id}
+                  className={styleTrends.img_thumb_list_item}
+                >
+                  <XButton
+                    icon={icon.closeCircle}
+                    onClick={() => onRemoveImg(i.model_id)}
+                  />
+                  <img
+                    className={styleTrends.img_thumb_item}
+                    src={i.original_url}
+                    alt=""
+                  />
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div className={styleTrends.comment_input_wrap}>
+            <Input
+              value={body.body}
+              onChange={onInputChange}
+              classNamePar={styleTrends.comment_input_par}
+              className={styleTrends.comment_input_child}
+              placeholder="Viết bình luận..."
+              onKeyDown={onSubmitComment}
+            />
+            <div className={styleTrends.comment_input_ctrl}>
+              <XButtonFile
+                onChange={onChangeInputMedia}
+                className={styleTrends.comment_btn}
+                multiple={true}
+              />
+              <XButton
+                icon={icon.sendBlack}
+                className={styleTrends.comment_btn}
+                onClick={onSubmitComment}
+                loading={loadPost}
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </>
+  );
+};
+
+const LoadComment = () => {
+  return (
+    <ul className={styleTrends.detail_comment_list}>
+      {[1, 2, 3, 4].map((i) => (
+        <li key={i} className={styleTrends.load_item}>
+          <div className={styleTrends.load_item_left}>
+            <Skeleton
+              width={"100%"}
+              height={"100%"}
+              style={{ borderRadius: "100%" }}
+            />
+          </div>
+          <div className={styleTrends.load_item_right}>
+            <Skeleton width={"100%"} height={"100%"} />
+          </div>
+        </li>
+      ))}
+    </ul>
+  );
+};
+
+const CommentItem = ({ comment }: { comment: ITrendComment }) => {
+  let body = comment.body;
+  try {
+    body = JSON.parse(comment.body).text;
+  } catch (error) {
+    body = comment.body;
+  }
+
+  return (
+    <div className={styleTrends.comment_item_cnt}>
+      <div className={styleTrends.comment_item_par}>
+        <div className={styleTrends.comment_user_avatar}>
+          <img
+            src={comment.user?.avatar ?? icon.userCircle}
+            onError={(e) => onErrorImg(e)}
+            alt=""
+          />
+        </div>
+        <div className={styleTrends.comment_item_par_right}>
+          <div className={styleTrends.comment_item_box}>
+            <p className={styleTrends.comment_text}>
+              <span className={styleTrends.comment_user_name}>
+                {comment.user?.fullname}
+              </span>
+              {body}
+            </p>
+          </div>
+    
+          <ul className={styleTrends.comment_item_images}>
+            {comment.media_url?.map((url: string, index: number) => (
+              <li key={index} className={styleTrends.comment_item_image}>
+                <div className={styleTrends.comment_item_image_cnt}>
+                  <img src={url} alt="" />
+                </div>
+              </li>
+            ))}
+          </ul>
+
+          {comment?.children.length === 0 ? (
+            <></>
+          ) : (
+            <ul className={styleTrends.comment_item_child}>
+              {comment?.children?.map((child: ITrendCommentChild, i: number) => (
+                <li key={i} className={styleTrends.comment_item_child_item}>
+                  <div className={styleTrends.comment_user_avatar}>
+                    <img
+                      src={child.user?.avatar ?? icon.userCircle}
+                      alt=""
+                      onError={(e) => onErrorImg(e)}
+                    />
+                  </div>
+                  <div className={styleTrends.comment_item_par_right}>
+                    <div
+                      style={{ backgroundColor: "#EAE9F5" }}
+                      className={styleTrends.comment_item_box}
+                    >
+                      <p className={styleTrends.comment_text}>
+                        <span className={styleTrends.comment_user_name}>
+                          {child.user?.fullname}
+                        </span>
+                        {child.body}
+                      </p>
+                    </div>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+interface IDrawerAbout {
+  openDrawer: boolean;
+  setOpenDrawer: any;
+  org: IOrganization;
+  trend: ITrend;
+  onToggleFavorite: () => void;
+  favoriteSt: {
+    is_favorite: boolean;
+    favorite_count: number;
+  };
+}
+const DrawerAbout = ({
+  openDrawer,
+  setOpenDrawer,
+  org,
+  trend,
+  onToggleFavorite,
+  favoriteSt,
+}: IDrawerAbout) => {
+  const IS_MB = useDeviceMobile();
+  const param: ParamComment = {
+    ...paramsComment,
+    "filter[commentable_type]": "ORGANIZATION",
+    "filter[commentable_id]": org?.id,
+    limit: 10,
+  };
+  const { comments, loadPost, postComment, totalComment } = useComment(param);
+  const { resData, totalItem, isValidating } = useFetchInfinite(
+    trend._id,
+    `${API_3RD.API_NODE}/tiktok/getCommentsByUrl`,
+    { "filter[trend]": trend._id }
+  );
+  const commentsTrend = resData ?? [];
+  const onOrgDetail = () => {
+    // history.push(
+    //   formatRouterLinkOrg(org?.subdomain ?? trend?.organization_id)
+    // );
+  };
+  return (
+    <Drawer
+      className={style.cusDrawer}
+      anchor={`${!IS_MB ? "right" : "bottom"}`}
+      open={openDrawer}
+      onClose={() => setOpenDrawer(false)}
+    >
+      <div className={styleTrends.right}>
+        <div className={styleTrends.right_top}>
+          <div className={styleTrends.right_top_org}>
+            <div onClick={onOrgDetail} className={styleTrends.org_detail}>
+              <div className={styleTrends.org_detail_img}>
+                <img src={trend.organization_image} alt="" />
+              </div>
+              <div className={styleTrends.org_detail_right}>
+                <p className={styleTrends.org_detail_name}>
+                  {trend.organization_name}
+                </p>
+                <p className={styleTrends.time_late}>
+                  {formatDateFromNow(trend.createdAt)}
+                </p>
+              </div>
+            </div>
+            <XButton
+              onClick={onToggleFavorite}
+              className={
+                favoriteSt.is_favorite
+                  ? styleTrends.right_top_org_btn
+                  : styleTrends.org_btn_act
+              }
+              title={favoriteSt.is_favorite ? "Đang theo dõi" : "Theo dõi"}
+            />
+          </div>
+          <div className={styleTrends.right_top_content}>
+            <p className={styleTrends.title}>{trend.title}</p>
+            <p className={styleTrends.content}>{trend.content}</p>
+          </div>
+          <div className={styleTrends.right_top_services}>
+            {trend.services?.map((service) => (
+              <Link
+                key={service.id}
+                to={{
+                  pathname: formatRouterLinkService(
+                    service.id,
+                    trend.organization_id,
+                    service.service_name
+                  ),
+                }}
+              >
+                <span className={styleTrends.service_link_text}>
+                  #{service.service_name}
+                </span>
+              </Link>
+            ))}
+          </div>
+          <div className={styleTrends.interactive}>
+            <div className={styleTrends.interactive_item}>
+              <XButton
+                iconSize={16}
+                className={styleTrends.interactive_icon_btn}
+                icon={icon.eyeBoldBlack}
+              />
+              <span className={styleTrends.interactive_item_text}>
+                {trend?.tiktok?.play_count}
+              </span>
+            </div>
+            <div className={styleTrends.interactive_item}>
+              <XButton
+                iconSize={16}
+                className={styleTrends.interactive_icon_btn}
+                onClick={onToggleFavorite}
+                icon={
+                  favoriteSt.is_favorite
+                    ? icon.heartBoldRed
+                    : icon.heartBoldBlack
+                }
+              />
+              <span className={styleTrends.interactive_item_text}>
+                {trend?.tiktok?.digg_count + (favoriteSt.favorite_count ?? 0)}
+              </span>
+            </div>
+            <div className={styleTrends.interactive_item}>
+              <XButton
+                iconSize={16}
+                className={styleTrends.interactive_icon_btn}
+                icon={icon.commentBoldBlack}
+              />
+              <span className={styleTrends.interactive_item_text}>
+                {trend?.tiktok?.comment_count + totalComment}
+              </span>
+            </div>
+            <div className={styleTrends.interactive_item}>
+              <XButton
+                iconSize={16}
+                className={styleTrends.interactive_icon_btn}
+                icon={icon.shareBoldBlack}
+              />
+              <span className={styleTrends.interactive_item_text}>
+                {trend?.tiktok?.share_count}
+              </span>
+            </div>
+          </div>
+        </div>
+        {totalItem === 1 && isValidating && <LoadComment />}
+        {resData && (
+          <TrendsDetailComment
+            org_id={trend.organization_id}
+            comments={[...comments, ...commentsTrend]}
+            postComment={postComment}
+            loadPost={loadPost}
+          />
+        )}
+      </div>
+    </Drawer>
   );
 };
