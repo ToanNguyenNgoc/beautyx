@@ -9,6 +9,7 @@ import { TypeLandingPage, TypeSearchResult, TypePopup } from "./components"
 import { useHistory } from 'react-router-dom';
 import HeadMobile from 'features/HeadMobile';
 import { extraParamsUrl } from 'utils';
+import queryString from "query-string"
 
 function LadingPage() {
     const IS_MB = useDeviceMobile()
@@ -22,12 +23,16 @@ function LadingPage() {
     useEffect(() => {
         if (banner?.type === "ORGANIZATION") history.replace(`/cua-hang/${banner.origin_id}`)
     }, [banner])
+    const qrParams = queryString.parse(banner?.url ?? '') as any
     return (
         <>
             <>
                 {IS_MB && <HeadMobile title={banner?.name ?? ""} />}
                 <div className={style.container}>
                     <Container>
+                        <div className={style.banner_container}>
+                            <img className={style.banner_img} src={qrParams.thumbnail || banner?.imageURL} alt="" />
+                        </div>
                         {banner?.type === "SEARCH_RESULT" && <TypeSearchResult banner={banner} />}
                         {banner?.type === "HTML" && <TypeLandingPage banner={banner} />}
                         {banner?.type === "POPUP" && <TypePopup banner={banner} />}

@@ -130,6 +130,10 @@ body > iframe {
   font-weight: 700 !important;
 }
 
+.MuiModal-root.MuiDrawer-root{
+  z-index: 1301 !important;
+}
+
 /* ------ */
 
 html {

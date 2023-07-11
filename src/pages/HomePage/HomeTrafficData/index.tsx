@@ -41,7 +41,7 @@ export default function TrafficData() {
           </p>
           <ul className={style.home_trafficData_left_list}>
             {data.map((item) => (
-              <li className={style.home_trafficData_left_item}>
+              <li key={item.id} className={style.home_trafficData_left_item}>
                 <div className={style.home_trafficData_left_count}>
                   {item.count}
                 </div>

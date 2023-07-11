@@ -1,28 +1,27 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { Container } from "@mui/material";
-import { useEffect } from "react";
-import HomeOrgDistance from "./HomeOrgDistance";
-import { useSelector } from "react-redux";
 import tracking from "api/trackApi";
-import { STATUS } from "redux/status";
-import { LoadHomeBanner } from "components/LoadingSketion/LoadHome";
-import HomeDiscount from "pages/HomePage/HomeDiscounts";
 import { OpenApp, PlashScreen } from "components/Layout";
+import { LoadHomeBanner } from "components/LoadingSketion/LoadHome";
 import { useDeviceMobile } from "hooks";
+import HomeDiscount from "pages/HomePage/HomeDiscounts";
+import TrafficData from "pages/HomePage/HomeTrafficData";
+import { useEffect } from "react";
+import { useSelector } from "react-redux";
+import { STATUS } from "redux/status";
 import HomeBanner2 from "./HomeBanner2";
+import HomeCate from "./HomeCate";
 import HomeCate2 from "./HomeCate2";
+import HomeCurrentLocation from "./HomeCurrentLocation";
+import HomeOrgDistance from "./HomeOrgDistance";
+import HomePartners from "./HomePartners";
+import HomeProducts from "./HomeProducts";
+import HomeProvince from "./HomeProvince";
 import HomeTags2 from "./HomeTags2";
 import HomeTopic from "./HomeTopic";
-import HomeProducts from "./HomeProducts";
-import HomeWhyNot from "./HomeWhyNot";
-import HomePartners from "./HomePartners";
-import HomeCate from "./HomeCate";
-import HomeProvince from "./HomeProvince";
-import style from "./home.module.css";
-import HomeCurrentLocation from "./HomeCurrentLocation";
 import HomeTrends from "./HomeTrends";
-import TrafficData from "pages/HomePage/HomeTrafficData";
-
+import HomeWhyNot from "./HomeWhyNot";
+import style from "./home.module.css";
 
 export default function HomePage() {
     const IS_MB = useDeviceMobile();
