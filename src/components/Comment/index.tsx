@@ -14,7 +14,8 @@ import CommentParItem from './CommentParItem';
 export interface CommentProps {
     commentable_type: any
     commentable_id: number,
-    org_id: number
+    org_id: number,
+    commentsMixed?: IComment[]
 }
 export interface TempCmt {
     body: string,
@@ -28,7 +29,7 @@ export const tempCmtInit: TempCmt = {
 }
 
 function Comment(props: CommentProps) {
-    const { commentable_type, commentable_id, org_id } = props;
+    const { commentable_type, commentable_id, org_id, commentsMixed = [] } = props;
     const { USER } = useSelector((state: IStore) => state.USER);
     const { bought } = useCheckUserBought({ commentable_type, commentable_id, org_id })
     const { firstLoad, resultLoad, noti } = useNoti()
@@ -38,7 +39,7 @@ function Comment(props: CommentProps) {
     const cntRef = useRef(null)
     const params = {
         ...paramsComment,
-        "filter[commentable_type]": commentable_type === "COMBO" ? "TREATMENT_COMBO":commentable_type,
+        "filter[commentable_type]": commentable_type === "COMBO" ? "TREATMENT_COMBO" : commentable_type,
         "filter[commentable_id]": commentable_id,
         "filter[organization_id]": commentable_type !== "ORGANIZATION" ? org_id : ""
     }
@@ -55,7 +56,7 @@ function Comment(props: CommentProps) {
     const paramPost = {
         "body": `${tempCmt.body}${bought ? `‭` : ''}`,
         "commentable_id": commentable_id,
-        "commentable_type": commentable_type === "COMBO" ? "TREATMENT_COMBO":commentable_type,
+        "commentable_type": commentable_type === "COMBO" ? "TREATMENT_COMBO" : commentable_type,
         "organization_id": org_id,
         "media_ids": tempCmt.media_ids,
         // "rate": 5,
@@ -101,7 +102,7 @@ function Comment(props: CommentProps) {
     return (
         <div ref={cntRef} className={style.container}>
             <h2 className={style.title}>
-                Đánh giá ({totalItem})
+                Đánh giá ({totalItem + commentsMixed.length})
             </h2>
             <div className={style.cmt_input_par_cnt}>
                 <div className={style.input_par_wrapper}>
@@ -170,6 +171,17 @@ function Comment(props: CommentProps) {
                                     org_id={org_id}
                                     USER_PAR_NAME={item.user?.fullname}
                                     bought={bought}
+                                />
+                            </li>
+                        ))
+                    }
+                    {
+                        commentsMixed.map((item: IComment, index: number) => (
+                            <li key={index} className={style.cmt_list_li}>
+                                <CommentParItem
+                                    comment={item}
+                                    USER_PAR_NAME={item.user?.fullname}
+                                    mixed
                                 />
                             </li>
                         ))

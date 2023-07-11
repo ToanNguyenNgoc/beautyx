@@ -1,5 +1,5 @@
 import { Input } from 'components/Layout';
-import React, { useContext, useState } from 'react';
+import  { useContext, useState } from 'react';
 import { XButton } from 'components/Layout'
 import style from "./style.module.css"
 import { AppContext } from 'context/AppProvider';

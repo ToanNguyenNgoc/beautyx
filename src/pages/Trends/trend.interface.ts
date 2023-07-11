@@ -1,3 +1,5 @@
+import { IComment } from "interface"
+
 export interface ITrendService {
     _id: string,
     id: string,
@@ -39,5 +41,6 @@ export interface ITrend {
     createdAt: string,
     updatedAt: string,
     tiktok: ITrendTiktok
-    __v: number
+    __v: number,
+    comments?:IComment[]
 }

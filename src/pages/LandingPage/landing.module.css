@@ -23,10 +23,7 @@
     object-fit: cover;
 }
 
-.body {
-    padding: 12px;
-    background-color: var(--bg-white);
-}
+
 @media only screen and (max-width: 1023px) {
     .container{
         padding: 44px 0px;

@@ -15,6 +15,7 @@ import { useDeviceMobile } from "hooks";
 import { AppContext } from "context/AppProvider";
 import { bannersHard } from '../data'
 import { EXTRA_FLAT_FORM } from "api/extraFlatForm";
+import PortDeal from "components/PortalDeal";
 
 interface PopupProps {
     open: boolean;
@@ -95,8 +96,11 @@ function HomeBanner2() {
                     );
                 case "SEARCH_RESULT":
                     return history.push({
-                        pathname: `/landingpage/${slugify(item.name)}?id=${item.id
-                            }`,
+                        pathname: `/landingpage/${slugify(item.name)}?id=${item.id}`,
+                    });
+                case "POPUP":
+                    return history.push({
+                        pathname: `/landingpage/${slugify(item.name)}?id=${item.id}`,
                     });
                 case "PROMOTION":
                     return console.log("PROMOTION");
@@ -143,56 +147,57 @@ function HomeBanner2() {
     const banners2 = bannersHard(PLAT_FORM)
     const banners1 = banners.slice(0, 1)
     const bannersLast = banners.slice(1, banners.length)
-    const BANNERS = [...banners1, ...banners2, ...bannersLast]
-
+    const BANNERS = [...banners1, ...banners2, ...bannersLast].filter(i => i.type !== "POPUP")
+    const portal = banners.find((item: IBanner) => item.type === "POPUP")
     return (
-        <div className={style.container}>
-            <div className={style.banner_container}>
-                <Slider {...settings}>
-                    {BANNERS.map((item: IBanner, index: number) => (
-                        <div
-                            onClick={() => onClickBanner(item)}
-                            key={index}
-                            className={style.banner_item_cnt}
-                        >
-                            <img
-                                className={style.banner_img}
-                                src={item.imageURL}
-                                // src='https://res.cloudinary.com/dt3auapd8/image/upload/v1673340495/Banner_BeautyX_Momo_1_btsvmb.jpg'
-                                alt=""
-                            />
-                        </div>
-                    ))}
-                </Slider>
-            </div>
-            <PopupBanner popup={popup} setPopup={setPopup} />
-            <div className={style.right_container_wrapper}>
-                <div className={style.right_container}>
-                    {features.map((item) => (
-                        <div
-                            onClick={() => onFeatureClick(item.func)}
-                            key={item.title}
-                            className={style.feature_item_cnt}
-                        >
-                            <div className={style.feature_item_icon}>
-                                <img src={item.icon} alt="" />
+        <>
+            {portal && <PortDeal banner={portal} />}
+            <div className={style.container}>
+                <div className={style.banner_container}>
+                    <Slider {...settings}>
+                        {BANNERS.map((item: IBanner, index: number) => (
+                            <div
+                                onClick={() => onClickBanner(item)}
+                                key={index}
+                                className={style.banner_item_cnt}
+                            >
+                                <img
+                                    className={style.banner_img}
+                                    src={item.imageURL}
+                                    // src='https://res.cloudinary.com/dt3auapd8/image/upload/v1673340495/Banner_BeautyX_Momo_1_btsvmb.jpg'
+                                    alt=""
+                                />
                             </div>
-                            <span className={style.feature_item_title}>
-                                {item.title}
-                            </span>
-                        </div>
-                    ))}
+                        ))}
+                    </Slider>
                 </div>
+                <PopupBanner popup={popup} setPopup={setPopup} />
+                <div className={style.right_container_wrapper}>
+                    <div className={style.right_container}>
+                        {features.map((item) => (
+                            <div
+                                onClick={() => onFeatureClick(item.func)}
+                                key={item.title}
+                                className={style.feature_item_cnt}
+                            >
+                                <div className={style.feature_item_icon}>
+                                    <img src={item.icon} alt="" />
+                                </div>
+                                <span className={style.feature_item_title}>{item.title}</span>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+                <PopupMessage
+                    open={message.open}
+                    onClose={() => setMessage({ ...message, open: false })}
+                    content={message.content}
+                    autoHide={true}
+                    iconLabel={message.icon}
+                    iconSize={40}
+                />
             </div>
-            <PopupMessage
-                open={message.open}
-                onClose={() => setMessage({ ...message, open: false })}
-                content={message.content}
-                autoHide={true}
-                iconLabel={message.icon}
-                iconSize={40}
-            />
-        </div>
+        </>
     );
 }
 

@@ -18,6 +18,11 @@ import { IOrganization } from "interface";
 export const About = () => {
   const { org, trends } = useContext(OrgContext) as OrgContextType;
   const [map, setMap] = useState(false);
+  const commentsMixed = trends
+    .map(i => i.comments ? i.comments?.map(item => { return { ...item, created_at: i.createdAt } }) : [])
+    .filter(Boolean)
+    .flat()
+  console.log(commentsMixed)
   return (
     <Container>
       {trends.length !== 0 && (
@@ -116,6 +121,7 @@ export const About = () => {
             org_id={org.id}
             commentable_id={org.id}
             commentable_type="ORGANIZATION"
+            commentsMixed={commentsMixed}
           />
         </div>
       </div>

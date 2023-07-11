@@ -5,8 +5,7 @@ import PageNotFound from 'components/PageNotFound';
 import { IBanner } from 'interface/banner'
 import style from './landing.module.css'
 import { Container } from '@mui/material';
-import Skeleton from 'react-loading-skeleton';
-import { TypeLandingPage, TypeSearchResult } from "./components"
+import { TypeLandingPage, TypeSearchResult, TypePopup } from "./components"
 import { useHistory } from 'react-router-dom';
 import HeadMobile from 'features/HeadMobile';
 import { extraParamsUrl } from 'utils';
@@ -29,16 +28,9 @@ function LadingPage() {
                 {IS_MB && <HeadMobile title={banner?.name ?? ""} />}
                 <div className={style.container}>
                     <Container>
-                        <div className={style.banner_container}>
-                            <div className={style.banner_container_load}>
-                                <Skeleton width={"100%"} height={"100%"} />
-                            </div>
-                            <img className={style.banner_img} src={banner?.imageURL ? banner.imageURL : ""} alt="" />
-                        </div>
-                        <div className={style.body}>
-                            {banner?.type === "SEARCH_RESULT" && <TypeSearchResult banner={banner} />}
-                            {banner?.type === "HTML" && <TypeLandingPage banner={banner} />}
-                        </div>
+                        {banner?.type === "SEARCH_RESULT" && <TypeSearchResult banner={banner} />}
+                        {banner?.type === "HTML" && <TypeLandingPage banner={banner} />}
+                        {banner?.type === "POPUP" && <TypePopup banner={banner} />}
                     </Container>
                 </div>
             </>

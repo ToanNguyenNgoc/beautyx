@@ -14,7 +14,6 @@ import HomeCate2 from "./HomeCate2";
 import HomeTags2 from "./HomeTags2";
 import HomeTopic from "./HomeTopic";
 import HomeProducts from "./HomeProducts";
-import HomeDownApp from "./HomeDownApp";
 import HomeWhyNot from "./HomeWhyNot";
 import HomePartners from "./HomePartners";
 import HomeCate from "./HomeCate";
@@ -32,7 +31,7 @@ export default function HomePage() {
         tracking.HOME_LOAD();
     }, []);
     return (
-        <>
+        <>  
             <div className={style.container}>
                 <div className="home_container_par">
                     <Container>
