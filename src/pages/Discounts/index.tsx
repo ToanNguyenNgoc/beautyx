@@ -56,7 +56,7 @@ function Discounts() {
                         loader={<></>}
                         next={onViewMore}
                     >
-
+                        <DiscountList totalItem={totalItem} discounts={discounts} />
                     </InfiniteScroll>
                 </div>
             </Container>
