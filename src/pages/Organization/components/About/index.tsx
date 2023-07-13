@@ -1,6 +1,6 @@
 import { Container, Dialog } from "@mui/material";
 import style from "./about.module.css";
-import { useContext, useState, useRef, FC, useEffect } from "react";
+import { useContext, useState, useRef, FC, useEffect, ChangeEvent } from "react";
 import { OrgContext, OrgContextType } from "context";
 import MapGL, { Marker, NavigationControl } from "react-map-gl";
 import icon from "constants/icon";
@@ -18,10 +18,10 @@ import useDeviceMobile from "hooks/useDeviceMobile";
 import styleTrends from "./aboutComment.module.css";
 import { formatDateFromNow, onErrorImg, formatCountTrends } from "utils";
 import {
-  postMediaMulti,
   useComment,
   useFavorite,
   useFetchInfinite,
+  usePostMedia,
 } from "hooks";
 import { ParamComment } from "params-query/param.interface";
 import { paramsComment } from "params-query";
@@ -466,6 +466,7 @@ const TrendsDetailComment = (props: TrendsDetailCommentProps) => {
   const { loadPost, postComment } = props;
   const org_id = props.org_id;
   const refCommentCnt = useRef<HTMLUListElement>(null);
+  const { handlePostMedia } = usePostMedia();
   const initialBody = {
     commentable_type: "ORGANIZATION",
     commentable_id: org_id,
@@ -478,11 +479,10 @@ const TrendsDetailComment = (props: TrendsDetailCommentProps) => {
   const onInputChange = (e: any) => {
     setBody({ ...body, body: e.target.value });
   };
-  const onChangeInputMedia = async (e: any) => {
-    const { mediaList } = await postMediaMulti(e);
-    setBody({
-      ...body,
-      models: mediaList,
+  const onChangeInputMedia = (e: ChangeEvent<HTMLInputElement>) => {
+    handlePostMedia({
+      e,
+      callBack: (data) => setBody({ ...body, models: data }),
     });
   };
   const onRemoveImg = (id: number) => {

@@ -24,7 +24,7 @@ export const orgPageApi = createApi({
                 params: paramServiceCatesOrg
             }),
             keepUnusedDataFor: 3600,
-            transformResponse: (response: ResponseType) => response?.context.data ?? {}
+            transformResponse: (response: ResponseType<any>) => response?.context.data ?? {}
         }),
         getProductCateOrg: builder.query({
             query: (org_id: number | string) => ({
@@ -32,7 +32,7 @@ export const orgPageApi = createApi({
                 params: paramProductCatesOrg
             }),
             keepUnusedDataFor: 3600,
-            transformResponse: (response: ResponseType) => response?.context.data ?? {}
+            transformResponse: (response: ResponseType<any>) => response?.context.data ?? {}
         }),
         getDiscountsOrg: builder.query({
             query: (org_id: number | string) => ({
@@ -47,7 +47,7 @@ export const orgPageApi = createApi({
                 )
             }),
             keepUnusedDataFor: 3600,
-            transformResponse: (response: ResponseType) => response?.context.data ?? {}
+            transformResponse: (response: ResponseType<any>) => response?.context.data ?? {}
         }),
         getProductsSpecialOrg: builder.query({
             query: (org_id: number | string) => ({
@@ -61,7 +61,7 @@ export const orgPageApi = createApi({
                 }, identity)
             }),
             keepUnusedDataFor: 3600,
-            transformResponse: (response: ResponseType) => response?.context.data ?? {}
+            transformResponse: (response: ResponseType<any>) => response?.context.data ?? {}
         }),
         getServicesSpecialOrg: builder.query({
             query: (org_id: string | number) => ({
@@ -75,7 +75,7 @@ export const orgPageApi = createApi({
                 }, identity),
             }),
             keepUnusedDataFor: 3600,
-            transformResponse: (response: ResponseType) => response?.context.data ?? {}
+            transformResponse: (response: ResponseType<any>) => response?.context.data ?? {}
         }),
         getOrgDetail: builder.query({
             query: (org_id: string | number) => ({

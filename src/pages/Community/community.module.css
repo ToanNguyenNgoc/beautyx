@@ -105,9 +105,7 @@
 
 .com_container_center {
     width: 760px;
-    height: calc(100vh);
     background-color: #FAFAFA;
-    overflow-y: scroll;
 }
 
 .center_group_recommend {

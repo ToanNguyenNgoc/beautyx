@@ -3,12 +3,24 @@ import style from './community.module.css'
 import { Link } from 'react-router-dom';
 import { Avatar, AvatarGroup } from '@mui/material';
 import imgC from './assets'
-import { PostCard } from './components';
-import { useSelector } from 'react-redux';
-import IStore from 'interface/IStore';
+import { PostItem } from './components';
+import { useInfiniteQuery } from '@tanstack/react-query';
+import { QR_KEY } from 'config';
+import { postApi } from 'api';
 
 function TabCommunity() {
-    const { posts } = useSelector((state: IStore) => state.COMMUNITY)
+    // const { posts } = useSelector((state: IStore) => state.COMMUNITY)
+    const {data, isLoading, fetchNextPage} = useInfiniteQuery({
+        queryKey:[QR_KEY.POSTS],
+        queryFn:({pageParam=1})=> postApi.posts({
+            "page":pageParam,
+            "limit":10,
+            "append":"media_url",
+            "sort":"-created_at"
+        }),
+        // getNextPageParam:(page)=>console.log(page) 
+    })
+    const posts = data?.pages.map(i => i.context.data).flat() ?? []
     return (
         <>
             <div className={style.com_container}>
@@ -39,7 +51,7 @@ function TabCommunity() {
                     </ul>
                 </div>
                 <div className={style.com_container_center}>
-                    <div className={style.center_group_recommend}>
+                    {/* <div className={style.center_group_recommend}>
                         <p className={style.section_title}>Gợi ý cho bạn</p>
                         <ul className={style.group_recommend_list}>
                             {
@@ -66,7 +78,7 @@ function TabCommunity() {
                                 ))
                             }
                         </ul>
-                    </div>
+                    </div> */}
                     <div className={style.center_post_cnt}>
                         <div className={style.center_post_head}>
                             <span className={style.section_title}>Bài viết</span>
@@ -75,7 +87,7 @@ function TabCommunity() {
                             {
                                 posts.map((post, index: number) => (
                                     <li key={index} className={style.center_post_li}>
-                                        <PostCard post={post} />
+                                        <PostItem post={post} />
                                     </li>
                                 ))
                             }

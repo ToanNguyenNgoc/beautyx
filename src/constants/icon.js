@@ -248,16 +248,17 @@ import imageBlack from "assets/icon/imageBlack.svg";
 import refresh from "assets/icon/refresh.svg";
 import smilePurple from "assets/icon/smile_purple.svg";
 import imagePurple from "assets/icon/img_purple.svg";
-import stateLlite from "assets/icon/statellite.png"
+import stateLlite from "assets/icon/statellite.png";
 import street from "assets/icon/street.png";
 import movie from "assets/icon/movie.png";
-import expend from "assets/icons/expend.svg"
-import homePurpleBold from "assets/icon/homePurpleBold.svg"
-import imageWhite from "assets/icon/imageWhite.svg"
-import thumbUpWhite from "assets/icon/thumbUpWhite.svg"
-import eyeWhite from "assets/icon/eyeWhite.svg"
-import shareWhiteArrow from "assets/icon/shareWhiteArown.svg"
-import heartSolidWhite from "assets/icon/heartSolidWhite.svg"
+import expend from "assets/icons/expend.svg";
+import homePurpleBold from "assets/icon/homePurpleBold.svg";
+import imageWhite from "assets/icon/imageWhite.svg";
+import thumbUpWhite from "assets/icon/thumbUpWhite.svg";
+import eyeWhite from "assets/icon/eyeWhite.svg";
+import shareWhiteArrow from "assets/icon/shareWhiteArown.svg";
+import heartSolidWhite from "assets/icon/heartSolidWhite.svg";
+import tag from "assets/icon/tag.png";
 
 const icon = {
   heartSolidWhite,
@@ -510,8 +511,13 @@ const icon = {
   sendBlack,
   imageBlack,
   refresh,
-  stateLlite, street, movie, expend,
+  stateLlite,
+  street,
+  movie,
+  expend,
   homePurpleBold,
-  imageWhite, thumbUpWhite
+  imageWhite,
+  thumbUpWhite,
+  tag,
 };
 export default icon;

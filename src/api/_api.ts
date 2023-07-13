@@ -29,7 +29,9 @@ const API_ROUTE = {
     TAGS_ID: (id: number | string) => `/tags/${id}`,
     ADDRESSES: '/useraddresses',
     APPOINTMENTS: '/appointments',
-    PAYMENT_METHOD: '/paymentmethods'
+    PAYMENT_METHOD: '/paymentmethods',
+    POSTS:'/posts',
+    POST:(id:number|string) => `/posts/${id}`
 }
 export { API_ROUTE_V }
 

@@ -1,11 +1,11 @@
-import React, { useState } from "react";
+import React, { ChangeEvent, useState } from "react";
 import { Dialog } from "@mui/material";
 import { useSelector } from "react-redux";
 import { onErrorImg } from "utils";
 import icon from "constants/icon";
 import HeadMobile from "features/HeadMobile";
 import { XButton } from "components/Layout";
-import { postMediaMulti, useDeviceMobile, useNoti } from "hooks";
+import { useDeviceMobile, useNoti, usePostMedia } from "hooks";
 import commentsApi from "api/commentsApi";
 import { IOrganization, ItemReviewed } from "interface";
 import style from './review.module.css'
@@ -45,6 +45,7 @@ const rateStars = [
 function Review(props: ReviewProps) {
     const { open, setOpen, itemsReviews, org } = props;
     const IS_MB = useDeviceMobile();
+    const { handlePostMedia } = usePostMedia()
     const { USER } = useSelector((state: any) => state.USER);
     const { firstLoad, resultLoad, noti, onCloseNoti } = useNoti()
     const [comment, setComment] = useState(initComment)
@@ -60,23 +61,16 @@ function Review(props: ReviewProps) {
             body: e.target.value,
         });
     };
-    const handleOnchangeMedia = async (e: any) => {
-        const tempMedia: any[] = []
-        for (var i = 0; i < e.target.files.length; i++) {
-            const tempMediaItem = {
-                original_url: '',
-                model_id: i
+    const handleOnchangeMedia = (e: ChangeEvent<HTMLInputElement>) => {
+        handlePostMedia({
+            e,
+            callBack: (data) => {
+                setComment({
+                    ...comment,
+                    media_ids: [...comment.media_ids.filter(i => i.original_url !== ''), ...data]
+                })
             }
-            tempMedia.push(tempMediaItem)
-        }
-        setComment({
-            ...comment,
-            media_ids: tempMedia
-        })
-        const { mediaList } = await postMediaMulti(e)
-        setComment({
-            ...comment,
-            media_ids: [...comment.media_ids.filter(i => i.original_url !== ''), ...mediaList]
+
         })
     };
     const onRemoveImg = (model_id: number) => {

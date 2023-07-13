@@ -864,7 +864,7 @@ export const DetailRecommend = ({ detail, org }: { detail: DetailProp, org: IOrg
         <div className={style.recommend}>
             <div className={style.recommend_section}>
                 {
-                    data?.length > 0 &&
+                    (data && data.length > 0) &&
                     <div>
                         <p
                             style={{ color: 'var(--text-black)' }}

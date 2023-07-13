@@ -1,7 +1,7 @@
-export interface ResponseType {
+export interface ResponseType<T> {
     context: {
         current_page: number,
-        data: any,
+        data: T,
         first_page_url: string,
         from: number,
         last_page: number,

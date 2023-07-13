@@ -15,7 +15,7 @@ export const serProComDetailApi = createApi({
                 params: params
             }),
             keepUnusedDataFor: 60 * 60, // default 60 seconds
-            transformResponse: (response: ResponseType) => response?.context?.data ?? []
+            transformResponse: (response: ResponseType<any>) => response?.context?.data ?? []
         })
     })
 })

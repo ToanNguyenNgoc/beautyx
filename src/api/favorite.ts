@@ -1,10 +1,11 @@
-import {axiosClient} from "config";
+import { axiosClient } from "config";
 import { pickBy, identity } from 'lodash';
 
 interface IPostFavoriteItem {
     org_id: number,
     product_id?: any,
-    service_id?: any
+    service_id?: any,
+    post_id?: any
 }
 
 class Favorite {
@@ -20,7 +21,7 @@ class Favorite {
         const values = {
             organization_id: org_id,
         };
-        return axiosClient.delete(url, {data:values});
+        return axiosClient.delete(url, { data: values });
     };
     postFavoriteItem = (values: IPostFavoriteItem) => {
         const url = `/favorites`;
@@ -28,6 +29,7 @@ class Favorite {
             organization_id: values.org_id,
             product_id: values.product_id,
             service_id: values.service_id,
+            post_id: values.post_id,
         }
         const params = pickBy(paramOb, identity)
         return axiosClient.post(url, params)
@@ -38,9 +40,10 @@ class Favorite {
             organization_id: values.org_id,
             product_id: values.product_id,
             service_id: values.service_id,
+            post_id: values.post_id,
         }
         const params = pickBy(paramOb, identity)
-        return axiosClient.delete(url, {data:params})
+        return axiosClient.delete(url, { data: params })
     }
 }
 const favorites = new Favorite();
