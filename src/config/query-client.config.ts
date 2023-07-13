@@ -17,4 +17,10 @@ export const queryClient = new QueryClient({
     }
   }
 })
-export const STALE_TIME = 3600 * 10 * 5
+export const STALE_TIME = 15 * (60 * 1000)
+
+export const QR_KEY = {
+  POSTS: 'POSTS',
+  APPROVE: 'APPROVE',
+  PROMOTION: 'PROMOTION'
+}

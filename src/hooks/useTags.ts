@@ -39,6 +39,7 @@ export function useTags() {
 
 
     return {
+        tags,
         tagsServiceLevel1,
         tagsProductLevel1,
         tagsChildServiceLevel2,

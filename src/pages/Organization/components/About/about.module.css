@@ -192,7 +192,7 @@
   right: 25%;
 }
 .about_popup_videos {
-  height: 100vh;
+  height: 100dvh;
   position: relative;
 }
 .about_popup_video {

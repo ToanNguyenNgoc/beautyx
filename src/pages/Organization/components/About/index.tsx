@@ -18,7 +18,7 @@ import useDeviceMobile from "hooks/useDeviceMobile";
 import styleTrends from "./aboutComment.module.css";
 import { formatDateFromNow, onErrorImg, formatCountTrends } from "utils";
 import {
-  postMediaMulti,
+  // postMediaMulti,
   useComment,
   useFavorite,
   useFetchInfinite,
@@ -479,11 +479,11 @@ const TrendsDetailComment = (props: TrendsDetailCommentProps) => {
     setBody({ ...body, body: e.target.value });
   };
   const onChangeInputMedia = async (e: any) => {
-    const { mediaList } = await postMediaMulti(e);
-    setBody({
-      ...body,
-      models: mediaList,
-    });
+    // const { mediaList } = await postMediaMulti(e);
+    // setBody({
+    //   ...body,
+    //   models: mediaList,
+    // });
   };
   const onRemoveImg = (id: number) => {
     setBody({

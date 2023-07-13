@@ -4,8 +4,8 @@ import tracking from "api/trackApi";
 import { OpenApp, PlashScreen } from "components/Layout";
 import { LoadHomeBanner } from "components/LoadingSketion/LoadHome";
 import { useDeviceMobile } from "hooks";
-import HomeDiscount from "pages/HomePage/HomeDiscounts";
-import TrafficData from "pages/HomePage/HomeTrafficData";
+import HomeDiscount from "./HomeDiscounts";
+import TrafficData from "./HomeTrafficData";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { STATUS } from "redux/status";
@@ -18,10 +18,11 @@ import HomePartners from "./HomePartners";
 import HomeProducts from "./HomeProducts";
 import HomeProvince from "./HomeProvince";
 import HomeTags2 from "./HomeTags2";
-import HomeTopic from "./HomeTopic";
+// import HomeDeal from "./HomeDeal";
 import HomeTrends from "./HomeTrends";
 import HomeWhyNot from "./HomeWhyNot";
 import style from "./home.module.css";
+import HomeTopic from "./HomeTopic";
 
 export default function HomePage() {
     const IS_MB = useDeviceMobile();
@@ -30,7 +31,7 @@ export default function HomePage() {
         tracking.HOME_LOAD();
     }, []);
     return (
-        <>  
+        <>
             <div className={style.container}>
                 <div className="home_container_par">
                     <Container>
@@ -51,15 +52,15 @@ export default function HomePage() {
                 <HomeDiscount />
                 <Container>
                     <HomeOrgDistance />
+                    {/* <HomeDeal /> */}
                     <HomeTopic />
                     <HomeProducts />
-                    {/* <HomeDownApp /> */}
+                    {/* <HomeApprove /> */}
                     <HomeWhyNot />
-                    {/* {USER.USER && <HomeRecommend />} */}
                     <HomeProvince />
                     {IS_MB ? <></> : <HomeTrends />}
                     <HomePartners />
-                    <TrafficData/>
+                    <TrafficData />
                 </Container>
                 <OpenApp type="none" />
             </div>

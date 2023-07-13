@@ -1,3 +1,8 @@
+export interface Page {
+    "page"?: number | string,
+    "limit"?: number | string
+}
+
 export interface ParamOrg {
     "page"?: number | string,
     "limit"?: number,
@@ -104,3 +109,11 @@ export interface ParamsProductable {
     "district_code"?: string | number,
     "is_demo"?: boolean | 'false' | 'true'
 }
+export interface ParamsPost extends Page {
+    "filter[organization_id]"?: number | string,
+    "filter[status]"?: number | string,
+    "filter[tag_id]"?: number | string,
+    "sort"?: "-created_at" | "created_at" | "",
+    "append"?: "media_url"
+}
+export interface ParamsOrgApprove extends Page { }

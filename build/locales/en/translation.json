@@ -139,7 +139,8 @@
         "comprehensive_beauty":"comprehensive beauty",
         "review_beautyx_place":"Review beauty place",
         "review_beautyx_place_desc":"focus on rating and providing quality reviews of the place",
-        "location_":"Location"
+        "location_":"Location",
+        "services":"Services"
     },
     "Search_result": {
         "text_result": "search results",

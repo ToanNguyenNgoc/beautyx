@@ -7,7 +7,7 @@ import { useHistory } from "react-router-dom"
 interface FavoriteProps {
     id?: number,
     org_id: number,
-    type: "ORG" | "SERVICE" | "PRODUCT" | "COMBO",
+    type: "ORG" | "SERVICE" | "PRODUCT" | "COMBO" | "POST",
     count: number,
     favorite: boolean
 }
@@ -24,7 +24,7 @@ export function useFavorite(
         setFavoriteSt({ is_favorite: favorite, favorite_count: count })
     }, [favorite, count])
     const { USER } = useSelector((state: IStore) => state.USER)
-    const onToggleFavoriteOrg =  () => {
+    const onToggleFavoriteOrg = () => {
         if (favoriteSt?.is_favorite) {
             favorites.deleteFavorite(org_id)
             setFavoriteSt({
@@ -43,20 +43,21 @@ export function useFavorite(
         const values = {
             org_id: org_id,
             service_id: type === "SERVICE" && id,
-            product_id: type === "PRODUCT" && id
+            product_id: type === "PRODUCT" && id,
+            post_id: type === "POST" && id
         }
         if (favoriteSt?.is_favorite) {
-            await favorites.deleteFavoriteItem(values)
             setFavoriteSt({
                 is_favorite: false,
                 favorite_count: favoriteSt.favorite_count - 1
             })
+            await favorites.deleteFavoriteItem(values)
         } else {
-            await favorites.postFavoriteItem(values)
             setFavoriteSt({
                 is_favorite: true,
                 favorite_count: favoriteSt.favorite_count + 1
             })
+            await favorites.postFavoriteItem(values)
         }
     }
     const onToggleFavorite = () => {

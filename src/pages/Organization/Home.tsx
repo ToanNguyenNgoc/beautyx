@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { Container } from '@mui/material';
-import { Banner, Deal, Header, Loading, More, ServiceSection, Tab, About, ChatButton } from './components';
+import { Banner, Deal, Header, Loading, More, ServiceSection, Tab, About } from './components';
 import { useContext, useRef } from 'react';
 import { OrgContext, OrgContextType } from 'context';
 import style from './organization.module.css'
@@ -11,6 +11,7 @@ import { usePostAnalytics } from 'pages/Organization/hooks';
 function Home() {
   const { load } = useContext(OrgContext) as OrgContextType
   const IS_MB = useDeviceMobile()
+  // const { USER } = useAuth()
   return (
     <div className={style.wrapper}>
       <div className={style.container}>
@@ -26,7 +27,7 @@ function Home() {
               <Body />
               <More />
               {!IS_MB && <BackTopButton />}
-              <ChatButton />
+              {/* {USER && <ChatButton />} */}
             </>
         }
         {/* <Container><Loading/></Container> */}

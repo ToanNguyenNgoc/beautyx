@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useRef } from "react";
 import { deals } from "pages/HomePage/data";
-import style from "./deal-banner.module.css";
+// import style from "./deal-banner.module.css";
 import { useParams, useHistory } from "react-router-dom";
 import {
     useDeviceMobile,
@@ -19,6 +19,7 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import { LoadGrid } from "components/LoadingSketion";
 import icon from "constants/icon";
 import { AUTH_LOCATION } from "api/authLocation";
+import style from "./deal-banner.module.css"
 
 function DealBanner() {
     const { _id } = useParams();
@@ -110,3 +111,40 @@ function DealBanner() {
 }
 
 export default DealBanner;
+
+// function DealBanner() {
+//     const params = useParams()
+//     const { data: dataList } = useGetPromotionQuery()
+//     const mb = useDeviceMobile()
+//     const promotion = dataList?.find(i => slugify(i.name) === params._id)
+//     const history = useHistory()
+//     const { data, isLoading } = useQuery({
+//         queryKey: [QR_KEY.PROMOTION, promotion?.id],
+//         queryFn: () => promotionApi.promotion(promotion?.id || 0),
+//         enabled: promotion ? true : false,
+//         onError: () => history.replace("/error"),
+//         staleTime: STALE_TIME
+//     })
+//     const detail = data?.context
+//     return (
+//         <>
+//             <Seo title={data?.context?.name || 'Đang tải...'} />
+//             {mb && <HeadMobile title={data?.context?.name || 'Đang tải...'} />}
+//             <Container>
+//                 <div className={style.body}>
+//                     <div className={style.image_thumbnail}>
+//                         <img src={detail?.is_popup === 1 ? detail?.thumbnail : detail?.imageURL} alt="" />
+//                     </div>
+//                     <div className={style.list}>
+//                         {
+//                             detail?.productables?.map(item => (
+//                                 <ProductableItem key={item.id} productable={item} />
+//                             ))
+//                         }
+//                     </div>
+//                 </div>
+//             </Container>
+//         </>
+//     )
+// }
+// export default DealBanner

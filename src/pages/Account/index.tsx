@@ -2,7 +2,7 @@
 import { RouteComponentProps } from "@reach/router";
 import { Switch, useHistory, useLocation } from "react-router-dom";
 import Information from "./components/Information/index";
-import React, { useContext, useEffect, useState } from "react";
+import React, { ChangeEvent, useContext, useEffect, useState } from "react";
 import { logoutUser } from "redux/profile/userSlice";
 import { useDispatch, useSelector } from "react-redux";
 import style from "./account.module.css";
@@ -10,7 +10,7 @@ import { Container } from "@mui/system";
 import IStore from "interface/IStore";
 import { clst, formatPhoneNumber, onErrorImg } from "utils";
 import icon from "constants/icon";
-import { postMedia, useDeviceMobile, useSwr } from "hooks";
+import { useDeviceMobile, usePostMedia, useSwr } from "hooks";
 import { updateAsyncUser } from "redux/profile/userSlice";
 import { ICON } from "constants/icon2";
 import { FullImage, XButton } from "components/Layout";
@@ -80,13 +80,18 @@ function Account() {
     enable: USER,
     params: paramsUserProfile
   }).response;
-  const onChangeAvatar = async (e: any) => {
-    const { model_id } = await postMedia(e);
-    await dispatch(
-      updateAsyncUser({
-        media_id: model_id,
-      })
-    );
+  const { handlePostMedia } = usePostMedia()
+  const onChangeAvatar = (e: ChangeEvent<HTMLInputElement>) => {
+    handlePostMedia({
+      e,
+      callBack: (data) => {
+        dispatch(
+          updateAsyncUser({
+            media_id: data[0]?.model_id,
+          })
+        );
+      }
+    })
   };
   const links = [
     {

@@ -1,7 +1,5 @@
 export * from './useAuth'
 export * from './useElementOnScreen'
-export * from './postMedia'
-export * from './postMediaMulti'
 export * from "./useCountDown"
 export * from "./useDeviceMobile"
 export * from "./useFetch"
@@ -24,3 +22,4 @@ export * from "./useTags"
 export * from "./useProductable"
 export * from "./useComment"
 export * from "./useUserAddress"
+export * from "./usePostMedia"
