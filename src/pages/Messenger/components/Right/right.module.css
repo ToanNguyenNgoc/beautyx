@@ -27,6 +27,15 @@
 .head_left_back img {
   transform: rotate(180deg);
 }
+.head_right_btn{
+  width: 28px;
+  height: 28px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--purple);
+  border-radius: 100%;
+}
 
 .topic {
   display: flex;

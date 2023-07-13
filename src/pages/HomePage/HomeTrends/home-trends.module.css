@@ -2,6 +2,10 @@
     padding: 10px;
     background: #fff;
 }
+.description{
+    font-size: 15px;
+    font-weight: 400;
+}
 
 .trends_list_cnt {
     margin-top: 24px;

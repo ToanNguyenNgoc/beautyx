@@ -10,7 +10,7 @@ export default function TrafficData() {
   const data = [
     {
       id: 1,
-      count: `+9,387 ${t("Home.location")}`,
+      count: `+9,387 ${t("Home.location_")}`,
       desc: `${t("Home.traffic_nationwide")}`,
     },
     {

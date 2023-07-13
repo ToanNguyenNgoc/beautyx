@@ -3,7 +3,7 @@ import dayjs from "dayjs";
 import TimeItem from "./components/TimeItem";
 import "./timePicker.css";
 import { IOrganization } from "interface";
-import { extraOrgTimeWork } from "pages/MerchantDetail/Functions/extraOrg";
+import { extraOrgTimeWork } from "pages/Organization/hooks";
 
 interface IProps {
     onChange: (e: string) => void;

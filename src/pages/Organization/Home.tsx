@@ -1,11 +1,12 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { Container } from '@mui/material';
-import { Banner, Deal, Header, Loading, More, ServiceSection, Tab, About } from './components';
+import { Banner, Deal, Header, Loading, More, ServiceSection, Tab, About, ChatButton } from './components';
 import { useContext, useRef } from 'react';
 import { OrgContext, OrgContextType } from 'context';
 import style from './organization.module.css'
 import { BackTopButton } from 'components/Layout';
 import { useDeviceMobile } from 'hooks';
+import { usePostAnalytics } from 'pages/Organization/hooks';
 
 function Home() {
   const { load } = useContext(OrgContext) as OrgContextType
@@ -18,13 +19,14 @@ function Home() {
             <Container> <Loading /></Container>
             :
             <>
-              {IS_MB && <Header/>}
+              {IS_MB && <Header />}
               <Container>
                 <Banner />
               </Container>
               <Body />
               <More />
-              <BackTopButton />
+              {!IS_MB && <BackTopButton />}
+              <ChatButton />
             </>
         }
         {/* <Container><Loading/></Container> */}
@@ -40,6 +42,7 @@ const Body = () => {
   const refProduct = useRef<HTMLDivElement>(null)
   const refCombo = useRef<HTMLDivElement>(null)
   const refDetail = useRef<HTMLDivElement>(null)
+  usePostAnalytics(org)
   return (
     <>
       <Tab
@@ -65,7 +68,7 @@ const Body = () => {
           </>
         }
         <div ref={refDetail} className={style.body_section}>
-          <About/>
+          <About />
         </div>
       </div>
     </>

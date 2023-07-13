@@ -129,7 +129,10 @@
         "traffic_share": "đã chia sẻ",
         "traffic_appointment_bookings": "lượt đặt hẹn",
         "traffic_accomplished": "đã hoàn thành",
-        "comprehensive_beauty":"làm đẹp toàn diện"
+        "comprehensive_beauty":"làm đẹp toàn diện",
+        "review_beautyx_place":"Review địa điểm",
+        "review_beautyx_place_desc":"tập trung vào việc đánh giá và cung cấp nhận xét chất lượng về địa điểm",
+        "location_":"địa điểm"
     },
     "Search_result": {
         "text_result": "kết quả tìm kiếm",
@@ -152,7 +155,7 @@
         "flow": "Theo dõi",
         "flowing": "Đang theo dõi",
         "about": "Về chúng tôi",
-        "services": "dịch vụ",
+        "services": "Dịch vụ",
         "services_name": "Tên dịch vụ",
         "products": "Sản phẩm",
         "combo":"Gói dịch vụ",

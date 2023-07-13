@@ -1,6 +1,5 @@
 import LoadDetail from 'components/LoadingSketion/LoadDetail';
 import { useCartReducer, useDeviceMobile, useFavorite } from 'hooks';
-import HeadOrg from 'pages/MerchantDetail/components/HeadOrg';
 import { DetailProp } from 'pages/_SerProCoDetail/detail.interface';
 import  { useContext, useState } from 'react';
 import { useDiscountDetail } from './useDiscountDetail';
@@ -85,7 +84,7 @@ function DiscountDetail() {
     return (
         (detail && org && discount) ?
             <>
-                {IS_MB && <HeadOrg onBackFunc={() => history.goBack()} org={org} />}
+                {/* {IS_MB && <HeadOrg onBackFunc={() => history.goBack()} org={org} />} */}
                 <Seo title={DETAIL.name} imageCover={DETAIL.image_url} content={DETAIL.description} />
                 <Container>
                     <div className={style.wrapper} >
