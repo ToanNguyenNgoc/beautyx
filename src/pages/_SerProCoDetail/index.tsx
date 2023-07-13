@@ -326,7 +326,7 @@ export const Head = () => {
             <div className={style.head_right}>
                 <XButton
                     icon={icon.ShoppingCartSimple}
-                    onClick={() => USER ? history.push("/sign-in?1") : history.push("/sign-in?1")}
+                    onClick={() => USER ? history.push("/gio-hang") : history.push("/sign-in?1")}
                 />
                 {
                     carts.cartQuantity > 0 &&

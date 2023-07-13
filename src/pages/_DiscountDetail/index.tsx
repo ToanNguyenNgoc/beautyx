@@ -8,7 +8,7 @@ import { Container, Drawer, Rating } from '@mui/material';
 import formatPrice from 'utils/formatPrice';
 import icon from 'constants/icon';
 import { AlertSnack, OpenApp, Seo, ShareSocial, XButton } from 'components/Layout';
-import { DetailDesc, DetailOrgCard, DetailRecommend, SliderImage } from 'pages/_SerProCoDetail';
+import { DetailDesc, DetailOrgCard, DetailRecommend, Head, SliderImage } from 'pages/_SerProCoDetail';
 import Comment from 'components/Comment';
 import { IDiscountPar, IOrganization } from 'interface';
 import { useDispatch, useSelector } from 'react-redux';
@@ -84,7 +84,7 @@ function DiscountDetail() {
     return (
         (detail && org && discount) ?
             <>
-                {/* {IS_MB && <HeadOrg onBackFunc={() => history.goBack()} org={org} />} */}
+                <Head/>
                 <Seo title={DETAIL.name} imageCover={DETAIL.image_url} content={DETAIL.description} />
                 <Container>
                     <div className={style.wrapper} >
