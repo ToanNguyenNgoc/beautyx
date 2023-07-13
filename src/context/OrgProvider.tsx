@@ -49,7 +49,7 @@ export function OrgProvider({ children }: { children: ReactNode }) {
   const { data: dataTrends } = useQuery({
     queryKey: ['VIDEO',  org?.id ],
     queryFn: () => axios.get(`${API_3RD.API_NODE}/trends`, {
-      params: { "filter[organization_id]": org?.id },
+      params: { "filter[organization_id]": org?.id, "include":"comments" },
     }),
     enabled: org?.id ? true : false,
     cacheTime: CACHE_TIME,

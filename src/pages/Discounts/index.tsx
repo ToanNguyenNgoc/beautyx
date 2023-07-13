@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { Container } from '@mui/material';
 import { useDeviceMobile } from 'hooks';
 import { IDiscountPar, IITEMS_DISCOUNT } from 'interface/discount';
@@ -56,27 +56,7 @@ function Discounts() {
                         loader={<></>}
                         next={onViewMore}
                     >
-                        <ul className={style.discount_list}>
-                            {
-                                discounts.map((discount: IDiscountPar, index: number) => (
-                                    <li
-                                        key={index}
-                                        className="item-cnt"
-                                    >
-                                        {
-                                            discount.items.map((item: IITEMS_DISCOUNT, i: number) => (
-                                                <DiscountItem
-                                                    key={i}
-                                                    discountItem={item}
-                                                    discountPar={discount}
-                                                />
-                                            ))
-                                        }
-                                    </li>
-                                ))
-                            }
-                        </ul>
-                        {discounts.length < totalItem && <LoadGrid grid={IS_MB ? 2 : 5} item_count={IS_MB ? 6 : 10} />}
+                        <DiscountList totalItem={totalItem} discounts={discounts} />
                     </InfiniteScroll>
                 </div>
             </Container>
@@ -85,3 +65,37 @@ function Discounts() {
 }
 
 export default Discounts;
+
+interface DiscountListProps {
+    discounts: IDiscountPar[],
+    totalItem: number
+}
+
+export const DiscountList: FC<DiscountListProps> = ({ discounts, totalItem }) => {
+    const MB = useDeviceMobile()
+    return (
+        <>
+            <ul className={style.discount_list}>
+                {
+                    discounts.map((discount: IDiscountPar, index: number) => (
+                        <li
+                            key={index}
+                            className="item-cnt"
+                        >
+                            {
+                                discount.items.map((item: IITEMS_DISCOUNT, i: number) => (
+                                    <DiscountItem
+                                        key={i}
+                                        discountItem={item}
+                                        discountPar={discount}
+                                    />
+                                ))
+                            }
+                        </li>
+                    ))
+                }
+            </ul>
+            {discounts.length < totalItem && <LoadGrid grid={MB ? 2 : 5} item_count={MB ? 6 : 10} />}
+        </>
+    )
+}

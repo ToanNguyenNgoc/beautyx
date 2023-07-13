@@ -78,6 +78,7 @@ const Video = (props: VideoProps) => {
                     className={style.trends_list_item_video}
                     webkit-playsinline="webkit-playsinline"
                     playsInline={true}
+                    poster={item.image_thumb}
                 >
                     <source type="video/mp4" src={`${item.media_url}#t=0.001`} />
                 </video>

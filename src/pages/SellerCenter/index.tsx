@@ -1,17 +1,14 @@
-import React, { useContext, useState, KeyboardEvent } from 'react';
-import img from '../../constants/img';
+import { useContext, useState, KeyboardEvent } from 'react';
 import './style.css'
-import { AppContext } from '../../context/AppProvider';
-import { Container } from '@mui/material';
-import { useHistory } from 'react-router-dom';
-import icon from '../../constants/icon';
+import { AppContext } from 'context';
+import img from 'constants/img';
+import icon from 'constants/icon';
 
 const onDropList = () => {
     document.querySelector('.sel-cent-cnt__form .inp-right')?.classList.toggle('drop')
 }
 
 function SellerCenter() {
-    const history = useHistory();
     const { t } = useContext(AppContext) as any
     const [sub, setSub] = useState('');
     const domains = ['.myspa.vn', '.myclinic.vn'];
@@ -30,26 +27,9 @@ function SellerCenter() {
 
     return (
         <>
-            {/* <Head /> */}
             <div
                 className='sel-cent-cnt'
             >
-                <div className="sel-cent-cnt__head">
-                    <Container>
-                        <div className="flex-row-sp cnt">
-                            <img
-                                onClick={() => history.push('/home')}
-                                src={img.beautyX}
-                                alt=""
-                            />
-                            <button
-                                onClick={() => history.push('/partner')}
-                            >
-                                {t("Header.1")}
-                            </button>
-                        </div>
-                    </Container>
-                </div>
                 <img src={img.sellerCenterImg} alt="" />
                 <div className="sel-cent-cnt__form">
                     <div className="container">

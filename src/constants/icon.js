@@ -255,9 +255,15 @@ import expend from "assets/icons/expend.svg"
 import homePurpleBold from "assets/icon/homePurpleBold.svg"
 import imageWhite from "assets/icon/imageWhite.svg"
 import thumbUpWhite from "assets/icon/thumbUpWhite.svg"
+import eyeWhite from "assets/icon/eyeWhite.svg"
+import shareWhiteArrow from "assets/icon/shareWhiteArown.svg"
+import heartSolidWhite from "assets/icon/heartSolidWhite.svg"
 import tag from "assets/icon/tag.png"
 
 const icon = {
+  heartSolidWhite,
+  eyeWhite,
+  shareWhiteArrow,
   smilePurple,
   imagePurple,
   noApply,

@@ -11,9 +11,7 @@ import { SWRConfig } from "swr";
 import { PlashScreen } from "components/Layout";
 import { axiosClient, queryClient, sentry } from "config";
 import { QueryClientProvider } from "@tanstack/react-query";
-// import * as Sentry from "@sentry/react";
 
-// sentry()
 
 
 ReactDOM.render(
@@ -35,4 +33,5 @@ ReactDOM.render(
     </React.StrictMode>,
     document.getElementById("app")
 );
+// sentry();
 reportWebVitals();

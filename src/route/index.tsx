@@ -54,6 +54,7 @@ const Community = lazy(() => import("pages/Community"));
 const TrendsDetail = lazy(() => import("pages/TrendsDetail"));
 const Rewards = lazy(() => import("pages/Rewards"));
 const Messenger = lazy(() => import("pages/Messenger"))
+const Seller = lazy(() => import("pages/SellerCenter"))
 
 function RouterConfig() {
   const routes = [
@@ -249,6 +250,10 @@ function RouterConfig() {
     {
       path: "/nhom/:id",
       component: <GroupDetail />,
+    },
+    {
+      path: "/seller",
+      component: <Seller />,
     },
     {
       path: "/error",

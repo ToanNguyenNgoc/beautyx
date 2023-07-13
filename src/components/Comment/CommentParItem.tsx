@@ -1,11 +1,11 @@
-import { Accordion, AccordionDetails, AccordionSummary } from '@mui/material';
+import { Accordion, AccordionDetails, AccordionSummary, Avatar } from '@mui/material';
 import commentsApi from 'api/commentsApi';
 import { FullImage, Input, XButton } from 'components/Layout';
 import icon from 'constants/icon';
 import { useDeviceMobile, useNoti } from 'hooks';
 import { IComment, ICommentChild } from 'interface';
 import IStore from 'interface/IStore';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { formatDateFromNow } from 'utils';
@@ -15,13 +15,14 @@ import style from './comment.module.css'
 
 interface CommentParItemProps {
     comment: IComment,
-    org_id: number,
+    org_id?: number,
     USER_PAR_NAME: string,
-    bought: boolean
+    bought?: boolean,
+    mixed?: boolean
 }
 
 function CommentParItem(props: CommentParItemProps) {
-    const { org_id, USER_PAR_NAME, bought, comment } = props;
+    const { org_id, USER_PAR_NAME, bought, comment, mixed = false } = props;
     let body = comment.body
     try {
         body = JSON.parse(comment.body).text
@@ -71,12 +72,13 @@ function CommentParItem(props: CommentParItemProps) {
     for (var i = 0; i < rate; i++) {
         starElement.push(<img key={i} src={icon.star} width={14} height={14} alt="" />)
     }
+    let replyBtnDis = false
+    if (!mixed) replyBtnDis = true
+    if (mixed && replyCount > 0) replyBtnDis = true
     return (
         <div className={style.cmt_item_par_cnt}>
             <div className={style.cmt_item_par_user}>
-                <div className={style.par_user_avt}>
-                    <img className={style.par_user_avt_icon} src={comment.user?.avatar ?? icon.userCircle} alt="" />
-                </div>
+                <Avatar src={comment.user?.avatar} />
                 <div className={style.par_user_name}>
                     {comment.user?.fullname}
                 </div>
@@ -120,9 +122,7 @@ function CommentParItem(props: CommentParItemProps) {
                             content={
                                 <div className={style.img_content} >
                                     <div className={style.cmt_item_par_user}>
-                                        <div className={style.par_user_avt}>
-                                            <img className={style.par_user_avt_icon} src={comment.user?.avatar ?? icon.userCircle} alt="" />
-                                        </div>
+                                        <Avatar src={comment.user?.avatar} />
                                         <div className={style.par_user_name}>
                                             {comment.user?.fullname}
                                         </div>
@@ -145,17 +145,17 @@ function CommentParItem(props: CommentParItemProps) {
                     <Accordion
                         style={{ width: "100%" }}
                     >
-                        <AccordionSummary
-                            aria-controls="panel1a-content"
-                            id="panel1a-header"
-                        >
-                            <span
-                                className={style.cmt_reply_open}
-                            // onClick={() => setTempCmt({ ...tempCmt, body: `@${USER_PAR_NAME}` })}
+                        {
+                            replyBtnDis &&
+                            <AccordionSummary
+                                aria-controls="panel1a-content"
+                                id="panel1a-header"
                             >
-                                {replyCount > 0 && replyCount}  Phản hồi
-                            </span>
-                        </AccordionSummary>
+                                <span className={style.cmt_reply_open}>
+                                    {replyCount > 0 && replyCount}  Phản hồi
+                                </span>
+                            </AccordionSummary>
+                        }
                         <AccordionDetails
                             style={{ padding: IS_MB ? "0px" : "4px 16px" }}
                         >
@@ -163,12 +163,7 @@ function CommentParItem(props: CommentParItemProps) {
                                 comment.children.concat(cmtArr).map((child: ICommentChild, i: number) => (
                                     <div key={i} className={style.cmt_reply_cnt}>
                                         <div className={style.cmt_reply_user}>
-                                            <div className={style.par_user_avt}>
-                                                <img
-                                                    src={child.user?.avatar ?? icon?.userCircle}
-                                                    alt="" className={style.par_user_avt_icon}
-                                                />
-                                            </div>
+                                            <Avatar src={child.user?.avatar} />
                                         </div>
                                         <div className={style.cmt_reply_text}>
                                             <span className={style.par_user_name}>
@@ -189,42 +184,45 @@ function CommentParItem(props: CommentParItemProps) {
                                                 }
                                                 {child.body}
                                                 <p className={style.cmt_time_late}>
-                                                    {formatDateFromNow(child?.created_at || '')}
+                                                    {formatDateFromNow(mixed ? comment.created_at : child?.created_at ?? '')}
                                                 </p>
                                             </span>
                                         </div>
                                     </div>
                                 ))
                             }
-                            <div className={style.reply_cmt_input_cnt}>
-                                <div className={style.input_top}>
-                                    <div className={style.par_user_avt}>
-                                        {
-                                            <img
-                                                className={style.par_user_avt_icon}
-                                                src={USER?.avatar ?? icon.userCircle} alt=""
+                            {
+                                !mixed &&
+                                <div className={style.reply_cmt_input_cnt}>
+                                    <div className={style.input_top}>
+                                        <div className={style.par_user_avt}>
+                                            {
+                                                <img
+                                                    className={style.par_user_avt_icon}
+                                                    src={USER?.avatar ?? icon.userCircle} alt=""
+                                                />
+                                            }
+                                        </div>
+                                        <div className={style.input_par_in_cnt}>
+                                            <Input
+                                                placeholder={`Phản hồi ${USER_PAR_NAME}...`}
+                                                value={tempCmt.body}
+                                                onChange={onChangeInputCmt}
+                                                onKeyDown={handlePostCmtReply}
                                             />
-                                        }
-                                    </div>
-                                    <div className={style.input_par_in_cnt}>
-                                        <Input
-                                            placeholder={`Phản hồi ${USER_PAR_NAME}...`}
-                                            value={tempCmt.body}
-                                            onChange={onChangeInputCmt}
-                                            onKeyDown={handlePostCmtReply}
-                                        />
-                                        <div className={style.input_par_button}>
-                                            <XButton
-                                                onClick={handlePostCmtReply}
-                                                className={style.btn_cmt}
-                                                icon={icon.sendComment}
-                                                iconSize={20}
-                                                loading={noti.load}
-                                            />
+                                            <div className={style.input_par_button}>
+                                                <XButton
+                                                    onClick={handlePostCmtReply}
+                                                    className={style.btn_cmt}
+                                                    icon={icon.sendComment}
+                                                    iconSize={20}
+                                                    loading={noti.load}
+                                                />
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            }
                         </AccordionDetails>
                     </Accordion>
                 </div>

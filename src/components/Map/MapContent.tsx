@@ -118,12 +118,14 @@ const MapContent = (props: IProps) => {
         }
     };
     const onPanTo = (lat: number, lng: number) => {
-        mapRef?.current?.panTo([lng, lat]);
+        if (lat && lng) mapRef?.current?.panTo([lng, lat]);
     };
     const onFlyTo = (lat: number, lng: number) => {
-        mapRef?.current?.flyTo({
-            center: [lng, lat],
-        });
+        if (lat && lng) {
+            mapRef?.current?.flyTo({
+                center: [lng, lat],
+            });
+        }
     };
     const onGotoSlickOrgItem = (index: number) => {
         slideRef?.current?.slickGoTo(index);
@@ -218,8 +220,8 @@ const MapContent = (props: IProps) => {
                 openDetail={openDetail}
                 setOpenDetail={setOpenDetail}
             />
-            <MapCurrentUser 
-                handleBackCurrentUser={handleBackCurrentUser} 
+            <MapCurrentUser
+                handleBackCurrentUser={handleBackCurrentUser}
                 setMapStyle={setMapStyle}
             />
             {
@@ -283,7 +285,7 @@ const MapContent = (props: IProps) => {
                             </div>
                         </Marker>
                     ))}
-                    <Island/>
+                    <Island />
                 </MapGL>
             }
             <div

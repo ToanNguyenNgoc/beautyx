@@ -1,28 +1,28 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { Container } from "@mui/material";
-import { useEffect } from "react";
-import HomeOrgDistance from "./HomeOrgDistance";
-import { useSelector } from "react-redux";
 import tracking from "api/trackApi";
-import { STATUS } from "redux/status";
-import { LoadHomeBanner } from "components/LoadingSketion/LoadHome";
-import HomeDiscount from "pages/HomePage/HomeDiscounts";
 import { OpenApp, PlashScreen } from "components/Layout";
+import { LoadHomeBanner } from "components/LoadingSketion/LoadHome";
 import { useDeviceMobile } from "hooks";
+import HomeDiscount from "./HomeDiscounts";
+import TrafficData from "./HomeTrafficData";
+import { useEffect } from "react";
+import { useSelector } from "react-redux";
+import { STATUS } from "redux/status";
 import HomeBanner2 from "./HomeBanner2";
-import HomeCate2 from "./HomeCate2";
-import HomeTags2 from "./HomeTags2";
-import HomeTopic from "./HomeTopic";
-import HomeProducts from "./HomeProducts";
-import HomeDownApp from "./HomeDownApp";
-import HomeWhyNot from "./HomeWhyNot";
-import HomePartners from "./HomePartners";
 import HomeCate from "./HomeCate";
-import HomeProvince from "./HomeProvince";
-import style from "./home.module.css";
+import HomeCate2 from "./HomeCate2";
 import HomeCurrentLocation from "./HomeCurrentLocation";
+import HomeOrgDistance from "./HomeOrgDistance";
+import HomePartners from "./HomePartners";
+import HomeProducts from "./HomeProducts";
+import HomeProvince from "./HomeProvince";
+import HomeTags2 from "./HomeTags2";
+import HomeDeal from "./HomeDeal";
 import HomeTrends from "./HomeTrends";
-
+import HomeWhyNot from "./HomeWhyNot";
+import HomeApprove from "./HomeApprove";
+import style from "./home.module.css";
 
 export default function HomePage() {
     const IS_MB = useDeviceMobile();
@@ -52,14 +52,14 @@ export default function HomePage() {
                 <HomeDiscount />
                 <Container>
                     <HomeOrgDistance />
-                    <HomeTopic />
+                    <HomeDeal />
                     <HomeProducts />
-                    <HomeDownApp />
+                    <HomeApprove />
                     <HomeWhyNot />
-                    {/* {USER.USER && <HomeRecommend />} */}
                     <HomeProvince />
                     {IS_MB ? <></> : <HomeTrends />}
                     <HomePartners />
+                    <TrafficData />
                 </Container>
                 <OpenApp type="none" />
             </div>

@@ -22,9 +22,10 @@ function HomeWhyNot() {
                 breakpoint: 767,
                 settings: {
                     swipe: true,
-                    slidesToShow: 1,
+                    slidesToShow: 2,
+                    slidesToScroll: 2,
                     infinite: false,
-                    centerMode: true,
+                    // centerMode: true,
                 },
             },
         ],

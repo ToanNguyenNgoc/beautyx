@@ -2,6 +2,11 @@
     padding: 32px 0px;
 }
 
+.body {
+    padding: 12px;
+    background-color: var(--bg-white);
+}
+
 .list_item {
     grid-gap: 16px;
     display: grid;

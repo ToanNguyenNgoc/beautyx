@@ -4,7 +4,6 @@ import { FullImage, XButton } from "components/Layout"
 import icon from "constants/icon"
 import { useContext, useState } from "react"
 import { OrgContext, OrgContextType } from "context"
-import OrgGalleriesDialog from "pages/MerchantDetail/components/OrgPages/OrgGalleries/OrgGalleriesDialog"
 
 interface GalleryProps {
   open: boolean,

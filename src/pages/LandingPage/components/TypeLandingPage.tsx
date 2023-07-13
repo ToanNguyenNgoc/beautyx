@@ -5,8 +5,12 @@ import style from './style.module.css'
 
 export function TypeLandingPage({ banner }: { banner: IBanner }) {
     return (
-        <div className={style.body_container}>
-            {banner?.htmlTemplate && parse(banner.htmlTemplate)}
-        </div>
+        <>
+            <div className={style.body}>
+                <div className={style.body_container}>
+                    {banner?.htmlTemplate && parse(banner.htmlTemplate)}
+                </div>
+            </div>
+        </>
     );
 }

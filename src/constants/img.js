@@ -54,8 +54,10 @@ import qrCodeTiki from 'assets/image/qrCodeTiki.png';
 import qrCodeMomo from 'assets/image/qrCodeMomo.png';
 import iconShoppee from 'assets/image/icon-shopee.png';
 import iconVinID from 'assets/image/icon-vinid.png'
+import portalDeal from 'assets/image/portalDeal.png'
 
 const img = {
+    portalDeal,
     iconShoppee,
     iconVinID,
     bgNotiBtxPoint,
