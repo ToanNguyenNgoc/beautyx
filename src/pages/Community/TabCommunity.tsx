@@ -51,7 +51,7 @@ function TabCommunity() {
                     </ul>
                 </div>
                 <div className={style.com_container_center}>
-                    {/* <div className={style.center_group_recommend}>
+                    <div className={style.center_group_recommend}>
                         <p className={style.section_title}>Gợi ý cho bạn</p>
                         <ul className={style.group_recommend_list}>
                             {
@@ -78,7 +78,7 @@ function TabCommunity() {
                                 ))
                             }
                         </ul>
-                    </div> */}
+                    </div>
                     <div className={style.center_post_cnt}>
                         <div className={style.center_post_head}>
                             <span className={style.section_title}>Bài viết</span>

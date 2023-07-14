@@ -17,6 +17,7 @@ import { SelectTag } from './Selection-Tag'
 import { useMutation } from "@tanstack/react-query";
 import { postApi } from "api";
 import { regexHTML, testRegexImage } from "utils";
+import { pick } from "lodash";
 
 interface PostInputProps {
   open?: boolean,
@@ -60,7 +61,7 @@ export const Input: FC<PostInputProps> = ({
     }),
     onSubmit: (values) => {
       mutate({
-        ...values,
+        // ...values,
         content: values.content.replace(regexHTML, ''),
         status: 1,
         media_ids: values.media_ids.map(i => i.model_id),
