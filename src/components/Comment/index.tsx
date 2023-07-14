@@ -144,9 +144,9 @@ function Comment(props: CommentProps) {
                             </div>
                         </div>
                     </div>
-                    <div className={style.input_img_temp}>
+                    {
+                        tempCmt.media_url.length > 0 && <div className={style.input_img_temp}>
                         {
-                            tempCmt.media_url.length > 0 &&
                             tempCmt.media_url.map((img_url: string) => (
                                 <div key={img_url} className={style.input_img_temp_item}>
                                     <XButton
@@ -164,6 +164,8 @@ function Comment(props: CommentProps) {
                             ))
                         }
                     </div>
+                    }
+                    
                 </div>
             </div>
             <div className={style.body}>

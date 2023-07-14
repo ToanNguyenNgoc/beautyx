@@ -22,6 +22,7 @@
   --trans: all 0.3s;
   --red-2: #de221f;
   --pr-green: #abd372;
+  --shadow-2: rgba(0, 0, 0, 0.2);
 }
 
 a {

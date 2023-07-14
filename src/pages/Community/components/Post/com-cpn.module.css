@@ -1,8 +1,10 @@
 /* card post item */
 .post_item {
     background-color: var(--bg-white);
-    padding: 12px 0px;
+    padding: 12px;
     margin-bottom: 10px;
+    box-shadow: 0 1px 2px var(--shadow-2);
+    border-radius: 14px;
 }
 
 .post_item_head {
@@ -291,6 +293,8 @@
 @media only screen and (max-width: 1023px) {
     .post_item {
         padding: 12px;
+        border-radius: unset;
+        box-shadow: unset;
     }
 
     /* post input */
