@@ -7,6 +7,7 @@ import Slider, { Settings } from "react-slick"
 import { Link } from "react-router-dom"
 import { clst, slugify } from "utils"
 import icon from "constants/icon"
+import { useDeviceMobile } from "hooks"
 
 const Next = (props: any) => {
   return (
@@ -30,11 +31,12 @@ const Prev = (props: any) => {
 function HomeDeal() {
   const { t } = useContext(AppContext) as AppContextType
   const { data } = useGetPromotionQuery()
+  const mb = useDeviceMobile()
   const settings: Settings = {
     dots: false,
     infinite: true,
     arrows: true,
-    centerPadding: "250px",
+    centerPadding: mb ? "25px" : "250px",
     centerMode: true,
     speed: 800,
     slidesToShow: 1,

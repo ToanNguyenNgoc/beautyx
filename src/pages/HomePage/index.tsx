@@ -53,10 +53,10 @@ export default function HomePage() {
                 <HomeDiscount />
                 <Container>
                     <HomeOrgDistance />
-                    {/* <HomeDeal /> */}
+                    <HomeDeal />
                     <HomeTopic />
                     <HomeProducts />
-                    {/* <HomeApprove /> */}
+                    <HomeApprove />
                     <HomeWhyNot />
                     <HomeProvince />
                     {IS_MB ? <></> : <HomeTrends />}

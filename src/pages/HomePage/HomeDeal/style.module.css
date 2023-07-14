@@ -52,3 +52,6 @@
 .slide_btn_next {
   right: -20px;
 }
+@media only screen and (max-width: 992px) and (min-width: 767px) {}
+
+@media only screen and (max-width: 767px) {}
