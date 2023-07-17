@@ -5,7 +5,7 @@ import style from "./style.module.css"
 import { useGetPromotionQuery } from "redux-toolkit-query/hook-home"
 import Slider, { Settings } from "react-slick"
 import { Link } from "react-router-dom"
-import { clst, slugify } from "utils"
+import { clst, scrollTop, slugify } from "utils"
 import icon from "constants/icon"
 import { useDeviceMobile } from "hooks"
 
@@ -61,7 +61,7 @@ function HomeDeal() {
         <Slider {...settings}>
           {
             data?.map(item => (
-              <Link key={item.id} className={style.deal_cnt} to={{ pathname: `/deal/${slugify(item.name)}` }} >
+              <Link onClick={() => scrollTop('auto')} key={item.id} className={style.deal_cnt} to={{ pathname: `/deal/${slugify(item.name)}` }} >
                 <div className={style.deal}>
                   <div className={style.image_cnt}>
                     <img src={item.is_popup === 1 ? item.thumbnail : item.imageURL} alt="" className={style.image} />
