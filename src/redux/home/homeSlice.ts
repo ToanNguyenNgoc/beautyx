@@ -24,13 +24,6 @@ export const fetchAsyncHome: any = createAsyncThunk(
 const initialState = {
     banners: [],
     tags: [],
-    DISCOUNTS: {
-        discounts: [],
-        page: 1,
-        totalItem: 1,
-        status_discount: "",
-    },
-
     provinces_org: [],
     provinces: [],
     status: STATUS.LOADING,
@@ -38,11 +31,7 @@ const initialState = {
 const homeSlice = createSlice({
     name: "HOME",
     initialState,
-    reducers: {
-        clearHomeDiscount: (state) => {
-            state.DISCOUNTS = initialState.DISCOUNTS
-        }
-    },
+    reducers: {},
     extraReducers(builder) {
         builder.addCase(fetchAsyncHome.pending, (state) => { return state })
         builder.addCase(fetchAsyncHome.fulfilled, (state, { payload }) => {
@@ -57,6 +46,4 @@ const homeSlice = createSlice({
         })
     },
 });
-const { actions } = homeSlice;
-export const { clearHomeDiscount } = actions
 export default homeSlice.reducer;

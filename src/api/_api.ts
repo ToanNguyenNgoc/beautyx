@@ -30,8 +30,10 @@ const API_ROUTE = {
     ADDRESSES: '/useraddresses',
     APPOINTMENTS: '/appointments',
     PAYMENT_METHOD: '/paymentmethods',
-    POSTS:'/posts',
-    POST:(id:number|string) => `/posts/${id}`
+    POSTS: '/posts',
+    POST: (id: number | string) => `/posts/${id}`,
+    PROMOTIONS: '/promotions',
+    PROMOTION: (id: number | string) => `/promotions/${id}`
 }
 export { API_ROUTE_V }
 

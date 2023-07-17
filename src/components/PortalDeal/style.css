@@ -53,3 +53,8 @@
 .portal-deal-img{
   z-index: 2;
 }
+@media only screen and (max-width: 1023px) {
+  .modal-content{
+    width: 90%;
+  }
+}

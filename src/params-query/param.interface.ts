@@ -116,3 +116,4 @@ export interface ParamsPost extends Page {
     "sort"?: "-created_at" | "created_at" | "",
     "append"?: "media_url"
 }
+export interface ParamsOrgApprove extends Page { }

@@ -33,5 +33,5 @@ ReactDOM.render(
     </React.StrictMode>,
     document.getElementById("app")
 );
-sentry();
+// sentry();
 reportWebVitals();

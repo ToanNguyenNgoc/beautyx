@@ -48,6 +48,45 @@
   background-color: transparent;
 }
 
+
+.cus_title_review{
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  position: relative;
+}
+.cus_title_review .icon_review{
+  width: 60px;
+  position: absolute;
+  right: -115%;
+  top: 50%;
+  transform: translateY(-42%);
+
+}
+.tab_item_review{
+    background: linear-gradient(
+        to right,
+        #7953cd 20%,
+        #00affa 30%,
+        #0190cd 70%,
+        #764ada 80%
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-fill-color: transparent;
+    background-size: 500% auto;
+    animation: textShine 2s ease-in-out infinite alternate;
+}
+
+@keyframes textShine {
+    0% {
+        background-position: 0% 50%;
+    }
+    100% {
+        background-position: 100% 50%;
+    }
+}
 @media only screen and (max-width: 767px) {
   .wrapper {
     border: none;

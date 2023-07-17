@@ -93,6 +93,10 @@ function HomeBanner2() {
           return history.push({
             pathname: `/landingpage/${slugify(item.name)}?id=${item.id}`,
           });
+        case "POPUP":
+          return history.push({
+            pathname: `/landingpage/${slugify(item.name)}?id=${item.id}`,
+          });
         case "PROMOTION":
           return console.log("PROMOTION");
         case "ORGANIZATION":

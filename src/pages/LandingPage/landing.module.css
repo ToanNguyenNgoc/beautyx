@@ -3,7 +3,7 @@
 }
 
 .banner_container {
-    aspect-ratio: 3 / 1.8;
+    aspect-ratio: 2 / 1;
     width: 100%;
     position: relative;
     background-color: var(--white);

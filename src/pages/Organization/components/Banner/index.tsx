@@ -109,8 +109,8 @@ export const Banner = () => {
                   icon={icon.chatSquare}
                   title='Tư vấn'
                   onClick={onChat}
-                /> */}
-                {/* <XButton
+                />
+                <XButton
                   onClick={() => setShare(true)}
                   iconSize={mb ? 18 : 16}
                   icon={icon.share}

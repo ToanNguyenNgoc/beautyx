@@ -251,14 +251,14 @@ import imagePurple from "assets/icon/img_purple.svg";
 import stateLlite from "assets/icon/statellite.png";
 import street from "assets/icon/street.png";
 import movie from "assets/icon/movie.png";
-import expend from "assets/icons/expend.svg";
-import homePurpleBold from "assets/icon/homePurpleBold.svg";
-import imageWhite from "assets/icon/imageWhite.svg";
-import thumbUpWhite from "assets/icon/thumbUpWhite.svg";
-import eyeWhite from "assets/icon/eyeWhite.svg";
-import shareWhiteArrow from "assets/icon/shareWhiteArown.svg";
-import heartSolidWhite from "assets/icon/heartSolidWhite.svg";
-import tag from "assets/icon/tag.png";
+import expend from "assets/icons/expend.svg"
+import homePurpleBold from "assets/icon/homePurpleBold.svg"
+import imageWhite from "assets/icon/imageWhite.svg"
+import thumbUpWhite from "assets/icon/thumbUpWhite.svg"
+import eyeWhite from "assets/icon/eyeWhite.svg"
+import shareWhiteArrow from "assets/icon/shareWhiteArown.svg"
+import heartSolidWhite from "assets/icon/heartSolidWhite.svg"
+import tag from "assets/icon/tag.png"
 
 const icon = {
   heartSolidWhite,
