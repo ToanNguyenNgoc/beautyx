@@ -25,7 +25,7 @@ function HomeApprove() {
   const { data, isLoading } = useQuery({
     queryKey: [QR_KEY.APPROVE],
     queryFn: () => statisticApi.orgsApprove({
-      'page': 1, limit: 8
+      'page': 1, limit: 20
     }),
     enabled: isVisible,
     staleTime: STALE_TIME
@@ -34,12 +34,14 @@ function HomeApprove() {
     <div ref={refSection} className={style.container}>
       <HomeTitle title="Doanh nghiệp mới tham gia" />
       <div className={style.list_cnt}>
-        {isLoading && <LoadGrid item_count={8} grid={4} />}
+        {isLoading && <LoadGrid item_count={4} grid={4} />}
         <div className={style.list}>
           {
-            data?.context?.data?.filter(item => item.organization_id !== 11).map(item => (
-              <ApproveItem key={item.id} item={item} />
-            ))
+            data?.context?.data?.filter(item => item.organization.image_url !== null)
+              .slice(0, 4)
+              .map(item => (
+                <ApproveItem key={item.id} item={item} />
+              ))
           }
         </div>
       </div>
