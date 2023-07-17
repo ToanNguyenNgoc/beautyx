@@ -2,7 +2,7 @@ import API_3RD from 'api/3rd-api';
 import { useDeviceMobile } from 'hooks';
 import { ITrend } from 'pages/Trends/trend.interface';
 import TrendDetailDia from 'pages/Trends/TrendDetailDia';
-import { useRef, useState } from 'react';
+import { useContext, useRef, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { formatRouterLinkOrg } from 'utils/formatRouterLink/formatRouter';
 import style from './home-trends.module.css'
@@ -10,8 +10,10 @@ import { HomeTitle } from 'components/Layout';
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 import { STALE_TIME } from 'config';
+import { AppContext, AppContextType } from 'context';
 
 function HomeTrends() {
+    const { t } = useContext(AppContext) as AppContextType
     const params = {
         'limit': '20',
         'include': 'services|tiktok'
@@ -26,8 +28,11 @@ function HomeTrends() {
         <div className={style.container}>
             <HomeTitle
                 url={`/xu-huong`}
-                title={'Xu hướng làm đẹp'} seemore="Xem tất cả >"
+                title={t('Home.review_beautyx_place')} seemore="Xem tất cả >"
             />
+            <span className={style.description}>
+                {t("Home.review_beautyx_place_desc")}
+            </span>
             <div className={style.trends_list_cnt}>
                 <ul className={style.trends_list}>
                     {

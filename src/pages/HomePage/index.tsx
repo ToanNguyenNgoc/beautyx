@@ -15,14 +15,14 @@ import HomeCate2 from "./HomeCate2";
 import HomeCurrentLocation from "./HomeCurrentLocation";
 import HomeOrgDistance from "./HomeOrgDistance";
 import HomePartners from "./HomePartners";
-import HomeProducts from "./HomeProducts";
 import HomeProvince from "./HomeProvince";
 import HomeTags2 from "./HomeTags2";
-import HomeDeal from "./HomeDeal";
+import HomeApprove from "./HomeApprove";
 import HomeTrends from "./HomeTrends";
 import HomeWhyNot from "./HomeWhyNot";
-import HomeApprove from "./HomeApprove";
 import style from "./home.module.css";
+import HomePromotions from "./HomePromotions";
+import PortDeal from "components/PortalDeal";
 
 export default function HomePage() {
     const IS_MB = useDeviceMobile();
@@ -31,7 +31,7 @@ export default function HomePage() {
         tracking.HOME_LOAD();
     }, []);
     return (
-        <>
+        <>  <PortDeal/>
             <div className={style.container}>
                 <div className="home_container_par">
                     <Container>
@@ -52,8 +52,7 @@ export default function HomePage() {
                 <HomeDiscount />
                 <Container>
                     <HomeOrgDistance />
-                    <HomeDeal />
-                    <HomeProducts />
+                    <HomePromotions />
                     <HomeApprove />
                     <HomeWhyNot />
                     <HomeProvince />

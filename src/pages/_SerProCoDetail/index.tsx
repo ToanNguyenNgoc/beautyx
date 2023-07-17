@@ -18,13 +18,12 @@ import { AUTH_LOCATION } from 'api/authLocation';
 import { formatAddCart } from 'utils/cart/formatAddCart';
 import { useDispatch, useSelector } from 'react-redux';
 import IStore from 'interface/IStore';
-import { addCart, onClearPrevCartItem, unCheck } from 'redux/cart';
+import { addCart, getTotal, onClearPrevCartItem, unCheck } from 'redux/cart';
 import { PopupMessage } from 'components/Notification';
 import { clearAllServices } from 'redux/booking';
 import { IS_VOUCHER } from 'utils/cart/checkConditionVoucher';
 import { paramsProductsOrg, paramsServicesOrg } from 'params-query'
 import Comment from 'components/Comment';
-import HeadOrg from 'pages/MerchantDetail/components/HeadOrg';
 import { postHistoryView } from 'user-behavior';
 import GoogleTagPush, { GoogleTagEvents } from 'utils/dataLayer';
 import { analytics, logEvent } from '../../firebase';
@@ -171,8 +170,8 @@ function SerProCoDetail() {
     return (
         response && org ?
             <>
-                {IS_MB && <HeadOrg onBackFunc={() => history.goBack()} org={org} />}
                 <Seo title={DETAIL.name} imageCover={DETAIL.image_url} content={DETAIL.description} />
+                <Head />
                 <Container>
                     <div className={style.wrapper} >
                         <div className={style.container}>
@@ -302,6 +301,43 @@ function SerProCoDetail() {
 }
 
 export default SerProCoDetail
+
+export const Head = () => {
+    const dispatch = useDispatch()
+    const history = useHistory()
+    const carts = useSelector((state: any) => state.carts);
+    const { USER } = useSelector((state: any) => state.USER);
+    useEffect(() => {
+        dispatch(getTotal(USER?.id));
+    }, [dispatch, carts]);
+    const refHead = useRef<HTMLDivElement>(null)
+    window.addEventListener("scroll", () => {
+        const scrolled = window.scrollY;
+        if (refHead.current) {
+            refHead.current.style.backgroundColor = `rgb(255 255 255 / ${scrolled}%)`
+        }
+    });
+    return (
+        <div ref={refHead} className={style.head}>
+            <XButton
+                onClick={() => history.goBack()}
+                icon={icon.chevronLeft}
+            />
+            <div className={style.head_right}>
+                <XButton
+                    icon={icon.ShoppingCartSimple}
+                    onClick={() => USER ? history.push("/gio-hang") : history.push("/sign-in?1")}
+                />
+                {
+                    carts.cartQuantity > 0 &&
+                    <div className={style.cart_badge}>
+                        {carts.cartQuantity >= 10 ? "9+" : carts.cartQuantity}
+                    </div>
+                }
+            </div>
+        </div>
+    )
+}
 
 export const SliderImage = ({ detail, org }: { detail: DetailProp, org: IOrganization }) => {
     const { data: dataTrends } = useQuery({

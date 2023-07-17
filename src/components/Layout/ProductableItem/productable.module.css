@@ -20,17 +20,12 @@
     transition: var(--trans);
 }
 
-.container:hover,
-.container_change:hover {
-    transform: translateY(-6px);
-    transition: var(--trans);
-}
-
 .img_container {
     padding-bottom: 100%;
     position: relative;
     background-color: var(--bg-color);
     border-radius: 8px 8px 0px 0px;
+    overflow: hidden;
 }
 
 .img_container_change {
@@ -39,31 +34,20 @@
     position: relative;
     background-color: var(--bg-color);
     border-radius: 8px;
+    overflow: hidden;
 }
 
 .item_percent {
-    position: absolute;
-    z-index: 3;
-    background-color: var(--red-cl);
-    border-radius: 4px;
-    -webkit-clip-path: polygon(100% 0, 100% 61%, 90% 100%, 0 100%, 0 0);
-    clip-path: polygon(100% 0, 100% 61%, 90% 100%, 0 100%, 0 0);
-    color: var(--bgWhite);
-    font-size: 14px;
+    background-color: var(--text-orange);
+    border-radius: 0 8px 0 8px;
+    color: var(--bg-white);
+    font-size: 12px;
     font-weight: 700;
-    margin: -8px 0 0 -6px;
-    padding: 4px 6px;
-    text-align: center;
-}
-
-.item_percent::after {
+    line-height: 16px;
+    padding: 5px;
     position: absolute;
-    content: "";
-    width: 20px;
-    height: 20px;
-    background-color: #ff9e90;
-    margin: 12px 0 0 -2px;
-    z-index: 5;
+    right: 0;
+    z-index: 2; 
 }
 
 .item_img {
@@ -73,6 +57,13 @@
     object-fit: cover;
     z-index: 1;
     border-radius: 8px 8px 0px 0px;
+    transition: all .4s;
+}
+
+.img_container:hover .item_img,
+.img_container_change:hover .item_img {
+    transform: scale(1.2);
+    transition: all .4s;
 }
 
 .item_org_avatar {

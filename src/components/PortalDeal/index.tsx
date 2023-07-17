@@ -1,16 +1,24 @@
 import { XButton } from "components/Layout";
 import icon from "constants/icon";
-import { IBanner } from "interface";
+import { Promotion } from "interface";
 import Lottie from "lottie-react";
-import { useState } from "react";
+import { FC, useState } from "react";
 import { createPortal } from "react-dom";
-import animationData from "../../assets/Confetti.json";
-import "./style.css";
+import animationData from "assets/Confetti.json";
 import { Link } from "react-router-dom";
 import { slugify } from "utils";
-export default function PortDeal({ banner }: { banner: IBanner }) {
+import { useGetPromotionQuery } from "redux-toolkit-query/hook-home";
+import style from "./style.module.css"
+
+export default function PortDeal() {
+  const { data } = useGetPromotionQuery()
+  const promotion = data?.find(i => i.is_popup === 1)
+  return promotion ? <Popup promotion={promotion} /> : <></>
+}
+
+const Popup: FC<{ promotion: Promotion }> = ({ promotion }) => {
   const sessionShow = !sessionStorage.getItem("show_portal") ? true : false;
-  const [showModal, setShowModal] = useState(!!banner && sessionShow);
+  const [showModal, setShowModal] = useState(!!promotion && sessionShow);
   const handleHidePortal = () => {
     sessionStorage.setItem("show_portal", JSON.stringify(false));
     setShowModal(false);
@@ -21,29 +29,29 @@ export default function PortDeal({ banner }: { banner: IBanner }) {
     return null;
   }
   return createPortal(
-    <div onClick={handleHidePortal} className="modal">
+    <div onClick={handleHidePortal} className={style.modal}>
       <div
         onClick={(e) => {
           e.stopPropagation();
           setTimeout(() => handleHidePortal(), 100)
         }}
-        className="modal-content"
+        className={style.modal_content}
       >
-        <Link to={{ pathname: `/landingpage/${slugify(banner.name)}?id=${banner.id}` }} >
-          <div className="lootie">
-            <Lottie animationData={animationData} />
-          </div>
-          <img className="portal-deal-img" src={banner.imageURL} alt="" />
-          <div className="lootie2">
-            <Lottie animationData={animationData} />
-          </div>
-          <XButton
-            className="modal-deal-btn"
-            onClick={handleHidePortal}
-            icon={icon.x}
-            iconSize={20}
-          />
+        <div className={style.lootie}>
+          <Lottie animationData={animationData} />
+        </div>
+        <Link className={style.link} to={{ pathname: `/deal/${slugify(promotion.name)}` }}>
+          <img className={style.portal_deal_img} src={promotion.imageURL} alt="" />
         </Link>
+        <div className={style.lootie2}>
+          <Lottie animationData={animationData} />
+        </div>
+        <XButton
+          className={style.modal_deal_btn}
+          onClick={handleHidePortal}
+          icon={icon.x}
+          iconSize={20}
+        />
       </div>
     </div>,
     document.body

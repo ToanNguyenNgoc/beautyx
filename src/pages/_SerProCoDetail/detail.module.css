@@ -1,3 +1,7 @@
+.head {
+    display: none;
+}
+
 .container {
     width: 100%;
     margin-top: 36px;
@@ -22,7 +26,8 @@
     background-color: var(--bg-color);
     position: relative;
 }
-.container_head_page{
+
+.container_head_page {
     position: absolute;
     z-index: 8;
     background-color: #43434380;
@@ -327,7 +332,8 @@
     display: block;
     text-align: center;
 }
-.detail_org_right_btn:nth-child(2){
+
+.detail_org_right_btn:nth-child(2) {
     background-color: var(--white);
 }
 
@@ -740,6 +746,46 @@
 }
 
 @media only screen and (max-width: 1023px) {
+    .head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 8px 12px;
+        position: fixed;
+        z-index: 102;
+        top: 0;
+        left: 0;
+        width: 100%;
+    }
+
+    .head button {
+        width: 36px;
+        height: 36px;
+        padding: 0px;
+        border-radius: 100%;
+        background-color: #fafafa8b;
+    }
+
+    .head_right {
+        position: relative;
+    }
+
+    .cart_badge {
+        position: absolute;
+        background-color: var(--red-cl);
+        border-radius: 100%;
+        color: var(--bgWhite);
+        font-size: 16px;
+        font-weight: 700;
+        line-height: 18px;
+        top: -7px;
+        right: -10px;
+        min-width: 24px;
+        padding: 3px 4px;
+        position: absolute;
+        text-align: center;
+    }
+
     .wrapper {
         background-color: #FAFAFA;
     }

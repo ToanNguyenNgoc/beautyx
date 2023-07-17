@@ -2,7 +2,6 @@ import React, { useContext, useRef, useState } from "react";
 import { useHistory } from "react-router-dom";
 import icon from "constants/icon";
 import { AppContext } from "context/AppProvider";
-import { extraOrgTimeWork } from "../../pages/MerchantDetail/Functions/extraOrg";
 import { paramsGalleries } from 'params-query'
 import API_ROUTE from "api/_api";
 import { IOrganization, IOrgMobaGalleries, Product, Service } from 'interface'
@@ -10,9 +9,9 @@ import { useDeviceMobile, useFavorite, useSwr, useSwrInfinite } from "hooks";
 import { AUTH_LOCATION } from "api/authLocation";
 import img from "constants/img";
 import { FullImage, SerProItem, XButton } from "components/Layout";
-import { useProductsSpecial, useServicesSpecial } from "pages/MerchantDetail/Functions";
 import { formatRouterLinkOrg } from "utils/formatRouterLink/formatRouter";
 import style from './map.module.css'
+import { extraOrgTimeWork, useProductsSpecial, useServicesSpecial } from "pages/Organization/hooks";
 
 interface IProps {
     org: IOrganization;

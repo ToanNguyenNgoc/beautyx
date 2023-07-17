@@ -37,7 +37,7 @@ function HomeApprove() {
         {isLoading && <LoadGrid item_count={8} grid={4} />}
         <div className={style.list}>
           {
-            data?.context?.data?.map(item => (
+            data?.context?.data?.filter(item => item.organization_id !== 11).map(item => (
               <ApproveItem key={item.id} item={item} />
             ))
           }

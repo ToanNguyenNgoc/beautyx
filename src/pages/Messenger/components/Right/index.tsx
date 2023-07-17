@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useLocation, useHistory } from "react-router-dom"
+import { useLocation, useHistory, Link } from "react-router-dom"
 import { IMessage, ITopic } from "interface"
 import style from "./right.module.css"
 import { XButton } from "components/Layout"
@@ -7,22 +7,27 @@ import icon from "constants/icon"
 import { formatDateFromNow, linkify, onErrorAvatar, unique, uniqueArr } from "utils"
 import { useAuth, useElementOnScreen, useSwr, useSwrInfinite } from "hooks"
 import InfiniteScroll from "react-infinite-scroll-component"
-import { Dispatch, SetStateAction, useContext, useEffect, useRef, useState, KeyboardEvent } from "react"
+import { Dispatch, SetStateAction, useContext, useEffect, useRef, useState, KeyboardEvent, FC } from "react"
 import { AppContext, AppContextType } from "context"
 import API_ROUTE from "api/_api"
 import { CACHE_TIME } from "common"
 import moment from "moment"
 import { chatApi } from "api"
-import { CircularProgress } from "@mui/material"
+import { Avatar, CircularProgress, Tooltip } from "@mui/material"
 
+interface RightProps {
+  _id?: string;
+  topicProp?: ITopic;
+  moreBtn?: boolean
+}
 
-export const Right = () => {
+export const Right: FC<RightProps> = ({ _id, topicProp, moreBtn }) => {
   const { echo } = useContext(AppContext) as AppContextType
   const { USER: user } = useAuth()
   const location = useLocation()
   const history = useHistory()
-  const topic_id = location.pathname.split("/")[2]
-  const topic: ITopic | undefined = location.state
+  const topic_id = _id || location.pathname.split("/")[2]
+  const topic: ITopic | undefined = topicProp || location.state
   const botRef = useRef<HTMLDivElement>(null)
   const onScrollBottom = () => {
     if (botRef.current) {
@@ -99,11 +104,21 @@ export const Right = () => {
             icon={icon.chevronRightBlack}
           />
           <div className={style.topic}>
-            <div className={style.topic_img}>
-              <img src="" alt="" />
-            </div>
+            <Avatar />
             <div className={style.topic_name}>{name}</div>
           </div>
+        </div>
+        <div className={style.head_right}>
+          {
+            moreBtn &&
+            <Tooltip placement="top-end" title="Xem tất cả đoạn chat">
+              <div>
+                <Link className={style.head_right_btn}
+                  to={{ pathname: `/messages/${topic_id}` }} ><img src={icon.menuWhite} alt="" />
+                </Link>
+              </div>
+            </Tooltip>
+          }
         </div>
       </div>
       <div

@@ -10,7 +10,7 @@ import { formatPhoneNumber } from "utils";
 import { PopupNotification } from "components/Notification";
 import { useLocation } from "react-router-dom";
 
-const pathsHide = ["messages","cong-dong"]
+const pathsHide = ["messages","cong-dong","video"]
 
 function Footer() {
   const url_map = `https://www.google.com/maps/@10.7968352,106.6920552,19.42z`;
