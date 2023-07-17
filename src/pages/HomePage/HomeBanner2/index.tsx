@@ -1,7 +1,7 @@
 import { XButton } from "components/Layout";
 import icon from "constants/icon";
 import { IBanner } from "interface";
-import React, { useContext, useState } from "react";
+import { useContext, useState } from "react";
 import { useSelector } from "react-redux";
 import Slider from "react-slick";
 import { clst, slugify } from "utils";
@@ -15,7 +15,6 @@ import { useDeviceMobile } from "hooks";
 import { AppContext } from "context/AppProvider";
 import { bannersHard } from '../data'
 import { EXTRA_FLAT_FORM } from "api/extraFlatForm";
-import PortDeal from "components/PortalDeal";
 
 interface PopupProps {
     open: boolean;
@@ -148,10 +147,8 @@ function HomeBanner2() {
     const banners1 = banners.slice(0, 1)
     const bannersLast = banners.slice(1, banners.length)
     const BANNERS = [...banners1, ...banners2, ...bannersLast].filter(i => i.type !== "POPUP")
-    const portal = banners.find((item: IBanner) => item.type === "POPUP")
     return (
         <>
-            {portal && <PortDeal banner={portal} />}
             <div className={style.container}>
                 <div className={style.banner_container}>
                     <Slider {...settings}>

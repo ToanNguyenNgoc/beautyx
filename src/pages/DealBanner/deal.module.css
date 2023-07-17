@@ -18,3 +18,29 @@
   z-index: 1;
   object-fit: cover;
 }
+
+.list {
+  padding: 24px 0px;
+  grid-gap: 12px;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+}
+
+.list>a>div {
+  box-shadow: none;
+}
+
+@media only screen and (max-width: 992px) and (min-width: 767px) {
+  .body {
+    margin-top: 44px;
+  }
+}
+
+@media only screen and (max-width: 767px) {
+  .body {
+    margin-top: 44px;
+  }
+  .list{
+    grid-template-columns: repeat(2, 1fr);
+  }
+}

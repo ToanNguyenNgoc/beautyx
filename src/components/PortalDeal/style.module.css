@@ -1,0 +1,67 @@
+.modal {
+  position: fixed;
+  background-color: rgba(0, 0, 0, 0.3);
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100vh;
+  z-index: 1000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal_content {
+  width: 40%;
+  aspect-ratio: 2 / 1;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal_deal_btn {
+  border-radius: 100px;
+  background-color: #fff;
+  position: absolute;
+  right: -15px;
+  top: -150px;
+  overflow: hidden;
+  padding: 8px;
+  z-index: 3;
+  z-index: 11;
+}
+
+.link {
+  display: block;
+  z-index: 10;
+  position: absolute;
+}
+
+.lootie {
+  position: absolute;
+  left: -30%;
+  top: -150px;
+  width: 100%;
+  height: max-content;
+}
+
+.lootie2 {
+  position: absolute;
+  right: -30%;
+  top: -50%;
+  width: 100%;
+  height: max-content;
+}
+
+.portal_deal_img {
+  z-index: 2;
+}
+
+@media only screen and (max-width: 1023px) {
+  .modal_content {
+    width: 90%;
+  }
+}

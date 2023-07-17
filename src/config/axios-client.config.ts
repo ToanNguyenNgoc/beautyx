@@ -53,3 +53,23 @@ axiosClient.interceptors.response.use(
     throw error;
   }
 );
+export const axiosClient2 = axios.create({
+  baseURL: baseURL,
+  headers: {
+    "Accept": "application/json, text/plain, */*",
+    "Content-Type": "application/json"
+  },
+  paramsSerializer: {
+    encode: (param: string) => { },
+    serialize: (params) => queryString.stringify(params),
+    indexes: false,
+  },
+});
+axiosClient2.interceptors.response.use(
+  (response) => {
+    return response;
+  },
+  (error) => {
+    throw error;
+  }
+);

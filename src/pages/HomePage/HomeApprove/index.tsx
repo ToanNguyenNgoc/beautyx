@@ -25,7 +25,7 @@ function HomeApprove() {
   const { data, isLoading } = useQuery({
     queryKey: [QR_KEY.APPROVE],
     queryFn: () => statisticApi.orgsApprove({
-      'page': 1, limit: 9
+      'page': 1, limit: 8
     }),
     enabled: isVisible,
     staleTime: STALE_TIME
