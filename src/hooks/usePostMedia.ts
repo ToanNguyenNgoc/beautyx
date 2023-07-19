@@ -19,6 +19,7 @@ export function usePostMedia() {
   const [isLoading, setIsLoading] = useState(false)
   const handlePostMedia = async ({ e, callBack, onError }: PostType) => {
     if (e.target.files) {
+      setIsLoading(true)
       let tempImages: Media[] = []
       for (var j = 0; j < e.target.files?.length; j++) {
         const item = {
@@ -29,7 +30,6 @@ export function usePostMedia() {
         tempImages.push(item)
       }
       if (callBack) { callBack(tempImages) }
-      setIsLoading(true)
       try {
         const mediaList: Media[] = []
         for (var i = 0; i < e.target.files?.length; i++) {
