@@ -232,12 +232,12 @@ function RouterConfig() {
       component: <HomeCateResult />,
     },
     {
-      path: "/xu-huong",
-      component: <Trends />,
+      path: "/xu-huong/:id",
+      component: <TrendsDetail />,
     },
     {
-      path: "/video/:id",
-      component: <TrendsDetail />,
+      path: "/xu-huong",
+      component: <Trends />,
     },
     {
       path: "/cong-dong",

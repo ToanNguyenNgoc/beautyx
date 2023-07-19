@@ -4,7 +4,7 @@ import { useDeviceMobile } from 'hooks';
 import { IDiscountPar, IITEMS_DISCOUNT } from 'interface/discount';
 import HeadTitle from 'features/HeadTitle';
 import HeadMobile from 'features/HeadMobile';
-import DiscountItem from 'pages/HomePage/HomeDiscounts/DiscountItem';
+import { DiscountItem } from 'pages/HomePage/components';
 import { LoadGrid } from 'components/LoadingSketion';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import style from './discounts.module.css'

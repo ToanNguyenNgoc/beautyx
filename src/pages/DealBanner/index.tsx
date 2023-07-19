@@ -14,7 +14,7 @@ import { useQuery } from "@tanstack/react-query";
 import { promotionApi } from "api";
 import { QR_KEY, STALE_TIME } from "config";
 import HeadMobile from "features/HeadMobile";
-import DiscountItem from "pages/HomePage/HomeDiscounts/DiscountItem";
+import { DiscountItem } from "pages/HomePage/components";
 
 function DealBanner() {
     const params = useParams()

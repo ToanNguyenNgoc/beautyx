@@ -27,7 +27,7 @@ import Comment from 'components/Comment';
 import { postHistoryView } from 'user-behavior';
 import GoogleTagPush, { GoogleTagEvents } from 'utils/dataLayer';
 import { analytics, logEvent } from '../../firebase';
-import HomeWatched from 'pages/HomePage/HomeWatched';
+import { HomeWatched } from 'pages/HomePage/components';
 import style from './detail.module.css'
 import { useGetByOrgIdCateIdQuery } from 'redux-toolkit-query/hook-detail';
 import { AppContext } from 'context/AppProvider';

@@ -1,6 +1,6 @@
 import { Container } from '@mui/material';
 import img from 'constants/img';
-import HomeRecommend from 'pages/HomePage/HomeRecommend';
+import { HomeRecommend } from 'pages/HomePage/components';
 import './style.css'
 export const EmptyRes = (
     { title, isRecommend, imgNull }

@@ -1,27 +1,30 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { Container } from "@mui/material";
+import {
+    HomeApprove,
+    HomeBanner,
+    HomeCate,
+    HomeCateMobile,
+    HomeCurrentLocation,
+    HomeDiscount,
+    HomeOrgDistance,
+    HomeOrgSpecial,
+    HomePartners,
+    HomePromotions,
+    HomeProvince,
+    HomeTag,
+    HomeTrafficData,
+    HomeTrends,
+    HomeWhyNot
+} from "./components"
 import tracking from "api/trackApi";
-import { OpenApp, PlashScreen } from "components/Layout";
+import { OpenApp } from "components/Layout";
 import { LoadHomeBanner } from "components/LoadingSketion/LoadHome";
 import { useDeviceMobile } from "hooks";
-import HomeDiscount from "./HomeDiscounts";
-import TrafficData from "./HomeTrafficData";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { STATUS } from "redux/status";
-import HomeBanner2 from "./HomeBanner2";
-import HomeCate from "./HomeCate";
-import HomeCate2 from "./HomeCate2";
-import HomeCurrentLocation from "./HomeCurrentLocation";
-import HomeOrgDistance from "./HomeOrgDistance";
-import HomePartners from "./HomePartners";
-import HomeProvince from "./HomeProvince";
-import HomeTags2 from "./HomeTags2";
-import HomeApprove from "./HomeApprove";
-import HomeTrends from "./HomeTrends";
-import HomeWhyNot from "./HomeWhyNot";
 import style from "./home.module.css";
-import HomePromotions from "./HomePromotions";
 import PortDeal from "components/PortalDeal";
 
 export default function HomePage() {
@@ -31,7 +34,8 @@ export default function HomePage() {
         tracking.HOME_LOAD();
     }, []);
     return (
-        <>  <PortDeal/>
+        <>
+            <PortDeal />
             <div className={style.container}>
                 <div className="home_container_par">
                     <Container>
@@ -40,15 +44,16 @@ export default function HomePage() {
                             {!IS_MB && <HomeCurrentLocation />}
                         </div>
                         {banner_status !== STATUS.SUCCESS ? (
-                            <>{IS_MB ? <PlashScreen /> : <LoadHomeBanner />}</>
+                             <LoadHomeBanner />
                         ) : (
                             <>
-                                <HomeBanner2 />
-                                {IS_MB ? <HomeCate2 /> : <HomeTags2 />}
+                                <HomeBanner />
+                                {IS_MB ? <HomeCateMobile /> : <HomeTag />}
                             </>
                         )}
                     </Container>
                 </div>
+                <HomeOrgSpecial />
                 <HomeDiscount />
                 <Container>
                     <HomeOrgDistance />
@@ -58,7 +63,7 @@ export default function HomePage() {
                     <HomeProvince />
                     {IS_MB ? <></> : <HomeTrends />}
                     <HomePartners />
-                    <TrafficData />
+                    <HomeTrafficData />
                 </Container>
                 <OpenApp type="none" />
             </div>

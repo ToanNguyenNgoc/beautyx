@@ -31,17 +31,20 @@
     position: relative;
     border-radius: 8px;
 }
-.trend_item_body iframe{
+
+.trend_item_body iframe {
     position: absolute;
 }
-.trend_item_img_thumb{
+
+.trend_item_img_thumb {
     width: 100%;
     height: 100%;
     border-radius: 8px;
     position: absolute;
     z-index: 1;
-    object-fit: cover; 
+    object-fit: cover;
 }
+
 .trend_item_video_thumb {
     width: 100%;
     height: 100%;
@@ -97,6 +100,20 @@
     font-size: 12px;
     line-height: 14px;
     font-weight: 500;
+}
+
+.load_grid>ul>li {
+    height: max-content;
+}
+
+.load_grid>ul>li>div:nth-child(1) {
+    height: unset;
+    aspect-ratio: 1 / 1.58;
+}
+
+.load_grid>ul>li>div:nth-child(2) {
+    height: 52px;
+    overflow: hidden;
 }
 
 @media only screen and (max-width: 1023px) {
