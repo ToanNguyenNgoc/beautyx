@@ -1,6 +1,6 @@
 import { Container, Dialog } from "@mui/material";
 import style from "./about.module.css";
-import { useContext, useState, useRef, FC, useEffect } from "react";
+import { useContext, useState, useRef, FC, useEffect, ChangeEvent } from "react";
 import { OrgContext, OrgContextType } from "context";
 import MapGL, { Marker, NavigationControl } from "react-map-gl";
 import icon from "constants/icon";

@@ -32,6 +32,7 @@ function Community() {
         <>
             {IS_MB && <HeadMobile title='Cộng đồng' />}
             <div className={style.container}>
+                {IS_MB && 
                 <div className={style.header_tab}>
                     <Container>
                         <div className={style.head_tab_cnt}>
@@ -52,6 +53,7 @@ function Community() {
                         </div>
                     </Container>
                 </div>
+                    }
                 <Switch>
                     <Redirect exact from="/cong-dong" to={`/cong-dong/trang-chu`} />
                     {routes.map((item, index) => (

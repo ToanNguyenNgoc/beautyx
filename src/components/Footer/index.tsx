@@ -52,9 +52,9 @@ function Footer() {
         },
         {
           id: 14,
-          title: "support@myspa.vn",
+          title: "support@beautyx.vn",
           type: "EMAIL",
-          url: "support@myspa.vn",
+          url: "support@beautyx.vn",
         },
         {
           id: 15,

@@ -1,8 +1,10 @@
 .container {
     padding: 12px;
-    margin: 24px auto 0px auto;
+    margin: 24px auto ;
     background-color: var(--bg-white);
-    width: 80%;
+    width: 700px;
+    border-radius: 14px;
+    box-shadow: 0 1px 2px var(--shadow-2);
 }
 
 .head,
@@ -84,7 +86,9 @@
 .interactive_item {
     margin-right: 12px;
 }
-
+.interactive{
+    margin: 14px 0;
+}
 .interactive_item button {
     padding: 2px;
     background-color: transparent;
@@ -97,6 +101,7 @@
     margin-left: 4px;
     color: #8C8C8C;
 }
+
 
 @media only screen and (max-width: 1023px) {
     .container {

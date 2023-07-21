@@ -248,7 +248,7 @@ import imageBlack from "assets/icon/imageBlack.svg";
 import refresh from "assets/icon/refresh.svg";
 import smilePurple from "assets/icon/smile_purple.svg";
 import imagePurple from "assets/icon/img_purple.svg";
-import stateLlite from "assets/icon/statellite.png"
+import stateLlite from "assets/icon/statellite.png";
 import street from "assets/icon/street.png";
 import movie from "assets/icon/movie.png";
 import expend from "assets/icons/expend.svg"
@@ -513,9 +513,12 @@ const icon = {
   sendBlack,
   imageBlack,
   refresh,
-  stateLlite, street, movie, expend,
+  stateLlite,
+  street,
+  movie,
+  expend,
   homePurpleBold,
   imageWhite, thumbUpWhite, chatSupport, tag,
-  addFileWhite, planPaperWhite
+  addFileWhite, planPaperWhite,
 };
 export default icon;

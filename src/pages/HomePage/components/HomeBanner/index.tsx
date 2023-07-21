@@ -1,9 +1,9 @@
 import { XButton } from "components/Layout";
 import icon from "constants/icon";
 import { IBanner } from "interface";
-import { FC, useContext, useState } from "react";
+import { useContext, useState } from "react";
 import { useSelector } from "react-redux";
-import Slider, { Settings } from "react-slick";
+import Slider from "react-slick";
 import { clst, slugify } from "utils";
 import tracking from "api/trackApi";
 import style from "./banner-mobile.module.css";
@@ -45,7 +45,7 @@ const NextButton = (props: any) => {
 };
 
 
-export const HomeBanner:FC=()=> {
+export function HomeBanner() {
     const { t } = useContext(AppContext) as any
     const PLAT_FORM = EXTRA_FLAT_FORM()
     const features = [
@@ -62,7 +62,7 @@ export const HomeBanner:FC=()=> {
     });
     const IS_MB = useDeviceMobile();
     const history = useHistory();
-    const settings:Settings = {
+    const settings = {
         dots: true,
         arrows: !IS_MB,
         speed: 1200,
@@ -197,8 +197,6 @@ export const HomeBanner:FC=()=> {
         </>
     );
 }
-
-export default HomeBanner;
 
 interface PopupBannerProps {
     popup: PopupProps;
