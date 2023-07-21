@@ -11,7 +11,9 @@ const {
     getProvince
 } = require("./api")
 const app = express();
+const dotenv = require("dotenv")
 
+dotenv.config({})
 const PORT = process.env.REACT_APP_PORT || 3001;
 const indexPath = path.resolve(__dirname, '..', 'build', 'index.html');
 
