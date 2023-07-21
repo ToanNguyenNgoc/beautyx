@@ -2,7 +2,7 @@ import { mediaApi } from "api";
 import { AxiosError } from "axios";
 import { ChangeEvent, useState } from "react";
 
-type Media = {
+export type Media = {
   model_id: number;
   original_url: string;
   model_type: string

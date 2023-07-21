@@ -65,7 +65,7 @@ class Comments {
         return axiosClient.post(url, pickBy(params, identity));
     }
 }
-const commentsApi = new Comments();
+export const commentsApi = new Comments();
 export default commentsApi;
 
 
