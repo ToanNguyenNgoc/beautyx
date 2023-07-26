@@ -1,16 +1,17 @@
-import React, { FC, useRef, useState, ChangeEvent, useEffect } from 'react';
+import { FC, useRef, useState, ChangeEvent, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import style from "./style.module.css"
 import IStore from 'interface/IStore';
-import { IComment } from 'interface';
-import { paramsComment } from 'params-query';
-import { useCheckUserBought, useNoti, usePostMedia, useSwrInfinite, Media } from 'hooks';
+import { BodyComment, IComment } from 'interface';
+import { useCheckUserBought, usePostMedia, Media } from 'hooks';
 import { useHistory } from 'react-router-dom';
 import commentsApi from 'api/commentsApi';
 import { XButton, XButtonFile } from 'components/Layout';
 import icon from 'constants/icon';
 import CommentParItem from './CommentParItem';
 import { Avatar, CircularProgress } from '@mui/material';
+import { useInfiniteQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { clst } from 'utils';
 
 export interface CommentProps {
   commentable_type: any
@@ -18,7 +19,9 @@ export interface CommentProps {
   org_id: number,
   commentsMixed?: IComment[],
   layout?: 'column' | 'row',
-  fixed_input?: boolean
+  fixed_input?: boolean,
+  classNameCnt?:string,
+  classNameInputCnt?:string
 }
 export interface InitialValue {
   body?: string,
@@ -26,30 +29,32 @@ export interface InitialValue {
 }
 
 function Comment({
-  commentable_type, commentable_id, org_id, commentsMixed = [], layout = 'row'
+  commentable_type, commentable_id, org_id, commentsMixed = [], layout = 'row', classNameCnt='', classNameInputCnt=''
 }: CommentProps) {
   const { USER } = useSelector((state: IStore) => state.USER);
   const { bought } = useCheckUserBought({ commentable_type, commentable_id, org_id })
   const { handlePostMedia } = usePostMedia()
-  const { firstLoad, resultLoad, noti } = useNoti()
   const history = useHistory()
   const [value, setValue] = useState<InitialValue>({ body: '' })
-  const [cmtArr, setCmtArr] = useState<IComment[]>([])
   const cntRef = useRef(null)
-  const params = {
-    ...paramsComment,
-    "filter[commentable_type]": commentable_type === "COMBO" ? "TREATMENT_COMBO" : commentable_type,
-    "filter[commentable_id]": commentable_id,
-    "filter[organization_id]": commentable_type !== "ORGANIZATION" ? org_id : ""
-  }
-  const { resData, totalItem, onLoadMore, isValidating } = useSwrInfinite(
-    {
-      API_URL: '/comments',
-      enable: commentable_id && org_id,
-      params: params
-    }
-  )
-  const paramPost = {
+  const client = useQueryClient()
+  const QR_KEY = ['COMMENT', commentable_type, commentable_id, org_id]
+  const { data } = useInfiniteQuery({
+    queryKey: QR_KEY,
+    queryFn: ({ pageParam = 1 }) => commentsApi.finAll({
+      'filter[organization_id]': commentable_type === "ORGANIZATION" ? "" : org_id,
+      'filter[commentable_type]': commentable_type,
+      'filter[commentable_id]': commentable_id,
+      'page': pageParam,
+      'limit': 20
+    }),
+    enabled:!!commentable_id
+  })
+  const { mutate, isLoading } = useMutation({
+    mutationFn: (body: BodyComment) => commentsApi.create(body),
+    onSuccess: () => { client.invalidateQueries({ queryKey: QR_KEY }); setValue({ body: '' }) }
+  })
+  const bodyComment = {
     "body": `${value?.body}${bought ? `‭` : ''}`,
     "commentable_id": commentable_id,
     "commentable_type": commentable_type === "COMBO" ? "TREATMENT_COMBO" : commentable_type,
@@ -58,22 +63,8 @@ function Comment({
   }
   const handlePostCmt = async () => {
     if (!USER) return history.push("/sign-in?1")
-    if ((paramPost.body.length > 0 && paramPost.body !== '‭') || (paramPost.media_ids?.length > 0)) {
-      firstLoad()
-      try {
-        const res = await commentsApi.postComment2(paramPost)
-        const newCmt = {
-          ...await res.data.context,
-          children: [],
-          media_url: value?.media_ids?.map(i => i.original_url)
-        }
-        setCmtArr([newCmt, ...cmtArr])
-        setValue({body:''})
-        resultLoad('')
-      } catch (error) {
-        console.log(error)
-        resultLoad('Có lỗi xảy ra. Vui lòng thử lại!')
-      }
+    if ((bodyComment.body.length > 0 && bodyComment.body !== '‭') || (bodyComment.media_ids?.length > 0)) {
+      mutate(bodyComment)
     }
   }
   const onChangeMedia = (e: ChangeEvent<HTMLInputElement>) => {
@@ -85,22 +76,26 @@ function Comment({
       }
     })
   }
+  const comments = data?.pages.map(i => i.context.data).flat() || []
   const onRemoveMedia = (model_id: number) => {
     setValue(prev => { return { ...prev, media_ids: prev?.media_ids?.filter(i => i.model_id !== model_id) } })
   }
   return (
-    <div ref={cntRef} className={style.container}>
-      <div className={style.input_wrapper}>
+    <div ref={cntRef} className={clst([style.container,classNameCnt])}>
+      <div className={clst([style.input_wrapper, classNameInputCnt])}>
         <div className={style.input_cnt}>
           <div className={style.input_avatar}>
             <Avatar src={USER?.avatar} alt={USER?.fullname} />
           </div>
           <div className={style.input}>
             <div className={style.input_body}>
-              <Textarea text={value?.body} onChange={(e) => setValue(prev => { return { ...prev, body: e.target.value } })} />
+              <Textarea
+                onKeyDown={handlePostCmt}
+                text={value?.body} onChange={(e) => setValue(prev => { return { ...prev, body: e.target.value } })}
+              />
               <div className={style.input_btn}>
                 <XButtonFile onChange={onChangeMedia} multiple iconSize={18} icon={icon.addFileWhite} />
-                <XButton loading={noti.load} onClick={handlePostCmt} iconSize={18} icon={icon.planPaperWhite} />
+                <XButton onClick={handlePostCmt} loading={isLoading} iconSize={18} icon={icon.planPaperWhite} />
               </div>
             </div>
             <div className={style.input_image}>
@@ -127,9 +122,10 @@ function Comment({
       <div className={style.body}>
         <ul className={style.cmt_list}>
           {
-            cmtArr.concat(resData).map((item: IComment, index: number) => (
+            comments.map((item: IComment, index: number) => (
               <li key={index} className={style.cmt_list_li}>
                 <CommentParItem
+                  layout={layout}
                   comment={item}
                   org_id={org_id}
                   USER_PAR_NAME={item.user?.fullname}
@@ -142,6 +138,7 @@ function Comment({
             commentsMixed.map((item: IComment, index: number) => (
               <li key={index} className={style.cmt_list_li}>
                 <CommentParItem
+                  layout={layout}
                   comment={item}
                   USER_PAR_NAME={item.user?.fullname}
                   mixed
@@ -151,17 +148,6 @@ function Comment({
           }
         </ul>
       </div>
-      {/* <div className={style.cmt_view_more}>
-        {
-          resData.length >= 10 && resData.length < totalItem &&
-          <XButton
-            title='Xem thêm đánh giá'
-            className={style.cmt_view_more_btn}
-            onClick={onViewMoreCmt}
-            loading={isValidating}
-          />
-        }
-      </div> */}
     </div>
   );
 }
@@ -193,7 +179,12 @@ const Textarea: FC<TextareaProps> = ({
       ref={textAreaRef}
       value={text}
       onChange={onChange}
-      onKeyDown={onKeyDown}
+      onKeyDown={(e) => {
+        if (e.code === "Enter") {
+          e.preventDefault()
+          onKeyDown(e)
+        }
+      }}
       className={style.input_txt} rows={1} placeholder='Aa'
     />
   )

@@ -1,6 +1,6 @@
 import { Container, Dialog } from "@mui/material";
 import style from "./about.module.css";
-import { useContext, useState, useRef, FC, useEffect, ChangeEvent } from "react";
+import { useContext, useState, useRef, FC, useEffect } from "react";
 import { OrgContext, OrgContextType } from "context";
 import MapGL, { Marker, NavigationControl } from "react-map-gl";
 import icon from "constants/icon";
@@ -316,9 +316,9 @@ const Video: FC<VideoProps> = ({ trend, org }) => {
     ...paramsComment,
     "filter[commentable_type]": "ORGANIZATION",
     "filter[commentable_id]": org?.id,
-    limit: 10,
+    limit: 15,
   };
-  const { totalComment } = useComment(param);
+  const { totalItem } = useComment(param,{fetchComments:true});
 
   useEffect(() => {
     onVideoPress();
@@ -397,7 +397,7 @@ const Video: FC<VideoProps> = ({ trend, org }) => {
               }}
             />
             <p className={style.about_popup_videos_count}>
-              {formatCountTrends(trend?.tiktok?.comment_count + totalComment)}
+              {formatCountTrends(trend?.tiktok?.comment_count + totalItem)}
             </p>
           </div>
           <div className={style.about_popup_videos_btn}>

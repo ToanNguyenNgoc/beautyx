@@ -1,42 +1,53 @@
 import commentsApi from "api/commentsApi";
 import IStore from "interface/IStore";
 import { ParamComment } from "params-query/param.interface";
-import { useState } from "react";
 import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { useSwr } from "./useSwr";
+import { useInfiniteQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { BodyComment, IComment } from "interface";
 
-export function useComment(param: ParamComment) {
-    const [loadPost, setLoadPost] = useState(false)
+export interface Options {
+    fetchComments?: boolean
+}
+export interface PostComment {
+    body: BodyComment,
+    onSuccess?: (comment: IComment) => void,
+    onError?: () => void
+}
+
+export function useComment(param?: ParamComment, options?: Options) {
     const history = useHistory()
     const { USER } = useSelector((state: IStore) => state.USER)
-    const { responseArray, result, mutate, totalItem } = useSwr({
-        API_URL: '/comments',
-        enable: param["filter[commentable_id]"],
-        params: param
+
+    const KEY = ['COMMENT', param]
+    const client = useQueryClient()
+    const { data, isLoading: loadComment } = useInfiniteQuery({
+        queryKey: KEY,
+        queryFn: ({ pageParam = 1 }) => commentsApi.finAll(
+            param ? { ...param, 'page': pageParam }
+                :
+                { 'filter[commentable_type]': 'ORGANIZATION', 'filter[commentable_id]': 1 }
+        ),
+        enabled: options?.fetchComments ? true : false,
     })
-    const comments = responseArray
-    const totalComment = totalItem
-    const postComment = async (body: any) => {
+    const { mutateAsync, isLoading: loadPost } = useMutation({
+        mutationFn: (body: BodyComment) => commentsApi.create(body),
+        onSuccess: () => client.invalidateQueries({ queryKey: KEY })
+    })
+
+    const comments = data?.pages.map(i => i.context.data).flat() || []
+    const totalItem = data?.pages[0]?.context?.total || 1
+    const postComment = async ({ body, onSuccess = () => { }, onError = () => { } }: PostComment) => {
         if (!USER) return history.push("/sign-in?1")
-        setLoadPost(true)
-        try {
-            const responsePost = await commentsApi.postComment2(body)
-            const muteDate = {
-                ...result,
-                data: {
-                    context: {
-                        ...result.data.context,
-                        data: [responsePost.data.context, ...responseArray]
-                    }
-                }
-            }
-            mutate(muteDate, true)
-            setLoadPost(false)
-        } catch (error) {
-            console.log(error)
-            setLoadPost(false)
-        }
+        const data = await mutateAsync(body)
+        if (data.context) { onSuccess(data.context) }
+        else { onError() }
     }
-    return { comments, loadPost, postComment, totalItem, totalComment }
+    return {
+        loadComment,
+        comments,
+        loadPost,
+        postComment,
+        totalItem
+    }
 }

@@ -2,27 +2,28 @@ import { Accordion, AccordionDetails, AccordionSummary, Avatar } from '@mui/mate
 import commentsApi from 'api/commentsApi';
 import { XButton } from 'components/Layout';
 import icon from 'constants/icon';
-import { useNoti } from 'hooks';
-import { IComment, ICommentChild } from 'interface';
+import { BodyComment, IComment, ICommentChild } from 'interface';
 import IStore from 'interface/IStore';
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { formatDateFromNow } from 'utils';
+import { clst, formatDateFromNow } from 'utils';
 import { InitialValue } from 'components/Comment';
 import style from "./style.module.css"
-
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 interface CommentParItemProps {
+  QR_KEY?: any,
   comment: IComment,
   org_id?: number,
   USER_PAR_NAME: string,
   bought?: boolean,
-  mixed?: boolean
+  mixed?: boolean,
+  layout?: 'column' | 'row',
 }
 
 function CommentParItem(props: CommentParItemProps) {
-  const { org_id, bought, comment, mixed = false } = props;
+  const { org_id, bought, comment, mixed = false, QR_KEY, layout } = props;
   let body = comment.body
   try {
     body = JSON.parse(comment.body).text
@@ -31,35 +32,24 @@ function CommentParItem(props: CommentParItemProps) {
   }
   const history = useHistory()
   const { USER } = useSelector((state: IStore) => state.USER)
-  const { firstLoad, resultLoad, noti } = useNoti()
-  //handle reply comment
   const [value, setValue] = useState<InitialValue>({ body: '' })
-  const [cmtArr, setCmtArr] = useState<ICommentChild[]>([])
-  const replyCount = comment.children?.length + cmtArr.length
-  const paramPost = {
+  const replyCount = comment.children?.length
+  const bodyComment = {
     "body": `${value?.body}${bought ? `‭` : ''}`,
     "commentable_id": comment.id,
     "commentable_type": "REPLY_COMMENT",
     "organization_id": org_id
   }
+  const client = useQueryClient()
+  const { mutate, isLoading } = useMutation({
+    mutationFn: (body: BodyComment) => commentsApi.create(body),
+    onSuccess: () => { client.invalidateQueries({ queryKey: QR_KEY }); setValue({ body: '' }) }
+  })
   const handlePostCmtReply = async () => {
     if (!USER) history.push("/sign-in?1")
-    if (USER && paramPost.body.length > 0 && paramPost.body !== '‭') {
-      firstLoad()
-      try {
-        const res = await commentsApi.postComment2(paramPost);
-        const newCmt = {
-          ...await res.data.context
-        }
-        setCmtArr([...cmtArr, newCmt])
-        resultLoad('')
-        setValue({ body: '' })
-      } catch (error) {
-        console.log(error)
-        resultLoad('Có lỗi xảy ra. Vui lòng thử lại!')
-      }
+    if (USER && bodyComment.body.length > 0 && bodyComment.body !== '‭') {
+      mutate(bodyComment)
     }
-
   }
   const starElement = []
   const rate: number = comment.rate?.point ?? 0
@@ -70,7 +60,7 @@ function CommentParItem(props: CommentParItemProps) {
   if (!mixed) replyBtnDis = true
   if (mixed && replyCount > 0) replyBtnDis = true
   return (
-    <div className={style.comment_item_cnt}>
+    <div className={clst([style.comment_item_cnt, layout === 'column' ? style.comment_item_cnt_ch:''])}>
       <div className={style.comment_item_head}>
         <div className={style.user}>
           <Avatar src={comment.user?.avatar} alt='' />
@@ -95,7 +85,7 @@ function CommentParItem(props: CommentParItemProps) {
           </div>
         </div>
         <span className={style.created_at}>{formatDateFromNow(comment.created_at)}</span>
-        <div className={style.reply_cnt}>
+        <div className={clst([style.reply_cnt, layout==='column' ? style.reply_cnt_ch:''])}>
           <Accordion>
             {
               replyBtnDis &&
@@ -110,8 +100,11 @@ function CommentParItem(props: CommentParItemProps) {
             }
             <AccordionDetails>
               {
-                comment.children.concat(cmtArr).map((child: ICommentChild, i: number) => (
-                  <div className={style.comment_item_cnt}>
+                comment.children.map((child: ICommentChild, i: number) => (
+                  <div 
+                  key={i} style={{marginBottom:'6px'}} 
+                  className={clst([style.comment_item_cnt, layout  === "column" ? style.comment_item_cnt_ch:''])}
+                  >
                     <div className={style.comment_item_head}>
                       <div className={style.user}>
                         <Avatar src={child.user?.avatar} alt='' />
@@ -125,7 +118,7 @@ function CommentParItem(props: CommentParItemProps) {
                       }
                     </div>
                     <div className={style.comment_body}>
-                      <div className={style.comment_body_txt}>
+                      <div style={{backgroundColor:'#c1dbe9'}} className={style.comment_body_txt}>
                         {child.body}
                         <div className={style.comment_body_media_list}>
                           {
@@ -153,7 +146,7 @@ function CommentParItem(props: CommentParItemProps) {
                       type="text" placeholder='Aa'
                       onKeyDown={(e) => { (e.code === "Enter") && handlePostCmtReply() }}
                     />
-                    <XButton onClick={handlePostCmtReply} loading={noti.load} icon={icon.planPaperWhite} iconSize={18} />
+                    <XButton onClick={handlePostCmtReply} loading={isLoading} icon={icon.planPaperWhite} iconSize={18} />
                   </div>
                 </div>
               }

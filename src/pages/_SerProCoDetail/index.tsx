@@ -34,8 +34,8 @@ import { AppContext } from 'context/AppProvider';
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 import API_3RD from 'api/3rd-api';
-import { CACHE_TIME } from 'common';
 import { ITrend } from 'pages/Trends/trend.interface';
+import { STALE_TIME } from 'config';
 
 interface RouteType {
     path: string,
@@ -346,7 +346,7 @@ export const SliderImage = ({ detail, org }: { detail: DetailProp, org: IOrganiz
             params: { "filter[organization_id]": org?.id },
         }),
         enabled: org?.id ? true : false,
-        cacheTime: CACHE_TIME,
+        staleTime: STALE_TIME,
     });
     const trends = dataTrends?.data.data.context.data ?? []
     const trend_videos_url = trends.filter((i: ITrend) => i.services.map(s => s.id)
