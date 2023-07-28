@@ -34,11 +34,23 @@
     padding: 4px 8px;
     margin: 4px 0px;
     width: max-content;
-    /* cursor: pointer; */
-    cursor: no-drop;
+    cursor: pointer;
     border-radius: 4px;
     font-size: 16px;
     line-height: 18px;
     font-weight: 600;
     transition: var(--trans);
+    position: relative;
+}
+.method_availability{
+    position: absolute;
+    background-color: var(--green);
+    width: max-content;
+    font-size: 10px;
+    line-height: 11px;
+    padding: 1px 4px;
+    border-radius: 6px;
+    top: -1px;
+    right: -38px;
+    color: var(--white);
 }

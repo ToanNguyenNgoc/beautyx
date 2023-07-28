@@ -29,7 +29,7 @@ export default function HomePage() {
     const [banner_status] = useSelector((state: any) => [state.HOME.status, state.USER]);
     useEffect(() => {
         tracking.HOME_LOAD();
-    }, []);
+    }, [])
     return (
         <>  <PortDeal/>
             <div className={style.container}>

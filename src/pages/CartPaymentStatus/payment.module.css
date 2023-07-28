@@ -51,6 +51,103 @@
     justify-content: flex-end;
 }
 
+.payment_left_open_payment {
+    margin-top: 24px;
+    display: flex;
+    justify-content: center;
+}
+
+.open_payment_btn {
+    padding: 10px 18px !important;
+    background-color: var(--pr-green) !important;
+    border-radius: 6px !important;
+}
+.payment_left_other{
+    margin-top: 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.payment_left_other_title{
+    text-align: center;
+    font-size: 13px;
+    font-weight: 500;
+}
+.payment_left_other_qr{
+    margin-top: 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.qr_img{
+    width: 240px;
+    height: 240px;
+    object-fit: cover;
+}
+.qr_img_download_btn{
+    display: flex;
+    width: max-content;
+    background-color: var(--green);
+    padding: 4px;
+    border-radius: 4px;
+    margin-bottom: 2px;
+}
+.qr_img_download_btn img{
+    transform: scale(0.7);
+}
+.bank_name{
+    text-align: center;
+    font-size: 16px;
+    font-weight: 500;
+}
+.bank_account_number{
+    margin-top: -8px;
+    display: flex;
+    align-items: flex-end;
+    font-size: 16px;
+    font-weight: 600;
+}
+.copy_info_btn{
+    margin-left: 6px;
+    padding: 0px;
+    width: 28px;
+    height: 28px;
+    border-radius: 4px;
+}
+.payment_left_other_desc{
+    margin-top: 12px;
+}
+.other_desc_row{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 2px;
+}
+.other_desc_row label{
+    font-size: 14px;
+    font-weight: 500;
+    margin-right: 10px;
+}
+.other_desc_row span{
+    font-size: 16px;
+    font-weight: 700;
+}
+.payment_left_other_guide{
+    margin-top: 12px;
+    background-color: #FEE3D2;
+    padding: 6px 8px;
+    border-radius: 6px;
+}
+.payment_left_other_guide p{
+    margin-bottom: 2px;
+    font-size: 14px;
+    line-height: 16px;
+    font-weight: 500;
+}
+
+
+
+
 .payment_status_decs_top_title,
 .payment_status_decs_top_box {
     font-size: 14px;
@@ -297,6 +394,10 @@
     .payment_left_qr_cnt,
     .payment_left_body_guide {
         display: none;
+    }
+
+    .open_payment_btn {
+        background-color: var(--pr-green);
     }
 
     .payment_left_body_status {

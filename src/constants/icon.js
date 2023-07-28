@@ -260,6 +260,7 @@ import shareWhiteArrow from "assets/icon/shareWhiteArown.svg"
 import heartSolidWhite from "assets/icon/heartSolidWhite.svg"
 import chatSupport from "assets/icon/chatSupport.png"
 import tag from "assets/icon/tag.png"
+import copyWhite from "assets/icon/copyWhite.svg"
 const icon = {
   heartSolidWhite,
   eyeWhite,
@@ -519,6 +520,7 @@ const icon = {
   imageWhite,
   thumbUpWhite,
   chatSupport,
-  tag
+  tag,
+  copyWhite
 };
 export default icon;
