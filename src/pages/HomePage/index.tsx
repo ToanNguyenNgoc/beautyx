@@ -23,6 +23,7 @@ import HomeWhyNot from "./HomeWhyNot";
 import style from "./home.module.css";
 import HomePromotions from "./HomePromotions";
 import PortDeal from "components/PortalDeal";
+import HomeStatisticsCustomer from "pages/HomePage/HomeStatisticsCustomers";
 
 export default function HomePage() {
     const IS_MB = useDeviceMobile();
@@ -31,37 +32,41 @@ export default function HomePage() {
         tracking.HOME_LOAD();
     }, []);
     return (
-        <>  <PortDeal/>
-            <div className={style.container}>
-                <div className="home_container_par">
-                    <Container>
-                        <div className={style.home_cate_head}>
-                            <HomeCate />
-                            {!IS_MB && <HomeCurrentLocation />}
-                        </div>
-                        {banner_status !== STATUS.SUCCESS ? (
-                            <>{IS_MB ? <PlashScreen /> : <LoadHomeBanner />}</>
-                        ) : (
-                            <>
-                                <HomeBanner2 />
-                                {IS_MB ? <HomeCate2 /> : <HomeTags2 />}
-                            </>
-                        )}
-                    </Container>
-                </div>
-                <HomeDiscount />
-                <Container>
-                    <HomeOrgDistance />
-                    <HomePromotions />
-                    <HomeApprove />
-                    <HomeWhyNot />
-                    <HomeProvince />
-                    {IS_MB ? <></> : <HomeTrends />}
-                    <HomePartners />
-                    <TrafficData />
-                </Container>
-                <OpenApp type="none" />
-            </div>
-        </>
+      <>
+        {" "}
+        <PortDeal />
+        <div className={style.container}>
+          <div className="home_container_par">
+            <Container>
+              <div className={style.home_cate_head}>
+                <HomeCate />
+                {!IS_MB && <HomeCurrentLocation />}
+              </div>
+              {banner_status !== STATUS.SUCCESS ? (
+                <>{IS_MB ? <PlashScreen /> : <LoadHomeBanner />}</>
+              ) : (
+                <>
+                  <HomeBanner2 />
+                  {IS_MB ? <HomeCate2 /> : <HomeTags2 />}
+                </>
+              )}
+            </Container>
+          </div>
+          <HomeDiscount />
+          <Container>
+            <HomeOrgDistance />
+            <HomePromotions />
+            <HomeApprove />
+            <HomeWhyNot />
+            <HomeProvince />
+            {IS_MB ? <></> : <HomeTrends />}
+            <HomePartners />
+            <TrafficData />
+            {IS_MB ? <></> : <HomeTrends />}
+            <HomeStatisticsCustomer />
+          </Container>
+          <OpenApp type="none" />
+        </div>
+      </>
     );
 }
