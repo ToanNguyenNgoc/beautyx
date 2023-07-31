@@ -62,7 +62,6 @@ export default function HomePage() {
             {IS_MB ? <></> : <HomeTrends />}
             <HomePartners />
             <TrafficData />
-            {IS_MB ? <></> : <HomeTrends />}
             <HomeStatisticsCustomer />
           </Container>
           <OpenApp type="none" />
