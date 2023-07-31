@@ -27,7 +27,7 @@ const Prev = (props: any) => {
   );
 };
 
-export const HomePromotions:FC=()=> {
+export const HomePromotions: FC = () => {
   const { data } = useGetPromotionQuery()
   const [title, setTitle] = useState<string>()
   const mb = useDeviceMobile()
@@ -65,7 +65,7 @@ export const HomePromotions:FC=()=> {
                 <Link onClick={() => scrollTop('auto')} key={item.id} className={style.deal_cnt} to={{ pathname: `/deal/${slugify(item.name)}` }} >
                   <div className={style.deal}>
                     <div className={style.image_cnt}>
-                      <img src={item.is_popup === 1 ? item.thumbnail : item.imageURL} alt="" className={style.image} />
+                      <img src={item.is_popup === 1 ? (item.thumbnail_url || '') : (item.thumbnail_url || '')} alt="" className={style.image} />
                     </div>
                   </div>
                 </Link>

@@ -37,7 +37,7 @@ function DealBanner() {
             <Container>
                 <div className={style.body}>
                     <div className={style.image_thumbnail}>
-                        <img src={detail?.is_popup === 1 ? detail?.thumbnail : detail?.imageURL} alt="" />
+                        <img src={detail?.is_popup === 1 ? (detail?.thumbnail_url || '') : (detail?.media_url || '')} alt="" />
                     </div>
                     <div className={style.list}>
                         {

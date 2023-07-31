@@ -41,7 +41,7 @@ const Popup: FC<{ promotion: Promotion }> = ({ promotion }) => {
           <Lottie animationData={animationData} />
         </div>
         <Link className={style.link} to={{ pathname: `/deal/${slugify(promotion.name)}` }}>
-          <img className={style.portal_deal_img} src={promotion.imageURL} alt="" />
+          <img className={style.portal_deal_img} src={promotion.media_url || ''} alt="" />
         </Link>
         <div className={style.lootie2}>
           <Lottie animationData={animationData} />
