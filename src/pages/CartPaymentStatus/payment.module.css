@@ -397,7 +397,12 @@
     }
 
     .open_payment_btn {
-        background-color: var(--pr-green);
+        background-color: var(--purple);
+        position: fixed;
+        bottom: 20px;
+        right: 12px;
+        z-index: 62;
+        padding: 8px 12px !important;
     }
 
     .payment_left_body_status {

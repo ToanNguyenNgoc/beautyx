@@ -31,8 +31,8 @@ const PaymentRender: FC<PaymentProps> = ({ pay_url, payment_method, res }) => {
       case MOMO.name_key:
         return <MomoRender pay_url={pay_url} />;
       case PAY_ON.name_key:
-        // return <PayonRender pay_url={pay_url} />;
-        return <OtherRender res={res} />
+        return <PayonRender pay_url={pay_url} />;
+        // return <OtherRender res={res} />
       default:
         <>
         </>
@@ -105,7 +105,7 @@ const PayonRender = ({ pay_url }: { pay_url: string }) => {
       </span>
       <div className={style.payment_left_open_payment}>
         <XButton className={style.open_payment_btn} onClick={() => onPaymentFrame(pay_url)}>
-          Trở lại thanh toán
+          Thanh toán
         </XButton>
       </div>
     </div>

@@ -48,7 +48,7 @@ function CartPaymentStatus() {
 
     const [statusOrder, setStatusOrder] = useState<StatusOrderProps>({
         cancel: false,
-        time_refresh: 1000 * 60
+        time_refresh: 1000
     })
     const { response } = useSwr({
         API_URL: `/paymentgateways/${transaction_uuid}/status`,
