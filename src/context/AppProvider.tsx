@@ -10,7 +10,7 @@ import { useAppointment, useOrderService } from "hooks";
 import Echo from 'laravel-echo'
 import IStore from "interface/IStore";
 import { echoConfig } from "config";
-import { LOCAL_TK } from "common";
+import { LOCAL_TK } from "common"
 const Pusher = require('pusher-js')
 
 export type AppContextType = {
@@ -34,6 +34,7 @@ export default function AppProvider({ children }: { children: any }) {
     const [echo, setEcho] = useState<Echo | null>(null)
     useEffect(() => {
         if (USER) {
+            
             setEcho(echoConfig())
         } else {
             // echoConfig().disconnect()

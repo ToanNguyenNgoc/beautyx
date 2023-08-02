@@ -58,16 +58,15 @@ function PaymentMethod(props: PaymentMethodType) {
             <div className={style.drawer}>
               <ul className={style.list_method}>
                 {
-                  methods.map(item => (
+                  methods.filter(i => availability(i.name_key)).map(item => (
                     <li
                       style={item.name_key === methodKey ? {
                         backgroundColor: 'var(--pink-momo)',
                         color: 'var(--bg-white)'
                       } : {}}
-                      onClick={() => availability(item.name_key) && onChooseMethod(item)} key={item.id} className={style.method_item}
+                      onClick={() => onChooseMethod(item)} key={item.id} className={style.method_item}
                     >
                       <span>{item.name_key} {item.name_key === OTHER.name_key && '(Chuyển khoản)'}</span>
-                      {availability(item.name_key) && <span className={style.method_availability}>Khả dụng</span>}
                     </li>
                   ))
                 }
