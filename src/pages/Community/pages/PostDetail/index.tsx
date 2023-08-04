@@ -41,10 +41,10 @@ function PostDetail() {
             </div>
             <div className={style.head_right}>
               <p className={style.user_name}>{post?.user?.fullname}</p>
-              <p className={style.post_group_name}>
+              {/* <p className={style.post_group_name}>
                 Trong nhóm{" "}
                 <Link to={{ pathname: "/" }}>{"post?.group?.name"}</Link>
-              </p>
+              </p> */}
               <p className={style.created_add}>
                 {formatDateFromNow(post?.created_at ?? "")}
               </p>

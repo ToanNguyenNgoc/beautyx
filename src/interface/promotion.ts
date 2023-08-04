@@ -1,12 +1,13 @@
 import { IDiscountPar } from "interface/discount";
-import { Productable } from "interface/productable";
+import { Media, Productable } from "interface/productable";
 
 export interface Promotion {
   id: number,
   name: string,
   content: string | null,
-  imageURL: string,
-  thumbnail: string,
+  media_url: string | null,
+  thumbnail_url: string | null,
+  media: Media[]
   is_popup: 1 | 0,
   valid_from: string,
   valid_util: string,

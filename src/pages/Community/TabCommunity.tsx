@@ -26,7 +26,7 @@ function TabCommunity() {
     <>
       <div className={style.com_container}>
         <div className={style.com_container_left}>
-          <span className={style.com_container_left_title}>
+          {/* <span className={style.com_container_left_title}>
             Danh mục đề xuất
           </span>
           <ul className={style.group_cate_list}>
@@ -49,10 +49,10 @@ function TabCommunity() {
                 </Link>
               </li>
             ))}
-          </ul>
+          </ul> */}
         </div>
         <div className={style.com_container_center}>
-          <div className={style.center_group_recommend}>
+          {/* <div className={style.center_group_recommend}>
             <p className={style.section_title}>Gợi ý cho bạn</p>
             <ul className={style.group_recommend_list}>
               {groups.map((item, index: number) => (
@@ -84,7 +84,7 @@ function TabCommunity() {
                 </li>
               ))}
             </ul>
-          </div>
+          </div> */}
           <div className={style.center_post_cnt}>
             <div className={style.center_post_head}>
               <span className={style.section_title}>Bài viết</span>

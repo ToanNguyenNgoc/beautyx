@@ -2,9 +2,9 @@ import { useContext } from 'react'
 import style from './deal.module.css'
 import { OrgContext, OrgContextType } from 'context'
 import { IITEMS_DISCOUNT, Product, Service } from 'interface'
-import DiscountItem from 'pages/HomePage/HomeDiscounts/DiscountItem'
 import { SerProItem } from 'components/Layout'
 import { Container, useMediaQuery } from '@mui/material'
+import { DiscountItem } from 'pages/HomePage/components'
 
 export const Deal = () => {
   const mb = useMediaQuery('(max-width:767px)')

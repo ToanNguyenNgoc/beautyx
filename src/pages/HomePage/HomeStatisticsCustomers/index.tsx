@@ -32,7 +32,6 @@ export default function HomeStatisticsCustomer() {
     swipe: false,
     pauseOnHover: false,
     autoplaySpeed: 20000
-    // autoplaySpeed: Math.round(getRandomAutoplaySpeed() * 1000) / 1000,
   };
 
   return (

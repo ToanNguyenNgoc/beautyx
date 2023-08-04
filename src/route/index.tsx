@@ -51,7 +51,6 @@ const LandingPage = lazy(() => import("pages/LandingPage"));
 const OtpMbPage = lazy(() => import("pages/OtpMbPage"));
 const Trends = lazy(() => import("pages/Trends"));
 const Community = lazy(() => import("pages/Community"));
-const TrendsDetail = lazy(() => import("pages/TrendsDetail"));
 const Rewards = lazy(() => import("pages/Rewards"));
 const Messenger = lazy(() => import("pages/Messenger"))
 const Seller = lazy(() => import("pages/SellerCenter"))
@@ -232,12 +231,12 @@ function RouterConfig() {
       component: <HomeCateResult />,
     },
     {
-      path: "/xu-huong",
+      path: "/xu-huong/:id",
       component: <Trends />,
     },
     {
-      path: "/video/:id",
-      component: <TrendsDetail />,
+      path: "/xu-huong",
+      component: <Trends />,
     },
     {
       path: "/cong-dong",

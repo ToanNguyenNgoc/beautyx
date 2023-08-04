@@ -48,3 +48,11 @@ export interface IComment {
     children: ICommentChild[],
     media_url: string[],
 }
+export interface BodyComment {
+    commentable_type: string;
+    commentable_id: number | string;
+    organization_id?: number | string;
+    media_ids?: string[] | number[];
+    rate?: number;
+    body?: string
+}

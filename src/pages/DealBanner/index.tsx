@@ -14,7 +14,7 @@ import { useQuery } from "@tanstack/react-query";
 import { promotionApi } from "api";
 import { QR_KEY, STALE_TIME } from "config";
 import HeadMobile from "features/HeadMobile";
-import DiscountItem from "pages/HomePage/HomeDiscounts/DiscountItem";
+import { DiscountItem } from "pages/HomePage/components";
 
 function DealBanner() {
     const params = useParams()
@@ -37,7 +37,10 @@ function DealBanner() {
             <Container>
                 <div className={style.body}>
                     <div className={style.image_thumbnail}>
-                        <img src={detail?.is_popup === 1 ? detail?.thumbnail : detail?.imageURL} alt="" />
+                        {
+                            detail &&
+                            <img src={detail?.is_popup === 1 ? (detail?.thumbnail_url || '') : (detail?.media_url || '')} alt="" />
+                        }
                     </div>
                     <div className={style.list}>
                         {

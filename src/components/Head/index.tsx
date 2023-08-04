@@ -58,14 +58,14 @@ const pathHeader = [
     "/ket-qua-tim-kiem/cua-hang",
     "/ket-qua-tim-kiem/dich-vu/",
     "/ket-qua-tim-kiem/san-pham/",
-    "/ket-qua-tim-kiem/cua-hang/",
+    "/ket-qua-tim-kiem/cua-hang/"
 ]
 const notPathHeader = [
     '/sign-in',
     '/sign-up',
     '/doi-mat-khau',
     '/trang-thai-don-hang/',
-    '/ban-do'
+    '/ban-do',
 ]
 
 

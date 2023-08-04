@@ -4,7 +4,8 @@ import "./style.css"
 
 interface LoadGridProp {
     grid?: number,
-    item_count?: number
+    item_count?: number,
+    className?: string
 }
 
 export function LoadGrid(props: LoadGridProp) {
@@ -41,7 +42,7 @@ export function LoadGrid(props: LoadGridProp) {
         return GridChildElement
     }
     return (
-        <div>
+        <div className={props.className} >
             <ul
                 style={grid ? { gridTemplateColumns: `repeat(${grid}, 1fr)` } : {}}
                 className="load_grid_list"

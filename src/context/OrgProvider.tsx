@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import API_3RD from "api/3rd-api";
 import API_ROUTE from "api/_api";
 import axios from "axios";
-import { CACHE_TIME } from "common";
+import { STALE_TIME } from "config";
 import { useSwr } from "hooks";
 import { IDiscountPar, IOrgMobaGalleries, IOrganization, Product, Service } from "interface";
 import { ITrend } from "pages/Trends/trend.interface";
@@ -52,7 +52,7 @@ export function OrgProvider({ children }: { children: ReactNode }) {
       params: { "filter[organization_id]": org?.id, "include":"comments" },
     }),
     enabled: org?.id ? true : false,
-    cacheTime: CACHE_TIME,
+    staleTime: STALE_TIME,
   });
   const trends = dataTrends?.data.data.context.data ?? []
   const value = {

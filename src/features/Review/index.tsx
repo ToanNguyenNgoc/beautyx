@@ -1,12 +1,11 @@
-import React, { ChangeEvent, useState } from "react";
+import { ChangeEvent, useState } from "react";
 import { Dialog } from "@mui/material";
 import { useSelector } from "react-redux";
 import { onErrorImg } from "utils";
 import icon from "constants/icon";
 import HeadMobile from "features/HeadMobile";
 import { XButton } from "components/Layout";
-import { useDeviceMobile, useNoti, usePostMedia } from "hooks";
-import commentsApi from "api/commentsApi";
+import { useComment, useDeviceMobile, useNoti, usePostMedia } from "hooks";
 import { IOrganization, ItemReviewed } from "interface";
 import style from './review.module.css'
 import { PopupSnack } from "components/Notification";
@@ -47,7 +46,7 @@ function Review(props: ReviewProps) {
     const IS_MB = useDeviceMobile();
     const { handlePostMedia } = usePostMedia()
     const { USER } = useSelector((state: any) => state.USER);
-    const { firstLoad, resultLoad, noti, onCloseNoti } = useNoti()
+    const { resultLoad, noti, onCloseNoti } = useNoti()
     const [comment, setComment] = useState(initComment)
     const onRateStar = (id: number) => {
         setComment({
@@ -79,25 +78,25 @@ function Review(props: ReviewProps) {
             media_ids: comment.media_ids.filter(i => i.model_id !== model_id)
         })
     }
-
-    const onSubmitComment = async () => {
-        firstLoad()
-        try {
-            for (var i = 0; i < itemsReviews.length; i++) {
-                await commentsApi.postComment2({
-                    "body": `${comment.body} ‭`,
-                    "commentable_id": itemsReviews[i].id,
-                    "commentable_type": itemsReviews[i].type,
-                    "organization_id": org.id,
-                    "media_ids": comment.media_ids.map(i => i.model_id),
-                    "rate": comment.rate
-                })
+    const { postComment, loadPost } = useComment()
+    const onSubmitComment = () => {
+        for (var i = 0; i < itemsReviews.length; i++) {
+            const body = {
+                "body": `${comment.body} ‭`,
+                "commentable_id": itemsReviews[i].id,
+                "commentable_type": itemsReviews[i].type,
+                "organization_id": org.id,
+                "media_ids": comment.media_ids.map(i => i.model_id),
+                "rate": comment.rate
             }
-            resultLoad(`Cảm ơn "${USER?.fullname}" đã đánh giá dịch vụ`)
-            setComment(initComment)
-        } catch (error) {
-            console.log(error)
-            resultLoad('Có lỗi xảy ra. Vui lòng thử lại')
+            postComment({
+                body,
+                onSuccess: () => {
+                    resultLoad(`Cảm ơn "${USER?.fullname}" đã đánh giá dịch vụ`);
+                    setComment(initComment)
+                },
+                onError: () => resultLoad('Có lỗi xảy ra. Vui lòng thử lại')
+            })
         }
     };
     return (
@@ -204,7 +203,7 @@ function Review(props: ReviewProps) {
                     <div className={style.bottom}>
                         <XButton
                             title="Gửi đánh giá"
-                            loading={noti.load}
+                            loading={loadPost}
                             onClick={onSubmitComment}
                             className={style.bottom_btn}
                         />
