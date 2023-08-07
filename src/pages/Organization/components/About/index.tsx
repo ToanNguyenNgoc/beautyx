@@ -50,7 +50,7 @@ export const About = () => {
             dangerouslySetInnerHTML={{
               __html:
                 org.content ||
-                org.description ||
+                org.organization_content?.content ||
                 `
               <p>&emsp;Chào mừng bạn đến với ${org.name} - nơi mang đến sự thư giãn và chăm sóc toàn diện cho cơ thể và tâm hồn của bạn. Tại ${org.name}, chúng tôi tạo ra một không gian yên tĩnh và sang trọng, nơi bạn có thể tránh xa cuộc sống bận rộn và thả mình vào không gian tuyệt vời của sự thư thái.</p>
               </br>

@@ -37,4 +37,7 @@ export interface IOrganization {
     distance: number | undefined;
     tags: [];
     telephone: [];
+    organization_content?:{
+        content:string
+    }
 }
