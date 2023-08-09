@@ -2,8 +2,8 @@
     position: fixed;
     width: 40px;
     height: 40px;
-    bottom: 140px;
-    right: 12px;
+    bottom: 80px;
+    right: 24px;
     border-radius: 100px;
     z-index: 10;
     box-shadow: 0px 0px 4px 0px rgba(255, 80, 181, 0.76);
@@ -19,4 +19,11 @@
 .navigate_map_btn img {
     margin: 0px;
     width: 100%;
+}
+
+@media screen and (max-width: 767.98px) {
+    .container{
+        bottom: 140px;
+        right: 12px;
+    }
 }

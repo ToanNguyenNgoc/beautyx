@@ -1,8 +1,11 @@
 import { Avatar } from '@mui/material';
+import Lottie from 'lottie-react';
 import { useQuery } from '@tanstack/react-query';
 import { statisticApi } from 'api';
 import Slider from 'react-slick';
 import style from "./style.module.css";
+import animationData from "assets/confetti2.json";
+import { useState } from 'react';
 
 export default function HomeStatisticsCustomer() {
   const { data } = useQuery({
@@ -10,14 +13,14 @@ export default function HomeStatisticsCustomer() {
     queryFn: () => statisticApi.customers()
   })
 
-  // function getRandomAutoplaySpeed() {
-  //   const minAutoplaySpeed = 1000; 
-  //   const maxAutoplaySpeed = 10000; 
-  //   return (
-  //     Math.floor(Math.random() * (maxAutoplaySpeed - minAutoplaySpeed + 1)) +
-  //     minAutoplaySpeed
-  //   );
-  // }
+  const [playAnimation, setPlayAnimation] = useState(false);
+
+  const onRefTimer = async () => {
+    setPlayAnimation(true)
+    setTimeout(() => {
+      setPlayAnimation(false);
+    }, 3000); 
+  }
 
   const settings = {
     dots: false,
@@ -31,12 +34,22 @@ export default function HomeStatisticsCustomer() {
     speed: 500,
     swipe: false,
     pauseOnHover: false,
-    autoplaySpeed: 20000
+    autoplaySpeed: 20000,
+    afterChange: onRefTimer
   };
 
   return (
     <>
       <div className={style.customer_wraper}>
+        {playAnimation && (
+          <Lottie
+            className={style.customer_lootie}
+            width={350}
+            height={100}
+            animationData={animationData}
+            loop={false}
+          />
+        )}
         <Slider {...settings}>
           {data?.context?.map((item, i) => (
             <div key={i}>
@@ -45,7 +58,10 @@ export default function HomeStatisticsCustomer() {
                   src={item.avatar || item.fullname}
                   sx={{ width: 24, height: 24 }}
                 />
-                <div className={style.customer_name}>{item.fullname} Vừa tham gia BeautyX</div>
+
+                <div className={style.customer_name}>
+                  Chúc mừng {item.fullname} vừa trở thành thành viên BeautyX!
+                </div>
               </div>
             </div>
           ))}

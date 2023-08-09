@@ -26,6 +26,7 @@ import { STATUS } from "redux/status";
 import style from "./home.module.css";
 import PortDeal from "components/PortalDeal";
 import HomeStatisticsCustomer from "pages/HomePage/HomeStatisticsCustomers";
+import HomeLocation from "pages/HomePage/components/HomeLocation";
 
 export default function HomePage() {
   const IS_MB = useDeviceMobile();
@@ -35,7 +36,6 @@ export default function HomePage() {
   }, []);
   return (
     <>
-      {" "}
       <PortDeal />
       <div className={style.container}>
         <div className="home_container_par">
@@ -65,6 +65,7 @@ export default function HomePage() {
           <HomePartners />
           <HomeTrafficData />
           <HomeStatisticsCustomer />
+          <HomeLocation />
         </Container>
         <OpenApp type="none" />
       </div>
