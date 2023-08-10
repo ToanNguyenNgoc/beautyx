@@ -1,4 +1,4 @@
-import { FC, useRef, useState, ChangeEvent, useEffect } from 'react';
+import { FC, useRef, useState, ChangeEvent, useEffect, useContext } from 'react';
 import { useSelector } from 'react-redux';
 import style from "./style.module.css"
 import IStore from 'interface/IStore';
@@ -12,6 +12,7 @@ import CommentParItem from './CommentParItem';
 import { Avatar, CircularProgress } from '@mui/material';
 import { useInfiniteQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { clst } from 'utils';
+import { AppContext } from 'context';
 
 export interface CommentProps {
   commentable_type: any
@@ -164,6 +165,7 @@ const Textarea: FC<TextareaProps> = ({
   text = '', onChange = () => { }, onKeyDown = () => { }
 }) => {
   const textAreaRef = useRef<HTMLTextAreaElement>(null)
+  const { t } = useContext(AppContext) as any;
   const resizeTextArea = () => {
     if (textAreaRef.current) {
       textAreaRef.current.style.height = "auto";
@@ -181,11 +183,13 @@ const Textarea: FC<TextareaProps> = ({
       onChange={onChange}
       onKeyDown={(e) => {
         if (e.code === "Enter") {
-          e.preventDefault()
-          onKeyDown(e)
+          e.preventDefault();
+          onKeyDown(e);
         }
       }}
-      className={style.input_txt} rows={1} placeholder='Aa'
+      className={style.input_txt}
+      rows={1}
+      placeholder={t("detail_item.write_a_comment")}
     />
-  )
+  );
 }

@@ -4,13 +4,14 @@ import { XButton } from 'components/Layout';
 import icon from 'constants/icon';
 import { BodyComment, IComment, ICommentChild } from 'interface';
 import IStore from 'interface/IStore';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { clst, formatDateFromNow } from 'utils';
 import { InitialValue } from 'components/Comment';
 import style from "./style.module.css"
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { AppContext } from 'context';
 
 interface CommentParItemProps {
   QR_KEY?: any,
@@ -24,6 +25,7 @@ interface CommentParItemProps {
 
 function CommentParItem(props: CommentParItemProps) {
   const { org_id, bought, comment, mixed = false, QR_KEY, layout } = props;
+  const { t } = useContext(AppContext) as any;
   let body = comment.body
   try {
     body = JSON.parse(comment.body).text
@@ -60,81 +62,100 @@ function CommentParItem(props: CommentParItemProps) {
   if (!mixed) replyBtnDis = true
   if (mixed && replyCount > 0) replyBtnDis = true
   return (
-    <div className={clst([style.comment_item_cnt, layout === 'column' ? style.comment_item_cnt_ch:''])}>
+    <div
+      className={clst([
+        style.comment_item_cnt,
+        layout === "column" ? style.comment_item_cnt_ch : "",
+      ])}
+    >
       <div className={style.comment_item_head}>
         <div className={style.user}>
-          <Avatar src={comment.user?.avatar} alt='' />
+          <Avatar src={comment.user?.avatar} alt="" />
           <span className={style.user_fullname}>{comment.user?.fullname}</span>
         </div>
-        {
-          body?.includes('‭') &&
+        {body?.includes("‭") && (
           <div className={style.bought_cnt}>
             <img src={icon.checkFlowGreen} alt="" /> Đã mua hàng
           </div>
-        }
+        )}
       </div>
       <div className={style.comment_body}>
         <div className={style.comment_body_txt}>
           {body}
           <div className={style.comment_body_media_list}>
-            {
-              comment.media_url?.map(i => (
-                <div key={i} className={style.comment_body_media}><img src={i} alt="" /></div>
-              ))
-            }
+            {comment.media_url?.map((i) => (
+              <div key={i} className={style.comment_body_media}>
+                <img src={i} alt="" />
+              </div>
+            ))}
           </div>
         </div>
-        <span className={style.created_at}>{formatDateFromNow(comment.created_at)}</span>
-        <div className={clst([style.reply_cnt, layout==='column' ? style.reply_cnt_ch:''])}>
+        <span className={style.created_at}>
+          {formatDateFromNow(comment.created_at)}
+        </span>
+        <div
+          className={clst([
+            style.reply_cnt,
+            layout === "column" ? style.reply_cnt_ch : "",
+          ])}
+        >
           <Accordion>
-            {
-              replyBtnDis &&
+            {replyBtnDis && (
               <AccordionSummary
                 aria-controls="panel1a-content"
                 id="panel1a-header"
               >
                 <span className={style.cmt_reply_open}>
-                  {replyCount > 0 && replyCount}  Phản hồi
+                  {replyCount > 0 && replyCount} Phản hồi
                 </span>
               </AccordionSummary>
-            }
+            )}
             <AccordionDetails>
-              {
-                comment.children.map((child: ICommentChild, i: number) => (
-                  <div 
-                  key={i} style={{marginBottom:'6px'}} 
-                  className={clst([style.comment_item_cnt, layout  === "column" ? style.comment_item_cnt_ch:''])}
-                  >
-                    <div className={style.comment_item_head}>
-                      <div className={style.user}>
-                        <Avatar src={child.user?.avatar} alt='' />
-                        <span className={style.user_fullname}>{child.user?.fullname}</span>
-                      </div>
-                      {
-                        child.body?.includes('‭') &&
-                        <div className={style.bought_cnt}>
-                          <img src={icon.checkFlowGreen} alt="" /> Đã mua hàng
-                        </div>
-                      }
+              {comment.children.map((child: ICommentChild, i: number) => (
+                <div
+                  key={i}
+                  style={{ marginBottom: "6px" }}
+                  className={clst([
+                    style.comment_item_cnt,
+                    layout === "column" ? style.comment_item_cnt_ch : "",
+                  ])}
+                >
+                  <div className={style.comment_item_head}>
+                    <div className={style.user}>
+                      <Avatar src={child.user?.avatar} alt="" />
+                      <span className={style.user_fullname}>
+                        {child.user?.fullname}
+                      </span>
                     </div>
-                    <div className={style.comment_body}>
-                      <div style={{backgroundColor:'#c1dbe9'}} className={style.comment_body_txt}>
-                        {child.body}
-                        <div className={style.comment_body_media_list}>
-                          {
-                            child.media_url?.map(i => (
-                              <div key={i} className={style.comment_body_media}><img src={i} alt="" /></div>
-                            ))
-                          }
-                        </div>
+                    {child.body?.includes("‭") && (
+                      <div className={style.bought_cnt}>
+                        <img src={icon.checkFlowGreen} alt="" /> Đã mua hàng
                       </div>
-                      <span className={style.created_at}>{formatDateFromNow(mixed ? comment.created_at : child.created_at || '')}</span>
-                    </div>
+                    )}
                   </div>
-                ))
-              }
-              {
-                !mixed &&
+                  <div className={style.comment_body}>
+                    <div
+                      style={{ backgroundColor: "#c1dbe9" }}
+                      className={style.comment_body_txt}
+                    >
+                      {child.body}
+                      <div className={style.comment_body_media_list}>
+                        {child.media_url?.map((i) => (
+                          <div key={i} className={style.comment_body_media}>
+                            <img src={i} alt="" />
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                    <span className={style.created_at}>
+                      {formatDateFromNow(
+                        mixed ? comment.created_at : child.created_at || ""
+                      )}
+                    </span>
+                  </div>
+                </div>
+              ))}
+              {!mixed && (
                 <div className={style.reply_input_cnt}>
                   <div className={style.user}>
                     <Avatar src={USER?.avatar} alt={USER?.fullname} />
@@ -142,19 +163,31 @@ function CommentParItem(props: CommentParItemProps) {
                   <div className={style.reply_input}>
                     <input
                       value={value.body}
-                      onChange={(e) => setValue(prev => { return { ...prev, body: e.target.value } })}
-                      type="text" placeholder='Aa'
-                      onKeyDown={(e) => { (e.code === "Enter") && handlePostCmtReply() }}
+                      onChange={(e) =>
+                        setValue((prev) => {
+                          return { ...prev, body: e.target.value };
+                        })
+                      }
+                      type="text"
+                      placeholder={t("detail_item.write_a_comment")}
+                      onKeyDown={(e) => {
+                        e.code === "Enter" && handlePostCmtReply();
+                      }}
                     />
-                    <XButton onClick={handlePostCmtReply} loading={isLoading} icon={icon.planPaperWhite} iconSize={18} />
+                    <XButton
+                      onClick={handlePostCmtReply}
+                      loading={isLoading}
+                      icon={icon.planPaperWhite}
+                      iconSize={18}
+                    />
                   </div>
                 </div>
-              }
+              )}
             </AccordionDetails>
           </Accordion>
         </div>
       </div>
     </div>
-  )
+  );
 }
 export default CommentParItem

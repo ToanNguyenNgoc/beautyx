@@ -5,9 +5,11 @@ import { statisticApi } from 'api';
 import Slider from 'react-slick';
 import style from "./style.module.css";
 import animationData from "assets/confetti2.json";
-import { useState } from 'react';
+import { useContext, useState } from 'react';
+import { AppContext } from 'context';
 
 export default function HomeStatisticsCustomer() {
+  const { t } = useContext(AppContext) as any;
   const { data } = useQuery({
     queryKey: ['customer'],
     queryFn: () => statisticApi.customers()
@@ -54,14 +56,14 @@ export default function HomeStatisticsCustomer() {
           {data?.context?.map((item, i) => (
             <div key={i}>
               <div className={style.customer}>
-                <Avatar
-                  src={item.avatar || item.fullname}
-                  sx={{ width: 24, height: 24 }}
-                />
+                {item?.avatar ? (
+                  <Avatar src={item?.avatar} sx={{ width: 24, height: 24 }} />
+                ) : (
+                  <div style={{ height: "24px", width: "0.1px" }}></div>
+                )}
 
-                <p className={style.customer_name}>
-                  Chúc mừng <span>{item.fullname}</span> vừa trở thành thành
-                  viên BeautyX!
+                <p className={style.customer_name}>{t("Home.congratulations")} {item.fullname} {t("Home.new_member")}
+
                 </p>
               </div>
             </div>

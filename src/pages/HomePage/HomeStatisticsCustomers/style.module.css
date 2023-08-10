@@ -1,21 +1,22 @@
 .customer_wraper{
   position: fixed;
-  bottom: 16px;
-  left: 16px;
+  bottom: 24px;
+  left: 24px;
   z-index: 200;
-  width: max-content;
   max-width: 600px;
+  pointer-events: none;
 }
-
 .customer{
   position: relative;
   display: flex;
   align-items: center;
-  padding: 4px 8px 4px 4px;
+  padding: 4px 10px 4px 4px;
   gap: 4px;
   width: max-content;
-  background-color: var(--purple);
+  background-color: var(--purple);  
   border-radius: 100px;
+  overflow: hidden;
+  height: 100%;
 }
 .customer_lootie{
   max-width: 350px;
@@ -33,35 +34,19 @@
   text-overflow: ellipsis;
   word-break: break-word;
 }
-.customer_name span {
-  font-weight: bold;
-}
-.customer_name_close{
-  position: absolute;
-  top: -12px;
-  right: -12px;
-  background-color: var(--white);
-  border-radius: 100rem;
-  overflow: hidden;
-  cursor: pointer;
-}
 
-@media screen and (max-width: 1023.98px) {
+@media screen and (max-width: 767px) {
   .customer_wraper{
     bottom: 90px;
     left: 12px;
-    max-width: calc(100% - 74px);
-    border-radius: 100%;
+    width: 100%;
   }
   .customer{
-    padding: 4px 6px 4px 4px;
-    gap: 4px;
-    background-color: var(--green);
-    box-shadow: unset;
-    width: unset;
+    padding: 4px 8px 4px 4px;
+    gap: 6px;
+    max-width: calc(100% - 74px);
   }
   .customer_name{
-    font-size: 9px;
-    font-weight: unset;
-}
+    -webkit-line-clamp: 2;
+  }
 }
