@@ -59,9 +59,10 @@ export default function HomeStatisticsCustomer() {
                   sx={{ width: 24, height: 24 }}
                 />
 
-                <div className={style.customer_name}>
-                  Chúc mừng {item.fullname} vừa trở thành thành viên BeautyX!
-                </div>
+                <p className={style.customer_name}>
+                  Chúc mừng <span>{item.fullname}</span> vừa trở thành thành
+                  viên BeautyX!
+                </p>
               </div>
             </div>
           ))}

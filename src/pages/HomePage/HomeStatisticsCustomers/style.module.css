@@ -33,6 +33,9 @@
   text-overflow: ellipsis;
   word-break: break-word;
 }
+.customer_name span {
+  font-weight: bold;
+}
 .customer_name_close{
   position: absolute;
   top: -12px;
@@ -47,16 +50,18 @@
   .customer_wraper{
     bottom: 90px;
     left: 12px;
+    max-width: calc(100% - 74px);
+    border-radius: 100%;
   }
   .customer{
     padding: 4px 6px 4px 4px;
     gap: 4px;
     background-color: var(--green);
     box-shadow: unset;
-    width: 100%;
+    width: unset;
   }
-  .customer_wraper{
-    max-width: calc(100% - 76px);
-    border-radius: 100%;
-  }
+  .customer_name{
+    font-size: 9px;
+    font-weight: unset;
+}
 }
