@@ -35,14 +35,14 @@
   border-radius: 8px;
   transform: scale(0);
   transform-origin: right bottom;
-  transition: all .6s;
+  transition: all .4s;
   opacity: 0;
   overflow: hidden;
 }
 
 .chat_box_show {
   transform: scale(1);
-  transition: all .6s;
+  transition: all .4s;
   opacity: 1;
 }
 
