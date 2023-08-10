@@ -72,7 +72,6 @@ export const HomeCateMobile:FC=()=> {
                     ))}
                 </div>
             </div>
-            <HomeLocation />
         </div>
     );
 }
