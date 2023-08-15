@@ -60,7 +60,7 @@ function DealBanner() {
                         }
                         {
                             detail?.productables?.map(item => (
-                                <ProductableItem key={item.id} productable={item} />
+                                <ProductableItem key={item.id} productable={item.productable} />
                             ))
                         }
                     </div>
