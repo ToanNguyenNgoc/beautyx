@@ -42,6 +42,7 @@ function DealBanner() {
                             <img src={detail?.is_popup === 1 ? (detail?.thumbnail_url || '') : (detail?.media_url || '')} alt="" />
                         }
                     </div>
+                    <div className={style.body_content} dangerouslySetInnerHTML={{ __html: detail?.content || '' }}/>
                     <div className={style.list}>
                         {
                             detail?.discounts.map((discount: IDiscountPar, index: number) => (

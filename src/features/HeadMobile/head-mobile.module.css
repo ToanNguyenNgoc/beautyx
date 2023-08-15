@@ -39,29 +39,41 @@
         z-index: 1001;
         background-color: var(--bg-white);
     }
+
     .wrapper {
         justify-content: space-between;
     }
+
     .button {
         width: 32px;
         height: 32px;
         padding: 0px;
         border: none;
     }
+
     .button img {
         width: 24px;
         height: 24px;
     }
+
     .head_title {
         font-size: 18px;
         line-height: 34px;
         font-weight: 700;
         color: var(--text-black);
         margin: 0px;
+        -webkit-line-clamp: 1;
+        -webkit-box-orient: vertical;
+        display: -webkit-box;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        word-break: break-word;
     }
+
     .head_icon {
         display: none;
     }
+
     .head_left {
         width: fit-content;
         min-width: 32px;

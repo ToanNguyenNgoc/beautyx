@@ -18,7 +18,11 @@
   z-index: 1;
   object-fit: cover;
 }
-
+.body_content p{
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 20px;
+}
 .list {
   padding: 24px 0px;
   grid-gap: 12px;
