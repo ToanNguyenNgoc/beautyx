@@ -1,6 +1,7 @@
 import { FC, useState } from "react";
 import style from "./com-cpn.module.css"
 import { FullImage } from "components/Layout";
+import { checkMediaType } from "utils";
 
 export const Images: FC<{ images: string[] }> = ({ images }) => {
   const [openImg, setOpenImg] = useState(false)
@@ -40,7 +41,18 @@ export const Images: FC<{ images: string[] }> = ({ images }) => {
                 style={{ cursor: 'pointer' }}
                 key={index}
               >
-                <img className={style.img_item} src={img} alt="" />
+                {
+                  checkMediaType(img) === "IMAGE" ?
+                    <img className={style.img_item} src={img} alt="" /> :
+                    <video
+                      className={style.video_item}
+                      controls
+                      webkit-playsinline="webkit-playsinline"
+                      playsInline={true}
+                    >
+                      <source src={img} />
+                    </video>
+                }
                 {
                   (index === 4 && images.length > 5) &&
                   <div className={style.image_more}>

@@ -21,7 +21,7 @@ export default function HomeStatisticsCustomer() {
     setPlayAnimation(true)
     setTimeout(() => {
       setPlayAnimation(false);
-    }, 3000); 
+    }, 3000);
   }
 
   const settings = {
