@@ -21,7 +21,7 @@ export default function HomeStatisticsCustomer() {
     setPlayAnimation(true)
     setTimeout(() => {
       setPlayAnimation(false);
-    }, 3000);
+    }, 2900);
   }
 
   const settings = {
@@ -36,7 +36,7 @@ export default function HomeStatisticsCustomer() {
     speed: 500,
     swipe: false,
     pauseOnHover: false,
-    autoplaySpeed: 20000,
+    autoplaySpeed: 3000,
     afterChange: onRefTimer
   };
 

@@ -16,7 +16,7 @@
   background-color: var(--purple);  
   border-radius: 100px;
   overflow: hidden;
-  height: 100%;
+  height: 32px;
 }
 .customer_lootie{
   max-width: 350px;
