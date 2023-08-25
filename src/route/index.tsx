@@ -54,6 +54,7 @@ const Community = lazy(() => import("pages/Community"));
 const Rewards = lazy(() => import("pages/Rewards"));
 const Messenger = lazy(() => import("pages/Messenger"))
 const Seller = lazy(() => import("pages/SellerCenter"))
+const OrganizationsApprove = lazy(() => import("pages/OrganizationsApprove"))
 
 function RouterConfig() {
   const routes = [
@@ -258,6 +259,10 @@ function RouterConfig() {
       path: "/error",
       component: <PageNotFound />,
     },
+    {
+      path:'/doanh-nghiep-moi-tham-gia',
+      component:<OrganizationsApprove/>
+    }
   ];
   const routesPrivate = [
     {

@@ -1,6 +1,6 @@
 import { HomeTitle } from "components/Layout"
 import style from "./style.module.css"
-import { useQuery } from "@tanstack/react-query"
+import { useInfiniteQuery } from "@tanstack/react-query"
 import { QR_KEY, STALE_TIME } from "config"
 import { statisticApi } from "api"
 import { useElementOnScreen } from "hooks"
@@ -15,29 +15,28 @@ import { Link } from "react-router-dom"
 import { formatRouterLinkOrg } from "utils/formatRouterLink/formatRouter"
 import { LoadGrid } from "components/LoadingSketion"
 
-export const HomeApprove:FC=()=> {
+export const HomeApprove: FC = () => {
   const refSection = useRef<HTMLDivElement>(null)
   const isVisible = useElementOnScreen({
     root: null,
     rootMargin: "0px",
     threshold: 0.3,
   }, refSection)
-  const { data, isLoading } = useQuery({
+  const { data, isLoading } = useInfiniteQuery({
     queryKey: [QR_KEY.APPROVE],
-    queryFn: () => statisticApi.orgsApprove({
-      'page': 1, limit: 20
-    }),
+    queryFn: ({ pageParam = 1 }) => statisticApi.orgsApprove({ page: pageParam, limit: 16 }),
     enabled: isVisible,
     staleTime: STALE_TIME
   })
+  const approves = data?.pages.map(i => i.context.data).flat()
   return (
     <div ref={refSection} className={style.container}>
-      <HomeTitle title="Doanh nghiệp mới tham gia" />
+      <HomeTitle title="Doanh nghiệp mới tham gia" seemore="Xem thêm" url="doanh-nghiep-moi-tham-gia" />
       <div className={style.list_cnt}>
         {isLoading && <LoadGrid item_count={4} grid={4} />}
-        <div className={style.list}>
+        <div className={style.list} >
           {
-            data?.context?.data?.filter(item => item.organization.image_url !== null)
+            approves?.filter(item => item.organization.image_url !== null)
               .slice(0, 4)
               .map(item => (
                 <ApproveItem key={item.id} item={item} />
@@ -50,8 +49,8 @@ export const HomeApprove:FC=()=> {
 }
 export default HomeApprove
 
-const ApproveItem: FC<{ item: OrganizationApprove }> = ({ item }) => {
-  const { data } = useGalleriesQuery(item.organization?.subdomain || '')
+export const ApproveItem: FC<{ item: OrganizationApprove, skipFetchGalleries?: boolean }> = ({ item, skipFetchGalleries = false }) => {
+  const { data } = useGalleriesQuery(item.organization?.subdomain || '', { skip: skipFetchGalleries })
   const galleries: IOrgMobaGalleries[] = data ?? []
   return (
     <Link

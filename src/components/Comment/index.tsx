@@ -17,7 +17,7 @@ import { AppContext } from 'context';
 export interface CommentProps {
   commentable_type: any
   commentable_id: number,
-  org_id: number,
+  org_id?: number,
   commentsMixed?: IComment[],
   layout?: 'column' | 'row',
   fixed_input?: boolean,
@@ -33,7 +33,7 @@ function Comment({
   commentable_type, commentable_id, org_id, commentsMixed = [], layout = 'row', classNameCnt='', classNameInputCnt=''
 }: CommentProps) {
   const { USER } = useSelector((state: IStore) => state.USER);
-  const { bought } = useCheckUserBought({ commentable_type, commentable_id, org_id })
+  const { bought } = useCheckUserBought({ commentable_type, commentable_id, org_id:org_id || 0 })
   const { handlePostMedia } = usePostMedia()
   const history = useHistory()
   const [value, setValue] = useState<InitialValue>({ body: '' })

@@ -1,0 +1,28 @@
+.container {
+    padding: 12px;
+    margin: 24px 0px;
+    background-color: var(--bg-white);
+    border-radius: 6px;
+}
+
+.list_approve {
+    margin-top: 32px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-gap: 16px;
+    grid-row-gap: 32px;
+}
+
+@media only screen and (max-width: 739px) {
+    .list_approve {
+        margin-top: 32px;
+        display: grid;
+        grid-template-columns: repeat(1, 1fr);
+        grid-gap: 12px;
+    }
+
+    .list_approve>a>div:nth-child(2) {
+        width: unset;
+        margin: 0px;
+    }
+}

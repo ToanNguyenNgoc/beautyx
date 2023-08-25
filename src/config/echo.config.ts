@@ -11,13 +11,11 @@ export const echoConfig = () => {
     cluster: process.env.REACT_APP_ECHO_CLUSTER,
     disableStats: true,
     forceTLS: false,
-    // wsHost: process.env.REACT_APP_ECHO_WSHOST,
     wsHost:wsHost,
     wsPort: process.env.REACT_APP_ECHO_WSPORT,
     wssPort: process.env.REACT_APP_ECHO_WSSPORT,
     encrypted: true,
     enabledTransports: ['ws', 'wss'],
-    // authEndpoint: process.env.REACT_APP_ECHO_AUTH_ENDPOINT,
     authEndpoint:authEndpoint,
     auth: AUTH_HEADER_WS()
   })

@@ -17,7 +17,7 @@ export const PostItem: FC<PostItemProps> = ({ post }) => {
         id: post.id,
         org_id: post.organization_id,
         type: 'POST',
-        count: post.comment_count,
+        count: post.favorite_count,
         favorite: post.is_favorite
     })
     return (

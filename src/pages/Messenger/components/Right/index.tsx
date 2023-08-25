@@ -2,12 +2,12 @@
 import { useLocation, useHistory, Link } from "react-router-dom"
 import { IMessage, ITopic } from "interface"
 import style from "./right.module.css"
-import { XButton } from "components/Layout"
+import { XButton, XButtonFile } from "components/Layout"
 import icon from "constants/icon"
 import { formatDateFromNow, linkify, onErrorAvatar, unique, uniqueArr } from "utils"
-import { useAuth, useElementOnScreen, useSwr, useSwrInfinite } from "hooks"
+import { useAuth, useElementOnScreen, usePostMedia, useSwr, useSwrInfinite } from "hooks"
 import InfiniteScroll from "react-infinite-scroll-component"
-import { Dispatch, SetStateAction, useContext, useEffect, useRef, useState, KeyboardEvent, FC } from "react"
+import { Dispatch, SetStateAction, useContext, useEffect, useRef, useState, KeyboardEvent, FC, ChangeEvent } from "react"
 import { AppContext, AppContextType } from "context"
 import API_ROUTE from "api/_api"
 import { CACHE_TIME } from "common"
@@ -73,6 +73,7 @@ export const Right: FC<RightProps> = ({ _id, topicProp, moreBtn }) => {
             }, socketId: echo?.socketId()
           })
           chat.listenForWhisper('typing', (u: any) => {
+            // setIsTyping(u.user.id !== user.id && u?.user?.isTyping)
             setIsTyping(u?.user?.isTyping)
           })
         })
@@ -141,7 +142,7 @@ export const Right: FC<RightProps> = ({ _id, topicProp, moreBtn }) => {
           {isTyping && <Typing />}
           {uniqueArr(msges).concat(resData).map((item: IMessage, index) => (
             <div key={index} className={style.message}>
-              <Message item={item} change={item.user_id === user.id} />
+              <Message item={item} change={item.user_id === user.id} topicProp={topicProp} />
             </div>
           ))}
         </InfiniteScroll>
@@ -152,11 +153,12 @@ export const Right: FC<RightProps> = ({ _id, topicProp, moreBtn }) => {
         onScrollBottom={onScrollBottom}
         isInScreen={isInScreen}
         org={org}
+        moreBtn={moreBtn}
       />
     </div>
   )
 }
-const Message = ({ item, change = false }: { item: IMessage, change?: boolean }) => {
+const Message = ({ item, change = false, topicProp }: { item: IMessage, change?: boolean, topicProp?: ITopic }) => {
   return (
     <div className={style.message_cnt}>
       <div className={style.message_head} style={change ? { flexDirection: "row-reverse" } : {}}>
@@ -174,14 +176,32 @@ const Message = ({ item, change = false }: { item: IMessage, change?: boolean })
         </span>
       </div>
       <div style={change ? { flexDirection: "row-reverse" } : {}} className={style.message_body}>
-        <div
-          style={change ? {
-            backgroundColor: "#f1faff",
-            borderRadius: "8px 0px 8px 8px"
-          } : {}}
-          className={style.message_body_cnt}
-          dangerouslySetInnerHTML={{ __html: linkify(item.msg) }}
-        />
+        <div className={style.message_item_cnt} style={{ alignItems: change ? 'end' : 'start' }}>
+          <div
+            style={change ? {
+              backgroundColor: "#f1faff",
+              borderRadius: "8px 0px 8px 8px"
+            } : {}}
+            className={style.message_body_cnt}
+            dangerouslySetInnerHTML={{ __html: linkify(item.msg) }}
+          />
+          {(item.media_urls && item.media_urls?.length > 0) &&
+            <div
+              style={{
+                gridTemplateColumns: `repeat(${item.media_urls.length >= 3 ? 3 : item.media_urls.length}, 1fr)`,
+                width: `${topicProp ? '18vw' : '33vw'}`
+              }}
+              className={style.message_body_images}
+            >
+              {
+                item.media_urls.map(media_url => (
+                  <div key={media_url} className={style.message_body_images_item}>
+                    <img src={media_url} alt="" />
+                  </div>
+                ))
+              }
+            </div>}
+        </div>
       </div>
     </div>
   )
@@ -192,6 +212,7 @@ interface InputProps {
   onScrollBottom: () => void;
   isInScreen?: boolean;
   org: any
+  moreBtn?: boolean
 }
 const initMsg = {
   _id: "",
@@ -201,9 +222,11 @@ const initMsg = {
   reply_id: null,
   updated_at: '',
   created_at: '',
+  medias: []
 }
-const InputChat = ({ setMsges, topic_id, onScrollBottom, isInScreen, org }: InputProps) => {
+const InputChat = ({ setMsges, topic_id, onScrollBottom, isInScreen, org, moreBtn }: InputProps) => {
   const { USER: user } = useAuth()
+  const { handlePostMedia } = usePostMedia()
   const [msg, setMsg] = useState<IMessage>(initMsg)
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
   const { echo } = useContext(AppContext) as AppContextType
@@ -229,15 +252,16 @@ const InputChat = ({ setMsges, topic_id, onScrollBottom, isInScreen, org }: Inpu
   };
   useEffect(resizeTextArea, [msg]);
   const onSubmit = async () => {
-    if (msg.msg.trim().length > 0) {
+    if (msg.msg.trim().length > 0 || msg.medias.length > 0) {
       setMsges(prev => [{
         ...msg,
         _id: `${moment().format("YYYYMMDDHHmmss")}${moment().milliseconds()}`,
         user_id: user?.id,
-        created_at: moment().format("YYYY-MM-DD HH:mm:ss")
+        created_at: moment().format("YYYY-MM-DD HH:mm:ss"),
+        media_urls: msg.medias.map(i => i.original_url)
       }, ...prev])
       setMsg(initMsg)
-      await chatApi.postMessage({ msg: msg.msg, topic_id })
+      await chatApi.postMessage({ msg: msg.msg, media_ids: msg.medias.map(i => i.model_id), topic_id })
       textAreaRef.current?.blur()
       onScrollBottom()
     }
@@ -248,6 +272,12 @@ const InputChat = ({ setMsges, topic_id, onScrollBottom, isInScreen, org }: Inpu
       onSubmit()
     }
   }
+  const onChangeMedia = (e: ChangeEvent<HTMLInputElement>) => {
+    handlePostMedia({
+      e,
+      callBack: (data) => setMsg({ ...msg, medias: data })
+    })
+  }
   return (
     <div className={style.input_cnt}>
       <XButton
@@ -255,36 +285,56 @@ const InputChat = ({ setMsges, topic_id, onScrollBottom, isInScreen, org }: Inpu
         className={!isInScreen ? `${style.scroll_btn} ${style.scroll_btn_act}` : style.scroll_btn}
         onClick={onScrollBottom}
       />
-      <div className={style.ip_ctl}>
-        <XButton
-          className={style.ip_ctl_btn}
-          iconSize={24}
-          icon={icon.plus}
-        />
-        <XButton
-          className={style.ip_ctl_btn}
-          iconSize={16}
-          icon={icon.imageWhite}
-        />
+      <div className={style.input_cnt_top}>
+        <div className={style.input_cnt_top_img}>
+          {
+            msg.medias?.map(img => (
+              <div key={img.original_url} className={style.input_img_item_cnt}>
+                <img className={style.img_item} src={img.original_url} alt="" />
+                {
+                  img.model_id > 0 ?
+                    <XButton
+                      icon={icon.closeCircleWhite} iconSize={20}
+                      onClick={() => setMsg({ ...msg, medias: msg.medias.filter(i => i.model_id !== img.model_id) })}
+                    />
+                    :
+                    <div className={style.input_img_item_cnt_load}><CircularProgress size={22} /></div>
+                }
+              </div>
+            ))
+          }
+        </div>
       </div>
-      <div className={style.text_area_cnt}>
-        <textarea
-          ref={textAreaRef}
-          onChange={(e) => setMsg({ ...msg, msg: e.target.value })}
-          value={msg.msg}
-          placeholder="Aa"
-          rows={1}
-          className={style.text_area}
-          onKeyDown={handleKeyDown}
-          onFocus={() => onEmitTyping(true)}
-          onBlur={() => onEmitTyping(false)}
-        />
-        <XButton
-          className={style.btn_send}
-          icon={msg.msg.length > 0 ? icon.sendWhite : icon.thumbUpWhite}
-          iconSize={16}
-          onClick={onSubmit}
-        />
+      <div className={style.input_cnt_bot}>
+        <div onClick={(e) => e.stopPropagation()} className={style.ip_ctl}>
+          <XButton className={style.ip_ctl_btn} iconSize={24} icon={icon.plus} />
+          {
+            !moreBtn &&
+            <XButtonFile
+              onChange={onChangeMedia} multiple iconSize={16}
+              icon={icon.imageWhite} className={style.ip_ctl_btn}
+            />
+          }
+        </div>
+        <div className={style.text_area_cnt}>
+          <textarea
+            ref={textAreaRef}
+            onChange={(e) => setMsg({ ...msg, msg: e.target.value })}
+            value={msg.msg}
+            placeholder="Aa"
+            rows={1}
+            className={style.text_area}
+            onKeyDown={handleKeyDown}
+            onFocus={() => onEmitTyping(true)}
+            onBlur={() => onEmitTyping(false)}
+          />
+          <XButton
+            className={style.btn_send}
+            icon={(msg.msg.length > 0 || msg.medias.length > 0) ? icon.sendWhite : icon.thumbUpWhite}
+            iconSize={16}
+            onClick={onSubmit}
+          />
+        </div>
       </div>
     </div>
   )

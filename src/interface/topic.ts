@@ -1,3 +1,5 @@
+import { Media } from "hooks";
+
 export interface ReqTopic {
   org: number;
   recipient_id?: string;
@@ -23,6 +25,8 @@ export interface IMessage {
   reply_id: null | string,
   updated_at: string,
   created_at: string,
+  media_urls?:string[],
+  medias:Media[]
   user?: {
     avatar: string | null;
     current_platform: string | null;

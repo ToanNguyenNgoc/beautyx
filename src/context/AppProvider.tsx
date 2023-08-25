@@ -34,9 +34,9 @@ export default function AppProvider({ children }: { children: any }) {
     const [echo, setEcho] = useState<Echo | null>(null)
     useEffect(() => {
         if (USER) {
-            // setEcho(echoConfig())
+            setEcho(echoConfig())
         } else {
-            // echoConfig().disconnect()
+            echoConfig().disconnect()
             setEcho(null)
         }
     }, [USER])

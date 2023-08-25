@@ -76,7 +76,7 @@ function PostDetail() {
               <Comment
                 commentable_type="POST"
                 commentable_id={post?.id}
-                org_id={post?.organization_id}
+                // org_id={post?.organization_id}
               />
             )}
           </div>

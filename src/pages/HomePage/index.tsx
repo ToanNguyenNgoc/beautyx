@@ -14,7 +14,8 @@ import {
   HomeTag,
   HomeTrafficData,
   HomeTrends,
-  HomeWhyNot
+  HomeWhyNot,
+  HomeStatisticsCustomer
 } from "./components"
 import tracking from "api/trackApi";
 import { OpenApp, PlashScreen } from "components/Layout";
@@ -25,7 +26,6 @@ import { useSelector } from "react-redux";
 import { STATUS } from "redux/status";
 import style from "./home.module.css";
 import PortDeal from "components/PortalDeal";
-import HomeStatisticsCustomer from "pages/HomePage/HomeStatisticsCustomers";
 import HomeLocation from "pages/HomePage/components/HomeLocation";
 
 export default function HomePage() {
