@@ -21,6 +21,11 @@ export interface IPost {
   is_favorite: boolean,
   list_service: Service[],
   media_url: string[],
+  media_url_sizes?: Array<{
+    original_url: string;
+    width: number;
+    height: number
+  }>
   tag?: ITag,
   user: User,
   organization?: IOrganization,

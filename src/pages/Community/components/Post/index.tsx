@@ -47,7 +47,7 @@ export const PostItem: FC<PostItemProps> = ({ post }) => {
                 <div className={style.post_item_img_cnt}>
                     {
                         post.media_url?.length > 0 &&
-                        <Images images={post.media_url} />
+                        <Images images={post.media_url || []} />
                     }
                 </div>
                 <div className={style.post_item_interactive}>

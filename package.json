@@ -53,6 +53,7 @@
         "react-elastic-carousel": "^0.11.5",
         "react-gallery-carousel": "^0.2.10",
         "react-google-recaptcha-v3": "^1.10.0",
+        "react-grid-gallery": "^1.0.0",
         "react-helmet": "^6.1.0",
         "react-i18next": "^11.18.4",
         "react-infinite-scroll-component": "^6.1.0",

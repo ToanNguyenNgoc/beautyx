@@ -5,7 +5,7 @@ import icon from "../../../constants/icon";
 import img from "../../../constants/img";
 import { useHistory } from "react-router-dom";
 import scrollTop from "../../../utils/scrollTop";
-import onErrorImg from "../../../utils/errorImg";
+import onErrorImg from "../../../utils/img";
 import { AppContext } from "../../../context/AppProvider";
 import { Drawer } from "@mui/material";
 import { fakeOrgStar } from "../../../utils/format";

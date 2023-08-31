@@ -22,6 +22,7 @@ function PostDetail() {
     onError: () => history.replace("/error"),
   });
   const post = data?.context;
+  console.log(post)
   return (
     <>
       <HeadTitle title={"post?.group?.name"} />
@@ -53,7 +54,7 @@ function PostDetail() {
           <div className={style.content}>{post?.content}</div>
           <div className={style.images_cont}>
             {post?.media_url && post?.media_url?.length > 0 && (
-              <Images images={post.media_url} />
+              <Images images={post.media_url || []} />
             )}
           </div>
           <div className={style.interactive}>

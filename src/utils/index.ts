@@ -1,6 +1,6 @@
 export * from "./unique"
 export * from "./formatUrlString"
-export * from "./errorImg"
+export * from "./img"
 export * from "./extraParamsUrl"
 export * from "./classStyle"
 export * from "./format"

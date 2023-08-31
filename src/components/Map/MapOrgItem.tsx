@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import icon from "../../constants/icon";
 import { IOrganization } from "../../interface/organization";
 import { onSetOrgCenter } from "../../redux/org/orgMapSlice";
-import onErrorImg from "../../utils/errorImg";
+import onErrorImg from "../../utils/img";
 
 interface IProps {
     item: IOrganization;

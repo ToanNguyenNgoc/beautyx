@@ -33,6 +33,7 @@ export const Images: FC<{ images: string[] }> = ({ images }) => {
   return (
     <>
       <div className={style.images_cnt}>
+        {/* <Gallery images={images.map(i => ({ ...i, src: i.original_url }))} /> */}
         <div className={onRenderList()}>
           {
             images.slice(0, 5).map((img, index) => (
