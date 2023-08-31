@@ -3,30 +3,43 @@ import { Container } from "@mui/system";
 import { XButton } from "components/Layout";
 import icon from "constants/icon";
 import HeadTitle from "features/HeadTitle";
-import { useParams, useHistory, Link } from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
 import style from "./post-detail.module.css";
 import { useQuery } from "@tanstack/react-query";
 import { QR_KEY } from "config";
 import { postApi } from "api";
 import { formatDateFromNow } from "utils";
-import { Images } from "pages/Community/components";
+import { Images, PostLoading } from "pages/Community/components";
 import Comment from "components/Comment";
+import { useFavorite } from "hooks";
 
 function PostDetail() {
   const { id } = useParams() as any;
   const history = useHistory();
-  const { data } = useQuery({
+  const { data, isLoading } = useQuery({
     queryKey: [QR_KEY.POSTS, id],
     queryFn: () => postApi.post(id),
     enabled: id ? true : false,
     onError: () => history.replace("/error"),
   });
   const post = data?.context;
-  console.log(post)
+  const { favoriteSt, onToggleFavorite } = useFavorite({
+    id: post?.id,
+    org_id: post?.organization_id || 0,
+    type: 'POST',
+    count: post?.favorite_count || 0,
+    favorite: post?.is_favorite || false
+  })
   return (
     <>
       <HeadTitle title={"post?.group?.name"} />
       <Container>
+        {
+          isLoading &&
+          <div className={style.container} style={{ padding: '0px', boxShadow: 'none' }}>
+            <PostLoading />
+          </div>
+        }
         <div className={style.container}>
           <div className={style.head}>
             <div className={style.head_left}>
@@ -60,11 +73,11 @@ function PostDetail() {
           <div className={style.interactive}>
             <div className={style.interactive_item}>
               <XButton
-                // onClick={() => dispatch(onFavorite({ id: post?.id, isFavorite: !post?.isFavorite }))}
+                onClick={() => onToggleFavorite()}
                 iconSize={28}
-                icon={post?.is_favorite ? icon.thumbUpPurple : icon.thumbUp}
+                icon={favoriteSt.is_favorite ? icon.thumbUpPurple : icon.thumbUp}
               />
-              <span>{post?.favorite_count}</span>
+              <span>{favoriteSt?.favorite_count}</span>
             </div>
             <div className={style.interactive_item}>
               <XButton iconSize={28} icon={icon.chatSquare} />
@@ -77,7 +90,7 @@ function PostDetail() {
               <Comment
                 commentable_type="POST"
                 commentable_id={post?.id}
-                // org_id={post?.organization_id}
+              // org_id={post?.organization_id}
               />
             )}
           </div>

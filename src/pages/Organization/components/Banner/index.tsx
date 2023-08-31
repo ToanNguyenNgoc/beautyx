@@ -104,7 +104,7 @@ export const Banner = () => {
                   icon={favoriteSt.is_favorite ? icon.heart : icon.unHeart}
                   title={favoriteSt.is_favorite ? "Đã thích" : "Yêu thích"}
                 />
-                {/* <XButton
+                <XButton
                   iconSize={mb ? 18 : 16}
                   icon={icon.chatSquare}
                   title='Tư vấn'
@@ -115,7 +115,7 @@ export const Banner = () => {
                   iconSize={mb ? 18 : 16}
                   icon={icon.share}
                   title='Chia sẻ'
-                /> */}
+                />
                 <SharePopup open={share} onClose={() => setShare(false)} />
               </div>
               <div className={style.head_right_time}>

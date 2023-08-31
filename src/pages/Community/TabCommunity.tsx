@@ -3,7 +3,7 @@ import style from "./community.module.css";
 import { Link } from "react-router-dom";
 import { Avatar, AvatarGroup } from "@mui/material";
 import imgC from "./assets";
-import { PostItem } from "./components";
+import { PostItem, PostLoading } from "./components";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { QR_KEY } from "config";
 import { postApi } from "api";
@@ -96,6 +96,12 @@ function TabCommunity() {
                 </li>
               ))}
             </ul>
+            {
+              isLoading &&
+              <ul className={style.center_post}>
+                {Array(4).fill(null).map((_, i) => <PostLoading key={i} />)}
+              </ul>
+            }
           </div>
         </div>
         <div className={style.com_container_right}></div>
