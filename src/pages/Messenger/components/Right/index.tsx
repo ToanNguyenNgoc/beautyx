@@ -96,7 +96,7 @@ export const Right: FC<RightProps> = ({ _id, topicProp, moreBtn }) => {
   }, [echo, topic_id, org])
 
   return (
-    <div className={style.container} >
+    <div className={style.container}>
       <div className={style.head}>
         <div className={style.head_left}>
           <XButton
@@ -110,41 +110,77 @@ export const Right: FC<RightProps> = ({ _id, topicProp, moreBtn }) => {
           </div>
         </div>
         <div className={style.head_right}>
-          {
-            moreBtn &&
+          {moreBtn && (
             <Tooltip placement="top-end" title="Xem tất cả đoạn chat">
               <div>
-                <Link className={style.head_right_btn}
-                  to={{ pathname: `/messages/${topic_id}` }} ><img src={icon.menuWhite} alt="" />
+                <Link
+                  className={style.head_right_btn}
+                  to={{ pathname: `/messages/${topic_id}` }}
+                >
+                  <img src={icon.menuWhite} alt="" />
                 </Link>
               </div>
             </Tooltip>
-          }
+          )}
         </div>
       </div>
-      <div
-        id="scrollableDiv"
-        className={style.messages}
-      >
+      <div id="scrollableDiv" className={style.messages}>
         <div ref={botRef} className={style.bottom}></div>
         <InfiniteScroll
           dataLength={resData.length}
           next={more}
-          style={{ display: 'flex', flexDirection: 'column-reverse' }}
+          style={{ display: "flex", flexDirection: "column-reverse" }}
           inverse={true} //
           hasMore={true}
-          loader={
-            resData.length < totalItem &&
-            <Loader />
-          }
+          loader={resData.length < totalItem && <Loader />}
           scrollableTarget="scrollableDiv"
         >
           {isTyping && <Typing />}
-          {uniqueArr(msges).concat(resData).map((item: IMessage, index) => (
-            <div key={index} className={style.message}>
-              <Message item={item} change={item.user_id === user.id} topicProp={topicProp} />
+          {uniqueArr(msges)
+            .concat(resData)
+            .map((item: IMessage, index) => (
+              <div key={index} className={style.message}>
+                <Message
+                  item={item}
+                  change={item.user_id === user.id}
+                  topicProp={topicProp}
+                  nameUser={name}
+                />
+              </div>
+            ))}
+          <div className={style.message_default}>
+            <div className={style.message_info_MC}>
+              <Avatar sx={{ width: 80, height: 80 }} />
+              <p className={style.message_info_name}>{name}</p>
+              <XButton>
+                <Link to={{ pathname: `/cua-hang/${topic?.organization_id}` }}>
+                  Xem doanh nghiệp
+                </Link>
+              </XButton>
             </div>
-          ))}
+            <div className={style.message_head}>
+              <div className={style.avatar}>
+                <img src="" onError={onErrorAvatar} alt="" />
+              </div>
+              <span className={style.user_name}>{name}</span>
+            </div>
+            <div className={style.message_body}>
+              <div
+                className={style.message_item_cnt}
+                style={{ alignItems: "end" }}
+              >
+                <p
+                  style={{
+                    backgroundColor: "#f1faff",
+                    borderRadius: "8px 0px 8px 8px",
+                  }}
+                  className={style.message_body_cnt}
+                >
+                  Xin chào {users_name}! {name} có thể hỗ trợ gì cho anh/chị?
+                </p>
+              </div>
+            </div>
+          </div>
         </InfiniteScroll>
       </div>
       <InputChat
@@ -156,55 +192,72 @@ export const Right: FC<RightProps> = ({ _id, topicProp, moreBtn }) => {
         moreBtn={moreBtn}
       />
     </div>
-  )
+  );
 }
-const Message = ({ item, change = false, topicProp }: { item: IMessage, change?: boolean, topicProp?: ITopic }) => {
+const Message = ({ item, change = false, topicProp, nameUser }: { item: IMessage, change?: boolean, topicProp?: ITopic, nameUser: string | null | undefined }) => {
   return (
     <div className={style.message_cnt}>
-      <div className={style.message_head} style={change ? { flexDirection: "row-reverse" } : {}}>
-        {
-          !change &&
+      <div
+        className={style.message_head}
+        style={change ? { flexDirection: "row-reverse" } : {}}
+      >
+        {!change && (
           <>
             <div className={style.avatar}>
-              <img src={item.user?.avatar || ''} onError={onErrorAvatar} alt="" />
+              <img
+                src={item.user?.avatar || ""}
+                onError={onErrorAvatar}
+                alt=""
+              />
             </div>
-            <span className={style.user_name}>{item.user?.fullname}</span>
+            <span className={style.user_name}>{nameUser}</span>
           </>
-        }
+        )}
         <span className={style.create}>
           {formatDateFromNow(item.created_at)}
         </span>
       </div>
-      <div style={change ? { flexDirection: "row-reverse" } : {}} className={style.message_body}>
-        <div className={style.message_item_cnt} style={{ alignItems: change ? 'end' : 'start' }}>
+      <div
+        style={change ? { flexDirection: "row-reverse" } : {}}
+        className={style.message_body}
+      >
+        <div
+          className={style.message_item_cnt}
+          style={{ alignItems: change ? "end" : "start" }}
+        >
           <div
-            style={change ? {
-              backgroundColor: "#f1faff",
-              borderRadius: "8px 0px 8px 8px"
-            } : {}}
+            style={
+              change
+                ? {
+                    backgroundColor: "#f1faff",
+                    borderRadius: "8px 0px 8px 8px",
+                  }
+                : {}
+            }
             className={style.message_body_cnt}
             dangerouslySetInnerHTML={{ __html: linkify(item.msg) }}
           />
-          {(item.media_urls && item.media_urls?.length > 0) &&
+          {item.media_urls && item.media_urls?.length > 0 && (
             <div
               style={{
-                gridTemplateColumns: `repeat(${item.media_urls.length >= 3 ? 3 : item.media_urls.length}, 1fr)`,
-                width: `${topicProp ? '18vw' : '33vw'}`
+                gridTemplateColumns: `repeat(${
+                  item.media_urls.length >= 3 ? 3 : item.media_urls.length
+                }, 1fr)`,
+                width: `${topicProp ? "18vw" : "33vw"}`,
               }}
               className={style.message_body_images}
             >
-              {
-                item.media_urls.map(media_url => (
-                  <div key={media_url} className={style.message_body_images_item}>
-                    <img src={media_url} alt="" />
-                  </div>
-                ))
-              }
-            </div>}
+              {item.media_urls.map((media_url) => (
+                <div key={media_url} className={style.message_body_images_item}>
+                  <img src={media_url} alt="" />
+                </div>
+              ))}
+            </div>
+          )}
         </div>
       </div>
     </div>
-  )
+  );
 }
 interface InputProps {
   setMsges: Dispatch<SetStateAction<IMessage[]>>;

@@ -40,7 +40,7 @@ function Bottom() {
         },
         {
             id: 2,
-            title: t("Home.trending"),
+            title: 'Review',
             icon: ICON.trend,
             iconAct: ICON.trendAct,
             path: "/xu-huong",
@@ -65,14 +65,14 @@ function Bottom() {
             params: "tab=1",
             badge: 0
         },
-        // {
-        //     id: 7,
-        //     title: "Chat",
-        //     icon: ICON.comments,
-        //     iconAct: ICON.commentPurpleAct,
-        //     path: "/chat",
-        //     badge: 0
-        // },
+        {
+            id: 6,
+            title: "Chat",
+            icon: ICON.comments,
+            iconAct: ICON.commentPurpleAct,
+            path: "/messages",
+            badge: 0
+        },
         {
             id: 5,
             title: t("Bottom.account"),

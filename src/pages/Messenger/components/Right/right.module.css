@@ -84,6 +84,20 @@
   padding: 10px 0px;
 }
 
+.message_default{
+
+}
+.message_info_MC{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  margin-top: 24px;
+  margin-bottom: 36vh;
+}
+.message_info_name{
+  font-weight: bold;
+}
 
 .message_head {
   display: flex;
@@ -408,7 +422,7 @@
   }
 
   .message_item_cnt {
-    max-width: 85%;
+    max-width: 100%;
   }
 
   .message_body_images {
