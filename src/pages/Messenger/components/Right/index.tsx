@@ -4,7 +4,7 @@ import { IMessage, ITopic } from "interface"
 import style from "./right.module.css"
 import { XButton, XButtonFile } from "components/Layout"
 import icon from "constants/icon"
-import { formatDateFromNow, linkify, onErrorAvatar, unique, uniqueArr } from "utils"
+import { checkMediaType, formatDateFromNow, linkify, onErrorAvatar, unique, uniqueArr } from "utils"
 import { useAuth, useElementOnScreen, usePostMedia, useSwr, useSwrInfinite } from "hooks"
 import InfiniteScroll from "react-infinite-scroll-component"
 import { Dispatch, SetStateAction, useContext, useEffect, useRef, useState, KeyboardEvent, FC, ChangeEvent } from "react"
@@ -105,7 +105,7 @@ export const Right: FC<RightProps> = ({ _id, topicProp, moreBtn }) => {
             icon={icon.chevronRightBlack}
           />
           <div className={style.topic}>
-            <Avatar />
+            <Avatar src={topic?.organization?.image_url} />
             <div className={style.topic_name}>{name}</div>
           </div>
         </div>
@@ -150,10 +150,10 @@ export const Right: FC<RightProps> = ({ _id, topicProp, moreBtn }) => {
             ))}
           <div className={style.message_default}>
             <div className={style.message_info_MC}>
-              <Avatar sx={{ width: 80, height: 80 }} />
+              <Avatar sx={{ width: 80, height: 80 }} src={topic?.organization?.image_url} />
               <p className={style.message_info_name}>{name}</p>
               <XButton>
-                <Link to={{ pathname: `/cua-hang/${topic?.organization_id}` }}>
+                <Link to={{ pathname: `/cua-hang/${topic?.organization?.subdomain || topic?.organization_id}` }}>
                   Xem doanh nghiệp
                 </Link>
               </XButton>
@@ -229,9 +229,9 @@ const Message = ({ item, change = false, topicProp, nameUser }: { item: IMessage
             style={
               change
                 ? {
-                    backgroundColor: "#f1faff",
-                    borderRadius: "8px 0px 8px 8px",
-                  }
+                  backgroundColor: "#f1faff",
+                  borderRadius: "8px 0px 8px 8px",
+                }
                 : {}
             }
             className={style.message_body_cnt}
@@ -240,16 +240,22 @@ const Message = ({ item, change = false, topicProp, nameUser }: { item: IMessage
           {item.media_urls && item.media_urls?.length > 0 && (
             <div
               style={{
-                gridTemplateColumns: `repeat(${
-                  item.media_urls.length >= 3 ? 3 : item.media_urls.length
-                }, 1fr)`,
+                gridTemplateColumns: `repeat(${item.media_urls.length >= 3 ? 3 : item.media_urls.length
+                  }, 1fr)`,
                 width: `${topicProp ? "18vw" : "33vw"}`,
               }}
               className={style.message_body_images}
             >
               {item.media_urls.map((media_url) => (
                 <div key={media_url} className={style.message_body_images_item}>
-                  <img src={media_url} alt="" />
+                  {
+                    checkMediaType(media_url) === "IMAGE" ?
+                      <img src={media_url} alt="" />
+                      :
+                      <video controls>
+                        <source src={`${media_url}#t=0.1`} />
+                      </video>
+                  }
                 </div>
               ))}
             </div>

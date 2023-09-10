@@ -1,4 +1,5 @@
 import { Media } from "hooks";
+import { IOrganization } from "./organization";
 
 export interface ReqTopic {
   org: number;
@@ -10,6 +11,7 @@ export interface ITopic {
   _id: string,
   type: string,
   organization_id: number,
+  organization?:IOrganization,
   created_by: number,
   name: string | null,
   updated_at: string,

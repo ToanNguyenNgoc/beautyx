@@ -88,13 +88,13 @@ const Topic = ({ item }: { item: ITopic }) => {
     >
       <div className={style.topic_left}>
         <div className={style.topic_left_img}>
-          <img src={item.topic_user[0]?.user?.avatar || ''} onError={onErrorAvatar} alt="" />
+          <img src={item.organization?.image_url || ''} onError={onErrorAvatar} alt="" />
           <span className={style.topic_left_online}></span>
         </div>
       </div>
       <div className={style.topic_right}>
         <span className={style.topic_name}>
-          {name}
+          {item.organization?.name || name}
         </span>
         <div className={style.topic_message}>
           <span>{item.messages[0]?.msg}</span>

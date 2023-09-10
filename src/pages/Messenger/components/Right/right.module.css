@@ -179,7 +179,8 @@
   background-color: var(--bg-color);
 }
 
-.message_body_images_item img {
+.message_body_images_item img,
+.message_body_images_item video {
   position: absolute;
   z-index: 1;
   width: 100%;
