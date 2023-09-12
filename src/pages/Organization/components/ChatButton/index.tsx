@@ -6,14 +6,16 @@ import anmChat from "assets/anmChat.json"
 import { MessengerContext, MessengerCtxType, OrgContext, OrgContextType } from "context";
 import { chatApi } from "api";
 import { Right } from "pages/Messenger/components";
-import { ITopic } from "interface";
+import { IOrganization, ITopic } from "interface";
 import { useDeviceMobile } from "hooks";
 import { useHistory } from "react-router-dom";
 
-export const ChatButton: FC = () => {
+export const ChatButton: FC<{ org?: IOrganization, customPosition?: boolean }> = (props) => {
+  const { customPosition = true } = props;
   const refBox = useRef<HTMLDivElement>(null)
   const { currTopic } = useContext(MessengerContext) as MessengerCtxType
-  const { org } = useContext(OrgContext) as OrgContextType
+  const orgContext = useContext(OrgContext) as OrgContextType
+  const org  = orgContext?.org || props.org
   const [topic, setTopic] = useState<ITopic>()
   const mb = useDeviceMobile()
   const history = useHistory()
@@ -41,8 +43,14 @@ export const ChatButton: FC = () => {
     }
   }
   return (
-    <div className={style.container}>
-      <div onClick={(e) => { e.stopPropagation(); onChat() }} className={style.box}>
+    <div className={`${customPosition && style.container}`}>
+      <div
+        onClick={(e) => {
+          e.stopPropagation();
+          onChat();
+        }}
+        className={style.box}
+      >
         <XButton className={style.chat_btn}>
           <Lottie animationData={anmChat} />
         </XButton>
@@ -51,5 +59,5 @@ export const ChatButton: FC = () => {
         </div>
       </div>
     </div>
-  )
+  );
 }

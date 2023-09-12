@@ -36,6 +36,10 @@ import axios from 'axios';
 import API_3RD from 'api/3rd-api';
 import { ITrend } from 'pages/Trends/trend.interface';
 import { STALE_TIME } from 'config';
+import { ChatButton } from "../../pages/Organization/components/ChatButton";
+import Lottie from "lottie-react";
+import anmChat from "assets/anmChat.json";
+import { IUSER } from 'redux/profile/userSlice';
 
 interface RouteType {
     path: string,
@@ -168,8 +172,10 @@ function SerProCoDetail() {
     }
 
     return (
-        response && org ?
-            <>
+        <>
+            {
+                response && org ?
+            <> 
                 <Seo title={DETAIL.name} imageCover={DETAIL.image_url} content={DETAIL.description} />
                 <Head />
                 <Container>
@@ -283,7 +289,7 @@ function SerProCoDetail() {
                         </div>
                         {
                             IS_MB &&
-                            <DetailBottom onCommerce={onCommerce} PERCENT={PERCENT} discounts={discounts} org={org} detail={DETAIL} />
+                            <DetailBottom onCommerce={onCommerce} PERCENT={PERCENT} discounts={discounts} org={org} detail={DETAIL} USER={USER} />
                         }
                     </div>
                 </Container>
@@ -294,9 +300,13 @@ function SerProCoDetail() {
                     org_id={org?.id}
                 />
                 <BackTopButton />
+                {USER &&  !IS_MB && <ChatButton org={org} />}
             </>
             :
             <LoadDetail />
+            }
+            
+        </>
     );
 }
 
@@ -696,12 +706,14 @@ export const DetailDesc = ({ detail, org, onBookingNow, PERCENT }: DetailDescPro
     )
 }
 const DetailBottom = (
-    { detail, org, discounts, PERCENT, onCommerce }:
+    { detail, org, discounts, PERCENT, onCommerce,USER }:
         {
             detail: DetailProp,
             org: IOrganization,
             discounts: IDiscountPar[],
-            PERCENT: number, onCommerce: boolean
+            PERCENT: number,
+            onCommerce: boolean,
+            USER: IUSER,
         }
 ) => {
     const { t } = useContext(AppContext) as any
@@ -712,16 +724,24 @@ const DetailBottom = (
         <div className={style.bottom}>
             {
                 onCommerce ?
-                    <>
-                        <XButton
-                            title={detail.type === 'SERVICE' ? t('detail_item.booking_now') : t('cart.payment_now')}
-                            onClick={() => setDra({ open: true, type: 'NOW' })}
-                        />
-                        <XButton
-                            title={t('pr.add_to_cart')}
-                            onClick={() => setDra({ open: true, type: 'ADD_CART' })}
-                        />
-                    </>
+                    <div className={style.bottom_wrap}>
+                        <div className={style.bottom_wrap_btns}>
+                            {USER && <ChatButton customPosition={false} org={org} />}
+                        </div>
+
+                        <div className={style.bottom_wrap_btns}>
+                            <XButton
+                                title={t('pr.add_to_cart')}
+                                onClick={() => setDra({ open: true, type: 'ADD_CART' })}
+                                icon={icon.cartWhiteBold}
+                                className={style.botton_btn}
+                            />
+                            <XButton
+                                title={detail.type === 'SERVICE' ? t('detail_item.booking_now') : t('cart.payment_now')}
+                                onClick={() => setDra({ open: true, type: 'NOW' })}
+                            />
+                        </div>
+                    </div>
                     :
                     <p className={style.detail_dis}>
                         {t('pr.This product/service is not sold online yet')}
