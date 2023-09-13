@@ -906,7 +906,7 @@
     .bottom_wrap{
         display: flex;
         width: 100%;
-        gap: 14px;
+        gap: 12px;
     }
 
     .bottom {
@@ -938,13 +938,16 @@
     .bottom_wrap_btns:nth-child(1){
         width: 40px;
     }
+    .bottom_wrap_btns:nth-child(1) button{
+        border-radius: 6px;
+    }
     .bottom_wrap_btns:nth-child(2){
-        width: calc(100% - 68px);
+        width: calc(100% - 66px);
         display: flex;
     }
     .bottom_wrap_btns {
         display: flex;
-        gap: 14px;
+        gap: 12px;
     }
     .bottom_wrap_btns:nth-child(2) button{
         width: 50%;

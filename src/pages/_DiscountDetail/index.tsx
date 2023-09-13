@@ -21,10 +21,13 @@ import GoogleTagPush, { GoogleTagEvents } from 'utils/dataLayer';
 import tracking from 'api/trackApi'
 import { clearAllServices } from 'redux/booking';
 import { AppContext } from 'context/AppProvider';
+import { ChatButton } from "../../pages/Organization/components/ChatButton";
+import { IUSER } from "redux/profile/userSlice";
 
 function DiscountDetail() {
     const IS_MB = useDeviceMobile()
     const { detail, org, discount, typeItemProps } = useDiscountDetail()
+    const { USER } = useSelector((state: IStore) => state.USER);
     const location = useLocation()
     const history = useHistory()
     //display special price
@@ -181,7 +184,7 @@ function DiscountDetail() {
                         </div>
                         {
                             IS_MB &&
-                            <DetailBottom PERCENT={PERCENT} discount={discount} org={org} detail={DETAIL} />
+                            <DetailBottom PERCENT={PERCENT} discount={discount} org={org} detail={DETAIL} USER={USER}/>
                         }
                     </div>
                 </Container>
@@ -191,6 +194,7 @@ function DiscountDetail() {
                     item_id={DETAIL.id}
                     org_id={org?.id}
                 />
+                {USER &&  !IS_MB && <ChatButton org={org} />}
             </>
             :
             <LoadDetail />
@@ -206,8 +210,8 @@ interface DetailQuantityProps {
     draType?: string
 }
 const DetailBottom = (
-    { detail, org, discount, PERCENT }:
-        { detail: DetailProp, org: IOrganization, discount: IDiscountPar, PERCENT: number }
+    { detail, org, discount, PERCENT,USER }:
+        { detail: DetailProp, org: IOrganization, discount: IDiscountPar, PERCENT: number, USER: IUSER, }
 ) => {
     const { t } = useContext(AppContext) as any
     const [dra, setDra] = useState({
@@ -215,14 +219,23 @@ const DetailBottom = (
     })
     return (
         <div className={style.bottom}>
-            <XButton
-                title={detail.type === 'SERVICE' ? t('pm.booking_now') : t('cart.payment_now')}
-                onClick={() => setDra({ open: true, type: 'NOW' })}
-            />
-            <XButton
-                title={t('pr.add_to_cart')}
-                onClick={() => setDra({ open: true, type: 'ADD_CART' })}
-            />
+            <div className={style.bottom_wrap}>
+                <div className={style.bottom_wrap_btns}>
+                    {USER && <ChatButton customPosition={false} org={org} />}
+                </div>
+                <div className={style.bottom_wrap_btns}>
+                    <XButton
+                        title={t('pr.add_to_cart')}
+                        onClick={() => setDra({ open: true, type: 'ADD_CART' })}
+                        icon={icon.cartWhiteBold}
+                        className={style.botton_btn}
+                    />
+                    <XButton
+                        title={detail.type === 'SERVICE' ? t('pm.booking_now') : t('cart.payment_now')}
+                        onClick={() => setDra({ open: true, type: 'NOW' })}
+                    />
+                </div>
+            </div>
             <Drawer anchor='bottom' open={dra.open} onClose={() => setDra({ open: false, type: '' })} >
                 <div className={style.bottom_wrapper}>
                     <div className={style.bottom_detail}>

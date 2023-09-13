@@ -37,8 +37,6 @@ import API_3RD from 'api/3rd-api';
 import { ITrend } from 'pages/Trends/trend.interface';
 import { STALE_TIME } from 'config';
 import { ChatButton } from "../../pages/Organization/components/ChatButton";
-import Lottie from "lottie-react";
-import anmChat from "assets/anmChat.json";
 import { IUSER } from 'redux/profile/userSlice';
 
 interface RouteType {
@@ -706,7 +704,7 @@ export const DetailDesc = ({ detail, org, onBookingNow, PERCENT }: DetailDescPro
     )
 }
 const DetailBottom = (
-    { detail, org, discounts, PERCENT, onCommerce,USER }:
+    { detail, org, discounts, PERCENT, onCommerce, USER }:
         {
             detail: DetailProp,
             org: IOrganization,

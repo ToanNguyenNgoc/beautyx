@@ -176,7 +176,8 @@ export const Right: FC<RightProps> = ({ _id, topicProp, moreBtn }) => {
                   }}
                   className={style.message_body_cnt}
                 >
-                  Xin chào {users_name}! {name} có thể hỗ trợ gì cho anh/chị?
+                  Xin chào {users_name && users_name}! {name} có thể hỗ trợ gì cho
+                  anh/chị?
                 </p>
               </div>
             </div>
