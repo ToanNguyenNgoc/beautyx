@@ -9,31 +9,34 @@ import { AlertSnack, XButton } from "components/Layout";
 import icon from "constants/icon";
 import { accept_media } from "common";
 import { useFormik } from "formik";
-import { IOrganization, ITag, Media, ReqPost } from "interface";
+import { IOrganization, IPost, ITag, Media, ReqPost } from "interface";
 import img from "constants/img";
 import * as Yup from "yup"
 import { SelectOrg } from './Selection-Org'
 import { SelectTag } from './Selection-Tag'
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { postApi } from "api";
 import { regexHTML, testRegexImage } from "utils";
 import { pick } from "lodash";
+import { QR_KEY } from "config";
 
 interface PostInputProps {
   open?: boolean,
   setOpen?: (open: boolean) => void,
+  isRefetchLisPost?: boolean
 }
 interface InitialValues {
   content: string;
   media_ids: Media[];
   organization: IOrganization | null;
-  tag: ITag | null
+  tag: ITag | null;
 }
 export const Input: FC<PostInputProps> = ({
-  open = false,
+  open = false, isRefetchLisPost = false,
   setOpen = () => false
 }) => {
   const mb = useDeviceMobile()
+  const client = useQueryClient()
   const { USER } = useSelector((state: IStore) => state.USER)
   const { noti, resultLoad, onCloseNoti } = useNoti()
   const { handlePostMedia } = usePostMedia()
@@ -41,8 +44,10 @@ export const Input: FC<PostInputProps> = ({
   const [openTag, setOpenTag] = useState(false)
   const { mutate, isLoading } = useMutation({
     mutationFn: (body: ReqPost) => postApi.createPost(body),
-    onSuccess: () => {
+    onSuccess: (data) => {
       resultLoad('Đăng bài thành công!')
+      if (isRefetchLisPost)
+        client.invalidateQueries([QR_KEY.POSTS])
       setTimeout(() => setOpen(false), 1000)
     },
     onError: () => resultLoad('Có lỗi xảy ra !')
@@ -56,8 +61,8 @@ export const Input: FC<PostInputProps> = ({
     },
     validationSchema: Yup.object({
       content: Yup.string().required(),
-      organization: Yup.object().shape({}),
-      tag: Yup.object().shape({})
+      // organization: Yup.object().shape({}),
+      // tag: Yup.object().shape({})
     }),
     onSubmit: (values) => {
       mutate({
@@ -65,7 +70,7 @@ export const Input: FC<PostInputProps> = ({
         content: values.content.replace(regexHTML, ''),
         status: 1,
         media_ids: values.media_ids.map(i => i.model_id),
-        organization_id: values.organization?.id || 0,
+        organization_id: values.organization?.id,
         tag_id: values.tag?.id
       })
     }

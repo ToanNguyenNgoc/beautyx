@@ -1,12 +1,12 @@
-import { groupCates, groups } from "./data";
 import style from "./community.module.css";
-import { Link } from "react-router-dom";
-import { Avatar, AvatarGroup } from "@mui/material";
-import imgC from "./assets";
-import { PostItem, PostLoading } from "./components";
+import { useHistory } from "react-router-dom";
+import { Avatar } from "@mui/material";
+import { PostItem, PostLoading, Input } from "./components";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { QR_KEY } from "config";
 import { postApi } from "api";
+import { useState } from "react";
+import { useAuth } from "hooks";
 
 function TabCommunity() {
   // const { posts } = useSelector((state: IStore) => state.COMMUNITY)
@@ -87,6 +87,7 @@ function TabCommunity() {
           </div> */}
           <div className={style.center_post_cnt}>
             <div className={style.center_post_head}>
+              <InputPost />
               <span className={style.section_title}>Bài viết</span>
             </div>
             <ul className={style.center_post}>
@@ -111,3 +112,19 @@ function TabCommunity() {
 }
 
 export default TabCommunity;
+const InputPost = () => {
+  const { USER } = useAuth()
+  const [open, setOpen] = useState(false)
+  const history = useHistory()
+  return (
+    <>
+      <div className={style.input_post_cnt}>
+        <Avatar src={USER?.avatar} />
+        <span onClick={() => USER ? setOpen(true) : history.push('/sign-in?1')} className={style.input_post}>
+          Tạo mới bài viết
+        </span>
+      </div>
+      <Input open={open} setOpen={setOpen} isRefetchLisPost />
+    </>
+  )
+}

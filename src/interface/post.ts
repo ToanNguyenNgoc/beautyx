@@ -2,7 +2,7 @@ import { IOrganization, ITag, User, Service } from "interface";
 
 export interface ReqPost {
   content: string;
-  organization_id: number;
+  organization_id?: number;
   media_ids: number[];
   status?: number;
   tag_id?: number;
