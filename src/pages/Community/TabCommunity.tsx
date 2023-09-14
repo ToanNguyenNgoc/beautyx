@@ -88,7 +88,6 @@ function TabCommunity() {
           <div className={style.center_post_cnt}>
             <div className={style.center_post_head}>
               <InputPost />
-              <span className={style.section_title}>Bài viết</span>
             </div>
             <ul className={style.center_post}>
               {posts.map((post, index: number) => (

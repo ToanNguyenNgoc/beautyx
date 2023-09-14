@@ -17,7 +17,10 @@
     margin-bottom: 16px;
     border-radius: 0 0 16px 16px;
 }
-
+.home-discounts__title > a {
+    color: var(--purple);
+    font-weight: bold;
+}
 .home-discounts__title h2,
 .home-discounts__title span {
     font-weight: 700;
@@ -287,6 +290,9 @@
 /* Mobile */
 
 @media only screen and (max-width: 767px) {
+    .home-discounts__title > a{
+        font-size: 12px;
+    }
     .home-discounts {
         padding: 0px;
         margin: 0px 0px 12px 0px;

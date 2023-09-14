@@ -82,7 +82,7 @@ function GroupDetail() {
                     <div className={style.body}>
                         <div className={style.body_left}>
                             <div className={style.group_post_inp}>
-                                <p className={style.title}>Tạo bài viết</p>
+                                <p className={style.title}>Tạo </p>
                                 {group && <PostInput group={group} />}
                             </div>
                             <div className={style.group_posts}>

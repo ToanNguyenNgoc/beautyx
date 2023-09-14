@@ -64,7 +64,7 @@ export const HomeOrgDistance:FC=()=> {
             <HomeTitle
                 onClick={onViewMore}
                 url={`/ket-qua-tim-kiem/cua-hang?keyword=${ORG_PR['filter[tags]']}`}
-                title={t('Home.near_you')} seemore={t('detail_item.see_more') + '>'}
+                title={t('Home.near_you')} seemore={t('detail_item.see_more') + ' >'}
             />
             <div className={style.org_filter_cnt}>
                 {tags.length === 0 && <TagSkelton />}

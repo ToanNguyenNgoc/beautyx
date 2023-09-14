@@ -31,7 +31,7 @@ export const HomeApprove: FC = () => {
   const approves = data?.pages.map(i => i.context.data).flat()
   return (
     <div ref={refSection} className={style.container}>
-      <HomeTitle title="Doanh nghiệp mới tham gia" seemore="Xem thêm" url="doanh-nghiep-moi-tham-gia" />
+      <HomeTitle title="Doanh nghiệp mới tham gia" seemore="Xem thêm >" url="doanh-nghiep-moi-tham-gia" />
       <div className={style.list_cnt}>
         {isLoading && <LoadGrid item_count={4} grid={4} />}
         <div className={style.list} >

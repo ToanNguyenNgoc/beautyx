@@ -26,7 +26,7 @@
 .input_post_cnt {
     background-color: var(--bg-white);
     padding: 12px;
-    margin-bottom: 10px;
+    margin-bottom: 14px;
     box-shadow: 0 1px 2px var(--shadow-2);
     border-radius: 12px;
     display: flex;
@@ -297,6 +297,7 @@
         box-shadow: none;
         border-radius: 0px;
         border-bottom: solid 1px var(--bgGray);
+        margin-bottom: 0;
     }
     .input_post{
         border-radius: 6px;
@@ -322,10 +323,10 @@
     }
 
     .center_post_head {
-        padding: 14px 12px;
+        padding: 0 12px;
         background-color: #FAFAFA;
         position: sticky;
-        top: 42px;
+        top: 43px;
         left: 0;
         width: 100%;
         z-index: 10;
