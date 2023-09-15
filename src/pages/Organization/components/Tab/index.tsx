@@ -56,13 +56,14 @@ export const Tab = ({
       path: "combo",
       ref: refCombo,
     },
-    // {
-    //   open: staffs.length > 0 ? true : false,
-    //   id: 5,
-    //   title: "Nhân viên",
-    //   path: "staff",
-    //   ref: refStaff,
-    // },
+    {
+      // open: staffs.length > 0 ? true : false,
+      open: false,
+      id: 5,
+      title: "Nhân viên",
+      path: "staff",
+      ref: refStaff,
+    },
     {
       open: true,
       id: 6,

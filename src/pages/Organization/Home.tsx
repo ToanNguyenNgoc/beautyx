@@ -69,9 +69,9 @@ const Body = () => {
             <div ref={refCombo} className={style.body_section}>
               <ServiceSection type="COMBO" />
             </div>
-            {/* <div ref={refStaff} className={style.body_section}>
-              <Staff/>
-            </div> */}
+            <div ref={refStaff} className={style.body_section}>
+              {/* <Staff/> */}
+            </div>
           </>
         )}
         <div ref={refDetail} className={style.body_section}>
