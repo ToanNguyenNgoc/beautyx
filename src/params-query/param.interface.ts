@@ -117,3 +117,9 @@ export interface ParamsPost extends Page {
     "append"?: "media_url"
 }
 export interface ParamsOrgApprove extends Page { }
+
+export interface ParamsStaffs extends Page {
+    "filter[is_employee_ecommerce]"?: boolean;
+    include?: string;
+    append?: string;
+}

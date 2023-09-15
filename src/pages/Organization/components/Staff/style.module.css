@@ -1,0 +1,12 @@
+.container {
+  padding-bottom: 12px;
+  background-color: var(--white);
+  padding: 12px;
+  border-radius: 8px;
+}
+.title{
+  font-size: 20px;
+  font-weight: bold;
+  padding-bottom: 6px;
+  border-bottom: solid 1px var(--grey_2);
+}

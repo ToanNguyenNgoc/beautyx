@@ -5,7 +5,6 @@ import { AppContext, AppContextType } from "context/AppProvider";
 import { OrgContext, OrgContextType } from "context";
 import { Container } from "@mui/material";
 import animationData from "../../../../assets/reviewSVG.json";
-import icon from "constants/icon";
 import Lottie from "lottie-react";
 interface TabProps {
   refDealHot: RefObject<HTMLDivElement>;
@@ -13,6 +12,7 @@ interface TabProps {
   refProduct: RefObject<HTMLDivElement>;
   refCombo: RefObject<HTMLDivElement>;
   refDetail: RefObject<HTMLDivElement>;
+  refStaff: RefObject<HTMLDivElement>;
 }
 
 export const Tab = ({
@@ -20,10 +20,11 @@ export const Tab = ({
   refService,
   refProduct,
   refCombo,
+  refStaff,
   refDetail,
 }: TabProps) => {
   const { t } = useContext(AppContext) as AppContextType;
-  const { org, trends } = useContext(OrgContext) as OrgContextType;
+  const { org, trends, staffs } = useContext(OrgContext) as OrgContextType;
   const [tabAct, setTabAct] = useState(0);
   const mrTop = 88;
   let tabs = [
@@ -55,16 +56,23 @@ export const Tab = ({
       path: "combo",
       ref: refCombo,
     },
+    // {
+    //   open: staffs.length > 0 ? true : false,
+    //   id: 5,
+    //   title: "Nhân viên",
+    //   path: "staff",
+    //   ref: refStaff,
+    // },
     {
       open: true,
-      id: 5,
+      id: 6,
       title: t("pr.merchant_detail"),
       path: "thong-tin",
       ref: refDetail,
     },
     {
       open: trends.length > 0 ? true : false,
-      id: 6,
+      id: 7,
       title: "Review",
       path: "review",
       ref: refDetail,
@@ -73,17 +81,19 @@ export const Tab = ({
   useEffect(() => {
     const handleScroll = () => {
       if (
-        refDealHot.current &&
-        refService.current &&
-        refProduct.current &&
-        refCombo.current &&
-        refDetail.current
+        refDealHot?.current &&
+        refService?.current &&
+        refProduct?.current &&
+        refCombo?.current &&
+        refStaff?.current &&
+        refDetail?.current
       ) {
         const scrollY = window.scrollY + 90;
         const dealHotOffset = refDealHot.current.offsetTop;
         const serviceOffset = refService.current.offsetTop;
         const productOffset = refProduct.current.offsetTop;
         const comboOffset = refCombo.current.offsetTop;
+        const staffOffset = refStaff.current.offsetTop;
         const detailOffset = refDetail.current.offsetTop;
         if (scrollY < 500) {
           setTabAct(0);
@@ -93,10 +103,12 @@ export const Tab = ({
           setTabAct(2);
         } else if (productOffset < scrollY && scrollY < comboOffset) {
           setTabAct(3);
-        } else if (comboOffset < scrollY && scrollY < detailOffset) {
+        } else if (comboOffset < scrollY && scrollY < staffOffset) {
           setTabAct(4);
-        } else if (detailOffset < scrollY) {
+        } else if (staffOffset < scrollY && scrollY < detailOffset) {
           setTabAct(5);
+        } else if (detailOffset < scrollY) {
+          setTabAct(6);
         }
       }
     };
@@ -127,7 +139,7 @@ export const Tab = ({
                   })
                 }
               >
-                {tab.id === 6 ? (
+                {!trends ? (
                   <div className={style.cus_title_review}>
                     <p className={style.tab_item_review}>{tab.title}</p>
                     <div className={style.icon_review}>

@@ -1,11 +1,14 @@
 import { useQuery } from "@tanstack/react-query";
+import { orgApi } from "api";
 import API_3RD from "api/3rd-api";
 import API_ROUTE from "api/_api";
 import axios from "axios";
-import { STALE_TIME } from "config";
+import { QR_KEY, STALE_TIME } from "config";
 import { useSwr } from "hooks";
 import { IDiscountPar, IOrgMobaGalleries, IOrganization, Product, Service } from "interface";
+import { IStaffs } from "interface/staffOrg";
 import { ITrend } from "pages/Trends/trend.interface";
+import { ParamsStaffs } from "params-query/param.interface";
 import { ReactNode, createContext } from "react";
 import { useParams } from "react-router-dom";
 import { useGalleriesQuery } from "redux-toolkit-query/hook-home";
@@ -25,6 +28,7 @@ export type OrgContextType = {
   servicesSpecial: Service[];
   productsSpecial: Product[];
   trends: ITrend[];
+  staffs: IStaffs[];
 };
 
 export const OrgContext = createContext<OrgContextType | null>(null);
@@ -55,6 +59,20 @@ export function OrgProvider({ children }: { children: ReactNode }) {
     staleTime: STALE_TIME,
   });
   const trends = dataTrends?.data.data.context.data ?? []
+
+  const paramStaff: ParamsStaffs = {
+    "filter[is_employee_ecommerce]": true,
+    include: "user|bed",
+    append: "group_name|avatar",
+  };
+  const { data: dataStaffs } = useQuery({
+    queryKey: [QR_KEY.STAFFS, org?.id],
+    queryFn: () => orgApi.getStaffOrg(Number(org?.id), paramStaff),
+    staleTime: STALE_TIME,
+    enabled: !!org,
+  });
+  const staffs = dataStaffs?.context?.data ?? []
+  
   const value = {
     subdomain,
     org,
@@ -65,6 +83,7 @@ export function OrgProvider({ children }: { children: ReactNode }) {
     servicesSpecial,
     productsSpecial,
     trends,
+    staffs,
   };
 
   return <OrgContext.Provider value={value} > {children} </OrgContext.Provider>

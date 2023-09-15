@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { Container } from '@mui/material';
-import { Banner, Deal, Header, Loading, More, ServiceSection, Tab, About, ChatButton } from './components';
+import { Banner, Deal, Header, Loading, More, ServiceSection, Tab, About, ChatButton, Staff } from './components';
 import { useContext, useRef } from 'react';
 import { OrgContext, OrgContextType } from 'context';
 import style from './organization.module.css'
@@ -42,35 +42,42 @@ const Body = () => {
   const refProduct = useRef<HTMLDivElement>(null)
   const refCombo = useRef<HTMLDivElement>(null)
   const refDetail = useRef<HTMLDivElement>(null)
+  const refStaff = useRef<HTMLDivElement>(null)
   usePostAnalytics(org)
   return (
     <>
       <Tab
-        refDealHot={refDealHot} refService={refService} refProduct={refProduct}
-        refCombo={refCombo} refDetail={refDetail}
+        refDealHot={refDealHot}
+        refService={refService}
+        refProduct={refProduct}
+        refCombo={refCombo}
+        refStaff={refStaff}
+        refDetail={refDetail}
       />
       <div className={style.body}>
-        {
-          org.is_momo_ecommerce_enable &&
+        {org.is_momo_ecommerce_enable && (
           <>
             <div ref={refDealHot} className={style.body_section}>
               <Deal />
             </div>
             <div ref={refService} className={style.body_section}>
-              <ServiceSection type='SERVICE' />
+              <ServiceSection type="SERVICE" />
             </div>
             <div ref={refProduct} className={style.body_section}>
-              <ServiceSection type='PRODUCT' />
+              <ServiceSection type="PRODUCT" />
             </div>
             <div ref={refCombo} className={style.body_section}>
-              <ServiceSection type='COMBO' />
+              <ServiceSection type="COMBO" />
             </div>
+            {/* <div ref={refStaff} className={style.body_section}>
+              <Staff/>
+            </div> */}
           </>
-        }
+        )}
         <div ref={refDetail} className={style.body_section}>
           <About />
         </div>
       </div>
     </>
-  )
+  );
 }
