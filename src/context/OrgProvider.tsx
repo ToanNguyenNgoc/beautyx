@@ -69,7 +69,8 @@ export function OrgProvider({ children }: { children: ReactNode }) {
     queryKey: [QR_KEY.STAFFS, org?.id],
     queryFn: () => orgApi.getStaffOrg(Number(org?.id), paramStaff),
     staleTime: STALE_TIME,
-    enabled: !!org,
+    // enabled: !!org,
+    enabled:false
   });
   const staffs = dataStaffs?.context?.data ?? []
   

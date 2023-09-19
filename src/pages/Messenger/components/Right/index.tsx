@@ -160,7 +160,7 @@ export const Right: FC<RightProps> = ({ _id, topicProp, moreBtn }) => {
             </div>
             <div className={style.message_head}>
               <div className={style.avatar}>
-                <img src="" onError={onErrorAvatar} alt="" />
+                <img src={topic?.organization?.image_url} onError={onErrorAvatar} alt="" />
               </div>
               <span className={style.user_name}>{name}</span>
             </div>
