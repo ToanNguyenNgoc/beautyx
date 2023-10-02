@@ -1,6 +1,6 @@
 const axios = require('axios')
 
-const API = 'https://api.myspa.vn/v1'
+const API = 'https://devapi.myspa.vn/v1'
 
 const getOrgDetail = async (id) => {
   let org = {}

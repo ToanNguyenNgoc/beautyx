@@ -131,6 +131,11 @@ app.get('/*', (req, res, next) => {
                     '<meta property="og:image" content=""/>',
                     `<meta property="og:image" content="${image}"/>`
                 )
+                .replace(
+                    '<meta property="og:image" content="./cover.jpeg"/>',
+                    `<meta property="og:image" content="${image}"/>`
+                )
+            console.log(image)
             return res.send(htmlData);
         } else {
             return res.send(htmlData);
