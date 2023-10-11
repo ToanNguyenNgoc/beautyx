@@ -1,12 +1,12 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { Container } from "@mui/material";
+import {  Container } from "@mui/material";
 import tracking from "api/trackApi";
 import { OpenApp, PlashScreen } from "components/Layout";
 import { LoadHomeBanner } from "components/LoadingSketion/LoadHome";
 import { useDeviceMobile } from "hooks";
 import HomeDiscount from "./HomeDiscounts";
 import TrafficData from "./HomeTrafficData";
-import { useEffect } from "react";
+import {  useEffect } from "react";
 import { useSelector } from "react-redux";
 import { STATUS } from "redux/status";
 import HomeBanner2 from "./HomeBanner2";
@@ -31,7 +31,8 @@ export default function HomePage() {
         tracking.HOME_LOAD();
     }, [])
     return (
-        <>  <PortDeal/>
+        <>
+            <PortDeal />
             <div className={style.container}>
                 <div className="home_container_par">
                     <Container>

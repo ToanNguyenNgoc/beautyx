@@ -123,6 +123,7 @@ function CartPaymentStatus() {
         }
         if (response?.status === "PAID") {
             dispatch(clearByCheck())
+            closeWindowPayon()
             if (action) handlePostApp()
             if (response?.paymentable_id) onShowNotiBTXPoint(response?.paymentable_id)
         }
@@ -244,5 +245,8 @@ export const onPaymentFrame = (pay_url: string) => {
     const windowWidth = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
     const windowHeight = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
     const windowFeatures = `toolbar=yes,scrollbars=yes,resizable=yes,top=${(windowHeight - windowHeight * 0.95) / 2},left=${(windowWidth - 573) / 2},width=573,height=${windowHeight * 0.95}`;
-    window.open(pay_url, "_blank", windowFeatures);
+    return window.open(pay_url, "_blank", windowFeatures);
 }
+let windowPayon = {} as any
+export const openWindowPayon = (pay_url:string) => windowPayon = onPaymentFrame(pay_url)
+export const closeWindowPayon = () => windowPayon?.close()

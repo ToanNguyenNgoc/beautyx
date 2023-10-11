@@ -2,10 +2,10 @@
 import { IOrderV2, IPaymentMethod } from "interface";
 import { FC, memo, useEffect, useRef } from "react";
 import img from "constants/img";
-import { MOMO, PAY_ON } from "common";
+import { MOMO, OTHER, PAY_ON_BTX } from "common";
 import { XButton } from "components/Layout";
 import style from "../payment.module.css"
-import { useCancelByTime, onPaymentFrame } from "pages/CartPaymentStatus";
+import { useCancelByTime, openWindowPayon } from "pages/CartPaymentStatus";
 import icon from "constants/icon";
 import CopyToClipboard from "react-copy-to-clipboard";
 import { Link } from "react-router-dom";
@@ -13,26 +13,19 @@ import { Link } from "react-router-dom";
 interface PaymentProps {
   pay_url: string,
   payment_method: IPaymentMethod,
-  res: IOrderV2
+  res: IOrderV2,
+  orderStatus:any
 }
 
-const PaymentRender: FC<PaymentProps> = ({ pay_url, payment_method, res }) => {
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      if (payment_method.name_key === PAY_ON.name_key) {
-        onPaymentFrame(pay_url)
-      }
-    }, 1000)
-    return () => clearTimeout(timer)
-  }, [])
-
+const PaymentRender: FC<PaymentProps> = ({ pay_url, payment_method, res, orderStatus }) => {
   const onRenderPayment = () => {
     switch (payment_method.name_key) {
       case MOMO.name_key:
         return <MomoRender pay_url={pay_url} />;
-      case PAY_ON.name_key:
-        return <PayonRender pay_url={pay_url} />;
-        // return <OtherRender res={res} />
+      case PAY_ON_BTX.name_key:
+        return <PayonRender pay_url={pay_url}/>;
+      case OTHER.name_key:
+        return <OtherRender res={res} />
       default:
         <>
         </>
@@ -98,13 +91,20 @@ const MomoRender = ({ pay_url }: { pay_url: string }) => {
   )
 }
 const PayonRender = ({ pay_url }: { pay_url: string }) => {
+  
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      openWindowPayon(pay_url)
+    }, 1000)
+    return () => clearTimeout(timer)
+  }, [])
   return (
     <div className={style.payment_left_body}>
       <span className={style.title}>
         Thực hiện theo hướng dẫn sau để thanh toán
       </span>
       <div className={style.payment_left_open_payment}>
-        <XButton className={style.open_payment_btn} onClick={() => onPaymentFrame(pay_url)}>
+        <XButton className={style.open_payment_btn} onClick={()=>openWindowPayon(pay_url)}>
           Thanh toán
         </XButton>
       </div>
@@ -113,10 +113,10 @@ const PayonRender = ({ pay_url }: { pay_url: string }) => {
 }
 const OtherRender = ({ res }: { res: IOrderV2 }) => {
   const aRef = useRef<HTMLAnchorElement>(null)
-  const download = ()=>{
-    if(aRef.current){
+  const download = () => {
+    if (aRef.current) {
       var file = new Blob(
-        ["https://beautyx.vn/static/media/qr-code.79621811196d73a4b3aa87e37acbb554.svg"],
+        [String(res.payment_gateway?.extra_data?.url_checkout)],
         { type: "image/*" }
       );
       aRef.current.href = URL.createObjectURL(file);
@@ -132,18 +132,20 @@ const OtherRender = ({ res }: { res: IOrderV2 }) => {
       <div className={style.payment_left_other}>
         <p className={style.payment_left_other_title}>Bạn vui lòng CK số tiền  bằng cách quét mã QR của ngân hàng sau:</p>
         <div className={style.payment_left_other_qr}>
-          <img src="https://beautyx.vn/static/media/qr-code.79621811196d73a4b3aa87e37acbb554.svg" className={style.qr_img} alt="" />
+          <img src={String(res.payment_gateway?.extra_data?.url_checkout)} className={style.qr_img} alt="" />
           <a
             className={style.qr_img_download_btn} ref={aRef}
-            href="https://beautyx.vn/static/media/qr-code.79621811196d73a4b3aa87e37acbb554.svg"
+            href={String(res.payment_gateway?.extra_data?.url_checkout)}
             download onClick={download}
           >
             <img src={icon.downLoadWhite} alt="" />
           </a>
-          <p className={style.bank_name}>BANKNAME</p>
+          <p className={style.bank_name}>
+            {res.payment_gateway?.extra_data?.bank_account_name}
+          </p>
           <div className={style.bank_account_number}>
-            12345678901234567890
-            <CopyToClipboard text="12345678901234567890">
+            {res.payment_gateway?.extra_data?.bank_number}
+            <CopyToClipboard text={String(res.payment_gateway?.extra_data?.bank_number)}>
               <XButton className={style.copy_info_btn} icon={icon.copyWhite} iconSize={14} />
             </CopyToClipboard>
           </div>
@@ -152,12 +154,12 @@ const OtherRender = ({ res }: { res: IOrderV2 }) => {
       <div className={style.payment_left_other_desc}>
         <div className={style.other_desc_row}>
           <label>Chủ TK nhận tiền:</label>
-          <span>CÔNG TY TNHH BEAUTYX</span>
+          <span>{res.payment_gateway?.extra_data?.bank_name}</span>
         </div>
         <div className={style.other_desc_row}>
           <label>Nội dung CK bắt buộc là:</label>
-          <span>ABCXYZgydewgywyedywefdtwed</span>
-          <CopyToClipboard text="ABCXYZgydewgywyedywefdtwed">
+          <span>{res.payment_gateway?.extra_data?.bank_title}</span>
+          <CopyToClipboard text={String(res.payment_gateway?.extra_data?.bank_title)}>
             <XButton className={style.copy_info_btn} icon={icon.copyWhite} iconSize={14} />
           </CopyToClipboard>
         </div>

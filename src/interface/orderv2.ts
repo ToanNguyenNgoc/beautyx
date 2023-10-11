@@ -104,6 +104,11 @@ export interface IOrderV2 {
             deeplink: string | null;
             qrCodeUrl: null | string;
             deeplinkMiniApp: string | null;
+            bank_account_name?:string;
+            bank_name?:string;
+            bank_number?:string;
+            bank_title?:string;
+            url_checkout?:string
         };
         payment_method_id: number;
         paymentable_type: string;

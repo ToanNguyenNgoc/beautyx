@@ -13,7 +13,7 @@ function PaymentQr(props: any) {
     const checkStatus = () => {
         switch (orderStatus) {
             case "PENDING":
-                return <PaymentRender payment_method={res.payment_method} pay_url={pay_url} res={res} />;
+                return <PaymentRender orderStatus={orderStatus} payment_method={res.payment_method} pay_url={pay_url} res={res} />;
             case "PAID":
                 return (
                     <div className={style.payment_left_body} >

@@ -8,13 +8,13 @@ import { Drawer } from '@mui/material';
 import { useDeviceMobile } from 'hooks';
 import { EXTRA_FLAT_FORM } from 'api/extraFlatForm';
 import { AppContext } from 'context/AppProvider';
-import { MOMO, OTHER, PAY_ON } from 'common';
+import { MOMO, OTHER, PAY_ON_BTX } from 'common';
 
 interface PaymentMethodType {
   onSetPaymentMethod?: (method_id: IPaymentMethod) => void
 }
 const availability = (name_key: string): Boolean => {
-  const availabilities = [MOMO.name_key, PAY_ON.name_key, OTHER.name_key]
+  const availabilities = [MOMO.name_key, PAY_ON_BTX.name_key]
   return availabilities.includes(name_key)
 }
 
@@ -24,7 +24,7 @@ function PaymentMethod(props: PaymentMethodType) {
   const PLAT_FORM = EXTRA_FLAT_FORM()
   const IS_MB = useDeviceMobile()
   const { data } = useGetPaymentMethodQuery()
-  const methods: IPaymentMethod[] = data ?? []
+  const methods: IPaymentMethod[] = data?.concat([PAY_ON_BTX]) ?? []
   const [open, setOpen] = useState(false)
 
   const [methodKey, setMethodKey] = useState(PLAT_FORM === 'BEAUTYX' ? 'MOMO' : PLAT_FORM)
@@ -58,17 +58,19 @@ function PaymentMethod(props: PaymentMethodType) {
             <div className={style.drawer}>
               <ul className={style.list_method}>
                 {
-                  methods.filter(i => availability(i.name_key)).map(item => (
-                    <li
-                      style={item.name_key === methodKey ? {
-                        backgroundColor: 'var(--pink-momo)',
-                        color: 'var(--bg-white)'
-                      } : {}}
-                      onClick={() => onChooseMethod(item)} key={item.id} className={style.method_item}
-                    >
-                      <span>{item.name_key} {item.name_key === OTHER.name_key && '(Chuyển khoản)'}</span>
-                    </li>
-                  ))
+                  methods
+                    .filter(i => availability(i.name_key)).map(item => (
+                      <li
+                        style={item.name_key === methodKey ? {
+                          backgroundColor: 'var(--pink-momo)',
+                          color: 'var(--bg-white)'
+                        } : {}}
+                        key={item.id} className={style.method_item}
+                        onClick={() => onChooseMethod(item)}
+                      >
+                        <span>{item.name_key} {item.name_key === OTHER.name_key && '(Chuyển khoản)'}</span>
+                      </li>
+                    ))
                 }
               </ul>
             </div>
