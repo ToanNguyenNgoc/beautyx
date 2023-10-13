@@ -8,14 +8,11 @@ import { Drawer } from '@mui/material';
 import { useDeviceMobile } from 'hooks';
 import { EXTRA_FLAT_FORM } from 'api/extraFlatForm';
 import { AppContext } from 'context/AppProvider';
-import { MOMO, OTHER, PAY_ON_BTX } from 'common';
+import { LIST_METHOD } from 'common';
+
 
 interface PaymentMethodType {
   onSetPaymentMethod?: (method_id: IPaymentMethod) => void
-}
-const availability = (name_key: string): Boolean => {
-  const availabilities = [MOMO.name_key, PAY_ON_BTX.name_key]
-  return availabilities.includes(name_key)
 }
 
 function PaymentMethod(props: PaymentMethodType) {
@@ -24,7 +21,11 @@ function PaymentMethod(props: PaymentMethodType) {
   const PLAT_FORM = EXTRA_FLAT_FORM()
   const IS_MB = useDeviceMobile()
   const { data } = useGetPaymentMethodQuery()
-  const methods: IPaymentMethod[] = data?.concat([PAY_ON_BTX]) ?? []
+  const methods: IPaymentMethod[] = data || []
+  const LIST = LIST_METHOD.map((i: IPaymentMethod) => ({
+    ...i,
+    id: Number(methods.find(item => item.id === i.id))
+  }))
   const [open, setOpen] = useState(false)
 
   const [methodKey, setMethodKey] = useState(PLAT_FORM === 'BEAUTYX' ? 'MOMO' : PLAT_FORM)
@@ -49,7 +50,9 @@ function PaymentMethod(props: PaymentMethodType) {
           onClick={() => setOpen(true)}
           className={style.choose_method}
         >
-          <span>{methodKey}</span>
+          <span>
+            {LIST.find(i => i.name_key === methodKey)?.content}
+          </span>
           <img src={icon.chevronRightBlack} alt="" />
         </div>
         <Drawer open={open} onClose={() => setOpen(false)} anchor={IS_MB ? "bottom" : "right"} >
@@ -58,19 +61,19 @@ function PaymentMethod(props: PaymentMethodType) {
             <div className={style.drawer}>
               <ul className={style.list_method}>
                 {
-                  methods
-                    .filter(i => availability(i.name_key)).map(item => (
-                      <li
-                        style={item.name_key === methodKey ? {
-                          backgroundColor: 'var(--pink-momo)',
-                          color: 'var(--bg-white)'
-                        } : {}}
-                        key={item.id} className={style.method_item}
-                        onClick={() => onChooseMethod(item)}
-                      >
-                        <span>{item.name_key} {item.name_key === OTHER.name_key && '(Chuyển khoản)'}</span>
-                      </li>
-                    ))
+                  LIST.map((item: IPaymentMethod, index:number) => (
+                    <li
+                      style={item.name_key === methodKey ? {
+                        backgroundColor: 'var(--pink-momo)',
+                        color: 'var(--bg-white)'
+                      } : {}}
+                      key={index} className={style.method_item}
+                      onClick={() => onChooseMethod(item)}
+                    >
+                      <img src={item.icon} alt="" />
+                      <div className={style.method_item_content}>{item.content}</div>
+                    </li>
+                  ))
                 }
               </ul>
             </div>

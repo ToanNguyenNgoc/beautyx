@@ -5,7 +5,6 @@ import { AppContext, AppContextType } from "context/AppProvider";
 import { OrgContext, OrgContextType } from "context";
 import { Container } from "@mui/material";
 import animationData from "../../../../assets/reviewSVG.json";
-import icon from "constants/icon";
 import Lottie from "lottie-react";
 interface TabProps {
   refDealHot: RefObject<HTMLDivElement>;

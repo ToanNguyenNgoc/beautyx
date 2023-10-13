@@ -143,6 +143,7 @@ function CommentParItem(props: CommentParItemProps) {
                 </span>
                 <div className={style.cmt_reply_cnt}>
                     <Accordion
+                        defaultExpanded={true}
                         style={{ width: "100%" }}
                     >
                         {

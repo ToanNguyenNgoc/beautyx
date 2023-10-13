@@ -170,22 +170,22 @@ function Footer() {
     //     id: 1,
     //     img: paymentMethod.tikiPay,
     // },
-    // {
-    //     id: 2,
-    //     img: paymentMethod.visa,
-    // },
-    // {
-    //     id: 3,
-    //     img: paymentMethod.masterCard,
-    // },
-    // {
-    //     id: 4,
-    //     img: paymentMethod.jcb,
-    // },
-    // {
-    //     id: 5,
-    //     img: paymentMethod.atm,
-    // },
+    {
+        id: 2,
+        img: paymentMethod.visa,
+    },
+    {
+        id: 3,
+        img: paymentMethod.masterCard,
+    },
+    {
+        id: 4,
+        img: paymentMethod.jcb,
+    },
+    {
+        id: 5,
+        img: paymentMethod.atm,
+    },
     {
       id: 6,
       img: paymentMethod.momoPayment,
@@ -210,10 +210,10 @@ function Footer() {
       id: 11,
       img: paymentMethod.handPay,
     },
-    // {
-    //     id: 12,
-    //     img: icon.payon,
-    // },
+    {
+        id: 12,
+        img: icon.payon,
+    },
   ];
   const app = [
     {

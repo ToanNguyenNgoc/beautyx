@@ -1,2 +1,24 @@
+import icon from "./icon"
+
 export const phoneSupport = '0343131003'
 export const ABOUT_PARTNER_LINK = 'https://myspa.vn/mo-gian-hang-tren-beautyx'
+export const MOMO_METHOD = {
+  name_key: "MOMO",
+  content: 'Thanh toán qua ví MOMO',
+  icon: icon.momo,
+}
+export const PAYON_METHOD = {
+  name_key: 'PAYON (BeautyX)',
+  content: 'Thanh toán qua Payon(Hỗ trợ thẻ ngân hàng, ATM, Visa,...)',
+  icon: icon.payon
+}
+export const OTHER_METHOD = {
+  name_key: 'OTHER',
+  content: 'Chuyển khoản ngân hàng',
+  icon: icon.creditCard
+}
+export const LIST_METHOD = [
+  MOMO_METHOD,
+  PAYON_METHOD,
+  OTHER_METHOD
+] as Array<{ name_key: string, content: string, icon: string }>

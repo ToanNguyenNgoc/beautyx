@@ -5,7 +5,7 @@ import IStore from 'interface/IStore';
 import { IComment } from 'interface';
 import { paramsComment } from 'params-query';
 import { useCheckUserBought, useNoti, usePostMedia, useSwrInfinite } from 'hooks';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import commentsApi from 'api/commentsApi';
 import { Input, XButton } from 'components/Layout';
 import icon from 'constants/icon';
@@ -30,6 +30,7 @@ export const tempCmtInit: TempCmt = {
 
 function Comment(props: CommentProps) {
     const { commentable_type, commentable_id, org_id, commentsMixed = [] } = props;
+    const location = useLocation()
     const { USER } = useSelector((state: IStore) => state.USER);
     const { bought } = useCheckUserBought({ commentable_type, commentable_id, org_id })
     const { handlePostMedia } = usePostMedia()
@@ -37,7 +38,7 @@ function Comment(props: CommentProps) {
     const history = useHistory()
     const [tempCmt, setTempCmt] = useState<TempCmt>(tempCmtInit)
     const [cmtArr, setCmtArr] = useState<IComment[]>([])
-    const cntRef = useRef(null)
+    const cntRef = useRef<HTMLDivElement>(null)
     const params = {
         ...paramsComment,
         "filter[commentable_type]": commentable_type === "COMBO" ? "TREATMENT_COMBO" : commentable_type,
@@ -48,8 +49,13 @@ function Comment(props: CommentProps) {
         {
             API_URL: '/comments',
             enable: commentable_id && org_id,
-            params: params
-        }
+            params: params,
+            onSuccess: () => {
+                if (location.hash === "#cmt" && cntRef.current) {
+                    cntRef.current.scrollIntoView()
+                }
+            }
+        },
     )
     const onChangeInputCmt = (e: any) => {
         setTempCmt({ ...tempCmt, body: e.target.value })
@@ -146,26 +152,26 @@ function Comment(props: CommentProps) {
                     </div>
                     {
                         tempCmt.media_url.length > 0 && <div className={style.input_img_temp}>
-                        {
-                            tempCmt.media_url.map((img_url: string) => (
-                                <div key={img_url} className={style.input_img_temp_item}>
-                                    <XButton
-                                        className={style.remove_img_btn}
-                                        icon={icon.closeCircle}
-                                        iconSize={22}
-                                        onClick={() => onRemoveImageTemple(img_url)}
-                                    />
-                                    <img
-                                        src={img_url} alt=""
-                                        width={"100%"} height={"100%"}
-                                        style={{ borderRadius: "4px" }}
-                                    />
-                                </div>
-                            ))
-                        }
-                    </div>
+                            {
+                                tempCmt.media_url.map((img_url: string) => (
+                                    <div key={img_url} className={style.input_img_temp_item}>
+                                        <XButton
+                                            className={style.remove_img_btn}
+                                            icon={icon.closeCircle}
+                                            iconSize={22}
+                                            onClick={() => onRemoveImageTemple(img_url)}
+                                        />
+                                        <img
+                                            src={img_url} alt=""
+                                            width={"100%"} height={"100%"}
+                                            style={{ borderRadius: "4px" }}
+                                        />
+                                    </div>
+                                ))
+                            }
+                        </div>
                     }
-                    
+
                 </div>
             </div>
             <div className={style.body}>

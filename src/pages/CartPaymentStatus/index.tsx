@@ -248,5 +248,11 @@ export const onPaymentFrame = (pay_url: string) => {
     return window.open(pay_url, "_blank", windowFeatures);
 }
 let windowPayon = {} as any
-export const openWindowPayon = (pay_url:string) => windowPayon = onPaymentFrame(pay_url)
-export const closeWindowPayon = () => windowPayon?.close()
+export const openWindowPayon = (pay_url: string) => windowPayon = onPaymentFrame(pay_url)
+export const closeWindowPayon = () => {
+    try {
+        windowPayon?.close()
+    } catch (error) {
+
+    }
+}

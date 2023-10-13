@@ -261,6 +261,8 @@ import heartSolidWhite from "assets/icon/heartSolidWhite.svg"
 import chatSupport from "assets/icon/chatSupport.png"
 import tag from "assets/icon/tag.png"
 import copyWhite from "assets/icon/copyWhite.svg"
+import creditCard from "assets/icon/credit-card-black.svg"
+
 const icon = {
   heartSolidWhite,
   eyeWhite,
@@ -521,6 +523,7 @@ const icon = {
   thumbUpWhite,
   chatSupport,
   tag,
-  copyWhite
+  copyWhite,
+  creditCard
 };
 export default icon;

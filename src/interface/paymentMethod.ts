@@ -4,4 +4,6 @@ export interface IPaymentMethod {
     is_changeable?: boolean,
     name_key: string,
     updated_at?: string,
+    icon?:string,
+    content?:string
 }
