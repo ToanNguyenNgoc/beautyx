@@ -7,11 +7,12 @@ import { createPortal } from "react-dom";
 import animationData from "assets/Confetti.json";
 import { Link } from "react-router-dom";
 import { slugify } from "utils";
-import { useGetPromotionQuery } from "redux-toolkit-query/hook-home";
 import style from "./style.module.css"
+import { usePromotion } from "hooks";
 
 export default function PortDeal() {
-  const { data } = useGetPromotionQuery()
+  // const { data } = useGetPromotionQuery()
+  const {data} = usePromotion()
   const promotion = data?.find(i => i.is_popup === 1)
   return promotion ? <Popup promotion={promotion} /> : <></>
 }

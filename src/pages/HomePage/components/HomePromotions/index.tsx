@@ -1,12 +1,11 @@
 import { HomeTitle, XButton } from "components/Layout"
 import { FC, useState } from "react"
 import style from "./style.module.css"
-import { useGetPromotionQuery } from "redux-toolkit-query/hook-home"
 import Slider, { Settings } from "react-slick"
 import { Link } from "react-router-dom"
 import { clst, scrollTop, slugify } from "utils"
 import icon from "constants/icon"
-import { useDeviceMobile } from "hooks"
+import { useDeviceMobile, usePromotion } from "hooks"
 
 const Next = (props: any) => {
   return (
@@ -28,7 +27,7 @@ const Prev = (props: any) => {
 };
 
 export const HomePromotions: FC = () => {
-  const { data } = useGetPromotionQuery()
+  const { data } = usePromotion()
   const [title, setTitle] = useState<string>()
   const mb = useDeviceMobile()
   const settings: Settings = {

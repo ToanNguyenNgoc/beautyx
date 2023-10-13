@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useParams, useHistory } from "react-router-dom";
 import {
-    useDeviceMobile,
+    useDeviceMobile, usePromotion,
 } from "hooks";
 import { slugify } from "utils";
 import { Container } from "@mui/system";
@@ -9,7 +9,6 @@ import { IDiscountPar, IITEMS_DISCOUNT } from "interface";
 import { ProductableItem, Seo } from "components/Layout";
 import { LoadGrid } from "components/LoadingSketion";
 import style from "./deal.module.css"
-import { useGetPromotionQuery } from "redux-toolkit-query/hook-home";
 import { useQuery } from "@tanstack/react-query";
 import { promotionApi } from "api";
 import { QR_KEY, STALE_TIME } from "config";
@@ -18,7 +17,7 @@ import { DiscountItem } from "pages/HomePage/components";
 
 function DealBanner() {
     const params = useParams()
-    const { data: dataList } = useGetPromotionQuery()
+    const { data: dataList } = usePromotion()
     const mb = useDeviceMobile()
     const promotion = dataList?.find(i => slugify(i.name) === params._id)
     const history = useHistory()

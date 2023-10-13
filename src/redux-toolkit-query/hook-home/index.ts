@@ -1,4 +1,4 @@
-import { IPaymentMethod, Promotion, ResponseType } from 'interface'
+import { IPaymentMethod, ResponseType } from 'interface'
 import API_ROUTE from 'api/_api'
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import { identity, pickBy } from 'lodash'
@@ -40,14 +40,14 @@ export const homeApi = createApi({
             keepUnusedDataFor: 3600,
             transformResponse: (response: ResponseType<any>) => response?.context?.data
         }),
-        getPromotion: builder.query<Promotion[], void>({
-            query: () => ({
-                url: API_ROUTE.PROMOTIONS,
-                params: { 'sort': '-created_at' },
-            }),
-            keepUnusedDataFor: 3600,
-            transformResponse: (response: ResponseType<any>) => response.context.data
-        })
+        // getPromotion: builder.query<Promotion[], void>({
+        //     query: () => ({
+        //         url: API_ROUTE.PROMOTIONS,
+        //         params: { 'sort': '-created_at' },
+        //     }),
+        //     keepUnusedDataFor: 3600,
+        //     transformResponse: (response: ResponseType<any>) => response.context.data
+        // })
     })
 })
 
@@ -56,5 +56,5 @@ export const {
     useOrgsDistanceQuery,
     useServiceCatesChildQuery,
     useGetPaymentMethodQuery,
-    useGetPromotionQuery
+    // useGetPromotionQuery
 } = homeApi
