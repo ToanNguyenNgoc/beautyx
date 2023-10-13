@@ -9,7 +9,7 @@ import { Provider } from "react-redux";
 import store from "./redux/store";
 import { SWRConfig } from "swr";
 import { PlashScreen } from "components/Layout";
-import { axiosClient, queryClient, sentry } from "config";
+import { axiosClient, queryClient } from "config";
 import { QueryClientProvider } from "@tanstack/react-query";
 
 

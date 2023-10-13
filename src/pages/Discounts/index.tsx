@@ -38,7 +38,6 @@ function Discounts() {
     const totalItem = data?.pages[0]?.total ?? 1
     const onViewMore = () => {
         if (discounts?.length < totalItem) {
-            console.log('call')
             fetchNextPage()
         }
     }
