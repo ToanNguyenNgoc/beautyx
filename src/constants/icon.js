@@ -262,6 +262,8 @@ import chatSupport from "assets/icon/chatSupport.png"
 import tag from "assets/icon/tag.png"
 import addFileWhite from "assets/icon/add-file-white.svg"
 import planPaperWhite from "assets/icon/planPaperWhite.svg"
+import copyWhite from "assets/icon/copyWhite.svg"
+import creditCard from "assets/icon/credit-card-black.svg"
 const icon = {
   heartSolidWhite,
   eyeWhite,
@@ -519,6 +521,7 @@ const icon = {
   expend,
   homePurpleBold,
   imageWhite, thumbUpWhite, chatSupport, tag,
-  addFileWhite, planPaperWhite,
+  addFileWhite, planPaperWhite,creditCard,
+  copyWhite
 };
 export default icon;

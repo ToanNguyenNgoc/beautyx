@@ -60,7 +60,7 @@ export function CartCalc(props: CartCalcType) {
             products: products_id,
             treatment_combo: combos_id,
             services: services_id,
-            coupon_code: listCouponCode
+            coupon_code: listCouponCode,
         }
         if (!orgChoose) {
             return resultLoad('Vui lòng chọn dịch vụ/ sản phẩm bạn muốn đặt hàng !')
@@ -94,7 +94,7 @@ export function CartCalc(props: CartCalcType) {
             }
             history.push({
                 pathname: `/trang-thai-don-hang/`,
-                search: state_payment.payment_gateway.transaction_uuid,
+                search: state_payment.payment_gateway?.transaction_uuid,
                 state: { state_payment },
             });
         } catch (error) {

@@ -20,11 +20,11 @@ export const Tab = ({
   refService,
   refProduct,
   refCombo,
-  refStaff,
   refDetail,
+  refStaff
 }: TabProps) => {
   const { t } = useContext(AppContext) as AppContextType;
-  const { org, trends, staffs } = useContext(OrgContext) as OrgContextType;
+  const { org, trends } = useContext(OrgContext) as OrgContextType;
   const [tabAct, setTabAct] = useState(0);
   const mrTop = 88;
   let tabs = [
@@ -57,23 +57,15 @@ export const Tab = ({
       ref: refCombo,
     },
     {
-      // open: staffs.length > 0 ? true : false,
-      open: false,
-      id: 5,
-      title: "Nhân viên",
-      path: "staff",
-      ref: refStaff,
-    },
-    {
       open: true,
-      id: 6,
+      id: 5,
       title: t("pr.merchant_detail"),
       path: "thong-tin",
       ref: refDetail,
     },
     {
       open: trends.length > 0 ? true : false,
-      id: 7,
+      id: 6,
       title: "Review",
       path: "review",
       ref: refDetail,
@@ -82,19 +74,17 @@ export const Tab = ({
   useEffect(() => {
     const handleScroll = () => {
       if (
-        refDealHot?.current &&
-        refService?.current &&
-        refProduct?.current &&
-        refCombo?.current &&
-        refStaff?.current &&
-        refDetail?.current
+        refDealHot.current &&
+        refService.current &&
+        refProduct.current &&
+        refCombo.current &&
+        refDetail.current
       ) {
         const scrollY = window.scrollY + 90;
         const dealHotOffset = refDealHot.current.offsetTop;
         const serviceOffset = refService.current.offsetTop;
         const productOffset = refProduct.current.offsetTop;
         const comboOffset = refCombo.current.offsetTop;
-        const staffOffset = refStaff.current.offsetTop;
         const detailOffset = refDetail.current.offsetTop;
         if (scrollY < 500) {
           setTabAct(0);
@@ -104,12 +94,10 @@ export const Tab = ({
           setTabAct(2);
         } else if (productOffset < scrollY && scrollY < comboOffset) {
           setTabAct(3);
-        } else if (comboOffset < scrollY && scrollY < staffOffset) {
+        } else if (comboOffset < scrollY && scrollY < detailOffset) {
           setTabAct(4);
-        } else if (staffOffset < scrollY && scrollY < detailOffset) {
-          setTabAct(5);
         } else if (detailOffset < scrollY) {
-          setTabAct(6);
+          setTabAct(5);
         }
       }
     };
@@ -140,7 +128,7 @@ export const Tab = ({
                   })
                 }
               >
-                {!trends ? (
+                {tab.id === 6 ? (
                   <div className={style.cus_title_review}>
                     <p className={style.tab_item_review}>{tab.title}</p>
                     <div className={style.icon_review}>

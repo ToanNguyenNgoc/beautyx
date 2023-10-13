@@ -99,7 +99,9 @@ function CommentParItem(props: CommentParItemProps) {
             layout === "column" ? style.reply_cnt_ch : "",
           ])}
         >
-          <Accordion>
+          <Accordion
+            defaultExpanded
+          >
             {replyBtnDis && (
               <AccordionSummary
                 aria-controls="panel1a-content"

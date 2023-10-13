@@ -36,7 +36,6 @@ interface StatusOrderProps {
 }
 
 function CartPaymentStatus() {
-    const { sec } = useCountDown(600);
     const dispatch = useDispatch();
     const history = useHistory();
     const [open, setOpen] = useState(initOpen);
@@ -56,7 +55,7 @@ function CartPaymentStatus() {
         enable: transaction_uuid,
         params: { cancel: statusOrder.cancel },
         refreshInterval: statusOrder.time_refresh,
-        dedupingInterval:0
+        dedupingInterval: 0
     })
     const orderStatus = response?.status ?? 'PENDING'
 
@@ -124,11 +123,12 @@ function CartPaymentStatus() {
         }
         if (response?.status === "PAID") {
             dispatch(clearByCheck())
+            closeWindowPayon()
             if (action) handlePostApp()
             if (response?.paymentable_id) onShowNotiBTXPoint(response?.paymentable_id)
         }
     }, [response?.status])
-    useCancelByTime(sec, handleCancelCallStatus)
+    useCancelByTime(handleCancelCallStatus)
 
     useEffect(() => {
         handleNotiApplyFail()
@@ -204,11 +204,7 @@ function CartPaymentStatus() {
             />
             <Container>
                 <div className={style.container}>
-                    <PaymentQr
-                        res={res}
-                        sec={sec}
-                        orderStatus={orderStatus}
-                    />
+                    <PaymentQr res={res} orderStatus={orderStatus} />
                     <div className={style.container_right}>
                         <PaymentInfo
                             action={action}
@@ -236,8 +232,27 @@ function CartPaymentStatus() {
 
 export default CartPaymentStatus;
 
-const useCancelByTime = (sec: number, onCancel: () => void) => {
+export const useCancelByTime = (onCancel?: () => void) => {
+    const { sec } = useCountDown(600);
     useEffect(() => {
-        if (sec === 0) onCancel()
+        if (sec === 0 && onCancel) onCancel()
     }, [sec])
+    return {
+        sec
+    }
+}
+export const onPaymentFrame = (pay_url: string) => {
+    const windowWidth = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+    const windowHeight = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
+    const windowFeatures = `toolbar=yes,scrollbars=yes,resizable=yes,top=${(windowHeight - windowHeight * 0.95) / 2},left=${(windowWidth - 573) / 2},width=573,height=${windowHeight * 0.95}`;
+    return window.open(pay_url, "_blank", windowFeatures);
+}
+let windowPayon = {} as any
+export const openWindowPayon = (pay_url: string) => windowPayon = onPaymentFrame(pay_url)
+export const closeWindowPayon = () => {
+    try {
+        windowPayon?.close()
+    } catch (error) {
+
+    }
 }

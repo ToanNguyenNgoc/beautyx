@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { EXTRA_PAYMENT } from 'rootComponents/extraPayment';
 import { EXTRA_FLAT_FORM } from 'api/extraFlatForm';
@@ -139,7 +139,6 @@ function PaymentInfo(props: any) {
         break
     }
   }
-  console.log(action)
   return (
     <>
       <UserPaymentInfo disableEdit disableAddress />

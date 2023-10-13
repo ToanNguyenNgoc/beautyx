@@ -4,7 +4,7 @@ import style from "./style.module.css"
 import IStore from 'interface/IStore';
 import { BodyComment, IComment } from 'interface';
 import { useCheckUserBought, usePostMedia, Media } from 'hooks';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import commentsApi from 'api/commentsApi';
 import { XButton, XButtonFile } from 'components/Layout';
 import icon from 'constants/icon';
@@ -33,11 +33,12 @@ function Comment({
   commentable_type, commentable_id, org_id, commentsMixed = [], layout = 'row', classNameCnt='', classNameInputCnt=''
 }: CommentProps) {
   const { USER } = useSelector((state: IStore) => state.USER);
+  const location = useLocation()
   const { bought } = useCheckUserBought({ commentable_type, commentable_id, org_id:org_id || 0 })
   const { handlePostMedia } = usePostMedia()
   const history = useHistory()
   const [value, setValue] = useState<InitialValue>({ body: '' })
-  const cntRef = useRef(null)
+  const cntRef = useRef<HTMLDivElement>(null)
   const client = useQueryClient()
   const QR_KEY = ['COMMENT', commentable_type, commentable_id, org_id]
   const { data } = useInfiniteQuery({
@@ -49,7 +50,12 @@ function Comment({
       'page': pageParam,
       'limit': 20
     }),
-    enabled:!!commentable_id
+    enabled:!!commentable_id,
+    onSuccess:()=>{
+      if(location.hash==="#cmt" && cntRef.current){
+        cntRef.current.scrollIntoView({behavior:'auto'})
+      }
+    }
   })
   const { mutate, isLoading } = useMutation({
     mutationFn: (body: BodyComment) => commentsApi.create(body),
