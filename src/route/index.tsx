@@ -32,6 +32,7 @@ import Bottom from "components/Bottom";
 import Head from "components/Head";
 import { AssistantButton } from "components/Layout"
 import CateTree from "pages/CateTree";
+import PayUrl from "rootComponents/momo/PayUrl";
 
 //community page
 const PostDetail = lazy(() => import("pages/Community/pages/PostDetail"));
@@ -262,6 +263,10 @@ function RouterConfig() {
     {
       path:'/doanh-nghiep-moi-tham-gia',
       component:<OrganizationsApprove/>
+    },
+    {
+      path:'/momo-payurl',
+      component:<PayUrl/>
     }
   ];
   const routesPrivate = [
