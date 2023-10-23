@@ -6,14 +6,14 @@ const PayUrl = () => {
   return (
     <div>
       btx
-      <iframe
+      {/* <iframe
         style={{
           width: '100vw',
           height: '100vh'
         }}
         src={`${params.url}&s=${params.s}`}
         title="This is a unique title"
-      />
+      /> */}
     </div>
   )
 }
