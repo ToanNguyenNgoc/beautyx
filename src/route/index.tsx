@@ -265,7 +265,7 @@ function RouterConfig() {
       component:<OrganizationsApprove/>
     },
     {
-      path:'/momo-payurl',
+      path:'/checkout-payment',
       component:<PayUrl/>
     }
   ];

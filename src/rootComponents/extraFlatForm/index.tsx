@@ -43,7 +43,7 @@ function ExtraFlatForm() {
             console.log(data)
     }
     useEffect(() => {
-        getFirebaseToken()
+        // getFirebaseToken()
     }, []);
     return (
         <>
