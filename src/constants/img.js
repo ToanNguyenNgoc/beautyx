@@ -22,6 +22,7 @@ import sellerCenterImg from "../assets/image/sellerCenterImg.jpeg";
 import beautyx from "../assets/image/beautyx_icon.png";
 import Partner from "assets/image/partner.png";
 import iconAppointment from "assets/image/iconAppointment.png";
+import awsStartups from "assets/image/aws.png";
 
 // social
 import facebook from "../assets/image/social/facebook.png";
@@ -55,8 +56,13 @@ import qrCodeMomo from 'assets/image/qrCodeMomo.png';
 import iconShoppee from 'assets/image/icon-shopee.png';
 import iconVinID from 'assets/image/icon-vinid.png'
 import portalDeal from 'assets/image/portalDeal.png'
+import flagUK from 'assets/image/uk.png'
+import flagVN from 'assets/image/vn.png'
 
 const img = {
+    flagUK,
+    flagVN,
+    awsStartups,
     portalDeal,
     iconShoppee,
     iconVinID,

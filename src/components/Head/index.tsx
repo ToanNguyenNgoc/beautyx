@@ -27,6 +27,7 @@ import { postHistorySearch } from "user-behavior";
 import HeadCart from "./HeadCart";
 import HeadMenu from "./HeadMenu";
 import HeadNoti from "./HeadNoti";
+import HeadLanguage from "./HeadLanguage";
 
 interface IProps {
     title?: string,
@@ -275,6 +276,9 @@ function Head(props: IProps) {
                                         <HeadMenu />
                                     )}
                                     <HeadCart changeStyle={changeStyle} />
+                                    {!IS_MB && (
+                                        <HeadLanguage/>
+                                    )}
                                 </div>
                             </div>
                             <div className={style.head_bot}>

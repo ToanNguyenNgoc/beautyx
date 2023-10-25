@@ -147,6 +147,20 @@
     object-fit: cover;
     margin-top: 16px;
 }
+.aws_starups{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+}
+.aws_startups_img{
+    width: 150px;
+}
+.aws_starups > p {
+    margin-bottom: 12px;
+    color: #fff;
+    font-size: 12px;
+}
 /* Mobile */
 @media only screen and (max-width: 769px) {
     .footer {
