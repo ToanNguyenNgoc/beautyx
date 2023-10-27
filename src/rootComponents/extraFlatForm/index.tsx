@@ -4,7 +4,6 @@ import LoginSocial from 'rootComponents/loginSocial';
 import { extraParamsUrl } from '../../utils/extraParamsUrl';
 import { FLAT_FORM_TYPE } from '../flatForm';
 import LoginFlatForm from '../loginFlatForm/LoginFlatForm';
-// import { requestForToken } from '../../firebase'
 
 
 function ExtraFlatForm() {
@@ -37,14 +36,6 @@ function ExtraFlatForm() {
                 sessionStorage.setItem('FLAT_FORM', 'BEAUTYX');
         }
     }
-    // const getFirebaseToken = async () => {
-    //     const data = await requestForToken()
-    //     if (data)
-    //         console.log(data)
-    // }
-    // useEffect(() => {
-    //     getFirebaseToken()
-    // }, []);
     return (
         <>
             <LoginFlatForm
