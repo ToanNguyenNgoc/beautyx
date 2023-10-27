@@ -11,14 +11,6 @@ const firebaseConfig = {
     messagingSenderId: process.env.REACT_APP_SEND_ID,
     appId: process.env.REACT_APP_APP_ID,
     measurementId: process.env.REACT_APP_MEASUREMENTID,
-
-    // apiKey: "AIzaSyDWm0BFZtGKZiKEWKGe6imI6IO9kdautpA",
-    // authDomain: "myspa-1499400524676.firebaseapp.com",
-    // projectId: "myspa-1499400524676",
-    // storageBucket: "myspa-1499400524676.appspot.com",
-    // messagingSenderId: "726291966346",
-    // appId: "1:726291966346:web:65e14c223871f6c3b20073",
-    // measurementId: "G-P61NDB6KJD"
 };
 const app = initializeApp(firebaseConfig)
 const analytics = getAnalytics(app);
