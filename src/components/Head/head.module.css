@@ -35,6 +35,17 @@
 .head_top_left_icon{
     position: relative;
 }
+.head_top_left_home{
+    position: relative;
+}
+.head_top_left_img_hat{
+    position: absolute;
+    z-index: 2;
+    width: 36px;
+    top: -18px;
+    left: -10px;
+    transform: rotate(-16deg);
+}
 .head_top_left_seller{
     margin-top: 6px;
     position: absolute;

@@ -5,7 +5,6 @@ import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { onResetFilter } from "redux/filter-result";
 import { useDeviceMobile } from "hooks";
-import HomeLocation from "../HomeLocation";
 import style from "./style.module.css";
 import { onSetTab } from "redux/cates-tree";
 
