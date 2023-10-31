@@ -27,6 +27,7 @@ const Popup: FC<{ promotions: Promotion[] }> = ({ promotions }) => {
   }
   const promotion = listShow.length > 0 ? listShow[0] : null
   const handleHidePortal = () => {
+    document.body.style.overflow = 'auto'
     const newListHidden = [...listHidden, promotion?.id]
     sessionStorage.setItem('list_hidden', JSON.stringify(newListHidden))
     setShowModal(false)
