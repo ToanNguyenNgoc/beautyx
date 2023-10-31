@@ -12,7 +12,7 @@ import { usePromotion } from "hooks";
 
 export default function PortDeal() {
   // const { data } = useGetPromotionQuery()
-  const {data} = usePromotion()
+  const { data } = usePromotion()
   const promotion = data?.find(i => i.is_popup === 1)
   return promotion ? <Popup promotion={promotion} /> : <></>
 }

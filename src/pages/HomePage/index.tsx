@@ -27,6 +27,7 @@ import { STATUS } from "redux/status";
 import style from "./home.module.css";
 import PortDeal from "components/PortalDeal";
 import HomeLocation from "pages/HomePage/components/HomeLocation";
+import HomeFettier from "pages/HomePage/components/HomeFettier";
 
 export default function HomePage() {
   const IS_MB = useDeviceMobile();
@@ -55,6 +56,8 @@ export default function HomePage() {
           </Container>
         </div>
         <HomeDiscount />
+        <HomeFettier />
+
         <Container>
           <HomeOrgDistance />
           <HomePromotions />
@@ -64,8 +67,8 @@ export default function HomePage() {
           {IS_MB ? <></> : <HomeTrends />}
           <HomePartners />
           <HomeTrafficData />
-          <HomeStatisticsCustomer />
           <HomeLocation />
+          <HomeStatisticsCustomer />
         </Container>
         <OpenApp type="none" />
       </div>
