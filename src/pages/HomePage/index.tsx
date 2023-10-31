@@ -56,7 +56,7 @@ export default function HomePage() {
           </Container>
         </div>
         <HomeDiscount />
-        <HomePrettier hidden={IS_MB} />
+        <HomePrettier hidden={true} />
         <Container>
           <HomeOrgDistance />
           <HomePromotions />
