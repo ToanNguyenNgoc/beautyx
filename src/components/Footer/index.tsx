@@ -235,6 +235,13 @@ function Footer() {
       url: process.env.REACT_APP_DEEP_LINK_TIKI,
       qrCode: img.qrCodeTiki
     },
+    {
+      id: 3,
+      img: icon.zalo,
+      type: "APP",
+      url: process.env.REACT_APP_DEEP_LINK_ZALO,
+      qrCode: img.qrCodeZalo
+    },
   ];
 
   const voucherInApp = [
@@ -258,6 +265,10 @@ function Footer() {
       id: 5,
       img: img.beautyx,
     },
+    {
+      id: 6,
+      img: icon.zalo,
+    }
   ];
   const gotoPolicy = (item: any) => {
     switch (item.type) {
@@ -293,7 +304,7 @@ function Footer() {
           content: '',
           child: <div className="footer-pop-child">
             <div className="footer-pop-child-title">
-              <span>Trải nghiệm mini app trên ứng dụng</span>
+              <span>Trải nghiệm BeautyX trên ứng dụng</span>
               <img src={item.img} alt="" />
             </div>
             <img src={item.qrCode} alt="" className="footer-pop-child-qr-code" />

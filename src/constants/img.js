@@ -58,6 +58,7 @@ import iconVinID from 'assets/image/icon-vinid.png'
 import portalDeal from 'assets/image/portalDeal.png'
 import flagUK from 'assets/image/uk.png'
 import flagVN from 'assets/image/vn.png'
+import qrCodeZalo from 'assets/image/qrCodeZalo.png'
 
 const img = {
     flagUK,
@@ -90,7 +91,7 @@ const img = {
     Partner,
     iconAppointment,
     plashScreenPc,
-    qrCodeTiki, qrCodeMomo
+    qrCodeTiki, qrCodeMomo, qrCodeZalo
 };
 export const social = {
     facebook,
