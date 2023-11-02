@@ -20,6 +20,7 @@ import { clst } from 'utils';
 import formatPrice from 'utils/formatPrice';
 import { formatRouterLinkOrg, formatLinkDetail } from 'utils/formatRouterLink/formatRouter';
 import style from '../cart.module.css'
+import { useDiscountLimitCart } from 'pages/_DiscountDetail/useDiscountDetail';
 
 interface CartItemProps {
     itemOrg: ICartGroupOrg,
@@ -157,10 +158,11 @@ const CartItem = (
     { item, itemOrg, orgChoose, onClearBranch }:
         { item: ICart, itemOrg: ICartGroupOrg, orgChoose?: IOrganization, onClearBranch: () => void }
 ) => {
+    const {enable} = useDiscountLimitCart({discount:item.discount, cart_id:item.cart_id})
     const dispatch = useDispatch()
     const [open, setOpen] = useState(false)
     const onTriggerQuantity = (btn: 'asc' | 'desc') => {
-        if (btn === 'asc') {
+        if (btn === 'asc' && enable) {
             dispatch(ascItem(item))
         }
         if (btn === 'desc' && item.quantity > 1) {

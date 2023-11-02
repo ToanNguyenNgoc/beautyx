@@ -21,6 +21,7 @@ export function useCartReducer() {
         return { id: item.id, quantity: item.quantity }
     })
     return {
+        cartList,
         products,
         services,
         combos,
