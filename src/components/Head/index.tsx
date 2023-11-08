@@ -1,10 +1,10 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, {
-    useCallback,
-    useContext,
-    useRef,
-    useState,
-    KeyboardEvent,
+  useCallback,
+  useContext,
+  useRef,
+  useState,
+  KeyboardEvent,
 } from "react";
 import img from "constants/img";
 import icon from "constants/icon";
@@ -30,267 +30,269 @@ import HeadNoti from "./HeadNoti";
 import HeadLanguage from "./HeadLanguage";
 
 interface IProps {
-    title?: string,
-    iconBack?: string
+  title?: string,
+  iconBack?: string
 }
 const homePath = [
-    "/TIKI",
-    "/MOMO",
-    "/TIKI/",
-    "/MOMO/",
-    "/MBBANK",
-    "/",
-    "/homepage/",
-    "/homepage",
-    "/home"
+  "/TIKI",
+  "/MOMO",
+  "/TIKI/",
+  "/MOMO/",
+  "/MBBANK",
+  "/",
+  "/homepage/",
+  "/homepage",
+  "/home"
 ];
 
 const pathHeader = [
-    "/TIKI",
-    "/MOMO",
-    "/TIKI/",
-    "/MOMO/",
-    "/MBBANK",
-    "/",
-    "/homepage/",
-    "/homepage",
-    "/ket-qua-tim-kiem/dich-vu",
-    "/ket-qua-tim-kiem/san-pham",
-    "/ket-qua-tim-kiem/cua-hang",
-    "/ket-qua-tim-kiem/dich-vu/",
-    "/ket-qua-tim-kiem/san-pham/",
-    "/ket-qua-tim-kiem/cua-hang/"
+  "/TIKI",
+  "/MOMO",
+  "/TIKI/",
+  "/MOMO/",
+  "/MBBANK",
+  "/",
+  "/homepage/",
+  "/homepage",
+  "/ket-qua-tim-kiem/dich-vu",
+  "/ket-qua-tim-kiem/san-pham",
+  "/ket-qua-tim-kiem/cua-hang",
+  "/ket-qua-tim-kiem/dich-vu/",
+  "/ket-qua-tim-kiem/san-pham/",
+  "/ket-qua-tim-kiem/cua-hang/"
 ]
 const notPathHeader = [
-    '/sign-in',
-    '/sign-up',
-    '/doi-mat-khau',
-    '/trang-thai-don-hang/',
-    '/ban-do',
+  '/sign-in',
+  '/sign-up',
+  '/doi-mat-khau',
+  '/trang-thai-don-hang/',
+  '/ban-do',
 ]
 
 
 function Head(props: IProps) {
-    const { title, iconBack } = props;
-    const location: any = useLocation();
-    const IS_MB = useDeviceMobile()
-    const pathname = location.pathname;
-    let showRecommendKey = false;
-    if (homePath.includes(pathname)) showRecommendKey = true;
-    let changeStyle = false
-    let showHeader = false
-    if (!IS_MB) showHeader = true
-    if (IS_MB && pathHeader.includes(pathname)) showHeader = true
-    if (notPathHeader.includes(pathname)) showHeader = false
-    if (IS_MB && homePath.includes(pathname)) changeStyle = true
+  const { title, iconBack } = props;
+  const location: any = useLocation();
+  const IS_MB = useDeviceMobile()
+  const pathname = location.pathname;
+  let showRecommendKey = false;
+  if (homePath.includes(pathname)) showRecommendKey = true;
+  let changeStyle = false
+  let showHeader = false
+  if (!IS_MB) showHeader = true
+  if (IS_MB && pathHeader.includes(pathname)) showHeader = true
+  if (notPathHeader.includes(pathname)) showHeader = false
+  if (IS_MB && homePath.includes(pathname)) changeStyle = true
 
 
-    const { t } = useContext(AppContext) as any;
-    const [key, setKey] = useState({ key: "", key_debounce: "" });
-    const history = useHistory();
-    const { USER } = useSelector((state: IStore) => state.USER);
-    const refSearch = useRef<any>();
-    const dispatch = useDispatch();
-    //
-    const [openSearch, setOpenSearch] = useState(false)
-    const onToggleSearch = (dis: "show" | "hide") => {
-        if (dis === "show")
-            return refSearch?.current?.classList.add(style.head_search_show);
-        if (dis === "hide" && !IS_MB)
-            return refSearch?.current?.classList.remove(style.head_search_show);
-    };
-    const onCloseSearchTimeOut = () => {
-        setTimeout(() => {
-            refSearch?.current?.classList.remove(style.head_search_show);
-        }, 100);
-    };
-    //
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const onSetDebounceKeyword = useCallback(
-        debounce((text) => setKey({ key: text, key_debounce: text }), 600),
-        []
-    );
-    const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        onSetDebounceKeyword(e.target.value);
-        setKey({ ...key, key: e.target.value });
-    };
-    const onResult = () => {
-        if (key.key_debounce !== "") {
-            history.push({
-                pathname: "/ket-qua-tim-kiem/dich-vu",
-                search: `?keyword=${encodeURIComponent(key.key_debounce)}`,
-            });
-            onCloseSearchTimeOut();
-            dispatch(onResetFilter());
-            if (USER) postHistorySearch(key.key_debounce, 'KEYWORD')
-        }
-    };
-    const handleKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
-        if (event.code === "Enter" || event?.nativeEvent.keyCode === 13) {
-            onResult();
-        }
-    };
-    //
-    const paramUrl: any = extraParamsUrl();
-    const keywordUrl = paramUrl?.keyword ?? "";
-    //handle scroll
-    const refHeader = useRef<HTMLDivElement>(null)
-    window.addEventListener('scroll', () => {
-        const header = document.getElementById("header");
-        const scrolled = window.scrollY;
-        if (header && changeStyle && IS_MB) {
-            header.style.backgroundColor = `rgb(113 97 186 / ${scrolled}%)`
-            // header.style.backgroundColor = `rgb(230 77 74 / ${scrolled}%)`
-        }
-    })
-    return (
-        showHeader ?
-            <>
-                <div
-                    ref={refHeader}
-                    id="header"
-                    className={
-                        changeStyle
-                            ? clst([style.container, style.container_ch])
-                            : style.container
+  const { t } = useContext(AppContext) as any;
+  const [key, setKey] = useState({ key: "", key_debounce: "" });
+  const history = useHistory();
+  const { USER } = useSelector((state: IStore) => state.USER);
+  const refSearch = useRef<any>();
+  const dispatch = useDispatch();
+  //
+  const [openSearch, setOpenSearch] = useState(false)
+  const onToggleSearch = (dis: "show" | "hide") => {
+    if (dis === "show")
+      return refSearch?.current?.classList.add(style.head_search_show);
+    if (dis === "hide" && !IS_MB)
+      return refSearch?.current?.classList.remove(style.head_search_show);
+  };
+  const onCloseSearchTimeOut = () => {
+    setTimeout(() => {
+      refSearch?.current?.classList.remove(style.head_search_show);
+    }, 100);
+  };
+  //
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const onSetDebounceKeyword = useCallback(
+    debounce((text) => setKey({ key: text, key_debounce: text }), 600),
+    []
+  );
+  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    onSetDebounceKeyword(e.target.value);
+    setKey({ ...key, key: e.target.value });
+  };
+  const onResult = () => {
+    if (key.key_debounce !== "") {
+      history.push({
+        pathname: "/ket-qua-tim-kiem/dich-vu",
+        search: `?keyword=${encodeURIComponent(key.key_debounce)}`,
+      });
+      onCloseSearchTimeOut();
+      dispatch(onResetFilter());
+      if (USER) postHistorySearch(key.key_debounce, 'KEYWORD')
+    }
+  };
+  const handleKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
+    if (event.code === "Enter" || event?.nativeEvent.keyCode === 13) {
+      onResult();
+    }
+  };
+  //
+  const paramUrl: any = extraParamsUrl();
+  const keywordUrl = paramUrl?.keyword ?? "";
+  //handle scroll
+  const refHeader = useRef<HTMLDivElement>(null)
+  window.addEventListener('scroll', () => {
+    const header = document.getElementById("header");
+    const scrolled = window.scrollY;
+    if (header && changeStyle && IS_MB) {
+      header.style.backgroundColor = `rgb(113 97 186 / ${scrolled}%)`
+      // header.style.backgroundColor = `rgb(230 77 74 / ${scrolled}%)`
+    }
+  })
+  return (
+    showHeader ?
+      <>
+        <div
+          ref={refHeader}
+          id="header"
+          className={
+            changeStyle
+              ? clst([style.container, style.container_ch])
+              : style.container
+          }
+        >
+          <HeadTitle title={title} />
+          <Container>
+            <div className={style.head_wrapper}>
+              <div className={style.head_top}>
+                <div className={style.head_top_left}>
+                  <div className={style.head_top_left_icon}>
+                    <Link className={style.head_top_left_home} to={{ pathname: "/" }}>
+                      <img src="https://i.imgur.com/UEUJvq2.png" alt="" className={style.head_top_left_img_hat} />
+                      <img
+                        className={style.head_top_left_img}
+                        // src={img.beautyxSlogan}
+                        src="https://i.imgur.com/CiSFnFB.png"
+                        alt=""
+                      />
+                    </Link>
+                    {/* <Link className={style.head_top_left_seller} to={'/seller'} >Kênh người bán</Link> */}
+                  </div>
+                  <BackContainer iconBack={iconBack} changeStyle={changeStyle} />
+                  <button
+                    className={style.head_top_left_search}
+                    onFocus={() => onToggleSearch("show")}
+                    onClick={() => {
+                      onToggleSearch("show");
+                      IS_MB && setOpenSearch(true)
+                    }}
+                    onBlur={() => onToggleSearch("hide")}
+                  >
+                    <img
+                      onClick={onResult}
+                      className={style.head_search_icon}
+                      alt=""
+                      src={icon.searchPurple}
+                    />
+                    <input
+                      onChange={onChange}
+                      className={style.head_search_input}
+                      type="text"
+                      placeholder={t('se.search_title')}
+                      disabled={IS_MB}
+                      value={IS_MB ? keywordUrl : key.key}
+                      onKeyDown={handleKeyDown}
+                    />
+                    {IS_MB && showRecommendKey && (
+                      <SearchRecommend />
+                    )}
+                    {
+                      !IS_MB &&
+                      <div
+                        ref={refSearch}
+                        className={style.head_search}
+                      >
+                        <Search
+                          onCloseSearchTimeOut={
+                            onCloseSearchTimeOut
+                          }
+                          key_work={key.key}
+                          key_work_debounce={key.key_debounce}
+                        />
+                      </div>
                     }
-                >
-                    <HeadTitle title={title} />
-                    <Container>
-                        <div className={style.head_wrapper}>
-                            <div className={style.head_top}>
-                                <div className={style.head_top_left}>
-                                    <div className={style.head_top_left_icon}>
-                                    <Link to={{ pathname: "/" }}>
-                                        <img
-                                            className={style.head_top_left_img}
-                                            src={img.beautyxSlogan}
-                                            alt=""
-                                        />
-                                    </Link>
-                                    {/* <Link className={style.head_top_left_seller} to={'/seller'} >Kênh người bán</Link> */}
-                                    </div>
-                                    <BackContainer iconBack={iconBack} changeStyle={changeStyle} />
-                                    <button
-                                        className={style.head_top_left_search}
-                                        onFocus={() => onToggleSearch("show")}
-                                        onClick={() => {
-                                            onToggleSearch("show");
-                                            IS_MB && setOpenSearch(true)
-                                        }}
-                                        onBlur={() => onToggleSearch("hide")}
-                                    >
-                                        <img
-                                            onClick={onResult}
-                                            className={style.head_search_icon}
-                                            alt=""
-                                            src={icon.searchPurple}
-                                        />
-                                        <input
-                                            onChange={onChange}
-                                            className={style.head_search_input}
-                                            type="text"
-                                            placeholder={t('se.search_title')}
-                                            disabled={IS_MB}
-                                            value={IS_MB ? keywordUrl : key.key}
-                                            onKeyDown={handleKeyDown}
-                                        />
-                                        {IS_MB && showRecommendKey && (
-                                            <SearchRecommend />
-                                        )}
-                                        {
-                                            !IS_MB &&
-                                            <div
-                                                ref={refSearch}
-                                                className={style.head_search}
-                                            >
-                                                <Search
-                                                    onCloseSearchTimeOut={
-                                                        onCloseSearchTimeOut
-                                                    }
-                                                    key_work={key.key}
-                                                    key_work_debounce={key.key_debounce}
-                                                />
-                                            </div>
-                                        }
-                                    </button>
-                                    <Dialog
-                                        open={openSearch}
-                                        fullScreen={true}
-                                    >
-                                        <Search
-                                            onCloseSearchTimeOut={
-                                                onCloseSearchTimeOut
-                                            }
-                                            onCloseSearchDialog={() => setOpenSearch(!openSearch)}
-                                            key_work={key.key}
-                                            key_work_debounce={key.key_debounce}
-                                        />
-                                    </Dialog>
-                                </div>
-                                <div className={style.head_top_right}>
-                                    <XButton
-                                        className={style.head_btn_partner}
-                                        title={t("Header.1")}
-                                        onClick={() => history.push("/partner")}
-                                    />
-                                    {USER ? (
-                                        <>
-                                            <Link
-                                                to={{
-                                                    pathname:
-                                                        "/tai-khoan/thong-tin-ca-nhan",
-                                                }}
-                                                className={style.head_top_right_user}
-                                            >
-                                                <img
-                                                    className={style.head_user_avatar}
-                                                    src={USER?.avatar}
-                                                    alt=""
-                                                />
-                                                <span className={style.head_user_name}>
-                                                    {USER?.fullname}
-                                                </span>
-                                            </Link>
-                                            <HeadNoti changeStyle={changeStyle} />
-                                        </>
-                                    ) : (
-                                        <div className={style.head_top_right_auth}>
-                                            <XButton
-                                                className={style.head_sign_btn}
-                                                title={t("Home.Sign_up")}
-                                                onClick={() =>
-                                                    history.push("/sign-up?2")
-                                                }
-                                            />
-                                            <XButton
-                                                onClick={() =>
-                                                    history.push("/sign-in?1")
-                                                }
-                                                className={style.head_sign_btn}
-                                                title={t("Home.Sign_in")}
-                                            />
-                                        </div>
-                                    )}
-                                    {!IS_MB && (
-                                        <HeadMenu />
-                                    )}
-                                    <HeadCart changeStyle={changeStyle} />
-                                    {!IS_MB && (
-                                        <HeadLanguage/>
-                                    )}
-                                </div>
-                            </div>
-                            <div className={style.head_bot}>
-
-                            </div>
-                        </div>
-                    </Container>
+                  </button>
+                  <Dialog
+                    open={openSearch}
+                    fullScreen={true}
+                  >
+                    <Search
+                      onCloseSearchTimeOut={
+                        onCloseSearchTimeOut
+                      }
+                      onCloseSearchDialog={() => setOpenSearch(!openSearch)}
+                      key_work={key.key}
+                      key_work_debounce={key.key_debounce}
+                    />
+                  </Dialog>
                 </div>
-            </>
-            :
-            <></>
-    );
+                <div className={style.head_top_right}>
+                  <XButton
+                    className={style.head_btn_partner}
+                    title={t("Header.1")}
+                    onClick={() => history.push("/partner")}
+                  />
+                  {USER ? (
+                    <>
+                      <Link
+                        to={{
+                          pathname:
+                            "/tai-khoan/thong-tin-ca-nhan",
+                        }}
+                        className={style.head_top_right_user}
+                      >
+                        <img
+                          className={style.head_user_avatar}
+                          src={USER?.avatar}
+                          alt=""
+                        />
+                        <span className={style.head_user_name}>
+                          {USER?.fullname}
+                        </span>
+                      </Link>
+                      <HeadNoti changeStyle={changeStyle} />
+                    </>
+                  ) : (
+                    <div className={style.head_top_right_auth}>
+                      <XButton
+                        className={style.head_sign_btn}
+                        title={t("Home.Sign_up")}
+                        onClick={() =>
+                          history.push("/sign-up?2")
+                        }
+                      />
+                      <XButton
+                        onClick={() =>
+                          history.push("/sign-in?1")
+                        }
+                        className={style.head_sign_btn}
+                        title={t("Home.Sign_in")}
+                      />
+                    </div>
+                  )}
+                  {!IS_MB && (
+                    <HeadMenu />
+                  )}
+                  <HeadCart changeStyle={changeStyle} />
+                  {!IS_MB && (
+                    <HeadLanguage />
+                  )}
+                </div>
+              </div>
+              <div className={style.head_bot}>
+
+              </div>
+            </div>
+          </Container>
+        </div>
+      </>
+      :
+      <></>
+  );
 }
 
 export default Head;
@@ -300,71 +302,71 @@ export default Head;
 
 
 const SearchRecommend = () => {
-    const [key, setKey] = useState("Gội đầu");
-    const history = useHistory();
-    const settings = {
-        dots: false,
-        infinite: true,
-        slidesToShow: 1,
-        slidesToScroll: 1,
-        vertical: true,
-        verticalSwiping: true,
-        arrows: false,
-        autoplay: true,
-        autoplaySpeed: 2600,
-        speed: 650,
-        afterChange: function (index: number) {
-            setKey(searchKeyRecommend[index]);
-        },
-    };
-    const onResult = () => {
-        history.push({
-            pathname: "/ket-qua-tim-kiem/dich-vu",
-            search: `?keyword=${encodeURIComponent(key)}`,
-        });
-    };
-    return (
-        <div className={style.re_container}>
-            <div className={style.slider_wrapper}></div>
-            <Slider {...settings}>
-                {searchKeyRecommend.map((item) => (
-                    <span key={item} className={style.re_container_text}>
-                        {item}
-                    </span>
-                ))}
-            </Slider>
-            <div
-                onClick={(e) => {
-                    onResult();
-                    e.preventDefault();
-                    e.stopPropagation();
-                }}
-                className={style.re_container_btn}
-            >
-                <img src={icon.searchPurple} alt="" />
-            </div>
-        </div>
-    );
+  const [key, setKey] = useState("Gội đầu");
+  const history = useHistory();
+  const settings = {
+    dots: false,
+    infinite: true,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    vertical: true,
+    verticalSwiping: true,
+    arrows: false,
+    autoplay: true,
+    autoplaySpeed: 2600,
+    speed: 650,
+    afterChange: function (index: number) {
+      setKey(searchKeyRecommend[index]);
+    },
+  };
+  const onResult = () => {
+    history.push({
+      pathname: "/ket-qua-tim-kiem/dich-vu",
+      search: `?keyword=${encodeURIComponent(key)}`,
+    });
+  };
+  return (
+    <div className={style.re_container}>
+      <div className={style.slider_wrapper}></div>
+      <Slider {...settings}>
+        {searchKeyRecommend.map((item) => (
+          <span key={item} className={style.re_container_text}>
+            {item}
+          </span>
+        ))}
+      </Slider>
+      <div
+        onClick={(e) => {
+          onResult();
+          e.preventDefault();
+          e.stopPropagation();
+        }}
+        className={style.re_container_btn}
+      >
+        <img src={icon.searchPurple} alt="" />
+      </div>
+    </div>
+  );
 };
 const BackContainer = ({ changeStyle, iconBack }: { changeStyle?: boolean, iconBack?: string }) => {
-    const history = useHistory();
-    const location = useLocation();
-    const pathname = location.pathname;
-    let show = true;
-    if (homePath.includes(pathname)) show = false;
-    return show ? (
-        <XButton
-            className={
-                changeStyle ?
-                    clst([style.head_back_btn, style.head_back_btn_change])
-                    :
-                    style.head_back_btn
-            }
-            icon={iconBack ?? icon.chevronLeft}
-            iconSize={28}
-            onClick={() => history.goBack()}
-        />
-    ) : (
-        <></>
-    );
+  const history = useHistory();
+  const location = useLocation();
+  const pathname = location.pathname;
+  let show = true;
+  if (homePath.includes(pathname)) show = false;
+  return show ? (
+    <XButton
+      className={
+        changeStyle ?
+          clst([style.head_back_btn, style.head_back_btn_change])
+          :
+          style.head_back_btn
+      }
+      icon={iconBack ?? icon.chevronLeft}
+      iconSize={28}
+      onClick={() => history.goBack()}
+    />
+  ) : (
+    <></>
+  );
 };

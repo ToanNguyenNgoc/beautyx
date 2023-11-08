@@ -20,7 +20,7 @@ export function OpenApp(props: OpenAppProps) {
     const PLATFORM = EXTRA_FLAT_FORM()
     const IS_MB = useDeviceMobile()
     let show = false
-    if (PLATFORM === "BEAUTYX" && IS_MB) show = true
+    // if (PLATFORM === "BEAUTYX" && IS_MB) show = true
     let deepLink = `https://beautyx.page.link/?link=https://beautyx.page.link/myspa?${type}%3D${id}%26merchant%3D${org_id}&apn=com.myspa.beautyx&amv=18&isi=1614767784&ibi=com.myspa.beautyx&imv=18&cid=3028181755793109443&_osl=https://beautyx.page.link/MoBKVqvvHTrirbCG6&_icp=1`
     if (type === "discount") {
         deepLink = `https://beautyx.page.link/?link=https://beautyx.page.link/myspa?discount%3D${id}%26merchant%3D${org_id}%26service%3D${item_id}&apn=com.myspa.beautyx&amv=18&isi=1614767784&ibi=com.myspa.beautyx&imv=18&cid=3028181755793109443&_osl=https://beautyx.page.link/MoBKVqvvHTrirbCG6&_icp=1`

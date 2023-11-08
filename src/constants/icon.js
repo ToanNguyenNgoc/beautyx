@@ -264,6 +264,8 @@ import addFileWhite from "assets/icon/add-file-white.svg"
 import planPaperWhite from "assets/icon/planPaperWhite.svg"
 import copyWhite from "assets/icon/copyWhite.svg"
 import creditCard from "assets/icon/credit-card-black.svg"
+import zalo from "assets/icon/zalo-icon.png"
+
 const icon = {
   heartSolidWhite,
   eyeWhite,
@@ -522,6 +524,7 @@ const icon = {
   homePurpleBold,
   imageWhite, thumbUpWhite, chatSupport, tag,
   addFileWhite, planPaperWhite,creditCard,
-  copyWhite
+  copyWhite,
+  zalo
 };
 export default icon;

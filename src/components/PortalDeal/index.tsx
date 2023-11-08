@@ -11,26 +11,32 @@ import style from "./style.module.css"
 import { usePromotion } from "hooks";
 
 export default function PortDeal() {
-  // const { data } = useGetPromotionQuery()
   const { data } = usePromotion()
-  const promotion = data?.find(i => i.is_popup === 1)
-  return promotion ? <Popup promotion={promotion} /> : <></>
+  const promotions = data?.filter(i => i.is_popup === 1)
+  return promotions.length > 0 ? <Popup promotions={promotions} /> : <></>
 }
 
-const Popup: FC<{ promotion: Promotion }> = ({ promotion }) => {
-  const sessionShow = !sessionStorage.getItem("show_portal") ? true : false;
-  const [showModal, setShowModal] = useState(!!promotion && sessionShow);
-  const handleHidePortal = () => {
-    sessionStorage.setItem("show_portal", JSON.stringify(false));
-    setShowModal(false);
-    document.body.style.overflow = "auto";
-  };
+const Popup: FC<{ promotions: Promotion[] }> = ({ promotions }) => {
+  const listHidden: number[] = sessionStorage.getItem('list_hidden') ?
+    JSON.parse(String(sessionStorage.getItem('list_hidden'))) : []
+  const listShow = promotions.filter(i => !listHidden.includes(i.id))
+  const [showModal, setShowModal] = useState(listShow.length > 0);
   document.body.style.overflow = showModal ? "hidden" : "auto";
   if (!showModal) {
     return null;
   }
+  const promotion = listShow.length > 0 ? listShow[0] : null
+  const handleHidePortal = () => {
+    document.body.style.overflow = 'auto'
+    const newListHidden = [...listHidden, promotion?.id]
+    sessionStorage.setItem('list_hidden', JSON.stringify(newListHidden))
+    setShowModal(false)
+  }
   return createPortal(
-    <div onClick={handleHidePortal} className={style.modal}>
+    <div
+      onClick={handleHidePortal}
+      className={style.modal}
+    >
       <div
         onClick={(e) => {
           e.stopPropagation();
@@ -41,8 +47,8 @@ const Popup: FC<{ promotion: Promotion }> = ({ promotion }) => {
         <div className={style.lootie}>
           <Lottie animationData={animationData} />
         </div>
-        <Link className={style.link} to={{ pathname: `/deal/${slugify(promotion.name)}` }}>
-          <img className={style.portal_deal_img} src={promotion.media_url || ''} alt="" />
+        <Link className={style.link} to={{ pathname: `/deal/${slugify(promotion?.name)}` }}>
+          <img className={style.portal_deal_img} src={promotion?.media_url || ''} alt="" />
         </Link>
         <div className={style.lootie2}>
           <Lottie animationData={animationData} />

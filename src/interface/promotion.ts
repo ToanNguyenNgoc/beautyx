@@ -8,7 +8,7 @@ export interface Promotion {
   media_url: string | null,
   thumbnail_url: string | null,
   media: Media[]
-  is_popup: 1 | 0,
+  is_popup: number,
   valid_from: string,
   valid_util: string,
   created_at: string,

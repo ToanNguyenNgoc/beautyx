@@ -39,7 +39,7 @@ export function HomeStatisticsCustomer() {
     swipe: false,
     pauseOnHover: false,
     autoplaySpeed: 3000,
-    afterChange: onRefTimer
+    // afterChange: onRefTimer
   };
 
   return (

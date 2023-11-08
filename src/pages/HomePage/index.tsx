@@ -15,7 +15,9 @@ import {
   HomeTrafficData,
   HomeTrends,
   HomeWhyNot,
-  HomeStatisticsCustomer
+  HomeStatisticsCustomer,
+  HomePrettier,
+  HomeLocation
 } from "./components"
 import tracking from "api/trackApi";
 import { OpenApp, PlashScreen } from "components/Layout";
@@ -26,8 +28,6 @@ import { useSelector } from "react-redux";
 import { STATUS } from "redux/status";
 import style from "./home.module.css";
 import PortDeal from "components/PortalDeal";
-import HomeLocation from "pages/HomePage/components/HomeLocation";
-import HomeFettier from "pages/HomePage/components/HomeFettier";
 
 export default function HomePage() {
   const IS_MB = useDeviceMobile();
@@ -56,8 +56,7 @@ export default function HomePage() {
           </Container>
         </div>
         <HomeDiscount />
-        <HomeFettier />
-
+        <HomePrettier hidden={true} />
         <Container>
           <HomeOrgDistance />
           <HomePromotions />
