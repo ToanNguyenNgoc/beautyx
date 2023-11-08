@@ -2,7 +2,7 @@ import icon from "./icon"
 
 export const mailSales = "sales@myspa.vn";
 export const mailSupport = "support@beautyx.vn";
-export const phoneSupport = "0367415699";
+export const phoneSupport = "0343131003";
 export const phoneHotline = "0899310908";
 export const ABOUT_PARTNER_LINK = 'https://myspa.vn/mo-gian-hang-tren-beautyx'
 export const MOMO_METHOD = {
