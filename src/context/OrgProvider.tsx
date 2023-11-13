@@ -65,12 +65,12 @@ export function OrgProvider({ children }: { children: ReactNode }) {
     include: "user|bed",
     append: "group_name|avatar",
   };
+
   const { data: dataStaffs } = useQuery({
     queryKey: [QR_KEY.STAFFS, org?.id],
-    queryFn: () => orgApi.getStaffOrg(Number(org?.id), paramStaff),
+    queryFn: () => orgApi.getStaffOrg(+org?.id, paramStaff),
     staleTime: STALE_TIME,
-    // enabled: !!org,
-    enabled:false
+    enabled: org?.id ? true : false,
   });
   const staffs = dataStaffs?.context?.data ?? []
   
