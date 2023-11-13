@@ -158,6 +158,27 @@
 .comment_body {
   width: calc(75% - 5px);
 }
+.comment_body_start_origin_cnt{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 4px;
+}
+.comment_body_origin_btn{
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--white);
+  background-color: var(--green);
+  display: flex;
+  align-items: center;
+  padding: 2px 4px;
+  border-radius: 4px;
+}
+.comment_body_origin_btn img{
+  width: 20px;
+  height: 20px;
+  transform: rotate(-90deg);
+}
 
 .comment_body_txt {
   background-color: #f8f5ff;
@@ -283,6 +304,10 @@
   }
   .comment_item_cnt{
     flex-direction: column;
+  }
+  .comment_item_cnt_par{
+    padding-bottom: 16px;
+    border-bottom: solid 1px var(--bgGray);
   }
   .comment_item_head{
     width: 100%;

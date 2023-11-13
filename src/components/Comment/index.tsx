@@ -4,7 +4,7 @@ import style from "./style.module.css"
 import IStore from 'interface/IStore';
 import { BodyComment, IComment } from 'interface';
 import { useCheckUserBought, usePostMedia, Media } from 'hooks';
-import { useHistory, useLocation } from 'react-router-dom';
+import { Link, useHistory, useLocation } from 'react-router-dom';
 import commentsApi from 'api/commentsApi';
 import { XButton, XButtonFile } from 'components/Layout';
 import icon from 'constants/icon';
@@ -13,16 +13,18 @@ import { Avatar, CircularProgress } from '@mui/material';
 import { useInfiniteQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { clst } from 'utils';
 import { AppContext } from 'context';
+import { formatLinkDetail } from 'utils/formatRouterLink/formatRouter';
 
 export interface CommentProps {
   commentable_type: any
-  commentable_id: number,
+  commentable_id?: number,
   org_id?: number,
   commentsMixed?: IComment[],
   layout?: 'column' | 'row',
   fixed_input?: boolean,
-  classNameCnt?:string,
-  classNameInputCnt?:string
+  classNameCnt?: string,
+  classNameInputCnt?: string,
+  all?: boolean
 }
 export interface InitialValue {
   body?: string,
@@ -30,11 +32,16 @@ export interface InitialValue {
 }
 
 function Comment({
-  commentable_type, commentable_id, org_id, commentsMixed = [], layout = 'row', classNameCnt='', classNameInputCnt=''
+  commentable_type, commentable_id, org_id, commentsMixed = [], layout = 'row', classNameCnt = '', classNameInputCnt = '',
+  all = false
 }: CommentProps) {
   const { USER } = useSelector((state: IStore) => state.USER);
   const location = useLocation()
-  const { bought } = useCheckUserBought({ commentable_type, commentable_id, org_id:org_id || 0 })
+  const { bought } = useCheckUserBought({
+    commentable_type,
+    commentable_id: commentable_id || Number(org_id),
+    org_id: org_id || 0
+  })
   const { handlePostMedia } = usePostMedia()
   const history = useHistory()
   const [value, setValue] = useState<InitialValue>({ body: '' })
@@ -44,16 +51,16 @@ function Comment({
   const { data } = useInfiniteQuery({
     queryKey: QR_KEY,
     queryFn: ({ pageParam = 1 }) => commentsApi.finAll({
-      'filter[organization_id]': commentable_type === "ORGANIZATION" ? "" : org_id,
-      'filter[commentable_type]': commentable_type,
-      'filter[commentable_id]': commentable_id,
+      'filter[organization_id]': commentable_type === "ORGANIZATION" ? (all ? org_id : '') : org_id,
+      'filter[commentable_type]': all ? "" : commentable_type,
+      'filter[commentable_id]': all ? "" : commentable_id,
       'page': pageParam,
       'limit': 20
     }),
-    enabled:!!commentable_id,
-    onSuccess:()=>{
-      if(location.hash==="#cmt" && cntRef.current){
-        cntRef.current.scrollIntoView({behavior:'auto'})
+    enabled: !!org_id,
+    onSuccess: () => {
+      if (location.hash === "#cmt" && cntRef.current) {
+        cntRef.current.scrollIntoView({ behavior: 'auto' })
       }
     }
   })
@@ -63,7 +70,7 @@ function Comment({
   })
   const bodyComment = {
     "body": `${value?.body}${bought ? `‭` : ''}`,
-    "commentable_id": commentable_id,
+    "commentable_id": commentable_id || org_id,
     "commentable_type": commentable_type === "COMBO" ? "TREATMENT_COMBO" : commentable_type,
     "organization_id": org_id,
     "media_ids": value?.media_ids?.map(i => i.model_id) || [],
@@ -88,7 +95,7 @@ function Comment({
     setValue(prev => { return { ...prev, media_ids: prev?.media_ids?.filter(i => i.model_id !== model_id) } })
   }
   return (
-    <div ref={cntRef} className={clst([style.container,classNameCnt])}>
+    <div ref={cntRef} className={clst([style.container, classNameCnt])}>
       <div className={clst([style.input_wrapper, classNameInputCnt])}>
         <div className={style.input_cnt}>
           <div className={style.input_avatar}>
@@ -137,6 +144,7 @@ function Comment({
                   org_id={org_id}
                   USER_PAR_NAME={item.user?.fullname}
                   bought={bought}
+                  all={all}
                 />
               </li>
             ))
@@ -198,4 +206,15 @@ const Textarea: FC<TextareaProps> = ({
       placeholder={t("detail_item.write_a_comment")}
     />
   );
+}
+
+export const RedirectOrigin: FC<{ comment: IComment }> = ({ comment }) => {
+  return (
+    <Link
+      to={formatLinkDetail(comment.commentable_id, Number(comment.organization_id), '', comment.commentable_type)}
+      className={style.comment_body_origin_btn} >
+      Từ dịch vụ
+      <img src={icon.arrowDown} alt="" />
+    </Link>
+  )
 }

@@ -1,14 +1,14 @@
 import { Accordion, AccordionDetails, AccordionSummary, Avatar } from '@mui/material';
 import commentsApi from 'api/commentsApi';
-import { XButton } from 'components/Layout';
+import { RenderStar, XButton } from 'components/Layout';
 import icon from 'constants/icon';
 import { BodyComment, IComment, ICommentChild } from 'interface';
 import IStore from 'interface/IStore';
 import { useContext, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import {  useHistory } from 'react-router-dom';
 import { clst, formatDateFromNow } from 'utils';
-import { InitialValue } from 'components/Comment';
+import { InitialValue, RedirectOrigin } from 'components/Comment';
 import style from "./style.module.css"
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { AppContext } from 'context';
@@ -21,10 +21,11 @@ interface CommentParItemProps {
   bought?: boolean,
   mixed?: boolean,
   layout?: 'column' | 'row',
+  all?:boolean
 }
 
 function CommentParItem(props: CommentParItemProps) {
-  const { org_id, bought, comment, mixed = false, QR_KEY, layout } = props;
+  const { org_id, bought, comment, mixed = false, QR_KEY, layout, all } = props;
   const { t } = useContext(AppContext) as any;
   let body = comment.body
   try {
@@ -65,6 +66,7 @@ function CommentParItem(props: CommentParItemProps) {
     <div
       className={clst([
         style.comment_item_cnt,
+        style.comment_item_cnt_par,
         layout === "column" ? style.comment_item_cnt_ch : "",
       ])}
     >
@@ -80,16 +82,25 @@ function CommentParItem(props: CommentParItemProps) {
         )}
       </div>
       <div className={style.comment_body}>
-        <div className={style.comment_body_txt}>
-          {body}
-          <div className={style.comment_body_media_list}>
-            {comment.media_url?.map((i) => (
-              <div key={i} className={style.comment_body_media}>
-                <img src={i} alt="" />
-              </div>
-            ))}
-          </div>
+        <div className={style.comment_body_start_origin_cnt}>
+          {
+            (comment.rate && body?.includes("‭")) ? <RenderStar point={comment.rate.point} /> : <div></div>
+          }
+          {all && <RedirectOrigin comment={comment} />}
         </div>
+        {
+          (body || comment.media_url.length > 0) &&
+          <div className={style.comment_body_txt}>
+            {body}
+            <div className={style.comment_body_media_list}>
+              {comment.media_url?.map((i) => (
+                <div key={i} className={style.comment_body_media}>
+                  <img src={i} alt="" />
+                </div>
+              ))}
+            </div>
+          </div>
+        }
         <span className={style.created_at}>
           {formatDateFromNow(comment.created_at)}
         </span>

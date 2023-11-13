@@ -38,7 +38,7 @@ export interface IComment {
     user_id: number,
     organization_id: null | number,
     rate_id: null | number,
-    commentable_type: string,
+    commentable_type: any,
     commentable_id: number,
     created_at: string,
     updated_at: string,
@@ -50,7 +50,7 @@ export interface IComment {
 }
 export interface BodyComment {
     commentable_type: string;
-    commentable_id: number | string;
+    commentable_id?: number | string;
     organization_id?: number | string;
     media_ids?: string[] | number[];
     rate?: number;
