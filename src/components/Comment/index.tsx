@@ -24,7 +24,8 @@ export interface CommentProps {
   fixed_input?: boolean,
   classNameCnt?: string,
   classNameInputCnt?: string,
-  all?: boolean
+  all?: boolean,
+  hiddenInput?:boolean
 }
 export interface InitialValue {
   body?: string,
@@ -33,7 +34,8 @@ export interface InitialValue {
 
 function Comment({
   commentable_type, commentable_id, org_id, commentsMixed = [], layout = 'row', classNameCnt = '', classNameInputCnt = '',
-  all = false
+  all = false,
+  hiddenInput = false
 }: CommentProps) {
   const { USER } = useSelector((state: IStore) => state.USER);
   const location = useLocation()
@@ -97,7 +99,9 @@ function Comment({
   return (
     <div ref={cntRef} className={clst([style.container, classNameCnt])}>
       <div className={clst([style.input_wrapper, classNameInputCnt])}>
-        <div className={style.input_cnt}>
+        {
+          !hiddenInput &&
+          <div className={style.input_cnt}>
           <div className={style.input_avatar}>
             <Avatar src={USER?.avatar} alt={USER?.fullname} />
           </div>
@@ -132,6 +136,7 @@ function Comment({
             </div>
           </div>
         </div>
+        }
       </div>
       <div className={style.body}>
         <ul className={style.cmt_list}>

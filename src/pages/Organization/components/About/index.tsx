@@ -126,7 +126,7 @@ export const About = () => {
         </div>
 
         <div style={{ marginTop: "16px" }} className={`${style.section} ${style.section_cmt}`}>
-        <Comment
+          <Comment
             org_id={org.id}
             commentable_id={org.id}
             commentable_type="ORGANIZATION"
@@ -136,6 +136,7 @@ export const About = () => {
             org_id={org.id}
             commentable_type="ORGANIZATION"
             all
+            hiddenInput
           />
         </div>
       </div>

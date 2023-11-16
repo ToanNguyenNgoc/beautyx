@@ -110,7 +110,7 @@ function CartPaymentStatus() {
         // const btx_reward = await res?.data?.context?.btx_reward?.reward_points
         const orderDetail: IOrderV2 = await res.data?.context
         const btx_reward = orderDetail?.payment_gateway?.amount / 100
-        if (btx_reward && btx_reward >= 500) {
+        if (btx_reward && btx_reward >= 0) {
             setOpenBtx({ open: true, btx_point: btx_reward })
         }
     }
