@@ -191,7 +191,8 @@
         "business_hours": "Giờ mở cửa",
         "branch": "Chi nhánh",
         "priority": "Độ ưu tiên",
-        "favorite": "Được yêu thích"
+        "favorite": "Được yêu thích",
+        "staffs": "Nhân viên"
     },
     "pr": {
         "merchant_detail": "Về doanh nghiệp",

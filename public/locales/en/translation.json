@@ -198,7 +198,8 @@
         "business_hours": "Business hours",
         "branch": "Branch",
         "priority": "Priority",
-        "favorite": "Favorite"
+        "favorite": "Favorite",
+        "staffs": "Staff"
     },
     "pr": {
         "merchant_detail": "Merchant detail",

@@ -3,7 +3,7 @@ import { RefObject, useContext, useEffect, useState } from "react";
 import style from "../../organization.module.css";
 import { AppContext, AppContextType } from "context/AppProvider";
 import { OrgContext, OrgContextType } from "context";
-import { Container } from "@mui/material";
+import { Container, useMediaQuery } from "@mui/material";
 import animationData from "../../../../assets/reviewSVG.json";
 import Lottie from "lottie-react";
 interface TabProps {
@@ -12,7 +12,6 @@ interface TabProps {
   refProduct: RefObject<HTMLDivElement>;
   refCombo: RefObject<HTMLDivElement>;
   refDetail: RefObject<HTMLDivElement>;
-  refStaff: RefObject<HTMLDivElement>;
 }
 
 export const Tab = ({
@@ -20,13 +19,12 @@ export const Tab = ({
   refService,
   refProduct,
   refCombo,
-  refDetail,
-  refStaff
+  refDetail
 }: TabProps) => {
   const { t } = useContext(AppContext) as AppContextType;
-  const { org, trends } = useContext(OrgContext) as OrgContextType;
+  const { org, trends, staffs } = useContext(OrgContext) as OrgContextType;
   const [tabAct, setTabAct] = useState(0);
-  const mrTop = 88;
+  const mrTop =  84;
   let tabs = [
     {
       open: org?.is_momo_ecommerce_enable,
@@ -64,8 +62,15 @@ export const Tab = ({
       ref: refDetail,
     },
     {
-      open: trends.length > 0 ? true : false,
+      open: staffs.length > 0 ? true : false,
       id: 6,
+      title: t("Mer_de.staff"),
+      path: "nhan-vien",
+      ref: refDetail,
+    },
+    {
+      open: trends.length > 0 ? true : false,
+      id: 7,
       title: "Review",
       path: "review",
       ref: refDetail,
@@ -128,7 +133,7 @@ export const Tab = ({
                   })
                 }
               >
-                {tab.id === 6 ? (
+                {tab.id === 7 ? (
                   <div className={style.cus_title_review}>
                     <p className={style.tab_item_review}>{tab.title}</p>
                     <div className={style.icon_review}>

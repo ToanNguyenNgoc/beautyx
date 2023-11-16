@@ -51,29 +51,29 @@ export function OrgProvider({ children }: { children: ReactNode }) {
   const org: IOrganization = resOrg
 
   const { data: dataTrends } = useQuery({
-    queryKey: ['VIDEO',  org?.id ],
+    queryKey: ['VIDEO', org?.id],
     queryFn: () => axios.get(`${API_3RD.API_NODE}/trends`, {
-      params: { "filter[organization_id]": org?.id, "include":"comments" },
+      params: { "filter[organization_id]": org?.id, "include": "comments" },
     }),
-    enabled: org?.id ? true : false,
+    enabled: !!org,
     staleTime: STALE_TIME,
   });
   const trends = dataTrends?.data.data.context.data ?? []
 
   const paramStaff: ParamsStaffs = {
-    "filter[is_employee_ecommerce]": true,
+    "filter[is_online]": true,
     include: "user|bed",
     append: "group_name|avatar",
   };
+
   const { data: dataStaffs } = useQuery({
     queryKey: [QR_KEY.STAFFS, org?.id],
-    queryFn: () => orgApi.getStaffOrg(Number(org?.id), paramStaff),
+    queryFn: () => orgApi.getStaffOrg(+org?.id, paramStaff),
     staleTime: STALE_TIME,
-    // enabled: !!org,
-    enabled:false
+    enabled: !!org
   });
   const staffs = dataStaffs?.context?.data ?? []
-  
+
   const value = {
     subdomain,
     org,

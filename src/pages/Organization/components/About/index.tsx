@@ -24,9 +24,10 @@ import {
 import { ParamComment } from "params-query/param.interface";
 import { paramsComment } from "params-query";
 import {  XButton } from "components/Layout";
+import { Staff } from "pages/Organization/components/Staff";
 
 export const About = () => {
-  const { org, trends } = useContext(OrgContext) as OrgContextType;
+  const { org, trends, staffs } = useContext(OrgContext) as OrgContextType;
   const [map, setMap] = useState(false);
   const commentsMixed = trends
     .map(i => i.comments ? i.comments?.map(item => { return { ...item, created_at: i.createdAt } }) : [])
@@ -34,6 +35,12 @@ export const About = () => {
     .flat()
   return (
     <Container>
+      {staffs.length !== 0 && (
+        <div className={style.body_section}>
+          <Staff />
+        </div>
+      )}
+
       {trends.length !== 0 && (
         <div className={style.container}>
           <div className={style.section}>
@@ -125,7 +132,10 @@ export const About = () => {
           <OrgItemMap open={map} setOpen={setMap} org={org} />
         </div>
 
-        <div style={{ marginTop: "16px" }} className={`${style.section} ${style.section_cmt}`}>
+        <div
+          style={{ marginTop: "16px" }}
+          className={`${style.section} ${style.section_cmt}`}
+        >
           <Comment
             org_id={org.id}
             commentable_id={org.id}
