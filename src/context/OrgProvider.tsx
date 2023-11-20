@@ -61,7 +61,7 @@ export function OrgProvider({ children }: { children: ReactNode }) {
   const trends = dataTrends?.data.data.context.data ?? []
 
   const paramStaff: ParamsStaffs = {
-    "filter[is_online]": true,
+    "filter[booking_online]": true,
     include: "user|bed",
     append: "group_name|avatar",
   };

@@ -46,7 +46,7 @@ const NextButton = (props: any) => {
 export function HomeBanner() {
   const { t } = useContext(AppContext) as any
   const features = [
-    { title: t('Home.community'), icon: icon.communityPurple, func: "COM", dot: true },
+    { title: t('Home.community'), icon: icon.communityPurple, func: "COM", dot: false },
     { title: t('Home.appointment'), icon: icon.calendarGreen, func: "CAL", dot: false },
     { title: t('Home.coupon_code'), icon: icon.ticketRed, func: "DIS", dot: false },
     { title: "Rewards", icon: icon.rewardOrange, func: "REW", dot: false },
@@ -116,7 +116,12 @@ export function HomeBanner() {
   const onFeatureClick = (func: string) => {
     switch (func) {
       case "COM":
-        return history.push('/cong-dong')
+        // return history.push('/cong-dong')
+        return setMessage({
+          open: true,
+          content: 'Tính năng "Cộng đồng" đang trong giai đoạn phát triển.',
+          icon: icon.communityPurple
+        });
       case "REW":
         return setMessage({
           open: true,

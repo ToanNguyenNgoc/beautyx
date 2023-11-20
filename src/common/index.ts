@@ -29,6 +29,12 @@ export const OTHER = {
   content: 'Chuyển khoản ngân hàng',
   icon: icon.creditCard
 }
+export const BTX = {
+  id: 17,
+  name_key: 'BTX',
+  content: 'Thanh toán bằng điểm thưởng',
+  icon: icon.coins
+}
 export const LIST_METHOD = [
   MOMO,
   PAY_ON_BTX,

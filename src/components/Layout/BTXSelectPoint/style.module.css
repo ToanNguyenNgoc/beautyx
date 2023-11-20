@@ -1,0 +1,27 @@
+.cnt{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: var(--trans);
+}
+.left{
+  display: flex;
+  align-items: center;
+}
+.left img{
+  width: 32px;
+  height: 32px;
+  margin-right: 6px;
+}
+.left_value p:nth-child(1){
+  font-size: 15px;
+  font-weight: 700;
+}
+.left_value p:nth-child(2){
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-hover);
+}
+.right label{
+  margin-right: 0px;
+}

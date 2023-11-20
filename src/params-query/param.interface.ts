@@ -121,6 +121,7 @@ export interface ParamsOrgApprove extends Page { }
 export interface ParamsStaffs extends Page {
     "filter[is_employee_ecommerce]"?: boolean;
     'filter[is_online]'?:boolean;
+    "filter[booking_online]"?:boolean;
     include?: string;
     append?: string;
 }

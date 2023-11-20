@@ -15,11 +15,12 @@ import { InputVoucher } from 'features/InputVoucher';
 
 interface BookingNowBillProps {
     org: IOrganization,
-    setFinalAmount: (amount: number) => void
+    setFinalAmount: (amount: number) => void,
+    point?: number
 }
 
 function BookingNowBill(props: BookingNowBillProps) {
-    const { setFinalAmount } = props
+    const { setFinalAmount, point = 0 } = props
     const { t } = useContext(AppContext) as any
     const { VOUCHER_APPLY } = useSelector((state: any) => state.carts);
     const { org } = props;
@@ -63,12 +64,15 @@ function BookingNowBill(props: BookingNowBillProps) {
     const { vouchersFinal, totalVoucherValue } = useVoucher(finalAmount, VOUCHER_APPLY, items)
 
 
-
+    let TOTAL_AMOUNT = finalAmount - totalVoucherValue
+    if (point > 0) {
+        TOTAL_AMOUNT = TOTAL_AMOUNT - point
+    }
     useEffect(() => {
         let mount = true
-        if (mount) { setFinalAmount(finalAmount - totalVoucherValue) }
+        if (mount) { setFinalAmount(TOTAL_AMOUNT) }
         return () => { mount = false }
-    }, [finalAmount, totalVoucherValue])
+    }, [finalAmount, totalVoucherValue, point])
 
     return (
         <>
@@ -109,10 +113,19 @@ function BookingNowBill(props: BookingNowBillProps) {
                         </div>
                     ))
                 }
+                {
+                    point > 0 &&
+                    <div className={style.booking_calc_item}>
+                        <span className={style.booking_calc_item_left}>Điểm thưởng</span>
+                        <span className={style.booking_calc_item_right}>
+                            -{formatPrice(point)}đ
+                        </span>
+                    </div>
+                }
                 <div className={style.booking_calc_item}>
                     <span className={style.booking_calc_item_left}>{t('pm.pay')}</span>
                     <span style={{ fontWeight: "700" }} className={style.booking_calc_item_right}>
-                        {formatPrice(finalAmount - totalVoucherValue)}đ
+                        {formatPrice(TOTAL_AMOUNT)}đ
                     </span>
                 </div>
             </div>

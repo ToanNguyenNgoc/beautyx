@@ -25,14 +25,14 @@ export function Staff() {
                   />
                 </div>
                 <p className={style.item_staff_name}>{item?.user?.fullname}</p>
-                <p className={style.item_staff_position}>
+                {/* <p className={style.item_staff_position}>
                   {item?.group_name?.map((name, index) => (
                     <span key={index}>
                       {index > 0 && ", "}
                       {name}
                     </span>
                   ))}
-                </p>
+                </p> */}
               </li>
             ))}
         </ul>

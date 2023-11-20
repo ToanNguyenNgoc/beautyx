@@ -51,10 +51,12 @@ export function CartCalc(props: CartCalcType) {
         .map((i: IDiscountPar) => i.coupon_code)
         .concat(vouchersFinal.map(i => i.coupon_code))
         .filter(Boolean)
-
+    let TOTAL_PAYMENT = finalAmount - totalVoucherValue
+    if (typeof order?.point == 'number' && order.point > 0) {
+        TOTAL_PAYMENT = TOTAL_PAYMENT - order.point
+    }
     const onPostOrder = async () => {
-        // console.log(orgChoose)
-        const param: PostOrderType = {
+        let param: PostOrderType = {
             ...order,
             user_address_id: addressDefault?.id,
             products: products_id,
@@ -62,10 +64,14 @@ export function CartCalc(props: CartCalcType) {
             services: services_id,
             coupon_code: listCouponCode,
         }
+        if (Number(order.point) > 0) {
+            param.payment_method_second_id = 17
+        }
+        // return console.log(param)
         if (!orgChoose) {
             return resultLoad('Vui lòng chọn dịch vụ/ sản phẩm bạn muốn đặt hàng !')
         }
-        if (finalAmount - totalVoucherValue < 1000) {
+        if (TOTAL_PAYMENT < 1000) {
             return resultLoad('Giá trị đơn hàng tối thiểu 1.000đ')
         }
         if (products_id?.length > 0 && !addressDefault) {
@@ -88,7 +94,7 @@ export function CartCalc(props: CartCalcType) {
         try {
             const res = await orderApi.postOrder(orgChoose.id, param)
             resultLoad('')
-            const state_payment = await { ...res.data.context, FINAL_AMOUNT: finalAmount - totalVoucherValue };
+            const state_payment = await { ...res.data.context, FINAL_AMOUNT: TOTAL_PAYMENT };
             if (state_payment.status !== 'PENDING') {
                 return resultLoad('Tạo đơn hàng thất bại!')
             }
@@ -132,12 +138,19 @@ export function CartCalc(props: CartCalcType) {
                         </div>
                     ))
                 }
+                {
+                    Number(order?.point) > 0 &&
+                    <div className={style.calc_body_row}>
+                        <span className={style.calc_body_row_label}>Điểm thưởng</span>
+                        <span className={style.calc_body_row_price}>-{formatPrice(order?.point)}đ</span>
+                    </div>
+                }
             </div>
             <div className={style.checkout_out}>
                 <div className={style.checkout_out_amount}>
                     <span className={style.checkout_out_amount_label}>{t('pm.total_payment')}</span>
                     <span className={style.checkout_out_amount_price}>
-                        {formatPrice(finalAmount - totalVoucherValue)}đ
+                        {formatPrice(TOTAL_PAYMENT)}đ
                     </span>
                 </div>
                 <XButton
