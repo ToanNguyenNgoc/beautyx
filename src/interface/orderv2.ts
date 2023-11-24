@@ -96,6 +96,8 @@ export interface IOrderV2 {
         id: number;
         status: string;
         amount: number;
+        amount_paid:number;
+        amount_second?:number;
         description: string;
         transaction_uuid: string;
         extra_data: {

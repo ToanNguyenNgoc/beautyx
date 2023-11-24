@@ -30,7 +30,7 @@ export const OTHER = {
   icon: icon.creditCard
 }
 export const BTX = {
-  id: 17,
+  id: 16,
   name_key: 'BTX',
   content: 'Thanh toán bằng điểm thưởng',
   icon: icon.coins

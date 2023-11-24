@@ -20,7 +20,7 @@ import apointmentApi from "api/apointmentApi";
 import { Container } from "@mui/material";
 import { onClearApplyVoucher } from "redux/cart";
 import { IDiscountPar } from "interface/discount";
-import { BTXSelectPoint, XButton } from "components/Layout";
+import {  XButton } from "components/Layout";
 import { PopupNotification } from "components/Notification";
 import { checkPhoneValid } from "utils/phoneUpdate";
 import UserPaymentInfo from "pages/Account/components/UserPaymentInfo";
@@ -164,7 +164,12 @@ function Booking() {
       params.payment_method_second_id = BTX.id
     }
     // setOpenNoti({ ...initOpenNoti, load: true })
-    // return console.log(params)
+    if(finalAmount < 1000 && point === 0){
+      return resultLoad(t('my_ser.minimum_order_is_1_000_VND'));
+    }
+    if(finalAmount === 0 && point > 0){
+      params.payment_method_id = BTX.id
+    }
     firstLoad()
     try {
       //tracking.PAY_CONFIRM_CLICK(org?.id, formatProductList(params.products))
@@ -217,8 +222,8 @@ function Booking() {
     if (!USER) return history.push('/sign-in?1')
     if (!bookTime.time)
       return resultLoad(t('my_ser.pl_select_date'));
-    if (location.state.TYPE === "BOOK_NOW" && finalAmount < 1000)
-      return resultLoad(t('my_ser.minimum_order_is_1_000_VND'));
+    // if (location.state.TYPE === "BOOK_NOW" && finalAmount < 1000)
+      // return resultLoad(t('my_ser.minimum_order_is_1_000_VND'));
     if (FLAT_FORM === FLAT_FORM_TYPE.MB && !checkPhoneValid(USER?.telephone))
       return resultLoad(
         t('my_ser.enter_update_phone'),
@@ -360,15 +365,12 @@ function Booking() {
                     onSetPaymentMethod={(method) => setPaymentMethodId(method.id)}
                   />
                 </div>
-                {/* <div className={style.section_payment}>
-                  <BTXSelectPoint valuePoint={point} onChangePoint={(e) => setPoint(Number(e))} />
-                </div> */}
               </>
             }
             <div className={style.section_bill}>
               {
                 TYPE_PAGE === 'BOOK_NOW' &&
-                <BookingNowBill point={point} org={org} setFinalAmount={setFinalAmount} />
+                <BookingNowBill point={point} org={org} setFinalAmount={setFinalAmount} setPoint={setPoint} />
               }
               <XButton
                 className={style.post_btn}

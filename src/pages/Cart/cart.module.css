@@ -321,7 +321,10 @@
 .open_voucher_bnt img {
     margin: 0px 0px -2px 4px;
 }
-
+.calc_pont{
+    padding: 4px 0px;
+    border-bottom: solid 1px var(--bg-color);
+}
 .calc_body {
     padding: 6px 0px;
     border-bottom: solid 1px var(--bg-color);

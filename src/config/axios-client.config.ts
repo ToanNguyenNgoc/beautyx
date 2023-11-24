@@ -7,6 +7,7 @@ import { LOCAL_TK } from "common";
 
 export const baseURL = process.env.REACT_APP_API_URL;
 // export const baseURL = process.env.REACT_APP_API_DEV;
+// export const baseURL = 'http://192.168.1.54:8000/v1/'
 export const axiosClient = axios.create({
   baseURL: baseURL,
   headers: {

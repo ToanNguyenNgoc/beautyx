@@ -17,9 +17,9 @@
   font-size: 15px;
   font-weight: 700;
 }
-.left_value p:nth-child(2){
-  font-size: 13px;
-  font-weight: 500;
+.left_value_gray{
+  font-size: 13px !important;
+  font-weight: 500 !important;
   color: var(--text-hover);
 }
 .right label{

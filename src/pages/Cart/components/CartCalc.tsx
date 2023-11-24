@@ -1,9 +1,9 @@
-import { XButton } from 'components/Layout';
+import { BTXSelectPoint, XButton } from 'components/Layout';
 import icon from 'constants/icon';
 import { useCartReducer, useNoti, useUserAddress, useVoucher } from 'hooks';
 import { IDiscountPar, IOrganization } from 'interface';
 import IStore from 'interface/IStore';
-import React, { useContext, useEffect, useState } from 'react';
+import React, { Dispatch, useContext, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getTotal } from 'redux/cart';
 import { PostOrderType } from '../index'
@@ -19,15 +19,17 @@ import tracking from 'api/trackApi';
 import formatProductList from 'utils/tracking';
 import { PLF_TYPE } from 'constants/plat-form';
 import { AppContext } from 'context/AppProvider';
+import { BTX } from 'common';
 
 interface CartCalcType {
     order: PostOrderType,
+    setOrder: Dispatch<React.SetStateAction<PostOrderType>>,
     orgChoose: IOrganization
 }
 
 export function CartCalc(props: CartCalcType) {
     const { t } = useContext(AppContext) as any
-    const { order, orgChoose } = props
+    const { order, orgChoose, setOrder } = props
     const PLAT_FORM = EXTRA_FLAT_FORM()
     const [openVc, setOpenVc] = useState(false)
     const { addressDefault } = useUserAddress()
@@ -55,19 +57,7 @@ export function CartCalc(props: CartCalcType) {
     if (typeof order?.point == 'number' && order.point > 0) {
         TOTAL_PAYMENT = TOTAL_PAYMENT - order.point
     }
-    const onPostOrder = async () => {
-        let param: PostOrderType = {
-            ...order,
-            user_address_id: addressDefault?.id,
-            products: products_id,
-            treatment_combo: combos_id,
-            services: services_id,
-            coupon_code: listCouponCode,
-        }
-        if (Number(order.point) > 0) {
-            param.payment_method_second_id = 17
-        }
-        // return console.log(param)
+    const withOptionalBTXPoint = async (param: PostOrderType) => {
         if (!orgChoose) {
             return resultLoad('Vui lòng chọn dịch vụ/ sản phẩm bạn muốn đặt hàng !')
         }
@@ -80,7 +70,7 @@ export function CartCalc(props: CartCalcType) {
                 <XButton title='Thêm mới' onClick={() => history.push('/tai-khoan/dia-chi-giao-hang')} />
             )
         }
-        if (!order.payment_method_id) {
+        if (!param.payment_method_id) {
             return resultLoad('Vui lòng chọn phương thức thanh toán')
         }
         if (PLAT_FORM === PLF_TYPE.MB && !checkPhoneValid(USER?.telephone)) {
@@ -107,6 +97,56 @@ export function CartCalc(props: CartCalcType) {
             return resultLoad('Tạo đơn hàng thất bại!')
         }
     }
+    const withFullBTXPoint = async (param: PostOrderType) => {
+        param.payment_method_id = BTX.id
+        if (products_id?.length > 0 && !addressDefault) {
+            return resultLoad(
+                'Vui lòng thêm địa chỉ giao hàng!',
+                <XButton title='Thêm mới' onClick={() => history.push('/tai-khoan/dia-chi-giao-hang')} />
+            )
+        }
+        if (PLAT_FORM === PLF_TYPE.MB && !checkPhoneValid(USER?.telephone)) {
+            return resultLoad(
+                'Vui lòng thêm số điện thoại để tiếp tục thanh toán!',
+                <XButton title='Thêm mới' onClick={() => history.push('/otp-form')} />
+            )
+        }
+        firstLoad()
+        tracking.PAY_CONFIRM_CLICK(orgChoose.id, formatProductList(products))
+        try {
+            const res = await orderApi.postOrder(orgChoose.id, param)
+            resultLoad('')
+            const state_payment = await { ...res.data.context, FINAL_AMOUNT: TOTAL_PAYMENT };
+            if (state_payment.status !== 'PAID') {
+                return resultLoad('Tạo đơn hàng thất bại!')
+            }
+            history.push({
+                pathname: `/trang-thai-don-hang/`,
+                search: state_payment.payment_gateway?.transaction_uuid,
+                state: { state_payment },
+            });
+        } catch (error) {
+            return resultLoad('Tạo đơn hàng thất bại!')
+        }
+    }
+    const onPostOrder = async () => {
+        let param: PostOrderType = {
+            ...order,
+            user_address_id: addressDefault?.id,
+            products: products_id,
+            treatment_combo: combos_id,
+            services: services_id,
+            coupon_code: listCouponCode,
+        }
+        if (Number(order.point) > 0) {
+            param.payment_method_second_id = BTX.id
+        }
+        if (TOTAL_PAYMENT === 0 && order.point) {
+            withFullBTXPoint(param)
+        } else {
+            withOptionalBTXPoint(param)
+        }
+    }
 
 
     return (
@@ -117,6 +157,12 @@ export function CartCalc(props: CartCalcType) {
                 onClick={() => setOpenVc(true)}
                 iconSize={14}
                 className={style.open_voucher_bnt}
+            />
+            <BTXSelectPoint
+                totalOrigin={cartAmount - cartAmountDiscount}
+                className={style.calc_pont}
+                valuePoint={order.point}
+                onChangePoint={(e) => setOrder({ ...order, point: e })}
             />
             <div className={style.calc_body}>
                 <div className={style.calc_body_row}>
@@ -141,7 +187,7 @@ export function CartCalc(props: CartCalcType) {
                 {
                     Number(order?.point) > 0 &&
                     <div className={style.calc_body_row}>
-                        <span className={style.calc_body_row_label}>Điểm thưởng</span>
+                        <span className={style.calc_body_row_label}>Tiết kiệm</span>
                         <span className={style.calc_body_row_price}>-{formatPrice(order?.point)}đ</span>
                     </div>
                 }

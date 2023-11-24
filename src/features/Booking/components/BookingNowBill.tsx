@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import icon from 'constants/icon';
-import React, { useContext, useEffect, useState } from 'react';
+import React, { Dispatch, useContext, useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import formatPrice from 'utils/formatPrice';
 import { DISCOUNT_TYPE } from 'utils/formatRouterLink/fileType';
@@ -8,7 +8,7 @@ import { IOrganization } from 'interface/organization';
 import { useSelector } from 'react-redux';
 import { IDiscountPar } from 'interface/discount';
 import style from '../booking.module.css'
-import { XButton } from 'components/Layout';
+import { BTXSelectPoint, XButton } from 'components/Layout';
 import { AppContext } from 'context/AppProvider';
 import { useVoucher } from 'hooks';
 import { InputVoucher } from 'features/InputVoucher';
@@ -16,11 +16,12 @@ import { InputVoucher } from 'features/InputVoucher';
 interface BookingNowBillProps {
     org: IOrganization,
     setFinalAmount: (amount: number) => void,
+    setPoint: Dispatch<React.SetStateAction<number>>,
     point?: number
 }
 
 function BookingNowBill(props: BookingNowBillProps) {
-    const { setFinalAmount, point = 0 } = props
+    const { setFinalAmount, point = 0, setPoint } = props
     const { t } = useContext(AppContext) as any
     const { VOUCHER_APPLY } = useSelector((state: any) => state.carts);
     const { org } = props;
@@ -85,6 +86,12 @@ function BookingNowBill(props: BookingNowBillProps) {
                     icon={icon.cardDiscountOrange}
                 />
             </div>
+            <BTXSelectPoint
+                className={style.booking_cnt_bot_point}
+                totalOrigin={finalAmount - totalVoucherValue}
+                valuePoint={point}
+                onChangePoint={(e) => setPoint(Number(e))}
+            />
             <div className={style.booking_cnt_bot_bill}>
                 <div className={style.booking_calc_item}>
                     <span className={style.booking_calc_item_left}>{t('cart.total_payment')}</span>
@@ -116,7 +123,7 @@ function BookingNowBill(props: BookingNowBillProps) {
                 {
                     point > 0 &&
                     <div className={style.booking_calc_item}>
-                        <span className={style.booking_calc_item_left}>Điểm thưởng</span>
+                        <span className={style.booking_calc_item_left}>Tiết kiệm</span>
                         <span className={style.booking_calc_item_right}>
                             -{formatPrice(point)}đ
                         </span>

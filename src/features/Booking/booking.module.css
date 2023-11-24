@@ -312,6 +312,12 @@
 .open_voucher_btn img {
     margin: 0px 0px 0px 6px;
 }
+.booking_cnt_bot_point{
+    padding: 4px 0px;
+    border-bottom: solid 1px var(--bg-color);
+    border-top: solid 1px var(--bg-color);
+    margin-bottom: 4px;
+}
 
 .booking_calc_item {
     width: 100%;

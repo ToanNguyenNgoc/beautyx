@@ -10,36 +10,54 @@ import { XSwitch } from "../Switch";
 import { omit } from "lodash";
 
 interface BTXSelectPointProps extends DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
+  totalOrigin?: number;
   valuePoint?: number;
   onChangePoint?: (e?: number) => void
 }
 
 export const BTXSelectPoint: FC<BTXSelectPointProps> = (props) => {
-  const { valuePoint = 0, onChangePoint = () => { } } = props
+  const { totalOrigin = 0, valuePoint = 0, onChangePoint = () => { } } = props
   const dispatch = useDispatch()
-  useEffect(() => { dispatch(fetchAsyncUser()) }, [])
+  useEffect(()=>{
+    const timer = setTimeout(()=>{
+      dispatch(fetchAsyncUser())
+    },500)
+    return () => clearTimeout(timer)
+  },[])
   const { USER } = useSelector((state: IStore) => state.USER)
+  let savePrice = Number(USER?.btx_points)
+  if (savePrice > totalOrigin) { savePrice = totalOrigin }
+  if (totalOrigin - savePrice > 0 && totalOrigin - savePrice < 1000) {
+    savePrice = totalOrigin - 1000 // Đảm bảo giá thanh toán cuối cùng đơn hàng vừa thanh toán online + BTX >= 1000
+  }
+  if (totalOrigin === 0) savePrice = 0
   const onChangeSwitch = (checked: boolean) => {
     if (checked) {
-      onChangePoint(Number(USER?.btx_points))
-      // onChangePoint(1000)
+      onChangePoint(savePrice)
     } else {
-      onChangePoint(undefined)
+      onChangePoint(0)
     }
   }
-  const disable = !USER?.btx_points || Number(USER?.btx_points) === 0
-  // const disable = false
+  useEffect(() => { onChangePoint(0) }, [totalOrigin])
+  const disable = !USER?.btx_points || Number(USER?.btx_points) === 0 || totalOrigin === 0
   return (
     <div
-      {...omit(props, ['onChangePoint', 'valuePoint'])}
+      {...omit(props, ['onChangePoint', 'valuePoint', 'totalOrigin'])}
       className={`${props.className} ${style.cnt}`}
       style={{ opacity: disable ? '0.6' : '1' }}
     >
       <div className={style.left}>
         <img src={icon.coins} alt="" />
         <div className={style.left_value}>
-          <p>Giảm {formatPrice(USER?.btx_points || 0)}đ</p>
-          <p>Khi dùng {USER?.btx_points || 0} của bạn</p>
+          {
+            totalOrigin > 0 ?
+              <>
+                <p>Giảm {formatPrice(savePrice || 0)}đ</p>
+                <p className={style.left_value_gray}>Khi dùng {savePrice || 0} BTX point của bạn</p>
+              </>
+              :
+              <p className={style.left_value_gray} >Vui lòng chọn dịch vụ/sản phẩm thanh toán</p>
+          }
         </div>
       </div>
       <div className={style.right}>

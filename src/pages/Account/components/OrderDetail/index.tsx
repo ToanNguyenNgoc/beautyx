@@ -125,6 +125,18 @@ function OrderDetail(props: OrderDetailProp) {
                                 }
                             </div>
                         </div>
+                        {
+                            order.payment_gateway?.amount_second && order.status === "PAID" &&
+                            <div className={style.amount}>
+                                <span className={style.amount_title}>BTX Point:</span>
+                                <div className={style.amount_number}>
+                                    <span style={{display:'flex', alignItems:'center'}}>
+                                        {formatPrice(order.payment_gateway?.amount_second)}
+                                        <img style={{marginLeft:'2px'}} src={icon.coins} alt="" />
+                                    </span>
+                                </div>
+                            </div>
+                        }
                     </div>
                     <div className={style.order_created}>
                         {

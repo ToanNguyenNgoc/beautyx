@@ -1,7 +1,7 @@
 
 import { Container } from '@mui/system';
 import { EXTRA_FLAT_FORM } from 'api/extraFlatForm';
-import { BTXSelectPoint, EmptyRes, XButton } from 'components/Layout';
+import { EmptyRes, XButton } from 'components/Layout';
 import PaymentMethod from 'components/PaymentMethod';
 import icon from 'constants/icon';
 import { PLF_TYPE } from 'constants/plat-form';
@@ -18,6 +18,7 @@ import { clearByCheck } from 'redux/cart';
 import { clst, unique } from 'utils';
 import style from './cart.module.css'
 import { CartCalc, CartOrgItem } from './components';
+import { MOMO } from 'common';
 
 interface ItemType { id: number, quantity: number }
 
@@ -55,7 +56,8 @@ function Cart() {
 
   const [order, setOrder] = useState<PostOrderType>({
     user_address_id: null,
-    branch_id: null
+    branch_id: null,
+    payment_method_id:MOMO.id
   })
   const removeItemByCheck = () => {
     dispatch(clearByCheck())
@@ -128,13 +130,9 @@ function Cart() {
                     }
                   />
                 </div>
-                {/* <BTXSelectPoint
-                  className={style.right_section}
-                  valuePoint={order.point}
-                  onChangePoint={(e) => setOrder({ ...order, point: e })}
-                /> */}
                 <div className={clst([style.right_section, style.bottom])}>
                   <CartCalc
+                    setOrder={setOrder}
                     orgChoose={orgChoose}
                     order={order}
                   />

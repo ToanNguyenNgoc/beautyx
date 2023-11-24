@@ -99,8 +99,21 @@ function OrderItem(props: IProp) {
                                 </span>
                             </>
                             :
-                            <span>
+                            <span style={{ display: 'flex', alignItems: 'center' }}>
                                 {formatPrice(order?.payment_gateway?.amount)}đ
+                                {/* {
+                                    order?.payment_gateway?.amount_second &&
+                                    <div style={{
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        marginLeft: '2px',
+                                        fontSize:'13px'
+                                    }}>
+                                        +{formatPrice(order.payment_gateway.amount_second)} 
+                                        <img style={{margin:'0px 2px'}} src={icon.coins} alt="" />
+                                        BTX
+                                    </div>
+                                } */}
                             </span>
                         }
                     </div>
