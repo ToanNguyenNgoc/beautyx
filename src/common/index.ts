@@ -20,7 +20,7 @@ export const PAY_ON_BTX = {
 export const MOMO = {
   id: 1,
   name_key: 'MOMO',
-  content: 'Thanh toán qua ví MOMO',
+  content: 'Thanh toán qua ví MOMO(Hỗ trợ quét mã ngân hàng, Napas...)',
   icon: icon.momo,
 }
 export const OTHER = {
