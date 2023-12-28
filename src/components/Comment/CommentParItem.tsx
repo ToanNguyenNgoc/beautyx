@@ -84,7 +84,9 @@ function CommentParItem(props: CommentParItemProps) {
       <div className={style.comment_body}>
         <div className={style.comment_body_start_origin_cnt}>
           {
-            (comment.rate && body?.includes("‭")) ? <RenderStar point={comment.rate.point} /> : <div></div>
+            // (comment.rate && body?.includes("‭")) ? <RenderStar point={comment.rate.point} /> : <div></div>
+            comment.rate &&
+            <RenderStar point={comment.rate.point} />
           }
           {all && <RedirectOrigin comment={comment} />}
         </div>

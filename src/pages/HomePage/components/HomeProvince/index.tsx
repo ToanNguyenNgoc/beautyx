@@ -2,18 +2,41 @@ import { AppContext } from "context/AppProvider";
 import { IProvince } from "interface";
 import { useContext } from "react";
 import { LazyLoadImage } from "react-lazy-load-image-component";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { formatRoundOrgCount, scrollTop } from "utils";
 import style from "./style.module.css";
 import { Link } from "react-router-dom";
 import { onChangeFilterBranch, onResetFilter } from 'redux/filter-result'
 import { HomeTitle } from "components/Layout";
+import { UseQueryOptions, useQuery } from "@tanstack/react-query";
+import { QR_KEY, STALE_TIME } from "config";
+import provincesApi from "api/provinceApi";
+
+export const useDataProvinces = (options?: UseQueryOptions<any>) => {
+    const query = useQuery<any>(
+        [QR_KEY.PROVINCES],
+        () => provincesApi.getAll(),
+        {
+            staleTime: STALE_TIME,
+            ...options
+        }
+    )
+    const provinces = query.data?.data?.context.data || []
+    const provinces_org = provinces?.filter(
+        (item: any) => item.organizations_count > 0
+    ) || []
+    return {
+        query,
+        provinces,
+        provinces_org
+    }
+}
 
 export function HomeProvince() {
     const { t } = useContext(AppContext) as any;
     const dispatch = useDispatch()
-    const HOME = useSelector((state: any) => state.HOME);
-    const { provinces_org } = HOME;
+    const { provinces_org } = useDataProvinces()
+
     return (
         <>
             <div className={style.home_province}>

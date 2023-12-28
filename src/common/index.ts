@@ -29,6 +29,12 @@ export const OTHER = {
   content: 'Chuyển khoản ngân hàng',
   icon: icon.creditCard
 }
+export const CASH = {
+  id: 9,
+  name_key: 'CASH',
+  content: 'Tiền mặt',
+  icon: icon.creditCard
+}
 export const BTX = {
   id: 16,
   name_key: 'BTX',
@@ -38,5 +44,6 @@ export const BTX = {
 export const LIST_METHOD = [
   MOMO,
   PAY_ON_BTX,
-  // OTHER
+  // OTHER,
+  // CASH
 ] as IPaymentMethod[]

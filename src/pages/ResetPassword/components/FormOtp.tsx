@@ -20,7 +20,7 @@ function FormOtp(props: any) {
     } = props;
     const history = useHistory();
     const { noti, firstLoad, resultLoad, onCloseNoti } = useNoti();
-    const [sec, setSec] = useState(60);
+    const [sec, setSec] = useState(120);
     const [versionOtp, setVersionOtp] = useState<"v1" | "v2">("v1")
     useEffect(() => {
         const timeSec = setInterval(() => {

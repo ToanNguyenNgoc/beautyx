@@ -8,15 +8,28 @@ export const fetchAsyncHome: any = createAsyncThunk(
     "HOME/fetchAsyncHome",
     async () => {
         const res_banners = await bannerApi.getAll();
-        const res_provinces = await provincesApi.getAll();
-        const res_tags = await tagsApi.getAll();
+        let tags = []
+        let provinces = []
+        try {
+            tags = JSON.parse(`${localStorage.getItem('tags')}`) || []
+            provinces = JSON.parse(`${localStorage.getItem('provinces')}`) || []
+        } catch (error) {
+            tags = []
+        }
+        if (tags.length === 0 || provinces.length === 0) {
+            const res_tags = await tagsApi.getAll();
+            tags = res_tags.data.context.data
+            const res_provinces = await provincesApi.getAll();
+            localStorage.setItem('tags', JSON.stringify(res_tags.data.context.data))
+            localStorage.setItem('provinces', JSON.stringify(res_provinces.data.context.data))
+        }
         const payload = {
             banners: await res_banners.data.context.data,
-            provinces: await res_provinces.data.context.data,
-            provinces_org: await res_provinces.data.context.data.filter(
+            provinces: provinces,
+            provinces_org: provinces.filter(
                 (item: any) => item.organizations_count > 0
             ),
-            tags: await res_tags.data.context.data,
+            tags: tags,
         };
         return payload;
     }
