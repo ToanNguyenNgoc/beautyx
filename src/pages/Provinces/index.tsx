@@ -1,7 +1,7 @@
 import { Container } from "@mui/material";
 import React, { useContext, useState } from "react";
 import { useHistory } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { onChangeFilterBranch, onResetFilter } from "redux/filter-result";
 import { AppContext } from "context/AppProvider";
 import { IProvince } from "interface";
@@ -10,14 +10,14 @@ import { useDeviceMobile, useSearchKeyword } from "hooks";
 import { BackTopButton, Input, Seo, XButton } from "components/Layout";
 import icon from "constants/icon";
 import style from './list-province.module.css'
+import { useDataProvinces } from "pages/HomePage/components";
 
 function Provinces() {
     const [value, setValue] = useState('')
     const IS_MB = useDeviceMobile()
     const dispatch = useDispatch()
+    const { provinces_org } = useDataProvinces()
     const { t } = useContext(AppContext) as any;
-    const HOME = useSelector((state: any) => state.HOME);
-    const { provinces_org } = HOME;
     const history = useHistory();
     const gotoResult = (province: IProvince) => {
         history.push({
@@ -32,9 +32,9 @@ function Provinces() {
     const list = value === '' ? provinces_org : provinces
     return (
         <>
-           <Seo
-            title="Địa điểm làm đẹp"
-           />
+            <Seo
+                title="Địa điểm làm đẹp"
+            />
             {
                 IS_MB &&
                 <div className={style.head}>

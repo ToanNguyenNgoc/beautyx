@@ -20,7 +20,7 @@ function SignUps(props: any) {
     const { setActiveTabSign } = props;
     const history = useHistory()
     const { firstLoad, resultLoad, noti, onCloseNoti } = useNoti()
-    const { sec, setSec } = useCountDown(60)
+    const { sec, setSec } = useCountDown(120)
     const [show, setShow] = useState({ pass: false, confirm: false })
     const [versionOtp, setVersionOtp] = useState<"v1" | "v2">("v1")
     const [openOtp, setOpenOtp] = useState(true);

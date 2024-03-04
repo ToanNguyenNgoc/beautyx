@@ -162,11 +162,11 @@ function Head(props: IProps) {
                 <div className={style.head_top_left}>
                   <div className={style.head_top_left_icon}>
                     <Link className={style.head_top_left_home} to={{ pathname: "/" }}>
-                      <img src="https://i.imgur.com/UEUJvq2.png" alt="" className={style.head_top_left_img_hat} />
+                      {/* <img src="https://i.imgur.com/UEUJvq2.png" alt="" className={style.head_top_left_img_hat} /> */}
                       <img
                         className={style.head_top_left_img}
-                        // src={img.beautyxSlogan}
-                        src="https://i.imgur.com/CiSFnFB.png"
+                        src={img.beautyxSlogan}
+                        // src="https://i.imgur.com/CiSFnFB.png"
                         alt=""
                       />
                     </Link>
