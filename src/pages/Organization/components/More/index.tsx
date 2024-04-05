@@ -4,7 +4,7 @@ import style from './more.module.css'
 import { Container, Dialog, useMediaQuery } from '@mui/material'
 import { useSwrInfinite } from 'hooks'
 import API_ROUTE from 'api/_api'
-import { useContext } from 'react'
+import { memo, useContext } from 'react'
 import { AppContext, AppContextType, OrgContext, OrgContextType } from 'context'
 import { Category, CategoryService, Product, Service } from 'interface'
 import { SerProItem, XButton } from 'components/Layout'
@@ -14,10 +14,10 @@ import queryString from "query-string";
 import { LoadGrid } from 'components/LoadingSketion'
 import icon from 'constants/icon'
 
-export const More = () => {
+export const More = memo(() => {
   const path = ['dich-vu', 'san-pham', 'goi-dich-vu']
   const { t } = useContext(AppContext) as AppContextType
-  const { subdomain } = useContext(OrgContext) as OrgContextType
+  const { subdomain, org } = useContext(OrgContext) as OrgContextType
   const location = useLocation()
   const history = useHistory()
   const pathArr = location.pathname.split('/')
@@ -35,7 +35,7 @@ export const More = () => {
     },
   ]
   return (
-    open ?
+    (open && org?.is_momo_ecommerce_enable) ?
       <Dialog
         open={open}
         fullScreen
@@ -72,7 +72,7 @@ export const More = () => {
       :
       <></>
   )
-}
+})
 
 const ChildPage = () => {
   const RouterPage = (
