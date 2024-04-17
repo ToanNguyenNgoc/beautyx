@@ -1,9 +1,9 @@
-import { FC, useRef, useState, ChangeEvent, useEffect, useContext } from 'react';
+import { FC, useRef, useState, ChangeEvent, useEffect, useContext, memo } from 'react';
 import { useSelector } from 'react-redux';
 import style from "./style.module.css"
 import IStore from 'interface/IStore';
 import { BodyComment, IComment } from 'interface';
-import { useCheckUserBought, usePostMedia, Media } from 'hooks';
+import { useCheckUserBought, usePostMedia, Media, useSwr } from 'hooks';
 import { Link, useHistory, useLocation } from 'react-router-dom';
 import commentsApi from 'api/commentsApi';
 import { XButton, XButtonFile } from 'components/Layout';
@@ -11,9 +11,11 @@ import icon from 'constants/icon';
 import CommentParItem from './CommentParItem';
 import { Avatar, CircularProgress } from '@mui/material';
 import { useInfiniteQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { clst } from 'utils';
+import { clst, slugify } from 'utils';
 import { AppContext } from 'context';
 import { formatLinkDetail } from 'utils/formatRouterLink/formatRouter';
+import { routeType } from 'pages/_SerProCoDetail';
+import { CACHE_TIME } from 'common';
 
 export interface CommentProps {
   commentable_type: any
@@ -25,7 +27,7 @@ export interface CommentProps {
   classNameCnt?: string,
   classNameInputCnt?: string,
   all?: boolean,
-  hiddenInput?:boolean
+  hiddenInput?: boolean
 }
 export interface InitialValue {
   body?: string,
@@ -102,40 +104,40 @@ function Comment({
         {
           !hiddenInput &&
           <div className={style.input_cnt}>
-          <div className={style.input_avatar}>
-            <Avatar src={USER?.avatar} alt={USER?.fullname} />
-          </div>
-          <div className={style.input}>
-            <div className={style.input_body}>
-              <Textarea
-                onKeyDown={handlePostCmt}
-                text={value?.body} onChange={(e) => setValue(prev => { return { ...prev, body: e.target.value } })}
-              />
-              <div className={style.input_btn}>
-                <XButtonFile onChange={onChangeMedia} multiple iconSize={18} icon={icon.addFileWhite} />
-                <XButton onClick={handlePostCmt} loading={isLoading} iconSize={18} icon={icon.planPaperWhite} />
-              </div>
+            <div className={style.input_avatar}>
+              <Avatar src={USER?.avatar} alt={USER?.fullname} />
             </div>
-            <div className={style.input_image}>
-              <div className={style.media_cnt}>
-                {
-                  value?.media_ids?.map(media => (
-                    <div key={media.model_id} className={style.media}>
-                      <img src={media.original_url} alt="" />
-                      {
-                        media.model_id > 0 ?
-                          <XButton onClick={() => onRemoveMedia(media.model_id)} className={style.media_rm} icon={icon.closeCircle} iconSize={18} />
-                          :
-                          <div className={style.media_load}><CircularProgress size={32} /></div>
-                      }
+            <div className={style.input}>
+              <div className={style.input_body}>
+                <Textarea
+                  onKeyDown={handlePostCmt}
+                  text={value?.body} onChange={(e) => setValue(prev => { return { ...prev, body: e.target.value } })}
+                />
+                <div className={style.input_btn}>
+                  <XButtonFile onChange={onChangeMedia} multiple iconSize={18} icon={icon.addFileWhite} />
+                  <XButton onClick={handlePostCmt} loading={isLoading} iconSize={18} icon={icon.planPaperWhite} />
+                </div>
+              </div>
+              <div className={style.input_image}>
+                <div className={style.media_cnt}>
+                  {
+                    value?.media_ids?.map(media => (
+                      <div key={media.model_id} className={style.media}>
+                        <img src={media.original_url} alt="" />
+                        {
+                          media.model_id > 0 ?
+                            <XButton onClick={() => onRemoveMedia(media.model_id)} className={style.media_rm} icon={icon.closeCircle} iconSize={18} />
+                            :
+                            <div className={style.media_load}><CircularProgress size={32} /></div>
+                        }
 
-                    </div>
-                  ))
-                }
+                      </div>
+                    ))
+                  }
+                </div>
               </div>
             </div>
           </div>
-        </div>
         }
       </div>
       <div className={style.body}>
@@ -213,13 +215,28 @@ const Textarea: FC<TextareaProps> = ({
   );
 }
 
-export const RedirectOrigin: FC<{ comment: IComment }> = ({ comment }) => {
+export const RedirectOrigin: FC<{ comment: IComment }> = memo(({ comment }) => {
+  let path = ''
+  if (comment.commentable_type === 'App\\Models\\CI\\Service') path = 'dich-vu'
+  if (comment.commentable_type === 'App\\Models\\CI\\Product') path = 'san-pham'
+  const currentRouteType = routeType.find(i => i.path === path)
+  const { response } = useSwr({
+    API_URL: `/organizations/${comment.organization_id}/${currentRouteType?.api}/${comment.commentable_id}`,
+    enable: currentRouteType,
+    params: currentRouteType?.params ?? {},
+    dedupingInterval: CACHE_TIME
+  })
+  if(!response) return <></>
+  const name = response?.service_name || response?.name
+
   return (
-    <Link
-      to={formatLinkDetail(comment.commentable_id, Number(comment.organization_id), '', comment.commentable_type)}
-      className={style.comment_body_origin_btn} >
-      Từ dịch vụ
-      <img src={icon.arrowDown} alt="" />
-    </Link>
+    <div className={style.redirect_cnt}>
+      <span>Đánh giá cho: {name}</span>
+      <Link
+        to={formatLinkDetail(comment.commentable_id, Number(comment.organization_id), slugify(name), comment.commentable_type)}
+        className={style.comment_body_origin_btn} >
+        Đặt hẹn ngay
+      </Link>
+    </div>
   )
-}
+})

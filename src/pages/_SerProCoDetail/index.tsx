@@ -46,7 +46,7 @@ interface RouteType {
     params: any
 }
 
-const routeType: RouteType[] = [
+export const routeType: RouteType[] = [
     {
         path: 'dich-vu', type: 'SERVICE', api: 'services', params: {
             'include': 'category|favorites_count',

@@ -164,20 +164,25 @@
   justify-content: space-between;
   margin-bottom: 4px;
 }
-.comment_body_origin_btn{
-  font-size: 12px;
-  font-weight: 600;
-  color: var(--white);
-  background-color: var(--green);
+.redirect_cnt{
   display: flex;
   align-items: center;
-  padding: 2px 4px;
-  border-radius: 4px;
 }
-.comment_body_origin_btn img{
-  width: 20px;
-  height: 20px;
-  transform: rotate(-90deg);
+.redirect_cnt span {
+  font-size: 12px;
+  line-height: 1.5;
+  font-weight: 400;
+  color: #757575;
+}
+
+.comment_body_origin_btn {
+  font-size: 12px;
+  line-height: 1.5;
+  font-weight: 600;
+  margin-left: 6px;
+  color: #212121;
+  text-decoration: underline;
+  cursor: pointer;
 }
 
 .comment_body_txt {
