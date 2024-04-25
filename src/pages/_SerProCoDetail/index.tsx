@@ -38,6 +38,7 @@ import { ITrend } from 'pages/Trends/trend.interface';
 import { STALE_TIME } from 'config';
 import { ChatButton } from "../../pages/Organization/components/ChatButton";
 import { IUSER } from 'redux/profile/userSlice';
+import { hidden_orgs } from '../../constants';
 
 interface RouteType {
     path: string,
@@ -84,6 +85,16 @@ function SerProCoDetail() {
     }
     if (!params.id || !params.org) redirectPageError = true
     if (!currentRouteType) redirectPageError = true
+    const org: IOrganization = useSwr({
+        API_URL: API_ROUTE.ORG(params.org),
+        enable: params.org,
+        params: { 'filter[location]': LOCATION },
+        onSuccess: (data) => {
+            if (data?.is_momo_ecommerce_enable === false && hidden_orgs.includes(data?.subdomain)) {
+                history.replace('/error')
+            }
+        }
+    }).response
     const { response, error } = useSwr({
         API_URL: `/organizations/${params.org}/${currentRouteType?.api}/${params.id}`,
         enable: (params.id && params.org && currentRouteType),
@@ -103,11 +114,6 @@ function SerProCoDetail() {
         ...response
     }
     const PERCENT = Math.ceil(100 - DETAIL.SPECIAL_PRICE / DETAIL.PRICE * 100)
-    const org: IOrganization = useSwr({
-        API_URL: API_ROUTE.ORG(params.org),
-        enable: params.org,
-        params: { 'filter[location]': LOCATION }
-    }).response
     const discounts: IDiscountPar[] = []
     const { favoriteSt, onToggleFavorite } = useFavorite({
         id: DETAIL.id,
@@ -173,137 +179,137 @@ function SerProCoDetail() {
         <>
             {
                 response && org ?
-            <> 
-                <Seo title={DETAIL.name} imageCover={DETAIL.image_url} content={DETAIL.description} />
-                <Head />
-                <Container>
-                    <div className={style.wrapper} >
-                        <div className={style.container}>
-                            <div className={style.container_head}>
-                                <div className={style.container_head_left}>
-                                    <SliderImage detail={DETAIL} org={org} />
-                                    <div className={style.container_head_img_thumb}>
-                                        {!IS_MB && <ShareSocial url={location.pathname} />}
-                                    </div>
-                                </div>
-                                <div className={style.container_head_right}>
-                                    <div>
-                                        {
-                                            DETAIL.category &&
-                                            <div className={style.detail_cate}>
-                                                {t('pr.category')}: <span onClick={onNavigateCateList}>{DETAIL.category?.name}</span>
+                    <>
+                        <Seo title={DETAIL.name} imageCover={DETAIL.image_url} content={DETAIL.description} />
+                        <Head />
+                        <Container>
+                            <div className={style.wrapper} >
+                                <div className={style.container}>
+                                    <div className={style.container_head}>
+                                        <div className={style.container_head_left}>
+                                            <SliderImage detail={DETAIL} org={org} />
+                                            <div className={style.container_head_img_thumb}>
+                                                {!IS_MB && <ShareSocial url={location.pathname} />}
                                             </div>
-                                        }
-                                        <span className={style.detail_name}>{DETAIL.name}</span>
-                                        <div className={style.duration}>
-                                            {
-                                                DETAIL.duration > 0 &&
-                                                <div className={style.duration_item}>
-                                                    <img src={icon.clockGray} className={style.duration_item_icon} alt="" />
-                                                    <span className={style.duration_item_text}>{DETAIL.duration} phút</span>
-                                                </div>
-                                            }
                                         </div>
-                                        <div className={style.detail_buy}>
-                                            <div className={style.detail_price}>
-                                                <div className={style.detail_price_left}>
-                                                    {
-                                                        DETAIL.SPECIAL_PRICE > 0 &&
-                                                        <span className={style.price_percent}>
-                                                            -{PERCENT}%
-                                                        </span>
-                                                    }
-                                                    <div className={style.price}>
-                                                        {DETAIL.SPECIAL_PRICE > 0 && <span>{formatPrice(DETAIL.SPECIAL_PRICE)}đ</span>}
-                                                        <span>{formatPrice(DETAIL.PRICE)}đ</span>
-                                                    </div>
-                                                </div>
-                                                <div className={style.detail_price_right}>
-                                                    <XButton
-                                                        className={style.right_btn}
-                                                        icon={favoriteSt.is_favorite ? icon.heart : icon.unHeart}
-                                                        iconSize={20}
-                                                        onClick={onToggleFavorite}
-                                                    />
-                                                </div>
-                                            </div>
-                                            <div className={style.detail_rate}>
-                                                <div className={style.detail_rate_item}>
-                                                    <Rating name="read-only" value={5} readOnly />
-                                                </div>
-                                                <div className={style.detail_rate_item}>
-                                                    <span className={style.detail_rate_item_count}>{favoriteSt.favorite_count}</span>
-                                                    <img src={icon.heart} className={style.detail_rate_icon} alt="" />
-                                                </div>
+                                        <div className={style.container_head_right}>
+                                            <div>
                                                 {
-                                                    DETAIL.bought_count &&
-                                                    <div className={style.detail_rate_item}>
-                                                        <span className={style.detail_rate_item_count}>
-                                                            {DETAIL.bought_count} {t('detail_item.sold')}
-                                                        </span>
+                                                    DETAIL.category &&
+                                                    <div className={style.detail_cate}>
+                                                        {t('pr.category')}: <span onClick={onNavigateCateList}>{DETAIL.category?.name}</span>
                                                     </div>
                                                 }
+                                                <span className={style.detail_name}>{DETAIL.name}</span>
+                                                <div className={style.duration}>
+                                                    {
+                                                        DETAIL.duration > 0 &&
+                                                        <div className={style.duration_item}>
+                                                            <img src={icon.clockGray} className={style.duration_item_icon} alt="" />
+                                                            <span className={style.duration_item_text}>{DETAIL.duration} phút</span>
+                                                        </div>
+                                                    }
+                                                </div>
+                                                <div className={style.detail_buy}>
+                                                    <div className={style.detail_price}>
+                                                        <div className={style.detail_price_left}>
+                                                            {
+                                                                DETAIL.SPECIAL_PRICE > 0 &&
+                                                                <span className={style.price_percent}>
+                                                                    -{PERCENT}%
+                                                                </span>
+                                                            }
+                                                            <div className={style.price}>
+                                                                {DETAIL.SPECIAL_PRICE > 0 && <span>{formatPrice(DETAIL.SPECIAL_PRICE)}đ</span>}
+                                                                <span>{formatPrice(DETAIL.PRICE)}đ</span>
+                                                            </div>
+                                                        </div>
+                                                        <div className={style.detail_price_right}>
+                                                            <XButton
+                                                                className={style.right_btn}
+                                                                icon={favoriteSt.is_favorite ? icon.heart : icon.unHeart}
+                                                                iconSize={20}
+                                                                onClick={onToggleFavorite}
+                                                            />
+                                                        </div>
+                                                    </div>
+                                                    <div className={style.detail_rate}>
+                                                        <div className={style.detail_rate_item}>
+                                                            <Rating name="read-only" value={5} readOnly />
+                                                        </div>
+                                                        <div className={style.detail_rate_item}>
+                                                            <span className={style.detail_rate_item_count}>{favoriteSt.favorite_count}</span>
+                                                            <img src={icon.heart} className={style.detail_rate_icon} alt="" />
+                                                        </div>
+                                                        {
+                                                            DETAIL.bought_count &&
+                                                            <div className={style.detail_rate_item}>
+                                                                <span className={style.detail_rate_item_count}>
+                                                                    {DETAIL.bought_count} {t('detail_item.sold')}
+                                                                </span>
+                                                            </div>
+                                                        }
+                                                    </div>
+                                                </div>
+                                                {!IS_MB && <DetailOrgCard org={org} />}
                                             </div>
-                                        </div>
-                                        {!IS_MB && <DetailOrgCard org={org} />}
-                                    </div>
-                                    {
-                                        !IS_MB &&
-                                        <>
                                             {
-                                                onCommerce ? <DetailQuantity discounts={discounts} org={org} detail={DETAIL} />
-                                                    :
-                                                    <p className={style.detail_dis}>
-                                                        {t('pr.This product/service is not sold online yet')}
-                                                    </p>
+                                                !IS_MB &&
+                                                <>
+                                                    {
+                                                        onCommerce ? <DetailQuantity discounts={discounts} org={org} detail={DETAIL} />
+                                                            :
+                                                            <p className={style.detail_dis}>
+                                                                {t('pr.This product/service is not sold online yet')}
+                                                            </p>
+                                                    }
+                                                </>
                                             }
-                                        </>
-                                    }
+                                        </div>
+                                    </div>
                                 </div>
+                                <DetailDesc
+                                    onBookingNow={DETAIL.type === 'SERVICE' ? onBookingNow : onBuyNow}
+                                    detail={DETAIL}
+                                    org={org}
+                                    PERCENT={PERCENT}
+                                />
+                                {
+                                    IS_MB &&
+                                    <div className={style.org_card_mb}>
+                                        <DetailOrgCard org={org} />
+                                    </div>
+                                }
+                                {
+                                    DETAIL?.category && org &&
+                                    <DetailRecommend detail={DETAIL} org={org} />
+                                }
+                                <div className={style.comment_cnt}>
+                                    <Comment
+                                        org_id={org?.id}
+                                        commentable_id={DETAIL.id}
+                                        commentable_type={DETAIL.type}
+                                    />
+                                </div>
+                                {
+                                    IS_MB &&
+                                    <DetailBottom onCommerce={onCommerce} PERCENT={PERCENT} discounts={discounts} org={org} detail={DETAIL} USER={USER} />
+                                }
                             </div>
-                        </div>
-                        <DetailDesc
-                            onBookingNow={DETAIL.type === 'SERVICE' ? onBookingNow : onBuyNow}
-                            detail={DETAIL}
-                            org={org}
-                            PERCENT={PERCENT}
+                        </Container>
+                        <OpenApp
+                            type={DETAIL.type === "SERVICE" ? 'service' : 'product'}
+                            id={DETAIL.id}
+                            item_id={DETAIL.id}
+                            org_id={org?.id}
                         />
-                        {
-                            IS_MB &&
-                            <div className={style.org_card_mb}>
-                                <DetailOrgCard org={org} />
-                            </div>
-                        }
-                        {
-                            DETAIL?.category && org &&
-                            <DetailRecommend detail={DETAIL} org={org} />
-                        }
-                        <div className={style.comment_cnt}>
-                            <Comment
-                                org_id={org?.id}
-                                commentable_id={DETAIL.id}
-                                commentable_type={DETAIL.type}
-                            />
-                        </div>
-                        {
-                            IS_MB &&
-                            <DetailBottom onCommerce={onCommerce} PERCENT={PERCENT} discounts={discounts} org={org} detail={DETAIL} USER={USER} />
-                        }
-                    </div>
-                </Container>
-                <OpenApp
-                    type={DETAIL.type === "SERVICE" ? 'service' : 'product'}
-                    id={DETAIL.id}
-                    item_id={DETAIL.id}
-                    org_id={org?.id}
-                />
-                <BackTopButton />
-                {USER &&  !IS_MB && <ChatButton org={org} />}
-            </>
-            :
-            <LoadDetail />
+                        <BackTopButton />
+                        {USER && !IS_MB && <ChatButton org={org} />}
+                    </>
+                    :
+                    <LoadDetail />
             }
-            
+
         </>
     );
 }

@@ -25,3 +25,5 @@ export const LIST_METHOD = [
   PAYON_METHOD,
   OTHER_METHOD
 ] as Array<{ name_key: string, content: string, icon: string }>
+
+export const hidden_orgs = ['nganthang', 'musa']

@@ -93,7 +93,7 @@
         "dev:build-server": "NODE_ENV=development webpack --config webpack.server.js --mode=development -w",
         "dev": "PORT=4200 react-scripts start",
         "ssr": "node server/index.js",
-        "clean":"rm -rf node_modules && rm -rf package-lock.json"
+        "clean":"rm -rf node_modules && rm -rf package-lock.json && rm -rf yarn.lock"
     },
     "eslintConfig": {
         "extends": [
