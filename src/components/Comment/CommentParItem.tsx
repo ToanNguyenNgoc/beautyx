@@ -6,7 +6,7 @@ import { BodyComment, IComment, ICommentChild } from 'interface';
 import IStore from 'interface/IStore';
 import { useContext, useState } from 'react';
 import { useSelector } from 'react-redux';
-import {  useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { clst, formatDateFromNow } from 'utils';
 import { InitialValue, RedirectOrigin } from 'components/Comment';
 import style from "./style.module.css"
@@ -21,7 +21,7 @@ interface CommentParItemProps {
   bought?: boolean,
   mixed?: boolean,
   layout?: 'column' | 'row',
-  all?:boolean
+  all?: boolean
 }
 
 function CommentParItem(props: CommentParItemProps) {
@@ -85,12 +85,12 @@ function CommentParItem(props: CommentParItemProps) {
         <div className={style.comment_body_start_origin_cnt}>
           {
             // (comment.rate && body?.includes("‭")) ? <RenderStar point={comment.rate.point} /> : <div></div>
-            comment.rate ? <RenderStar point={comment.rate.point} />: <div></div>
+            comment.rate ? <RenderStar point={comment.rate.point} /> : <div></div>
           }
           {all && <RedirectOrigin comment={comment} />}
         </div>
         {
-          (body || comment.media_url.length > 0) &&
+          (body?.replace('‭', '') !== '' || comment.media_url.length > 0) &&
           <div className={style.comment_body_txt}>
             {body}
             <div className={style.comment_body_media_list}>
@@ -112,7 +112,7 @@ function CommentParItem(props: CommentParItemProps) {
           ])}
         >
           <Accordion
-            defaultExpanded
+            defaultExpanded={comment.children.length > 0}
           >
             {replyBtnDis && (
               <AccordionSummary

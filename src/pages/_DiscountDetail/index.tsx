@@ -181,6 +181,12 @@ function DiscountDetail() {
                 commentable_id={DETAIL.id}
                 commentable_type={DETAIL.type}
               />
+              <Comment
+                org_id={org?.id}
+                commentable_id={org?.id}
+                commentable_type="ORGANIZATION"
+                hiddenInput
+              />
             </div>
             {
               IS_MB &&
