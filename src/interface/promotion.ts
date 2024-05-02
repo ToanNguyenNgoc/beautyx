@@ -1,5 +1,6 @@
 import { IDiscountPar } from "interface/discount";
 import { Media, Productable } from "interface/productable";
+import { IOrganization } from "./organization";
 
 export interface Promotion {
   id: number,
@@ -14,5 +15,5 @@ export interface Promotion {
   created_at: string,
   updated_at: string,
   discounts: IDiscountPar[],
-  productables: Array<{id:number, productable: Productable }>
+  productables: Array<{ id: number, productable: Productable, organization?: IOrganization }>
 }
