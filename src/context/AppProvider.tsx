@@ -23,6 +23,7 @@ export type AppContextType = {
     appointment_today: any,
     orderService: any,
     order_app: any,
+    order_not_review: any,
     echo: Echo | null,
     orderPopupType: "review" | "detail" | undefined
     setOrderPopupType: Dispatch<SetStateAction<"review" | "detail" | undefined>>
@@ -79,7 +80,7 @@ export default function AppProvider({ children }: { children: any }) {
     }, [])
     const serviceCate: any[] = []
     const { appointment, appointment_today } = useAppointment()
-    const { orders: orderService, order_app } = useGetOrderCount()
+    const { orders: orderService, order_app, order_not_review } = useGetOrderCount()
     const value = {
         t,
         language,
@@ -90,6 +91,7 @@ export default function AppProvider({ children }: { children: any }) {
         appointment_today,
         orderService,
         order_app,
+        order_not_review,
         echo,
         orderPopupType,
         setOrderPopupType

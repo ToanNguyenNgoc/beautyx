@@ -20,10 +20,18 @@ export function useGetOrderCount() {
   })
   const orders = result.data?.data || []
   //**Count order is not appointment */
-  const order_app = useMemo(() => {
-    return orders?.filter(
+  const { order_app, order_not_review } = useMemo(() => {
+    const app = orders?.filter(
       (a: any) => (a?.appointments?.length === 0 && checkTimeExpired(a?.items))
     );
+    const not_review = orders?.filter(
+      (a: any) => (a?.is_review === 0)
+    );
+    return {
+      order_app: app,
+      order_not_review: not_review
+    }
   }, [orders])
-  return Object.assign(result, { orders, order_app })
+
+  return Object.assign(result, { orders, order_app, order_not_review })
 }

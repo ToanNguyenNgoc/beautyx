@@ -1,6 +1,6 @@
 import icon from 'constants/icon';
 import { ICON } from 'constants/icon2';
-import { AppContext } from 'context/AppProvider';
+import { AppContext, AppContextType } from 'context/AppProvider';
 import { useDeviceMobile } from 'hooks';
 import { AppointmentNoti } from 'interface/appointment';
 import IStore from 'interface/IStore';
@@ -13,7 +13,7 @@ import style from './head.module.css'
 
 function HeadNoti({ changeStyle }: { changeStyle?: boolean }) {
     const refNoti = useRef<HTMLDivElement>();
-    const { appointment_today, order_app } = useContext(AppContext) as any;
+    const { appointment_today, order_app, order_not_review } = useContext(AppContext) as AppContextType;
     const IS_MB = useDeviceMobile()
     const onToggleNoti = (dis: "show" | "hide") => {
         if (IS_MB) {
@@ -27,7 +27,10 @@ function HeadNoti({ changeStyle }: { changeStyle?: boolean }) {
     };
     // window.onclick = () => onToggleNoti('hide')
     //
-    const notiCount = appointment_today.concat(order_app).length;
+    const notiCount = appointment_today
+        .concat(order_app)
+        .concat(order_not_review)
+        .length;
     return (
         <button
             onClick={() => onToggleNoti('show')}
@@ -69,11 +72,11 @@ interface HeadNotificationProps {
 }
 
 const HeadNotification = (props: HeadNotificationProps) => {
-    const { t } = useContext(AppContext) as any
+    const { t, order_not_review } = useContext(AppContext) as AppContextType
     const { refNoti, appointment_today, order_app } = props;
     const { USER } = useSelector((state: IStore) => state.USER);
     const history = useHistory();
-    const noti = appointment_today.length + order_app.length;
+    const noti = appointment_today.length + order_app.length + order_not_review.length;
     const notiList = [
         {
             id: 1,
@@ -90,6 +93,14 @@ const HeadNotification = (props: HeadNotificationProps) => {
             url: "/lich-hen?tab=2",
             icon: icon.servicesPurpleBold,
             type: "SER",
+        },
+        {
+            id: 3,
+            count: order_not_review.length,
+            title: `${USER?.fullname} ơi ! Đánh giá những dịch vụ đã mua để nhận điểm thưởng nhé !`,
+            url: "/tai-khoan/lich-su-mua",
+            icon: icon.coins,
+            type: "REVIEW",
         },
     ];
     return (
