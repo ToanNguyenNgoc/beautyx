@@ -26,7 +26,7 @@ export function useSwrInfinite(options: SWRInOptions) {
 
         }
     }
-    const { data, isValidating, size, setSize, mutate, error } = useSWRInfinite(
+    const { data, isValidating, size, setSize, mutate, revalidate } = useSWRInfinite(
         (index) => enable && `${API_URL}?${keyPage}=${index + 1}${paramsURL}`,
         {
             ...newOptions, onSuccess(data, key, config) {
@@ -37,11 +37,6 @@ export function useSwrInfinite(options: SWRInOptions) {
             },
         }
     );
-    useEffect(() => {
-        if (error) {
-            Sentry.captureException(error)
-        }
-    }, [error])
     let resData: any[] = [];
     let originData: any[] = []
     let totalItem = 1;
@@ -59,6 +54,7 @@ export function useSwrInfinite(options: SWRInOptions) {
         isValidating,
         onLoadMore,
         originData,
-        mutate
+        mutate,
+        revalidate
     }
 }

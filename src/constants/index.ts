@@ -5,6 +5,7 @@ export const mailSupport = "support@beautyx.vn";
 export const phoneSupport = "0343131003";
 export const phoneHotline = "0899310908";
 export const ABOUT_PARTNER_LINK = 'https://myspa.vn/mo-gian-hang-tren-beautyx'
+export const BTX_POINT_RATIO = 100
 export const MOMO_METHOD = {
   name_key: "MOMO",
   content: 'Thanh toán qua ví MOMO',

@@ -25,7 +25,7 @@
 }
 
 .order_load_cnt {
-  width: calc(50% - 6px) !important;
+  width: 100% !important;
   height: 208px;
   margin-bottom: 12px;
   border-radius: 8px;

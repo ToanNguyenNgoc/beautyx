@@ -595,7 +595,8 @@
         "not_sale": "This product has not been activated for online sales",
         "see_more": "See more",
         "shelf_life": "Shelf life: 1 month from the date of successful purchase",
-        "detailed_description": "Detailed description"
+        "detailed_description": "Detailed description",
+        "reviewed":"Reviewed"
     },
     "footer": {
         "voucher_in_app": "Get beauty voucher right on the app",

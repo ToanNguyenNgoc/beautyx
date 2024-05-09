@@ -1,12 +1,11 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useContext, useState } from "react";
-import TabOrderCancel from "./components/TabOrderCancel";
-import TabOrderPaid from "./components/TabOrderPaid";
 import { Tab } from "@mui/material";
 import { TabContext, TabList, TabPanel } from "@mui/lab";
 import { HeadTitle } from "pages/Account";
 import { AppContext } from "context/AppProvider";
 import "./order.css";
+import { TabOrderCancel, TabOrderPaid } from "./components";
 
 function Orders() {
   const { t } = useContext(AppContext) as any;

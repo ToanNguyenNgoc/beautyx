@@ -47,6 +47,7 @@ export interface IComment {
     user: User,
     children: ICommentChild[],
     media_url: string[],
+    is_order:1|0
 }
 export interface BodyComment {
     commentable_type: string;

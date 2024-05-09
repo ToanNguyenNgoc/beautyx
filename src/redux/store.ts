@@ -9,6 +9,7 @@ import cateTree from "./cates-tree";
 import orgMapReducer from "./org/orgMapSlice";
 import filterResultReduce from "./filter-result";
 import communityReducer from './community'
+import OrderHasReviewReducer from './order-has-review/OrderHasReviewSlice'
 // react toolkit query
 import { homeApi } from "redux-toolkit-query/hook-home";
 import { serProComDetailApi } from "redux-toolkit-query/hook-detail";
@@ -26,6 +27,7 @@ const rootReducer = {
     ORGS_MAP: orgMapReducer,
     FILTER_RESULT: filterResultReduce,
     COMMUNITY: communityReducer,
+    ORDER_HAS_REVIEW: OrderHasReviewReducer,
 
     [homeApi.reducerPath]: homeApi.reducer,
     [serProComDetailApi.reducerPath]: serProComDetailApi.reducer,

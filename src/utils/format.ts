@@ -8,6 +8,15 @@ export const formatDateFromNow = (date: string) => {
     dayjs.extend(relativeTime);
     return dayjs(date).locale(locale.name).fromNow();
 };
+export const formatTimeComment = (date: string) => {
+    let timeFormat = formatDateFromNow(date)
+    const now = new Date().getTime()
+    const time = new Date(date).getTime()
+    if (((now - time) / (1000 * 60 * 60 * 24 * 30)) > 1) {
+        timeFormat = dayjs(date).format('DD/MM/YY')
+    }
+    return timeFormat
+}
 export const formatDateRevArr = (dateParams: any) => {
     const dateArr = dateParams?.split(" ");
     const date = dateArr[0]?.split("-");

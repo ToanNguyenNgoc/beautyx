@@ -2,66 +2,70 @@
 import { XButton } from "components/Layout";
 import { AppContext } from "context/AppProvider";
 import { IOrderV2 } from "interface/orderv2";
-import React, { useContext } from "react";
+import React, { FC, memo, useContext } from "react";
 import OrderItem from "./OrderItem";
 import { EmptyRes } from "components/Layout";
 import Skeleton from "react-loading-skeleton";
-import { Masonry } from "@mui/lab";
-import { useDeviceMobile, useOrderService } from "hooks";
+import { useGetOrder } from "hooks";
 import style from '../order.module.css'
+import { useDispatch } from "react-redux";
+import { onSetOrderHasReview } from "redux/order-has-review/OrderHasReviewSlice";
 
-function TabOrderPaid() {
-    const { t } = useContext(AppContext) as any
-    const IS_MB = useDeviceMobile()
-    const { resData, totalItem, onLoadMore, isValidating } = useOrderService()
-    const orders: IOrderV2[] = resData ?? []
+export const TabOrderPaid: FC = memo(() => {
+  const { t } = useContext(AppContext) as any
+  const dispatch = useDispatch()
+  const { orders, totalItem, fetchNextPage, loading, allowNextPage, isFetchingNextPage } = useGetOrder({
+    "filter[status]": 'PAID',
+  }, {
+    onSuccess: (data: any) => {
+      const dataOrders: IOrderV2[] = data?.pages?.map((i: any) => i.data)?.flat() || []
+      dispatch(onSetOrderHasReview(dataOrders?.filter(i => i.is_review === 1).map(i => i.id)))
+    }
+  })
 
-    return (
-        <div className={style.order_container} >
-            {totalItem === 0 && <EmptyRes title='Bạn chưa có đơn hàng nào' />}
-            {orders.length === 0 && isValidating && <OrderSkelton />}
-            <Masonry
-                columns={IS_MB ? 1 : 2}
-                spacing={IS_MB ? 0 : 1}
-            >
-                {orders.map((order: IOrderV2, index: number) => (
-                    <OrderItem key={index} order={order} />
-                ))}
-            </Masonry>
-            <div className="order-list__bottom">
-                {orders.length < totalItem && (
-                    <XButton
-                        title={t("trending.watch_all")}
-                        loading={isValidating}
-                        onClick={onLoadMore}
-                    />
-                )}
-            </div>
-        </div>
-    );
-}
-
-export default TabOrderPaid;
+  return (
+    <div className={style.order_container} >
+      {totalItem === 0 && <EmptyRes title='Bạn chưa có đơn hàng nào' />}
+      {loading && <OrderSkelton />}
+      <ul>
+        {orders.map((order: IOrderV2, index: number) => (
+          <li key={order.id} style={{ margin: '6px 0px' }}>
+            <OrderItem key={index} order={order} />
+          </li>
+        ))}
+      </ul>
+      <div className="order-list__bottom">
+        {allowNextPage && (
+          <XButton
+            title={t("trending.watch_all")}
+            loading={isFetchingNextPage}
+            onClick={() => fetchNextPage()}
+          />
+        )}
+      </div>
+    </div>
+  );
+})
 
 export const OrderSkelton = () => {
-    const count = [1, 2, 3, 4, 5, 6]
-    return (
-        <ul className="order-list__cnt order-load__cnt">
-            {
-                count.map(item => (
-                    <li key={item} className="order_load_cnt">
-                        <div className="order_load_cnt_head">
-                            <Skeleton width={'100%'} height={'100%'} />
-                        </div>
-                        <div className="order_load_cnt_body">
-                            <Skeleton width={'100%'} height={'100%'} />
-                        </div>
-                        <div className="order_load_cnt_bot">
-                            <Skeleton width={'100%'} height={'100%'} />
-                        </div>
-                    </li>
-                ))
-            }
-        </ul>
-    )
+  const count = [1, 2, 3, 4, 5, 6]
+  return (
+    <ul className="order-list__cnt order-load__cnt">
+      {
+        count.map(item => (
+          <li key={item} className="order_load_cnt">
+            <div className="order_load_cnt_head">
+              <Skeleton width={'100%'} height={'100%'} />
+            </div>
+            <div className="order_load_cnt_body">
+              <Skeleton width={'100%'} height={'100%'} />
+            </div>
+            <div className="order_load_cnt_bot">
+              <Skeleton width={'100%'} height={'100%'} />
+            </div>
+          </li>
+        ))
+      }
+    </ul>
+  )
 }
