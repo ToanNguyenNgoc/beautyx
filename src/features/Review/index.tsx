@@ -1,6 +1,6 @@
 import { ChangeEvent, useState } from "react";
 import { Dialog } from "@mui/material";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { onErrorImg } from "utils";
 import icon from "constants/icon";
 import HeadMobile from "features/HeadMobile";
@@ -8,7 +8,7 @@ import { XButton } from "components/Layout";
 import { useComment, useDeviceMobile, useNoti, usePostMedia } from "hooks";
 import { IOrganization, ItemReviewed } from "interface";
 import style from './review.module.css'
-import { PopupSnack, PopupBtxReward } from "components/Notification";
+import { PopupBtxReward } from "components/Notification";
 import Skeleton from "react-loading-skeleton";
 import { onUserUpdatePoint } from "redux/profile/userSlice";
 import { onUpdateOrderReviewed } from "redux/order-has-review/OrderHasReviewSlice";
@@ -49,7 +49,6 @@ function Review(props: ReviewProps) {
   const { open, onClose = () => { }, itemsReviews, org, order_id, point } = props;
   const IS_MB = useDeviceMobile();
   const { handlePostMedia } = usePostMedia()
-  const { USER } = useSelector((state: any) => state.USER);
   const { resultLoad, noti, onCloseNoti } = useNoti()
   const [comment, setComment] = useState(initComment)
   const onRateStar = (id: number) => {
@@ -85,8 +84,6 @@ function Review(props: ReviewProps) {
   const { postComment, loadPost } = useComment()
   const dispatch = useDispatch()
   const onSubmitComment = () => {
-    // dispatch(onUpdateOrderReviewed(order_id))
-    // dispatch(onUserUpdatePoint(10000000))
     // onClose()
     // return
     const body = {
@@ -100,7 +97,7 @@ function Review(props: ReviewProps) {
     postComment({
       body,
       onSuccess: () => {
-        // resultLoad(`Cảm ơn "${USER?.fullname}" đã đánh giá dịch vụ`);
+        resultLoad(``);
         setComment(initComment)
         dispatch(onUpdateOrderReviewed(order_id))
         if (point) dispatch(onUserUpdatePoint(point))
@@ -111,125 +108,118 @@ function Review(props: ReviewProps) {
     })
   };
   return (
-      <>
+    <>
       <Dialog
         fullScreen={IS_MB}
         open={open}
         onClose={onClose}
       >
-              {IS_MB && open && (
+        {IS_MB && open && (
           <HeadMobile
             onBack={onClose}
             title="Đánh giá"
           />
-              )}
-              <div className={style.container}>
-                  <div className={style.body}>
-                      <p className={style.org_name}>{org?.name}</p>
-                      <ul className={style.list}>
+        )}
+        <div className={style.container}>
+          <div className={style.body}>
+            <p className={style.org_name}>{org?.name}</p>
+            <ul className={style.list}>
               {
                 itemsReviews.map((item: ItemReviewed, index: number) => ((
-                                  <li key={index} className={style.item}>
-                                      <div className={style.item_img}>
-                                          <img
+                  <li key={index} className={style.item}>
+                    <div className={style.item_img}>
+                      <img
                         src={item.image_url ?? org?.image_url}
                         onError={(e) => onErrorImg(e)} alt=""
-                                          />
-                                      </div>
+                      />
+                    </div>
                     <div className={style.item_name}>{item.name}</div>
-                                  </li>
+                  </li>
                 )))
               }
-                      </ul>
-                      <div className={style.rate_star}>
-                          <p className={style.title}>
-                              Bạn cảm thấy dịch vụ thế nào ?
-                          </p>
-                          <ul className={style.rate_star_list}>
+            </ul>
+            <div className={style.rate_star}>
+              <p className={style.title}>
+                Bạn cảm thấy dịch vụ thế nào ?
+              </p>
+              <ul className={style.rate_star_list}>
                 {
                   rateStars.map(i => (
-                                  <li
-                                      onClick={() => onRateStar(i.id)}
+                    <li
+                      onClick={() => onRateStar(i.id)}
                       key={i.id} className={style.star_item}
-                                  >
-                                      <img
+                    >
+                      <img
                         src={i.id <= comment.rate ? i.icon : i.iconActive}
                         className={style.star_icon} alt=""
-                                      />
+                      />
                       <p className={style.star_item_label}>{i.title}</p>
-                                  </li>
+                    </li>
                   ))
                 }
-                          </ul>
-                      </div>
-                      <textarea
-                          placeholder="Vui lòng để lại đánh giá của bạn ..."
-                          value={comment.body}
-                          onChange={(e) => handleOnchangeText(e)}
-                          className={style.text_area}
-                      />
-                      <div className={style.body_media}>
-                          <div className={style.body_media_head}>
+              </ul>
+            </div>
+            <textarea
+              placeholder="Vui lòng để lại đánh giá của bạn ..."
+              value={comment.body}
+              onChange={(e) => handleOnchangeText(e)}
+              className={style.text_area}
+            />
+            <div className={style.body_media}>
+              <div className={style.body_media_head}>
                 <label className={style.body_media_btn} htmlFor="media">
-                                  <img src={icon.addImg} alt="" />
-                                  Hình ảnh
-                              </label>
-                              <input
-                                  onChange={handleOnchangeMedia}
+                  <img src={icon.addImg} alt="" />
+                  Hình ảnh
+                </label>
+                <input
+                  onChange={handleOnchangeMedia}
                   id='media' multiple
-                                  hidden
+                  hidden
                   accept="image/png, image/jpeg, image/jpg" type="file"
-                              />
-                          </div>
-                          <div className={style.media_img_cnt}>
-                              <ul className={style.list_img}>
+                />
+              </div>
+              <div className={style.media_img_cnt}>
+                <ul className={style.list_img}>
                   {
                     comment.media_ids.map((item: media_ids) => (
                       <li key={item.model_id} className={style.list_img_item}>
-                                          <div className={style.img_cnt}>
+                        <div className={style.img_cnt}>
                           {
                             item.original_url === '' ?
                               <Skeleton className={style.skelton} />
                               :
-                                                  <>
-                                                      <XButton
+                              <>
+                                <XButton
                                   className={style.img_cnt_remove}
                                   icon={icon.closeCircle}
                                   onClick={() => onRemoveImg(item.model_id)}
-                                                      />
-                                                      <img
+                                />
+                                <img
                                   src={item.original_url}
                                   className={style.img_item_temp} alt=""
-                                                      />
-                                                  </>
+                                />
+                              </>
                           }
-                                          </div>
-                                      </li>
+                        </div>
+                      </li>
                     ))
                   }
-                              </ul>
-                          </div>
-                      </div>
-                  </div>
-                  <div className={style.bottom}>
-                      <XButton
-                          title="Gửi đánh giá"
-                          loading={loadPost}
-                          onClick={onSubmitComment}
-                          className={style.bottom_btn}
-                      />
-                  </div>
+                </ul>
               </div>
-              {/* <PopupSnack
-                  open={noti.openAlert}
-                  onClose={onCloseNoti}
-                  title={noti.message}
-              /> */}
-              {point && (
-                  <PopupBtxReward open={noti.openAlert} onClose={onCloseNoti} btxPoint={point} />
-              )}
-          </Dialog>
-      </>
+            </div>
+          </div>
+          <div className={style.bottom}>
+            <XButton
+              title="Gửi đánh giá"
+              loading={loadPost}
+              onClick={onSubmitComment}
+              className={style.bottom_btn}
+            />
+          </div>
+        </div>
+        <PopupBtxReward open={noti.openAlert} onClose={onCloseNoti} btxPoint={Number(point)} />
+      </Dialog>
+    </>
   );
 }
 
