@@ -4,7 +4,7 @@ import { Promotion } from "interface";
 import Lottie from "lottie-react";
 import { FC, useState } from "react";
 import { createPortal } from "react-dom";
-import animationData from "assets/heart.json";
+import animationData from "assets/Confetti.json";
 import { Link } from "react-router-dom";
 import { slugify } from "utils";
 import style from "./style.module.css"

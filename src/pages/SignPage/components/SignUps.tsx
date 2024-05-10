@@ -103,6 +103,7 @@ function SignUps(props: any) {
         },
         validationSchema: Yup.object({
             name: Yup.string()
+                .trim()
                 .min(2, "Tên lớn hơn 2 ký tự")
                 .required("Vui lòng nhập họ và tên")
                 .matches(
@@ -111,6 +112,7 @@ function SignUps(props: any) {
                 ),
             sex: Yup.string().required("Vui lòng chọn giới tính"),
             email: Yup.string()
+                .trim()
                 .required("Vui lòng nhập Email hoặc Số điện thoại")
                 .matches(
                     // eslint-disable-next-line no-useless-escape
@@ -118,15 +120,18 @@ function SignUps(props: any) {
                     "Vui lòng nhập đúng định dạng Email"
                 ),
             code: Yup.string()
+                .trim()
                 .required("Vui lòng nhập mã xác thực")
                 .matches(/^[0-9]+$/, "Mã xác thực không hợp lệ")
                 .min(4, 'Mã xác thực gồm 6 ký tự')
                 .max(6, 'Mã xác thực gồm 6 ký tự'),
             password: Yup.string()
+                .trim()
                 .min(8, "Mật khẩu lớn hơn 8 ký tự")
                 .max(32, "Mật khẩu tối đa 32 kí tự")
                 .required("Vui lòng nhập mật khẩu"),
             confirm_password: Yup.string()
+                .trim()
                 .required("Vui lòng xác nhận lại mật khẩu")
                 .oneOf([Yup.ref("password"), null], "Mật khẩu không khớp"),
             agree: Yup.boolean().oneOf(
