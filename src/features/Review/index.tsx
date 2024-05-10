@@ -112,59 +112,54 @@ function Review(props: ReviewProps) {
   };
   return (
       <>
-          <Dialog fullScreen={IS_MB} open={open} onClose={onClose}>
+      <Dialog
+        fullScreen={IS_MB}
+        open={open}
+        onClose={onClose}
+      >
               {IS_MB && open && (
-                  <HeadMobile onBack={onClose} title="Đánh giá" />
+          <HeadMobile
+            onBack={onClose}
+            title="Đánh giá"
+          />
               )}
               <div className={style.container}>
                   <div className={style.body}>
                       <p className={style.org_name}>{org?.name}</p>
                       <ul className={style.list}>
-                          {itemsReviews.map(
-                              (item: ItemReviewed, index: number) => (
+              {
+                itemsReviews.map((item: ItemReviewed, index: number) => ((
                                   <li key={index} className={style.item}>
                                       <div className={style.item_img}>
                                           <img
-                                              src={
-                                                  item.image_url ??
-                                                  org?.image_url
-                                              }
-                                              onError={(e) => onErrorImg(e)}
-                                              alt=""
+                        src={item.image_url ?? org?.image_url}
+                        onError={(e) => onErrorImg(e)} alt=""
                                           />
                                       </div>
-                                      <div className={style.item_name}>
-                                          {item.name}
-                                      </div>
+                    <div className={style.item_name}>{item.name}</div>
                                   </li>
-                              )
-                          )}
+                )))
+              }
                       </ul>
                       <div className={style.rate_star}>
                           <p className={style.title}>
                               Bạn cảm thấy dịch vụ thế nào ?
                           </p>
                           <ul className={style.rate_star_list}>
-                              {rateStars.map((i) => (
+                {
+                  rateStars.map(i => (
                                   <li
                                       onClick={() => onRateStar(i.id)}
-                                      key={i.id}
-                                      className={style.star_item}
+                      key={i.id} className={style.star_item}
                                   >
                                       <img
-                                          src={
-                                              i.id <= comment.rate
-                                                  ? i.icon
-                                                  : i.iconActive
-                                          }
-                                          className={style.star_icon}
-                                          alt=""
+                        src={i.id <= comment.rate ? i.icon : i.iconActive}
+                        className={style.star_icon} alt=""
                                       />
-                                      <p className={style.star_item_label}>
-                                          {i.title}
-                                      </p>
+                      <p className={style.star_item_label}>{i.title}</p>
                                   </li>
-                              ))}
+                  ))
+                }
                           </ul>
                       </div>
                       <textarea
@@ -175,63 +170,43 @@ function Review(props: ReviewProps) {
                       />
                       <div className={style.body_media}>
                           <div className={style.body_media_head}>
-                              <label
-                                  className={style.body_media_btn}
-                                  htmlFor="media"
-                              >
+                <label className={style.body_media_btn} htmlFor="media">
                                   <img src={icon.addImg} alt="" />
                                   Hình ảnh
                               </label>
                               <input
                                   onChange={handleOnchangeMedia}
-                                  id="media"
-                                  multiple
+                  id='media' multiple
                                   hidden
-                                  accept="image/png, image/jpeg, image/jpg"
-                                  type="file"
+                  accept="image/png, image/jpeg, image/jpg" type="file"
                               />
                           </div>
                           <div className={style.media_img_cnt}>
                               <ul className={style.list_img}>
-                                  {comment.media_ids.map((item: media_ids) => (
-                                      <li
-                                          key={item.model_id}
-                                          className={style.list_img_item}
-                                      >
+                  {
+                    comment.media_ids.map((item: media_ids) => (
+                      <li key={item.model_id} className={style.list_img_item}>
                                           <div className={style.img_cnt}>
-                                              {item.original_url === "" ? (
-                                                  <Skeleton
-                                                      className={style.skelton}
-                                                  />
-                                              ) : (
+                          {
+                            item.original_url === '' ?
+                              <Skeleton className={style.skelton} />
+                              :
                                                   <>
                                                       <XButton
-                                                          className={
-                                                              style.img_cnt_remove
-                                                          }
-                                                          icon={
-                                                              icon.closeCircle
-                                                          }
-                                                          onClick={() =>
-                                                              onRemoveImg(
-                                                                  item.model_id
-                                                              )
-                                                          }
+                                  className={style.img_cnt_remove}
+                                  icon={icon.closeCircle}
+                                  onClick={() => onRemoveImg(item.model_id)}
                                                       />
                                                       <img
-                                                          src={
-                                                              item.original_url
-                                                          }
-                                                          className={
-                                                              style.img_item_temp
-                                                          }
-                                                          alt=""
+                                  src={item.original_url}
+                                  className={style.img_item_temp} alt=""
                                                       />
                                                   </>
-                                              )}
+                          }
                                           </div>
                                       </li>
-                                  ))}
+                    ))
+                  }
                               </ul>
                           </div>
                       </div>
