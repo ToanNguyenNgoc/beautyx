@@ -148,7 +148,7 @@ export const Banner = () => {
                   ref={refTime}
                   className={style.time_list_cnt}
                 >
-                  {orgTimes.map((i) => (
+                  {orgTimes?.map((i) => (
                     <li
                       style={i.todayAct ? { color: "var(--pr-green)" } : {}}
                       key={i.day_week}
