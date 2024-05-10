@@ -8,7 +8,7 @@ export const ABOUT_PARTNER_LINK = 'https://myspa.vn/mo-gian-hang-tren-beautyx'
 export const BTX_POINT_RATIO = 100
 export const MOMO_METHOD = {
   name_key: "MOMO",
-  content: 'Thanh toán qua ví MOMO',
+  content: 'Thanh toán qua ví MOMO hoặc app ngân hàng',
   icon: icon.momo,
 }
 export const PAYON_METHOD = {
