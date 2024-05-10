@@ -590,7 +590,8 @@
         "not_sale": "Sản phẩm này chưa được kích hoạt bán hàng Online",
         "see_more": "Xem thêm",
         "shelf_life": "Thời hạn sử dụng: 1 tháng kể từ ngày mua hàng thành công",
-        "detailed_description": "Mô tả chi tiết"
+        "detailed_description": "Mô tả chi tiết",
+        "reviewed":"Đã đánh giá"
     },
     "footer": {
         "voucher_in_app": "Nhận voucher làm đẹp ngay trên ứng dụng",

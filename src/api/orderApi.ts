@@ -1,7 +1,11 @@
-import {axiosClient} from "config";
+import { axiosClient } from "config";
 import { pickBy, identity } from 'lodash'
+import { ParamOrder } from "params-query/param.interface";
 
 class Order {
+      getOrder = (params: ParamOrder) => {
+            return axiosClient.get('/orders', { params }).then(res => res.data.context)
+      }
       getOrderById = (order_id: number) => {
             const params = {
                   'include': 'btxReward',

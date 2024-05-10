@@ -1,58 +1,39 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { Masonry } from '@mui/lab';
-import API_ROUTE from 'api/_api';
 import { EmptyRes, XButton } from 'components/Layout';
-import { useDeviceMobile } from 'hooks';
-import IStore from 'interface/IStore';
+import { useGetOrder } from 'hooks';
 import { IOrderV2 } from 'interface/orderv2';
-import { paramOrder } from 'params-query';
-import React from 'react';
-import { useSelector } from 'react-redux';
-import { useSwrInfinite } from 'hooks';
+import React, { FC, memo, useContext } from 'react';
 import OrderItem from './OrderItem';
 import { OrderSkelton } from './TabOrderPaid';
 import style from '../order.module.css'
-import { EXTRA_FLAT_FORM } from 'api/extraFlatForm';
+import { AppContext } from 'context';
 
 
-function TabOrderCancel() {
-    const PLAT_FORM = EXTRA_FLAT_FORM()
-    const { USER } = useSelector((state: IStore) => state.USER)
-    const { resData, totalItem, onLoadMore, isValidating } = useSwrInfinite({
-        enable: USER,
-        API_URL: API_ROUTE.ORDERS,
-        params: {
-            ...paramOrder,
-            "filter[platform]": PLAT_FORM === 'BEAUTYX' ? 'BEAUTYX|BEAUTYX MOBILE|WEB' : PLAT_FORM,
-        },
-        dedupingInterval: 0
+export const TabOrderCancel: FC = memo(() => {
+    const { t } = useContext(AppContext) as any
+    const { orders, totalItem, loading, allowNextPage, fetchNextPage, isFetchingNextPage } = useGetOrder({
+        'filter[status]': ''
     })
-    const orders: IOrderV2[] = resData ?? []
-    const IS_MB = useDeviceMobile()
     return (
         <div className={style.order_container} >
             {totalItem === 0 && <EmptyRes title='Bạn chưa có đơn hàng nào' />}
-            {orders.length === 0 && isValidating && <OrderSkelton />}
-            <Masonry
-                columns={IS_MB ? 1 : 2}
-                spacing={IS_MB ? 0 : 1}
-            >
+            {loading && <OrderSkelton />}
+            <ul>
                 {orders.map((order: IOrderV2, index: number) => (
-                    <OrderItem key={index} order={order} />
+                    <li key={order.id} style={{ margin: '6px 0px' }}>
+                        <OrderItem key={index} order={order} />
+                    </li>
                 ))}
-            </Masonry>
+            </ul>
             <div className="order-list__bottom">
-                {
-                    orders.length < totalItem &&
+                {allowNextPage && (
                     <XButton
-                        title='Xem thêm'
-                        loading={isValidating}
-                        onClick={onLoadMore}
+                        title={t("trending.watch_all")}
+                        loading={isFetchingNextPage}
+                        onClick={() => fetchNextPage()}
                     />
-                }
+                )}
             </div>
         </div>
     );
-}
-
-export default TabOrderCancel;
+})

@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react';
+import React, { CSSProperties, ReactNode } from 'react';
 import { CircularProgress } from '@mui/material';
 import './style.css';
 
@@ -9,7 +9,7 @@ interface IProps {
     onClick?: (e?: any) => void,
     type?: "button" | "submit",
     className?: string,
-    style?: any
+    style?: CSSProperties
     icon?: string,
     iconSize?: number,
     disable?: boolean

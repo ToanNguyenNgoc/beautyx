@@ -457,12 +457,12 @@ function Footer() {
           </div>
         </div>
 
-        <div className="aws_starups">
+        {/* <div className="aws_starups">
           <div className="aws_startups_img">
             <img src={img.awsStartups} alt="" />
           </div>
           <p>BeautyX has been accelerated by AWS Startup Program</p>
-        </div>
+        </div> */}
 
         <div
           className="address"

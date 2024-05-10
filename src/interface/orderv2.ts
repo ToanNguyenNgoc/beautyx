@@ -96,8 +96,8 @@ export interface IOrderV2 {
         id: number;
         status: string;
         amount: number;
-        amount_paid:number;
-        amount_second?:number;
+        amount_paid: number;
+        amount_second?: number;
         description: string;
         transaction_uuid: string;
         extra_data: {
@@ -106,11 +106,11 @@ export interface IOrderV2 {
             deeplink: string | null;
             qrCodeUrl: null | string;
             deeplinkMiniApp: string | null;
-            bank_account_name?:string;
-            bank_name?:string;
-            bank_number?:string;
-            bank_title?:string;
-            url_checkout?:string
+            bank_account_name?: string;
+            bank_name?: string;
+            bank_number?: string;
+            bank_title?: string;
+            url_checkout?: string
         };
         payment_method_id: number;
         paymentable_type: string;
@@ -120,9 +120,11 @@ export interface IOrderV2 {
         deleted_at: null;
         items: ITems[];
     };
-    items: ITems[]
+    items: ITems[];
+    appointments?:any[];
     origin?: IOrderOrigin;
-    btx_reward: BTX_points
+    btx_reward: BTX_points;
+    is_review: 1 | 0
 }
 export interface ItemReviewed {
     id: number,

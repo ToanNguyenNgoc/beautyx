@@ -40,6 +40,12 @@ export function useSwr(options: SWROptions) {
         revalidateOnFocus: revalidateOnFocus ?? false,
         refreshInterval: refreshInterval,
         dedupingInterval: dedupingInterval === 0 ? 0 : CACHE_TIME,
+        onSuccess: (data, key) => {
+            if (options.onSuccess) options.onSuccess(data?.data?.context, key)
+        },
+        onError: (err) => {
+            Sentry.captureException(error)
+        }
     })
     if (data) {
         response = data.data?.context ?? data
@@ -47,11 +53,6 @@ export function useSwr(options: SWROptions) {
         totalItem = data?.data?.context?.total
         result = data
     }
-    useEffect(() => {
-        if (error) {
-            Sentry.captureException(error)
-        }
-    }, [error])
     return {
         result,
         response,

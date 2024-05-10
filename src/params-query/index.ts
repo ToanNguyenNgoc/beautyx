@@ -97,8 +97,8 @@ export const paramOrderService = {
     "sort": "-created_at"
 }
 export const paramOrder: ParamOrder = {
-    "limit": "14",
-    "filter[platform]": '',
+    "limit": 8,
+    "filter[platform]": PLAT_FORM === 'BEAUTYX' ? 'BEAUTYX|BEAUTYX MOBILE|WEB' : PLAT_FORM,
     "filter[status]": "",
     "filter[withServicesSold]": true,
     "filter[productable]": true,

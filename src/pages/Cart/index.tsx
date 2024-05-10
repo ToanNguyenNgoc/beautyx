@@ -57,7 +57,7 @@ function Cart() {
   const [order, setOrder] = useState<PostOrderType>({
     user_address_id: null,
     branch_id: null,
-    payment_method_id:MOMO.id
+    payment_method_id: MOMO.id
   })
   const removeItemByCheck = () => {
     dispatch(clearByCheck())
@@ -127,6 +127,7 @@ function Cart() {
                   <PaymentMethod
                     onSetPaymentMethod={(method) =>
                       setOrder({ ...order, payment_method_id: method.id })
+                      // setOrder({ ...order, payment_method_id: 7 })
                     }
                   />
                 </div>

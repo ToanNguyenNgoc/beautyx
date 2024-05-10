@@ -7,7 +7,7 @@ export const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
       refetchOnWindowFocus: false,
-      cacheTime: 3600 * 10,
+      cacheTime: 3600 * 10 * 60,
       onError(err) {
         const error = err as AxiosError
         Sentry.captureException(`${error.config?.url}?${queryString.stringify(error.config?.params)}`, {
@@ -26,5 +26,8 @@ export const QR_KEY = {
   TREND_DETAIL: 'TREND_DETAIL',
   TREND_DETAIL_CMT: 'TREND_DETAIL_CMT',
   STAFFS: 'STAFFS',
-  PROVINCES:'PROVINCES'
+  PROVINCES: 'PROVINCES',
+  ORDER_ALL: 'ORDER_ALL',
+  ORDER_PAID: 'ORDER_PAID',
+  ORDER_COUNT: 'ORDER_COUNT'
 }

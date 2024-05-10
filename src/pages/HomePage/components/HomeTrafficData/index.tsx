@@ -35,7 +35,7 @@ export  function HomeTrafficData() {
         {t("Home.traffic_title")}
       </h3>
       <div className={style.home_trafficData_wrap}>
-        <div className={style.home_trafficData_left}>
+        {/* <div className={style.home_trafficData_left}>
           <p className={style.home_trafficData_left_title}>
             {t("Home.traffic_statistical")}
           </p>
@@ -51,9 +51,9 @@ export  function HomeTrafficData() {
               </li>
             ))}
           </ul>
-        </div>
+        </div> */}
         <div
-          style={{ backgroundImage: `url(${thumbApp})` }}
+          style={{ backgroundImage: `url(${thumbApp})`,width:'100%' }}
           className={style.home_trafficData_right}
         >
           <div className={style.home_trafficData_right_content}>

@@ -2,7 +2,7 @@
 import { RouteComponentProps } from "@reach/router";
 import { Switch, useHistory, useLocation } from "react-router-dom";
 import Information from "./components/Information/index";
-import React, { ChangeEvent, useContext, useEffect, useState } from "react";
+import React, { ChangeEvent, memo, useContext, useEffect, useState } from "react";
 import { logoutUser } from "redux/profile/userSlice";
 import { useDispatch, useSelector } from "react-redux";
 import style from "./account.module.css";
@@ -10,7 +10,7 @@ import { Container } from "@mui/system";
 import IStore from "interface/IStore";
 import { clst, formatPhoneNumber, onErrorImg } from "utils";
 import icon from "constants/icon";
-import { useDeviceMobile, usePostMedia, useSwr } from "hooks";
+import { useAuth, useDeviceMobile, usePostMedia } from "hooks";
 import { updateAsyncUser } from "redux/profile/userSlice";
 import { ICON } from "constants/icon2";
 import { FullImage, XButton } from "components/Layout";
@@ -27,10 +27,7 @@ import languages from "data/languages";
 import { AppContext } from "context/AppProvider";
 import i18next from "i18next";
 import { PopupMessage } from "components/Notification";
-import API_ROUTE from "api/_api";
-import { paramsUserProfile } from "params-query";
 import { phoneSupport } from "constants/index";
-import { User } from "interface";
 import CardCoin from "./components/CardCoin";
 import Member from "./components/Member";
 import AddressForm from "./components/UserAddress/AddressForm";
@@ -67,19 +64,11 @@ const routes = [
 ];
 function Account() {
   const { t, appointment_today } = useContext(AppContext) as any;
-  const RouterPage = (
-    props: { pageComponent: JSX.Element } & RouteComponentProps
-  ) => props.pageComponent;
   const dispatch = useDispatch();
   const history = useHistory();
   const location = useLocation();
   const IS_MB = useDeviceMobile();
-  const { USER } = useSelector((state: IStore) => state.USER);
-  const userResponse: User = useSwr({
-    API_URL: API_ROUTE.USER_PROFILE,
-    enable: USER,
-    params: paramsUserProfile
-  }).response;
+  const { USER } = useAuth({ refresh_enable: true })
   const { handlePostMedia } = usePostMedia()
   const onChangeAvatar = (e: ChangeEvent<HTMLInputElement>) => {
     handlePostMedia({
@@ -170,7 +159,7 @@ function Account() {
   return (
     <>
       <FullImage open={openImg} setOpen={setOpenImg} src={[USER?.avatar]} />
-      <CardCoin open={openCard} setOpen={setOpenCard} user={userResponse} />
+      <CardCoin open={openCard} setOpen={setOpenCard} user={USER} />
       <Container>
         <div className={style.container}>
           <div
@@ -229,7 +218,7 @@ function Account() {
                     <p className={style.coin_value_label}>BTX</p>
                     <div className={style.coin_value_count}>
                       <span>
-                        {userResponse?.btx_points ?? USER?.btx_points}
+                        {USER?.btx_points}
                       </span>
                     </div>
                   </div>
@@ -327,15 +316,7 @@ function Account() {
             }
             className={style.right_cnt}
           >
-            <Switch>
-              {routes.map((item, index) => (
-                <RouterPage
-                  key={index}
-                  path={`${item.path}`}
-                  pageComponent={item.component}
-                />
-              ))}
-            </Switch>
+            <SwitchRoute />
           </div>
         </div>
       </Container>
@@ -345,7 +326,24 @@ function Account() {
 }
 export default Account;
 
-const SwitchLanguage = () => {
+const SwitchRoute = memo(() => {
+  const RouterPage = (
+    props: { pageComponent: JSX.Element } & RouteComponentProps
+  ) => props.pageComponent;
+  return (
+    <Switch>
+      {routes.map((item, index) => (
+        <RouterPage
+          key={index}
+          path={`${item.path}`}
+          pageComponent={item.component}
+        />
+      ))}
+    </Switch>
+  )
+})
+
+const SwitchLanguage = memo(() => {
   const { t, language, setLanguage } = useContext(AppContext) as any;
   const handleChangeLang = (code: string) => {
     setLanguage(code);
@@ -386,7 +384,7 @@ const SwitchLanguage = () => {
       </div>
     </div>
   );
-};
+})
 
 export const HeadAccount = () => {
   const history = useHistory();

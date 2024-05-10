@@ -1,12 +1,12 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable react-hooks/exhaustive-deps */
-import { createContext, useState, useEffect } from "react";
+import { createContext, useState, useEffect, Dispatch, SetStateAction } from "react";
 import { TFunction, useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchAsyncUser } from 'redux/profile/userSlice';
 import { fetchAsyncHome } from 'redux/home/homeSlice';
 import { AUTH_LOCATION, getPosition } from "api/authLocation";
-import { useAppointment, useOrderService } from "hooks";
+import { useAppointment, useGetOrder, useGetOrderCount } from "hooks";
 import Echo from 'laravel-echo'
 import IStore from "interface/IStore";
 import { echoConfig } from "config";
@@ -23,7 +23,10 @@ export type AppContextType = {
     appointment_today: any,
     orderService: any,
     order_app: any,
-    echo: Echo | null
+    order_not_review: any,
+    echo: Echo | null,
+    orderPopupType: "review" | "detail" | undefined
+    setOrderPopupType: Dispatch<SetStateAction<"review" | "detail" | undefined>>
 }
 
 
@@ -32,6 +35,7 @@ export default function AppProvider({ children }: { children: any }) {
     const { t } = useTranslation();
     const { USER } = useSelector((state: IStore) => state.USER)
     const [echo, setEcho] = useState<Echo | null>(null)
+    const [orderPopupType, setOrderPopupType] = useState<'review' | 'detail'>()
     useEffect(() => {
         if (USER) {
             setEcho(echoConfig())
@@ -76,7 +80,7 @@ export default function AppProvider({ children }: { children: any }) {
     }, [])
     const serviceCate: any[] = []
     const { appointment, appointment_today } = useAppointment()
-    const { orderService, order_app } = useOrderService()
+    const { orders: orderService, order_app, order_not_review } = useGetOrderCount()
     const value = {
         t,
         language,
@@ -87,7 +91,10 @@ export default function AppProvider({ children }: { children: any }) {
         appointment_today,
         orderService,
         order_app,
-        echo
+        order_not_review,
+        echo,
+        orderPopupType,
+        setOrderPopupType
     };
     return <AppContext.Provider value={value} > {children} </AppContext.Provider>;
 }

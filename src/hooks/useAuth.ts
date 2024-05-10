@@ -4,7 +4,11 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchAsyncUser } from "redux/profile/userSlice";
 
-export function useAuth() {
+interface Options {
+    refresh_enable?: boolean
+}
+
+export function useAuth(options?: Options) {
     const dispatch = useDispatch()
     const [firstLoad, setFirstLoad] = useState(true)
     const { USER } = useSelector((state: IStore) => state.USER)
@@ -15,7 +19,11 @@ export function useAuth() {
         }
     }
     useEffect(() => {
-        getUser()
+        if (options?.refresh_enable) {
+            dispatch(fetchAsyncUser())
+        } else {
+            getUser()
+        }
     }, [])
     return { firstLoad, USER }
 }

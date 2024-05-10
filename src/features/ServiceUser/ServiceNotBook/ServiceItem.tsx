@@ -49,9 +49,10 @@ function ServiceItem(props: IProps) {
         org &&
         <Review
           open={open}
-          setOpen={setOpen}
+          onClose={()=> setOpen(false)}
           itemsReviews={itemsReviews}
           org={org}
+          order_id={0}
         />
       }
       <div>

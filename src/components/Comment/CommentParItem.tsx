@@ -6,8 +6,8 @@ import { BodyComment, IComment, ICommentChild } from 'interface';
 import IStore from 'interface/IStore';
 import { useContext, useState } from 'react';
 import { useSelector } from 'react-redux';
-import {  useHistory } from 'react-router-dom';
-import { clst, formatDateFromNow } from 'utils';
+import { useHistory } from 'react-router-dom';
+import { clst, formatTimeComment } from 'utils';
 import { InitialValue, RedirectOrigin } from 'components/Comment';
 import style from "./style.module.css"
 import { useMutation, useQueryClient } from '@tanstack/react-query';
@@ -21,7 +21,7 @@ interface CommentParItemProps {
   bought?: boolean,
   mixed?: boolean,
   layout?: 'column' | 'row',
-  all?:boolean
+  all?: boolean
 }
 
 function CommentParItem(props: CommentParItemProps) {
@@ -75,7 +75,7 @@ function CommentParItem(props: CommentParItemProps) {
           <Avatar src={comment.user?.avatar} alt="" />
           <span className={style.user_fullname}>{comment.user?.fullname}</span>
         </div>
-        {body?.includes("‭") && (
+        {(body?.includes("‭") || comment.is_order === 1) && (
           <div className={style.bought_cnt}>
             <img src={icon.checkFlowGreen} alt="" /> Đã mua hàng
           </div>
@@ -85,13 +85,12 @@ function CommentParItem(props: CommentParItemProps) {
         <div className={style.comment_body_start_origin_cnt}>
           {
             // (comment.rate && body?.includes("‭")) ? <RenderStar point={comment.rate.point} /> : <div></div>
-            comment.rate &&
-            <RenderStar point={comment.rate.point} />
+            comment.rate ? <RenderStar point={comment.rate.point} /> : <div></div>
           }
           {all && <RedirectOrigin comment={comment} />}
         </div>
         {
-          (body || comment.media_url.length > 0) &&
+          (body?.replace('‭', '') !== '' || comment.media_url.length > 0) &&
           <div className={style.comment_body_txt}>
             {body}
             <div className={style.comment_body_media_list}>
@@ -104,7 +103,8 @@ function CommentParItem(props: CommentParItemProps) {
           </div>
         }
         <span className={style.created_at}>
-          {formatDateFromNow(comment.created_at)}
+          {/* {formatDateFromNow(comment.created_at)} */}
+          {formatTimeComment(comment.created_at)}
         </span>
         <div
           className={clst([
@@ -113,7 +113,7 @@ function CommentParItem(props: CommentParItemProps) {
           ])}
         >
           <Accordion
-            defaultExpanded
+            defaultExpanded={comment.children.length > 0}
           >
             {replyBtnDis && (
               <AccordionSummary
@@ -163,7 +163,10 @@ function CommentParItem(props: CommentParItemProps) {
                       </div>
                     </div>
                     <span className={style.created_at}>
-                      {formatDateFromNow(
+                      {/* {formatDateFromNow(
+                        mixed ? comment.created_at : child.created_at || ""
+                      )} */}
+                      {formatTimeComment(
                         mixed ? comment.created_at : child.created_at || ""
                       )}
                     </span>

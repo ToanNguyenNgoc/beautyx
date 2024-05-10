@@ -51,13 +51,15 @@ export const updateAsyncUser: any = createAsyncThunk(
 
 export interface IUSER {
     USER: any,
+    point: number,
     error: any,
     loading: boolean,
-    refresh: boolean
+    refresh: boolean,
 }
 
 const initialState: IUSER = {
     USER: null,
+    point: 1000,
     error: null,
     loading: true,
     refresh: false
@@ -76,6 +78,9 @@ const userSlice = createSlice({
             localStorage.removeItem('_WEB_TK_RE')
             localStorage.removeItem(LOCAL_TK)
             sessionStorage.removeItem(LOCAL_TK)
+        },
+        onUserUpdatePoint: (state, { payload }: { payload: number }) => {
+            state.USER = Object.assign(state.USER, { btx_points: state.USER.btx_points + payload })
         }
     },
     extraReducers(builder) {
@@ -106,5 +111,5 @@ const userSlice = createSlice({
     },
 })
 const { actions } = userSlice;
-export const { putUser, logoutUser } = actions;
+export const { putUser, logoutUser, onUserUpdatePoint } = actions;
 export default userSlice.reducer

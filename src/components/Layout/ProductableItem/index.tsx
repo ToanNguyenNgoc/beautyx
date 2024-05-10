@@ -1,6 +1,6 @@
 /* eslint-disable eqeqeq */
 import icon from "constants/icon";
-import { Productable } from "interface";
+import { IOrganization, Productable } from "interface";
 import { Link } from "react-router-dom";
 import { formatDistance, onErrorImg } from "utils";
 import formatPrice, { formatSalePriceService } from "utils/formatPrice";
@@ -15,11 +15,12 @@ import img from "constants/img";
 interface ProductableItemProps {
     productable: Productable;
     changeStyle?: boolean;
+    org?:IOrganization
 }
 
 export function ProductableItem(props: ProductableItemProps) {
     const { productable, changeStyle } = props;
-    const org = productable.organization?.length > 0 ? productable?.organization[0] : undefined;
+    const org =props.org || (productable.organization?.length > 0 ? productable?.organization[0] : undefined);
     let image_url = org?.image_url ?? img.imgDefault;
     if (productable.media) {
         image_url = productable.media[0]?.original_url;
