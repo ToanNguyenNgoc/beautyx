@@ -49,7 +49,7 @@ const MomoRender = ({ pay_url }: { pay_url: string }) => {
       </span>
       <ul className={style.payment_left_body_guide}>
         <li className={style.guide_item}>
-          <h4>Bước 1:</h4>Mở ứng dụng <h4>MOMO</h4> để thanh toán
+          <h4>Bước 1:</h4>Mở ứng dụng <h4>MOMO</h4> hoặc app ngân hàng để thanh toán
         </li>
         <li className={style.guide_item}>
           <h4>Bước 2:</h4>Chọn<h4>"Thanh toán"</h4> và quét mã QR tại đây
