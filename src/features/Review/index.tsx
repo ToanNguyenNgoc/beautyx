@@ -49,7 +49,7 @@ function Review(props: ReviewProps) {
   const { open, onClose = () => { }, itemsReviews, org, order_id, point } = props;
   const IS_MB = useDeviceMobile();
   const { handlePostMedia } = usePostMedia()
-  const { resultLoad, noti, onCloseNoti } = useNoti()
+  const { resultLoad, noti } = useNoti()
   const [comment, setComment] = useState(initComment)
   const onRateStar = (id: number) => {
     setComment({
@@ -84,8 +84,6 @@ function Review(props: ReviewProps) {
   const { postComment, loadPost } = useComment()
   const dispatch = useDispatch()
   const onSubmitComment = () => {
-    // onClose()
-    // return
     const body = {
       "body": `${comment.body}`,
       "commentable_id": order_id,
@@ -217,7 +215,7 @@ function Review(props: ReviewProps) {
             />
           </div>
         </div>
-        <PopupBtxReward open={noti.openAlert} onClose={onCloseNoti} btxPoint={Number(point)} />
+        <PopupBtxReward open={noti.openAlert} onClose={onClose} btxPoint={Number(point)} />
       </Dialog>
     </>
   );

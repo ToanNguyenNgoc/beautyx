@@ -90,7 +90,7 @@ export const paramAppointment = {
 export const paramOrderService = {
     "page": "",
     "limit": 15,
-    "filter[platform]": PLAT_FORM === 'BEAUTYX' ? 'BEAUTYX | BEAUTYX MOBILE' : PLAT_FORM,
+    "filter[platform]": 'BEAUTYX|BEAUTYX MOBILE|ZALO|MOMO',
     "filter[status]": "PAID",
     "filter[withServicesSold]": true,
     "include": "items|organization|appointments",
@@ -98,7 +98,7 @@ export const paramOrderService = {
 }
 export const paramOrder: ParamOrder = {
     "limit": 8,
-    "filter[platform]": PLAT_FORM === 'BEAUTYX' ? 'BEAUTYX|BEAUTYX MOBILE|WEB' : PLAT_FORM,
+    "filter[platform]": 'BEAUTYX|BEAUTYX MOBILE|ZALO|MOMO',
     "filter[status]": "",
     "filter[withServicesSold]": true,
     "filter[productable]": true,
