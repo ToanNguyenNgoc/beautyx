@@ -95,7 +95,7 @@ export function HomeBanner() {
           });
         case "POPUP":
           return history.push({
-            pathname: `/landingpage/${slugify(item.name)}?id=${item.id}`,
+            pathname: `/deal/${slugify(item.name)}`,
           });
         case "PROMOTION":
           return console.log("PROMOTION");
