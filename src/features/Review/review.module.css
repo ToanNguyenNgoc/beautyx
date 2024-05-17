@@ -14,6 +14,7 @@
     width: 100%;
     height: calc(100% - 38px);
     overflow-y: scroll;
+    padding-bottom: 70px;
 }
 
 .org_name {
@@ -54,39 +55,20 @@
 
 .rate_star {
     padding: 6px 0px;
-    border-top: solid 1px var(--bg-color);
-    border-bottom: solid 1px var(--bg-color);
 }
 
 .title,
 .star_item_label {
-    font-size: 14px;
+    font-size: 12px;
     line-height: 16px;
     font-weight: 500;
 }
-
-.rate_star_list {
-    margin-top: 12px;
-    display: flex;
-    justify-content: space-between;
+.title{
+    font-size: 13px;
+    font-weight: 600;
 }
 
-.star_item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    cursor: pointer;
-    width: 20%;
-}
 
-.star_icon {
-    transform: scale(0.9);
-}
-
-.star_item_label {
-    font-weight: 500;
-    margin-top: 12px;
-}
 
 .text_area {
     margin-top: 12px;
@@ -96,7 +78,7 @@
     font-weight: 500;
     line-height: 18px;
     max-width: 100%;
-    min-height: 140px;
+    min-height: 100px;
     min-width: 100%;
     padding: 8px;
 }
@@ -184,6 +166,17 @@
     width: 100%;
     border-radius: 6px;
     background-color: var(--text-orange);
+}
+.service_item_cnt{
+    width: 100%;
+    padding: 12px;
+    box-shadow: var(--box-shadow);
+    border-radius: 6px;
+}
+.service{
+    display: flex;
+    justify-content: space-between;
+    padding: 7px 0px;
 }
 
 @media only screen and (max-width: 1023px) {

@@ -17,6 +17,7 @@ class Comments {
     create = (body: BodyComment) => {
         return axiosClient.post('/comments', pickBy(body, identity)).then<Response<IComment>>(res => res.data)
     }
+    postCommentOrder = (body:any)=> axiosClient.post('/comments/order', body).then(res => res.data)
 }
 export const commentsApi = new Comments();
 export default commentsApi;
