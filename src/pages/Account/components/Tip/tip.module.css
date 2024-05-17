@@ -1,0 +1,29 @@
+.tip{
+    margin: 14px 0 0 0;
+}
+.tip__wrap{
+    border-radius: 8px;
+    padding: 14px;
+    background-image: url(../../../../assets/image/bg-tip.jpg);
+    background-position: left;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 100%;
+}
+.tip__text{
+    font-size: 14px;
+    color: white;
+    font-style: italic;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    display:-webkit-box;
+    -webkit-line-clamp:3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    word-break: break-word;
+}
+.tip__loading{
+    width: 100%;
+    border-radius: 8px;
+}
+

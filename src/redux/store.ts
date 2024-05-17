@@ -10,11 +10,13 @@ import orgMapReducer from "./org/orgMapSlice";
 import filterResultReduce from "./filter-result";
 import communityReducer from './community'
 import OrderHasReviewReducer from './order-has-review/OrderHasReviewSlice'
+import tipReducer from "./tip/tipSlice";
 // react toolkit query
 import { homeApi } from "redux-toolkit-query/hook-home";
 import { serProComDetailApi } from "redux-toolkit-query/hook-detail";
 import { searchApi } from "redux-toolkit-query/hook-search-history";
 import { orgPageApi } from 'redux-toolkit-query/hook-org'
+
 
 const rootReducer = {
     carts: cartReducer,
@@ -28,6 +30,7 @@ const rootReducer = {
     FILTER_RESULT: filterResultReduce,
     COMMUNITY: communityReducer,
     ORDER_HAS_REVIEW: OrderHasReviewReducer,
+    TIP: tipReducer,
 
     [homeApi.reducerPath]: homeApi.reducer,
     [serProComDetailApi.reducerPath]: serProComDetailApi.reducer,
