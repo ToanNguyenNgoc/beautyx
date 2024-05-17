@@ -8,6 +8,7 @@ import Slider, { Settings } from "react-slick";
 import { ITip } from "interface";
 import Skeleton from "@mui/material/Skeleton";
 import useDeviceMobile from "hooks/useDeviceMobile";
+import img from "constants/img";
 
 export default function Tip() {
     const { USER } = useSelector((state: IStore) => state.USER);
@@ -48,7 +49,7 @@ export default function Tip() {
                     {isLoading ? (
                         <Skeleton
                             className={style.tip__loading}
-                            height={IS_MB ? 70 : 80}
+                            height={IS_MB ? 106 : 116}
                             variant="rectangular"
                             animation="wave"
                         />
@@ -56,6 +57,10 @@ export default function Tip() {
                         <Slider {...settings}>
                             {tip?.map((item: ITip) => (
                                 <div key={item.id} className={style.tip__wrap}>
+                                    <div className={style.tip__top}>
+                                        <img className={style.tip__img} src={img.tip} alt="tip" />
+                                        <p>Tips!</p>
+                                    </div>
                                     <p className={style.tip__text}>
                                         {item.name}
                                     </p>
