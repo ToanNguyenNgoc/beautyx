@@ -43,11 +43,15 @@ export function useComment(param?: ParamComment, options?: Options) {
         if (data.context) { onSuccess(data.context) }
         else { onError() }
     }
+    const mutatePostCommentOrder = useMutation({
+        mutationFn: (body: any) => commentsApi.postCommentOrder(body)
+    })
     return {
         loadComment,
         comments,
         loadPost,
         postComment,
+        mutatePostCommentOrder,
         totalItem
     }
 }

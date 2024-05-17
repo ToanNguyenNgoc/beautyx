@@ -1,28 +1,24 @@
-import { ChangeEvent, useState } from "react";
+/* eslint-disable react-hooks/exhaustive-deps */
+import { ChangeEvent, FC, memo, useEffect } from "react";
 import { Dialog } from "@mui/material";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { onErrorImg } from "utils";
 import icon from "constants/icon";
 import HeadMobile from "features/HeadMobile";
-import { XButton } from "components/Layout";
+import { RateStar, XButton } from "components/Layout";
 import { useComment, useDeviceMobile, useNoti, usePostMedia } from "hooks";
 import { IOrganization, ItemReviewed } from "interface";
 import style from './review.module.css'
-import { PopupBtxReward } from "components/Notification";
-import Skeleton from "react-loading-skeleton";
+import { PopupBtxReward, PopupNotification } from "components/Notification";
 import { onUserUpdatePoint } from "redux/profile/userSlice";
-import { onUpdateOrderReviewed } from "redux/order-has-review/OrderHasReviewSlice";
+import {
+  onChangeBodyServiceItemOrder,
+  onChangeRateOrder,
+  onInitBody,
+  onRemoveMediaServiceOrder,
+  onUpdateOrderReviewed
+} from "redux/order-has-review/OrderHasReviewSlice";
 
-interface media_ids {
-  model_id: number,
-  original_url: string
-}
-
-interface InitComment {
-  body: string,
-  media_ids: media_ids[],
-  rate: number,
-}
 
 
 interface ReviewProps {
@@ -33,77 +29,43 @@ interface ReviewProps {
   order_id: number,
   point?: number
 }
-const initComment: InitComment = {
-  body: "",
-  media_ids: [],
-  rate: 5,
-}
-const rateStars = [
-  { id: 1, icon: icon.startBold, iconActive: icon.starLine, title: "Rất tệ" },
-  { id: 2, icon: icon.startBold, iconActive: icon.starLine, title: "Tệ" },
-  { id: 3, icon: icon.startBold, iconActive: icon.starLine, title: "Bình thường" },
-  { id: 4, icon: icon.startBold, iconActive: icon.starLine, title: "Tốt" },
-  { id: 5, icon: icon.startBold, iconActive: icon.starLine, title: "Rất tốt" },
-];
+
 function Review(props: ReviewProps) {
   const { open, onClose = () => { }, itemsReviews, org, order_id, point } = props;
   const IS_MB = useDeviceMobile();
-  const { handlePostMedia } = usePostMedia()
-  const { resultLoad, noti } = useNoti()
-  const [comment, setComment] = useState(initComment)
-  const onRateStar = (id: number) => {
-    setComment({
-      ...comment,
-      rate: id,
-    });
-  };
-  const handleOnchangeText = (e: any) => {
-    setComment({
-      ...comment,
-      body: e.target.value,
-    });
-  };
-  const handleOnchangeMedia = (e: ChangeEvent<HTMLInputElement>) => {
-    handlePostMedia({
-      e,
-      callBack: (data) => {
-        setComment({
-          ...comment,
-          media_ids: [...comment.media_ids.filter(i => i.original_url !== ''), ...data]
-        })
-      }
-
-    })
-  };
-  const onRemoveImg = (model_id: number) => {
-    setComment({
-      ...comment,
-      media_ids: comment.media_ids.filter(i => i.model_id !== model_id)
-    })
-  }
-  const { postComment, loadPost } = useComment()
   const dispatch = useDispatch()
-  const onSubmitComment = () => {
-    const body = {
-      "body": `${comment.body}`,
-      "commentable_id": order_id,
-      "commentable_type": 'ORDER',
-      "organization_id": org.id,
-      "media_ids": comment.media_ids.map(i => i.model_id),
-      "rate": comment.rate
+  const { resultLoad, noti, onCloseNoti } = useNoti()
+  useEffect(() => {
+    if (open) {
+      dispatch(onInitBody({ services: itemsReviews.map(i => i.id) }))
     }
-    postComment({
-      body,
-      onSuccess: () => {
-        resultLoad(``);
-        setComment(initComment)
+  }, [open])
+
+  const { mutatePostCommentOrder } = useComment()
+  const { bodyComment } = useSelector((state: any) => state.ORDER_HAS_REVIEW)
+  const onSubmitComment = () => {
+    const services = bodyComment.services.filter((i: any) => (i.body.trim() !== "" || i.media_ids.length > 0))
+    if (services.length !== itemsReviews.length) {
+      return resultLoad('Vui lòng đánh giá tất cả dịch vụ của đơn hàng')
+    }
+    const bodyServices = services.map((ser: any) => ({ ...ser, media_ids: ser.media_ids.map((i: any) => i.model_id) }))
+    const body = {
+      ...bodyComment,
+      commentable_type: "ORDER",
+      services: bodyServices,
+      commentable_id: order_id,
+      organization_id: org.id,
+      media_ids: []
+    }
+    mutatePostCommentOrder.mutateAsync(body)
+      .then(() => {
+        resultLoad("POINT");
         dispatch(onUpdateOrderReviewed(order_id))
         if (point) dispatch(onUserUpdatePoint(point))
-      },
-      onError: () => {
+      })
+      .catch(() => {
         resultLoad('Có lỗi xảy ra. Vui lòng thử lại')
-      }
-    })
+      })
   };
   return (
     <>
@@ -121,104 +83,128 @@ function Review(props: ReviewProps) {
         <div className={style.container}>
           <div className={style.body}>
             <p className={style.org_name}>{org?.name}</p>
+            <div>
+              <RateStar value={bodyComment.rate} onRateStar={star => dispatch(onChangeRateOrder(star))} />
+            </div>
             <ul className={style.list}>
               {
-                itemsReviews.map((item: ItemReviewed, index: number) => ((
-                  <li key={index} className={style.item}>
-                    <div className={style.item_img}>
-                      <img
-                        src={item.image_url ?? org?.image_url}
-                        onError={(e) => onErrorImg(e)} alt=""
-                      />
-                    </div>
-                    <div className={style.item_name}>{item.name}</div>
+                itemsReviews.map((item: ItemReviewed) => ((
+                  <li key={item.id} className={style.item}>
+                    <ServiceItemReviewed item={item} />
                   </li>
                 )))
               }
             </ul>
-            <div className={style.rate_star}>
-              <p className={style.title}>
-                Bạn cảm thấy dịch vụ thế nào ?
-              </p>
-              <ul className={style.rate_star_list}>
-                {
-                  rateStars.map(i => (
-                    <li
-                      onClick={() => onRateStar(i.id)}
-                      key={i.id} className={style.star_item}
-                    >
-                      <img
-                        src={i.id <= comment.rate ? i.icon : i.iconActive}
-                        className={style.star_icon} alt=""
-                      />
-                      <p className={style.star_item_label}>{i.title}</p>
-                    </li>
-                  ))
-                }
-              </ul>
-            </div>
-            <textarea
-              placeholder="Vui lòng để lại đánh giá của bạn ..."
-              value={comment.body}
-              onChange={(e) => handleOnchangeText(e)}
-              className={style.text_area}
-            />
-            <div className={style.body_media}>
-              <div className={style.body_media_head}>
-                <label className={style.body_media_btn} htmlFor="media">
-                  <img src={icon.addImg} alt="" />
-                  Hình ảnh
-                </label>
-                <input
-                  onChange={handleOnchangeMedia}
-                  id='media' multiple
-                  hidden
-                  accept="image/png, image/jpeg, image/jpg" type="file"
-                />
-              </div>
-              <div className={style.media_img_cnt}>
-                <ul className={style.list_img}>
-                  {
-                    comment.media_ids.map((item: media_ids) => (
-                      <li key={item.model_id} className={style.list_img_item}>
-                        <div className={style.img_cnt}>
-                          {
-                            item.original_url === '' ?
-                              <Skeleton className={style.skelton} />
-                              :
-                              <>
-                                <XButton
-                                  className={style.img_cnt_remove}
-                                  icon={icon.closeCircle}
-                                  onClick={() => onRemoveImg(item.model_id)}
-                                />
-                                <img
-                                  src={item.original_url}
-                                  className={style.img_item_temp} alt=""
-                                />
-                              </>
-                          }
-                        </div>
-                      </li>
-                    ))
-                  }
-                </ul>
-              </div>
-            </div>
           </div>
           <div className={style.bottom}>
             <XButton
               title="Gửi đánh giá"
-              loading={loadPost}
+              loading={mutatePostCommentOrder.isLoading}
               onClick={onSubmitComment}
               className={style.bottom_btn}
             />
           </div>
         </div>
-        <PopupBtxReward open={noti.openAlert} onClose={onClose} btxPoint={Number(point)} />
+        <PopupBtxReward open={noti.openAlert && noti.message === "POINT"} onClose={onClose} btxPoint={Number(point)} />
+        <PopupNotification content={noti.message} open={noti.openAlert && noti.message !== "POINT"} setOpen={onCloseNoti} />
       </Dialog>
     </>
   );
 }
+
+interface ServiceItemProps {
+  org_image?: string
+  item: ItemReviewed
+}
+
+const ServiceItemReviewed: FC<ServiceItemProps> = memo(props => {
+  const { item, org_image } = props
+  const dispatch = useDispatch()
+  const { bodyComment } = useSelector((state: any) => state.ORDER_HAS_REVIEW)
+  const bodyService = bodyComment.services.find((i: any) => i.id === item.id)
+  const onChangeText = (body: string) => {
+    dispatch(onChangeBodyServiceItemOrder({
+      id: item.id,
+      body
+    }))
+  }
+  const { handlePostMedia } = usePostMedia()
+  const handleOnchangeMedia = (e: ChangeEvent<HTMLInputElement>) => {
+    handlePostMedia({
+      e,
+      callBack: (data) => {
+        dispatch(onChangeBodyServiceItemOrder({
+          id: item.id,
+          media_ids: data.map(i => ({ model_id: i.model_id, media_url: i.original_url }))
+        }))
+      }
+    })
+  };
+  return (
+    <div className={style.service_item_cnt}>
+      <div className={style.rate_star}>
+        <p className={style.title}>
+          Bạn cảm thấy dịch vụ "{item.name}" thế nào ?
+        </p>
+        {/* <RateStar value={3} /> */}
+      </div>
+      <div className={style.service}>
+        <div className={style.item_img}>
+          <img
+            src={item.image_url || org_image}
+            onError={(e) => onErrorImg(e)} alt=""
+          />
+        </div>
+        <div className={style.item_name}>{item.name}</div>
+      </div>
+      <textarea
+        placeholder="Vui lòng để lại đánh giá của bạn ..."
+        value={bodyService?.body || ''}
+        onChange={(e) => onChangeText(e.target.value)}
+        className={style.text_area}
+      />
+      <div className={style.body_media}>
+        <div className={style.body_media_head}>
+          <label className={style.body_media_btn} htmlFor={`media-${item.id}`}>
+            <img src={icon.addImg} alt="" />
+            Hình ảnh
+          </label>
+          <input
+            onChange={handleOnchangeMedia}
+            id={`media-${item.id}`} multiple
+            hidden
+            accept="image/png, image/jpeg, image/jpg" type="file"
+          />
+        </div>
+        <div className={style.media_img_cnt}>
+          <ul className={style.list_img}>
+            {
+              bodyService?.media_ids?.map((itemImage: any) => (
+                <li key={itemImage.model_id} className={style.list_img_itemImage}>
+                  <div className={style.img_cnt}>
+                    {
+                      itemImage.model_id ?
+                        <XButton
+                          className={style.img_cnt_remove}
+                          icon={icon.closeCircle}
+                          onClick={() => dispatch(onRemoveMediaServiceOrder({ id: item.id, model_id: itemImage.model_id }))}
+                        />
+                        :
+                        <></>
+                    }
+                    <img
+                      src={itemImage.media_url}
+                      className={style.img_item_temp} alt=""
+                    />
+                  </div>
+                </li>
+              ))
+            }
+          </ul>
+        </div>
+      </div>
+    </div>
+  )
+})
 
 export default Review;
