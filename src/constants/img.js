@@ -59,8 +59,12 @@ import portalDeal from 'assets/image/portalDeal.png'
 import flagUK from 'assets/image/uk.png'
 import flagVN from 'assets/image/vn.png'
 import qrCodeZalo from 'assets/image/qrCodeZalo.png'
+import bgTip from 'assets/image/bg-tip.jpg'
+import tip from 'assets/image/tips.png'
 
 const img = {
+    tip,
+    bgTip,
     flagUK,
     flagVN,
     awsStartups,

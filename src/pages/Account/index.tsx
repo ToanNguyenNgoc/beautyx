@@ -31,6 +31,7 @@ import { phoneSupport } from "constants/index";
 import CardCoin from "./components/CardCoin";
 import Member from "./components/Member";
 import AddressForm from "./components/UserAddress/AddressForm";
+import Tip from "pages/Account/components/Tip";
 
 const routes = [
   {
@@ -224,6 +225,7 @@ function Account() {
                   </div>
                 </div>
               </div>
+              <Tip/>
             </div>
             <div className={style.left_cnt_link}>
               <ul className={style.link_list}>
