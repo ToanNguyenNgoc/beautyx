@@ -37,7 +37,6 @@ export default function Tip() {
                 settings: {
                     fade: false,
                     speed: 600,
-                    adaptiveHeight: true,
                 },
             },
         ],
