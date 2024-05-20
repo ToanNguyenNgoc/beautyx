@@ -34,7 +34,7 @@ import BookingMap from "./components/BookingMap";
 import { AUTH_LOCATION } from "api/authLocation";
 import PaymentMethod from "components/PaymentMethod";
 import { PLF_TYPE } from "constants/plat-form";
-import { BTX } from "common";
+import { BTX, VIETTELPAY } from "common";
 
 const date = dayjs();
 function Booking() {
@@ -175,6 +175,13 @@ function Booking() {
       //tracking.PAY_CONFIRM_CLICK(org?.id, formatProductList(params.products))
       const response = await order.postOrder(org?.id, params);
       const state_payment = await { ...response.data.context, FINAL_AMOUNT: finalAmount };
+      
+      if (
+          response?.data?.context?.payment_method?.name_key === VIETTELPAY.name_key
+      ) {
+          return onRedirectVIETTELPAY(response?.data?.context);
+      }
+
       const transaction_uuid =
         state_payment.payment_gateway.transaction_uuid;
       if (response.data.context.status !== "CANCELED") {
@@ -200,6 +207,20 @@ function Booking() {
       resultLoad(t('my_ser.create_order_fail'))
     }
   }
+
+  function onRedirectVIETTELPAY(res: any) {
+    if (
+      res?.payment_gateway?.extra_data?.payUrl &&
+      res?.payment_gateway?.extra_data?.qr_code_String
+    ) {
+      window.location.assign(
+        `${res?.payment_gateway?.extra_data?.payUrl}`
+      );
+    } else {
+      return resultLoad("Tạo đơn hàng thất bại!");
+    }
+  }
+
   //func appointment
   const gotoAppointment = () => {
     history.push("/lich-hen?tab=1");

@@ -23,6 +23,12 @@ export const MOMO = {
   content: 'Thanh toán qua ví MOMO hoặc app ngân hàng(Hỗ trợ quét mã ngân hàng, Napas...)',
   icon: icon.momo,
 }
+export const VIETTELPAY = {
+    id: 7,
+    name_key: "VIETTELPAY",
+    content: "Thanh toán qua VIETTELPAY",
+    icon: icon.viettelpay,
+};
 export const OTHER = {
   id: 8,
   name_key: 'OTHER',
@@ -44,6 +50,7 @@ export const BTX = {
 export const LIST_METHOD = [
   MOMO,
   PAY_ON_BTX,
+  VIETTELPAY
   // OTHER,
   // CASH
 ] as IPaymentMethod[]

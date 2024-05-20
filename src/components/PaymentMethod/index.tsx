@@ -54,7 +54,7 @@ function PaymentMethod(props: PaymentMethodType) {
                   key={index} className={style.method_item}
                   onClick={() => onChooseMethod(item)}
                 >
-                  <img src={item.icon} alt="" />
+                  <img className={style.method_item_img} src={item.icon} alt="" />
                   <div className={style.method_item_content}>{item.content}</div>
                 </li>
               ))
