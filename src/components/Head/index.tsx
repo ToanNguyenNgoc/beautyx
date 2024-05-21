@@ -67,6 +67,7 @@ const notPathHeader = [
   '/doi-mat-khau',
   '/trang-thai-don-hang/',
   '/ban-do',
+  '/ket-qua-thanh-toan'
 ]
 
 
@@ -75,6 +76,7 @@ function Head(props: IProps) {
   const location: any = useLocation();
   const IS_MB = useDeviceMobile()
   const pathname = location.pathname;
+  
   let showRecommendKey = false;
   if (homePath.includes(pathname)) showRecommendKey = true;
   let changeStyle = false

@@ -19,7 +19,7 @@ import tracking from 'api/trackApi';
 import formatProductList from 'utils/tracking';
 import { PLF_TYPE } from 'constants/plat-form';
 import { AppContext } from 'context/AppProvider';
-import { BTX } from 'common';
+import { BTX, VIETTELPAY } from 'common';
 
 interface CartCalcType {
     order: PostOrderType,
@@ -83,20 +83,39 @@ export function CartCalc(props: CartCalcType) {
         tracking.PAY_CONFIRM_CLICK(orgChoose.id, formatProductList(products))
         try {
             const res = await orderApi.postOrder(orgChoose.id, param)
-            resultLoad('')
             const state_payment = await { ...res.data.context, FINAL_AMOUNT: TOTAL_PAYMENT };
             if (state_payment.status !== 'PENDING') {
                 return resultLoad('Tạo đơn hàng thất bại!')
+            }
+            if (res?.data?.context?.payment_method?.name_key === VIETTELPAY.name_key) {
+                return onRedirectVIETTELPAY(
+                    res?.data?.context
+                );
             }
             history.push({
                 pathname: `/trang-thai-don-hang/`,
                 search: state_payment.payment_gateway?.transaction_uuid,
                 state: { state_payment },
             });
+            resultLoad('')
         } catch (error) {
             return resultLoad('Tạo đơn hàng thất bại!')
         }
     }
+
+    function onRedirectVIETTELPAY(res: any) {
+        if (
+            res?.payment_gateway?.extra_data?.payUrl &&
+            res?.payment_gateway?.extra_data?.qr_code_String
+        ) {
+            window.location.assign(
+                `${res?.payment_gateway?.extra_data?.payUrl}`
+            );
+        } else {
+            return resultLoad("Tạo đơn hàng thất bại!");
+        }
+    }
+
     const withFullBTXPoint = async (param: PostOrderType) => {
         param.payment_method_id = BTX.id
         if (products_id?.length > 0 && !addressDefault) {

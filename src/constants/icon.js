@@ -265,8 +265,10 @@ import planPaperWhite from "assets/icon/planPaperWhite.svg"
 import copyWhite from "assets/icon/copyWhite.svg"
 import creditCard from "assets/icon/credit-card-black.svg"
 import zalo from "assets/icon/zalo-icon.png"
+import viettelpay from "assets/icon/viettelpay.png";
 
 const icon = {
+  viettelpay,
   heartSolidWhite,
   eyeWhite,
   shareWhiteArrow,

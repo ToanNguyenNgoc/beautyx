@@ -15,17 +15,23 @@ import { pick } from 'lodash';
 import { ResponsePmStatus, IOrderV2 } from 'interface';
 import { orderApi } from 'api/orderApi';
 import { PopupBtxReward } from 'components/Notification';
+import { extraParamsUrl } from 'utils';
+import { Container } from '@mui/material';
 
 function PaymentStatus() {
     const history = useHistory()
     const { firstLoad, resultLoad, noti } = useNoti()
     const params: any = useParams()
-    const tran_uid = params.tran_uid
+    const tran_uid = params.tran_uid || extraParamsUrl()?.tran_uid
     const { USER } = useSelector((state: IStore) => state.USER)
     const { response } = useSwr({
         API_URL: API_ROUTE.PAYMENT_GATEWAYS(tran_uid),
-        enable: tran_uid && USER
+        enable: tran_uid && USER,
+        onError: () => {
+            history.replace('/error')
+        }
     })
+
     //handle post appointment after payment success
     const data = localStorage.getItem('APP_INFO') && JSON.parse(`${localStorage.getItem('APP_INFO')}`)
     const handlePostApp = useCallback(async () => {
@@ -55,73 +61,91 @@ function PaymentStatus() {
     return (
         <>
             <HeadMobile onBackFunc={() => history.push('/')} title='Trạng thái' />
-            <div className={style.container}>
-                <div className={style.head}>
-                    <img src={img.imgDefault} alt="" />
-                    <div className={style.head_status}>
-                        <span className={style.head_status_left}>
-                            {/* Trạng thái thanh toán */}
-                        </span>
-                        <div className={style.head_status_right}>
-                            {data ? noti.message : 'Thanh toán thành công'}
-                        </div>
-                    </div>
-                </div>
-                {
-                    USER &&
-                    <div className={style.user_info}>
-                        <span className={style.user_info_title}>
-                            Thông tin thanh toán
-                        </span>
-                        <div className={style.user_info_row}>
-                            <span className={style.user_info_row_left}>Người mua</span>
-                            <span className={style.user_info_row_right}>{USER?.fullname}</span>
-                        </div>
-                        <div className={style.user_info_row}>
-                            <span className={style.user_info_row_left}>Số điện thoại</span>
-                            <span className={style.user_info_row_right}>{USER?.telephone}</span>
-                        </div>
-                        <div className={style.user_info_row}>
-                            <span className={style.user_info_row_left}>Mô tả</span>
-                            <span className={style.user_info_row_right}>
-                                {response?.description ?? ''}
+            <Container>
+                <div className={style.container}>
+                    <div className={style.head}>
+                        <img src={img.imgDefault} alt="" />
+                        <div className={style.head_status}>
+                            <span className={style.head_status_left}>
+                                {/* Trạng thái thanh toán */}
                             </span>
+                            {
+                                response?.status === 'PAID' ?
+                                    <div className={style.head_status_right}>
+                                        {data ? noti.message : 'Thanh toán thành công'}
+                                    </div>
+                                    :
+                                    <div className={style.head_status_right} style={{ backgroundColor: 'var(--red-cl)' }}>
+                                        Thanh toán đơn hàng đã bị hủy
+                                    </div>
+                            }
                         </div>
                     </div>
-                }
-                {
-                    response &&
-                    <div className={style.bill}>
-                        <span className={style.bill_title}>Tổng thanh toán</span>
-                        <p className={style.bill_title_amount}>
-                            {formatPrice(response?.amount_paid)}đ
-                        </p>
-                    </div>
-                }
-                {
-                    !data &&
-                    <div className={style.navigate_cnt}>
-                        <div className={style.navigate_cnt_body}>
-                            Xem các dịch vụ đã mua và đặt hẹn
+                    {
+                        USER &&
+                        <div className={style.user_info}>
+                            <span className={style.user_info_title}>
+                                Thông tin thanh toán
+                            </span>
+                            <div className={style.user_info_row}>
+                                <span className={style.user_info_row_left}>Người mua</span>
+                                <span className={style.user_info_row_right}>{USER?.fullname}</span>
+                            </div>
+                            <div className={style.user_info_row}>
+                                <span className={style.user_info_row_left}>Số điện thoại</span>
+                                <span className={style.user_info_row_right}>{USER?.telephone}</span>
+                            </div>
+                            <div className={style.user_info_row}>
+                                <span className={style.user_info_row_left}>Mô tả</span>
+                                <span className={style.user_info_row_right}>
+                                    {response?.description ?? ''}
+                                </span>
+                            </div>
                         </div>
+                    }
+                    {
+                        response &&
+                        <div className={style.bill}>
+                            <span className={style.bill_title}>Tổng thanh toán</span>
+                            <p className={style.bill_title_amount}>
+                                {formatPrice(response?.amount_paid > 0 ? response?.amount_paid : response?.amount)}đ
+                            </p>
+                        </div>
+                    }
+                    {
+                        (!data && response?.status === "PAID") ?
+                            <div className={style.navigate_cnt}>
+                                <div className={style.navigate_cnt_body}>
+                                    Xem các dịch vụ đã mua và đặt hẹn
+                                </div>
+                            </div>
+                            :
+                            <div className={style.navigate_cnt}>
+                                <div className={style.navigate_cnt_body}>
+                                    Tiếp tục mua dịch vụ tại "BeautyX"
+                                </div>
+                            </div>
+                    }
+                    <div className={style.bottom}>
+                        <XButton
+                            onClick={() => {
+                                history.push('/');
+                                onClearAppointment()
+                            }}
+                            className={style.bottom_bnt}
+                            title='Trang chủ'
+                        />
+                        {
+                            response?.status === "PAID" &&
+                            <XButton
+                                onClick={onNavigateBooking}
+                                className={style.bottom_bnt}
+                                title={data ? 'Lịch hẹn' : 'Đặt hẹn'}
+                            />
+                        }
                     </div>
-                }
-                <div className={style.bottom}>
-                    <XButton
-                        onClick={() => {
-                            history.push('/');
-                            onClearAppointment()
-                        }}
-                        className={style.bottom_bnt}
-                        title='Trang chủ'
-                    />
-                    <XButton
-                        onClick={onNavigateBooking}
-                        className={style.bottom_bnt}
-                        title={data ? 'Lịch hẹn' : 'Đặt hẹn'}
-                    />
                 </div>
-            </div>
+            </Container>
             {response?.paymentable_id && <NotificationBTX response={response} />}
         </>
     );
