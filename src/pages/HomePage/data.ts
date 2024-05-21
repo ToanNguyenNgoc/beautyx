@@ -106,7 +106,7 @@ export const whyNots = [
         image_url: homeWhy1,
     },
     {
-        title: "+9,387 địa điểm uy tín",
+        title: "+10,387 địa điểm uy tín",
         content:
             "Mua đa dạng dịch vụ làm đẹp uy tín, an toàn với các đánh giá xác thực.",
         image_url: homeWhy2,

@@ -19,7 +19,7 @@ import tracking from 'api/trackApi';
 import formatProductList from 'utils/tracking';
 import { PLF_TYPE } from 'constants/plat-form';
 import { AppContext } from 'context/AppProvider';
-import { BTX, VIETTELPAY } from 'common';
+import { BTX, PAY_ON_BTX, VIETTELPAY } from 'common';
 
 interface CartCalcType {
     order: PostOrderType,
@@ -63,6 +63,9 @@ export function CartCalc(props: CartCalcType) {
         }
         if (TOTAL_PAYMENT < 1000) {
             return resultLoad('Giá trị đơn hàng tối thiểu 1.000đ')
+        }
+        if (param.payment_method_id === PAY_ON_BTX.id && TOTAL_PAYMENT < 5000) {
+            return resultLoad('Với phương thức Payon giá trị đơn hàng tối thiểu 5.000đ')
         }
         if (products_id?.length > 0 && !addressDefault) {
             return resultLoad(
