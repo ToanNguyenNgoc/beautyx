@@ -213,8 +213,7 @@ function Booking() {
 
   function onRedirectVIETTELPAY(res: any) {
     if (
-      res?.payment_gateway?.extra_data?.payUrl &&
-      res?.payment_gateway?.extra_data?.qr_code_String
+      res?.payment_gateway?.extra_data?.payUrl
     ) {
       window.location.assign(
         `${res?.payment_gateway?.extra_data?.payUrl}`

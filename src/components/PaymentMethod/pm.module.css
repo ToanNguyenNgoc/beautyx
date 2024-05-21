@@ -44,10 +44,10 @@
     margin: 6px 0px;
 }
 .method_item img{
-    width: 30px;
+    width: 45px;
 }
 .method_item_content{
-    width: calc(100% - 36px);
+    width: calc(100% - 50px);
     font-size: 14px;
     line-height: 18px;
     font-weight: 600;
