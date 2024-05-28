@@ -54,6 +54,7 @@ Thumbs.db
 
 .env
 .firebase/
+.yarn/
 *.firebaserc
 .vscode/
 .next/
@@ -66,5 +67,6 @@ public/.htaccess
 .firebase/hosting.YnVpbGQ.cache
 
 *.cache
+
  
  
