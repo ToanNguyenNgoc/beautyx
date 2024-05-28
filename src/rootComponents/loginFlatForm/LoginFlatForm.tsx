@@ -6,6 +6,7 @@ import {
     loginAsyncMomo,
     loginAsyncTiki,
     loginAsyncMb,
+    loginAsyncViettel,
 } from "../../redux/loginFlatForm/loginFlatFrom";
 import { pickBy, identity } from "lodash";
 import MOMO from "api/_momoImport"
@@ -138,6 +139,12 @@ function LoginFlatForm(props: any) {
             console.warn(err);
         }
     };
+    const onLoginPlatformViettel = async () => {
+        if (params.msisdn) {
+            await dispatch(loginAsyncViettel({ telephone: params.msisdn }))
+            await dispatch(fetchAsyncUser())
+        }
+    }
     const handleLoginFlatform = () => {
         if (params || flatForm === FLAT_FORM_TYPE.MOMO) {
             switch (flatForm) {
@@ -154,6 +161,9 @@ function LoginFlatForm(props: any) {
                     break;
                 case FLAT_FORM_TYPE.MB:
                     onLoginFlatFormMB();
+                    break;
+                case FLAT_FORM_TYPE.VIETTEL:
+                    onLoginPlatformViettel();
                     break;
                 default:
                     break;

@@ -4,6 +4,7 @@ import tikiAuthApi from '../../api/_tikiAuthApi';
 import momoAuthApi from '../../api/_momoAuthApi';
 import mbAuthApi from '../../api/_mbAuthApi';
 import { STATUS } from '../status'
+import viettelAuthApi from 'api/_viettelAuthApi';
 
 export const loginAsyncMomo: any = createAsyncThunk(
     "LOGIN/loginAsyncMomo",
@@ -45,6 +46,22 @@ export const loginAsyncMb: any = createAsyncThunk(
         }
     }
 )
+
+export const loginAsyncViettel: any = createAsyncThunk(
+    "LOGIN/loginAsyncViettel",
+    async (params: { telephone: string }) => {
+        try {
+            const res = await viettelAuthApi.login(params)
+            window.sessionStorage.setItem("_WEB_TK", res.data.context.token)
+            const payload = res.data.context;
+            return payload;
+        } catch (error) {
+            console.log(error)
+            return error
+        }
+    }
+)
+
 const initialState = {
     response: null,
     status: ''
@@ -92,6 +109,19 @@ const loginFlatFormSlice = createSlice({
             }
         })
         builder.addCase(loginAsyncMb.rejected, (state) => {
+            return { ...state, status: STATUS.FAIL }
+        })
+        //[VIETTEL]
+        builder.addCase(loginAsyncViettel.pending, (state) => {
+            return { ...state, status: STATUS.LOADING }
+        })
+        builder.addCase(loginAsyncViettel.fulfilled, (state, { payload }) => {
+            return {
+                response: payload,
+                status: STATUS.SUCCESS
+            }
+        })
+        builder.addCase(loginAsyncViettel.rejected, (state) => {
             return { ...state, status: STATUS.FAIL }
         })
     },

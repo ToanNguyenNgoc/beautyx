@@ -5,11 +5,26 @@ import { IPaymentMethod } from 'interface'
 import style from './pm.module.css'
 import { EXTRA_FLAT_FORM } from 'api/extraFlatForm';
 import { AppContext } from 'context/AppProvider';
-import { LIST_METHOD } from 'common';
+import { LIST_METHOD, MOMO, VIETTELPAY } from 'common';
+import { PLF_TYPE } from 'constants/plat-form';
 
 
 interface PaymentMethodType {
   onSetPaymentMethod?: (method_id: IPaymentMethod) => void
+}
+
+const instanceInitStateMethodKey = ()=>{
+  const PLAT_FORM = EXTRA_FLAT_FORM()
+  let key = MOMO.name_key
+  switch (PLAT_FORM) {
+    case PLF_TYPE.VIETTEL:
+      key = VIETTELPAY.name_key
+      break;
+    default:
+      key = MOMO.name_key
+      break;
+  }
+  return key
 }
 
 function PaymentMethod(props: PaymentMethodType) {
@@ -18,12 +33,21 @@ function PaymentMethod(props: PaymentMethodType) {
   const PLAT_FORM = EXTRA_FLAT_FORM()
   const { data } = useGetPaymentMethodQuery()
   const methods: IPaymentMethod[] = data || []
-  const LIST = LIST_METHOD.map((i: IPaymentMethod) => ({
+  
+  let LIST = LIST_METHOD.map((i: IPaymentMethod) => ({
     ...i,
-    id: Number(methods.find(item => item.id === i.id))
+    id: Number(methods.find(item => item.id === i.id)?.id)
   }))
+  if(PLAT_FORM === PLF_TYPE.MOMO){
+    LIST = LIST.filter(i => i.name_key === MOMO.name_key)
+  }
+  if(PLAT_FORM === PLF_TYPE.VIETTEL){
+    LIST = LIST.filter(i => i.name_key === VIETTELPAY.name_key)
+  }
+  
 
-  const [methodKey, setMethodKey] = useState(PLAT_FORM === 'BEAUTYX' ? 'MOMO' : PLAT_FORM)
+
+  const [methodKey, setMethodKey] = useState(instanceInitStateMethodKey())
   const method = methods.find(i => i.name_key === methodKey)
   useEffect(() => {
     let mount = true

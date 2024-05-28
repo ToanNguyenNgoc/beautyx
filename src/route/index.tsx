@@ -109,6 +109,10 @@ function RouterConfig() {
       component: <HomePage />,
     },
     {
+      path: `/trang-chu`,
+      component: <HomePage />,
+    },
+    {
       path: `/homepage`,
       component: <HomePage />,
     },
@@ -325,7 +329,7 @@ function RouterConfig() {
       <Router>
         <Head />
         <Switch>
-          <Redirect exact from="/" to="homepage" />
+          <Redirect exact from="/" to="trang-chu" />
           {routes.map((item, index: number) => (
             <Route key={index} path={item.path}>
               <Suspense fallback={<LoadProgress />}>

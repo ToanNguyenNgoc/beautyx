@@ -18,7 +18,7 @@ import { clearByCheck } from 'redux/cart';
 import { clst, unique } from 'utils';
 import style from './cart.module.css'
 import { CartCalc, CartOrgItem } from './components';
-import { MOMO } from 'common';
+import { MOMO, VIETTELPAY } from 'common';
 
 interface ItemType { id: number, quantity: number }
 
@@ -54,15 +54,22 @@ function Cart() {
   const { cart_confirm } = useCartReducer()
   const orgChoose = cart_confirm[0]?.org
 
+  const instancePaymentMethodId = ()=>{
+    let id = MOMO.id
+    if(platForm === PLF_TYPE.VIETTEL){
+      id = VIETTELPAY.id
+    }
+    return id
+  }
+
   const [order, setOrder] = useState<PostOrderType>({
     user_address_id: null,
     branch_id: null,
-    payment_method_id: MOMO.id
+    payment_method_id: instancePaymentMethodId()
   })
   const removeItemByCheck = () => {
     dispatch(clearByCheck())
   }
-
 
   return (
     <>
@@ -119,15 +126,14 @@ function Cart() {
                   <UserPaymentInfo />
                 </div>
                 <div
-                  style={platForm === PLF_TYPE.BEAUTYX ? {} : {
-                    display: 'none'
-                  }}
+                  // style={platForm === PLF_TYPE.BEAUTYX ? {} : {
+                  //   display: 'none'
+                  // }}
                   className={style.right_section}
                 >
                   <PaymentMethod
                     onSetPaymentMethod={(method) =>
                       setOrder({ ...order, payment_method_id: method.id })
-                      // setOrder({ ...order, payment_method_id: 7 })
                     }
                   />
                 </div>
