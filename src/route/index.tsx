@@ -1,4 +1,4 @@
-import { lazy, Suspense } from "react";
+import { createRef, lazy, Suspense, useEffect } from "react";
 import AuthRoute from "./AuthRoute";
 import {
   BrowserRouter as Router,
@@ -30,7 +30,7 @@ import Cart from "pages/Cart";
 import SignPage from "pages/SignPage";
 import Bottom from "components/Bottom";
 import Head from "components/Head";
-import { AssistantButton } from "components/Layout"
+import { Alert, AppAlert, AppAlertHandle, AssistantButton } from "components/Layout"
 import CateTree from "pages/CateTree";
 import PayUrl from "rootComponents/momo/PayUrl";
 
@@ -56,6 +56,7 @@ const Rewards = lazy(() => import("pages/Rewards"));
 const Messenger = lazy(() => import("pages/Messenger"))
 const Seller = lazy(() => import("pages/SellerCenter"))
 const OrganizationsApprove = lazy(() => import("pages/OrganizationsApprove"))
+
 
 function RouterConfig() {
   const routes = [
@@ -265,12 +266,12 @@ function RouterConfig() {
       component: <PageNotFound />,
     },
     {
-      path:'/doanh-nghiep-moi-tham-gia',
-      component:<OrganizationsApprove/>
+      path: '/doanh-nghiep-moi-tham-gia',
+      component: <OrganizationsApprove />
     },
     {
-      path:'/checkout-payment',
-      component:<PayUrl/>
+      path: '/checkout-payment',
+      component: <PayUrl />
     }
   ];
   const routesPrivate = [
@@ -315,8 +316,8 @@ function RouterConfig() {
       component: <Messenger />
     },
     {
-      path:'/ket-qua-thanh-toan',
-      component:<PaymentStatus/>
+      path: '/ket-qua-thanh-toan',
+      component: <PaymentStatus />
     }
   ];
   logEvent(analytics, "page_view", {
@@ -324,6 +325,11 @@ function RouterConfig() {
     page_path: window.location.pathname,
     page_location: window.location.href,
   });
+  const alertRef = createRef<AppAlertHandle>();
+
+  useEffect(() => {
+    Alert.register(alertRef);
+  }, [alertRef]);
   return (
     <BrowserRouter>
       <Router>
@@ -350,6 +356,7 @@ function RouterConfig() {
         <AssistantButton />
         <Footer />
         <Bottom />
+        <AppAlert ref={alertRef} />
       </Router>
     </BrowserRouter>
   );

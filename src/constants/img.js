@@ -61,6 +61,8 @@ import flagVN from 'assets/image/vn.png'
 import qrCodeZalo from 'assets/image/qrCodeZalo.png'
 import bgTip from 'assets/image/bg-tip.jpg'
 import tip from 'assets/image/tips.png'
+import viettelMoney from 'assets/icon/viettelpay.png'
+import viettel from 'assets/icon/viettel.png'
 
 const img = {
     tip,
@@ -116,6 +118,8 @@ export const paymentMethod = {
     mocaGrap,
     phonePay,
     momoPayment,
+    viettelMoney,
+    viettel
 };
 
 export const imgTag = {

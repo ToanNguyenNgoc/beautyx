@@ -4,6 +4,7 @@ import * as Yup from 'yup';
 import { useHistory } from 'react-router-dom'
 import { AppContext } from 'context/AppProvider';
 import icon from 'constants/icon';
+import validateForm from 'utils/validateForm';
 
 
 function FormTelephone(props: any) {
@@ -15,7 +16,9 @@ function FormTelephone(props: any) {
             telephone: "",
         },
         validationSchema: Yup.object({
-            telephone: Yup.string()
+            telephone: Yup
+                .string()
+                .matches(validateForm.phone,"Vui lòng nhập đúng định dạng số điện thoại")
                 .required(t("form.please_enter_your_phone")),
         }),
         onSubmit: (values) => {

@@ -219,6 +219,10 @@ function Footer() {
         id: 12,
         img: icon.payon,
     },
+    {
+      id: 13,
+      img: paymentMethod.viettel,
+  },
   ];
   const app = [
     {

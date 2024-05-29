@@ -407,7 +407,10 @@
         "bonus": "Tiền thưởng",
         "benefit": "Quyền lợi",
         "create_address":"Thêm mới địa chỉ",
-        "update_address":"Cập nhật địa chỉ"
+        "update_address":"Cập nhật địa chỉ",
+        "aswer_delete_address":"Bạn có muốn xóa địa chỉ không ?",
+        "create_address_ok":"Tạo mới địa chỉ thành công",
+        "limit_buy_service":"Giới hạn lượt mua 1 lần / 1 dịch vụ"
     },
     "order": {
         "order_his": "Lịch sử đơn hàng",

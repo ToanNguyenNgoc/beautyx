@@ -9,6 +9,11 @@ export function useCartReducer() {
     const services = cart_confirm.filter((item: ICart) => item.is_type === 'SERVICE');
     const combos = cart_confirm.filter((item: ICart) => item.is_type === 'COMBO');
 
+    const products_check = products.filter(i => i.isConfirm)
+    const services_check = services.filter(i => i.isConfirm)
+    const combos_check = combos.filter(i => i.isConfirm)
+
+
     const outDiscounts: IDiscountPar[] | any[] = cart_confirm.map((i: ICart) => i.discount).filter(Boolean)
 
     const products_id = products.map((item: any) => {
@@ -29,6 +34,9 @@ export function useCartReducer() {
         services_id,
         products_id,
         combos_id,
-        outDiscounts
+        outDiscounts,
+        products_check,
+        services_check,
+        combos_check
     }
 }

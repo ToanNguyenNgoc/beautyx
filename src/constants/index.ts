@@ -28,3 +28,7 @@ export const LIST_METHOD = [
 ] as Array<{ name_key: string, content: string, icon: string }>
 
 export const hidden_orgs = ['nganthang', 'musa']
+
+export const storage_keys = {
+  local_pm_method:'local_pm_method'
+}

@@ -89,9 +89,9 @@ function Booking() {
   }, [location.state]);
   const { servicesBook } = SERVICES_BOOK;
   const [open, setOpen] = useState(false);
-  const instancePaymentMethodId = ()=>{
+  const instancePaymentMethodId = () => {
     let id = MOMO.id
-    if(FLAT_FORM === PLF_TYPE.VIETTEL){
+    if (FLAT_FORM === PLF_TYPE.VIETTEL) {
       id = VIETTELPAY.id
     }
     return id
@@ -222,9 +222,13 @@ function Booking() {
     if (
       res?.payment_gateway?.extra_data?.payUrl
     ) {
-      window.location.assign(
-        `${res?.payment_gateway?.extra_data?.payUrl}`
-      );
+      if (IS_MB) {
+        window.location.assign(`${res?.payment_gateway?.extra_data?.deepLink}`);
+      } else {
+        window.location.assign(
+          `${res?.payment_gateway?.extra_data?.payUrl}`
+        );
+      }
     } else {
       return resultLoad("Tạo đơn hàng thất bại!");
     }

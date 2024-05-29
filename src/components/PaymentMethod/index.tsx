@@ -5,15 +5,16 @@ import { IPaymentMethod } from 'interface'
 import style from './pm.module.css'
 import { EXTRA_FLAT_FORM } from 'api/extraFlatForm';
 import { AppContext } from 'context/AppProvider';
-import { LIST_METHOD, MOMO, VIETTELPAY } from 'common';
+import { LIST_METHOD, MOMO, PAY_ON_BTX, VIETTELPAY } from 'common';
 import { PLF_TYPE } from 'constants/plat-form';
+import { storage_keys } from '../../constants';
 
 
 interface PaymentMethodType {
   onSetPaymentMethod?: (method_id: IPaymentMethod) => void
 }
 
-const instanceInitStateMethodKey = ()=>{
+const instanceInitStateMethodKey = () => {
   const PLAT_FORM = EXTRA_FLAT_FORM()
   let key = MOMO.name_key
   switch (PLAT_FORM) {
@@ -22,6 +23,11 @@ const instanceInitStateMethodKey = ()=>{
       break;
     default:
       key = MOMO.name_key
+      if (localStorage.getItem(storage_keys.local_pm_method) === VIETTELPAY.name_key) {
+        key = VIETTELPAY.name_key
+      } else if (localStorage.getItem(storage_keys.local_pm_method) === PAY_ON_BTX.name_key) {
+        key = PAY_ON_BTX.name_key
+      }
       break;
   }
   return key
@@ -33,18 +39,18 @@ function PaymentMethod(props: PaymentMethodType) {
   const PLAT_FORM = EXTRA_FLAT_FORM()
   const { data } = useGetPaymentMethodQuery()
   const methods: IPaymentMethod[] = data || []
-  
+
   let LIST = LIST_METHOD.map((i: IPaymentMethod) => ({
     ...i,
     id: Number(methods.find(item => item.id === i.id)?.id)
   }))
-  if(PLAT_FORM === PLF_TYPE.MOMO){
+  if (PLAT_FORM === PLF_TYPE.MOMO) {
     LIST = LIST.filter(i => i.name_key === MOMO.name_key)
   }
-  if(PLAT_FORM === PLF_TYPE.VIETTEL){
+  if (PLAT_FORM === PLF_TYPE.VIETTEL) {
     LIST = LIST.filter(i => i.name_key === VIETTELPAY.name_key)
   }
-  
+
 
 
   const [methodKey, setMethodKey] = useState(instanceInitStateMethodKey())
@@ -58,6 +64,7 @@ function PaymentMethod(props: PaymentMethodType) {
   }, [method])
 
   const onChooseMethod = (item: IPaymentMethod) => {
+    localStorage.setItem(storage_keys.local_pm_method, item.name_key)
     setMethodKey(item.name_key)
   }
 
