@@ -33,6 +33,7 @@ import Head from "components/Head";
 import { AssistantButton } from "components/Layout"
 import CateTree from "pages/CateTree";
 import PayUrl from "rootComponents/momo/PayUrl";
+import { RegisterAppAlert } from "components/RegisterAppAlert/RegisterAppAlert";
 
 //community page
 const PostDetail = lazy(() => import("pages/Community/pages/PostDetail"));
@@ -350,6 +351,7 @@ function RouterConfig() {
         <AssistantButton />
         <Footer />
         <Bottom />
+        <RegisterAppAlert/>
       </Router>
     </BrowserRouter>
   );

@@ -1,6 +1,7 @@
 import icon from "./icon"
 
 export const mailSales = "sales@myspa.vn";
+export const reward_percent_order = 0.02
 export const mailSupport = "support@beautyx.vn";
 export const phoneSupport = "0343131003";
 export const phoneHotline = "0899310908";

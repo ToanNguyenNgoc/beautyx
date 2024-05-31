@@ -41,7 +41,7 @@ export function PopupBtxReward(props: PopupBtxRewardProps) {
                     (Từ thanh toán đơn hàng thành công !)
                 </span>
                 <span className={style.desc_btx_reward}>
-                    BTX Coins dùng để sử dụng đổi các phần quà giá trị
+                    BTX Poins dùng để sử dụng đổi các phần quà giá trị
                 </span>
                 <XButton
                     onClick={onClose}
