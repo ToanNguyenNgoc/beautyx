@@ -4,8 +4,8 @@ import { useContext, useRef, useState, MouseEvent } from 'react';
 import style from './address.module.css'
 import { useSelector } from 'react-redux';
 import { IDistrict, IProvince, IWard } from 'interface';
-import { useSwr, useUserAddress } from 'hooks';
-import { XButton } from 'components/Layout';
+import { useNoti, useSwr, useUserAddress } from 'hooks';
+import { AlertSnack, XButton } from 'components/Layout';
 import { useHistory } from 'react-router-dom';
 
 interface Address {
@@ -88,6 +88,7 @@ function AddressForm() {
       enable: address.district?.code
     }
   )
+  const { noti, resultLoad, onCloseNoti } = useNoti()
   const onSaveAddress = () => {
     if (address.ward && address.text) {
       postAddress({
@@ -95,7 +96,10 @@ function AddressForm() {
           address: `${address.text}, ${address.ward?.txt}, ${address.district?.txt}, ${address.province?.txt}`,
           is_default: refCheckbox.current?.checked
         },
-        cb: () => history.goBack()
+        cb: () => {
+          resultLoad(t('acc.create_address_ok'))
+          setTimeout(() => { history.goBack() }, 3000)
+        }
       })
     }
   }
@@ -103,6 +107,9 @@ function AddressForm() {
     <>
       <HeadTitle
         title={t('acc.create_address')}
+      />
+      <AlertSnack
+        open={noti.openAlert} onClose={onCloseNoti} title={noti.message} status='SUCCESS'
       />
       <div className={style.container}>
         <div className={style.form}>

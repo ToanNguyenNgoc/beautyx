@@ -58,6 +58,7 @@ const Messenger = lazy(() => import("pages/Messenger"))
 const Seller = lazy(() => import("pages/SellerCenter"))
 const OrganizationsApprove = lazy(() => import("pages/OrganizationsApprove"))
 
+
 function RouterConfig() {
   const routes = [
     // START mini app share link
@@ -266,12 +267,12 @@ function RouterConfig() {
       component: <PageNotFound />,
     },
     {
-      path:'/doanh-nghiep-moi-tham-gia',
-      component:<OrganizationsApprove/>
+      path: '/doanh-nghiep-moi-tham-gia',
+      component: <OrganizationsApprove />
     },
     {
-      path:'/checkout-payment',
-      component:<PayUrl/>
+      path: '/checkout-payment',
+      component: <PayUrl />
     }
   ];
   const routesPrivate = [
@@ -316,8 +317,8 @@ function RouterConfig() {
       component: <Messenger />
     },
     {
-      path:'/ket-qua-thanh-toan',
-      component:<PaymentStatus/>
+      path: '/ket-qua-thanh-toan',
+      component: <PaymentStatus />
     }
   ];
   logEvent(analytics, "page_view", {
@@ -351,7 +352,7 @@ function RouterConfig() {
         <AssistantButton />
         <Footer />
         <Bottom />
-        <RegisterAppAlert/>
+        <RegisterAppAlert />
       </Router>
     </BrowserRouter>
   );
