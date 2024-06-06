@@ -2,7 +2,6 @@ import { CACHE_TIME } from "common";
 import { identity, pickBy } from "lodash";
 import useSWR, { SWRResponse } from "swr";
 import * as Sentry from "@sentry/react"
-import { useEffect } from "react";
 
 export type SWROptions<Data = any, Error = any> = {
     API_URL: string;
@@ -43,8 +42,9 @@ export function useSwr(options: SWROptions) {
         onSuccess: (data, key) => {
             if (options.onSuccess) options.onSuccess(data?.data?.context, key)
         },
-        onError: (err) => {
+        onError: (err, key) => {
             Sentry.captureException(error)
+            if (options.onError) options.onError(err, key)
         }
     })
     if (data) {

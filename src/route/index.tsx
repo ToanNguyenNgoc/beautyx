@@ -309,6 +309,10 @@ function RouterConfig() {
     {
       path: "/messages",
       component: <Messenger />
+    },
+    {
+      path:'/ket-qua-thanh-toan',
+      component:<PaymentStatus/>
     }
   ];
   logEvent(analytics, "page_view", {

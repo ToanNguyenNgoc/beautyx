@@ -12,9 +12,9 @@ export const PAY_ON = {
   name_key: 'PAYON (QR Code)',
 }
 export const PAY_ON_BTX = {
-  id: 16,
+  id: 15,
   name_key: 'PAYON (BeautyX)',
-  content: 'Thanh toán qua Payon(Hỗ trợ thẻ ngân hàng, ATM, Visa,...)',
+  content: 'Thanh toán qua Payon (tối thiểu 5.000đ) (Hỗ trợ thẻ ngân hàng, ATM, Visa,...)',
   icon: icon.payon
 }
 export const MOMO = {
@@ -24,10 +24,10 @@ export const MOMO = {
   icon: icon.momo,
 }
 export const VIETTELPAY = {
-    id: 7,
-    name_key: "VIETTELPAY",
-    content: "Thanh toán qua VIETTELPAY",
-    icon: icon.viettelpay,
+  id: 7,
+  name_key: "VIETTELPAY",
+  content: "Thanh toán qua VIETTELPAY",
+  icon: icon.viettelpay,
 };
 export const OTHER = {
   id: 8,
@@ -49,8 +49,8 @@ export const BTX = {
 }
 export const LIST_METHOD = [
   MOMO,
+  VIETTELPAY,
   PAY_ON_BTX,
-  VIETTELPAY
   // OTHER,
   // CASH
 ] as IPaymentMethod[]
