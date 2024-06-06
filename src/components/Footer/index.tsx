@@ -548,7 +548,7 @@ function Footer() {
         </div>
         <div className="footer-copy-right">{t("footer.policy")}</div>
         <div className="footer-copy-right">
-          © 2021 Copyright BeautyX | ProductX teams.
+          © 2023 Copyright BeautyX | ProductX team.
         </div>
       </Container>
     </div>

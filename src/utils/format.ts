@@ -85,6 +85,8 @@ export const formatRoundOrgCount = (count: number) => {
         countRound = `${Math.ceil(count / 10) * 10}+`;
     } else if (count > 100 && count <= 1000) {
         countRound = `${Math.ceil(count / 100) * 100}+`;
+    } else if (count > 1000 && count <= 10000) {
+        countRound = `${Math.ceil(count / 1000) * 1000}+`;
     }
     return countRound;
 };
