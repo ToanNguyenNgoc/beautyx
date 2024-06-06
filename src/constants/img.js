@@ -61,10 +61,14 @@ import flagVN from 'assets/image/vn.png'
 import qrCodeZalo from 'assets/image/qrCodeZalo.png'
 import bgTip from 'assets/image/bg-tip.jpg'
 import tip from 'assets/image/tips.png'
+import logoMyspa from 'assets/image/logo-myspa.png'
+import logoMyspaWhite from 'assets/image/logo-myspa-white.png'
 import viettelMoney from 'assets/icon/viettelpay.png'
 import viettel from 'assets/icon/viettel.png'
 
 const img = {
+    logoMyspaWhite,
+    logoMyspa,
     tip,
     bgTip,
     flagUK,

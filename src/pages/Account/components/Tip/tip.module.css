@@ -8,8 +8,8 @@
     background-position: left;
     background-repeat: no-repeat;
     background-size: cover;
-    height: 126px;
-}
+    height: 128px;
+}   
 .tip__text{
     font-size: 14px;
     color: white;
@@ -40,7 +40,7 @@
 
 @media screen and (max-width: 767.98px) {
     .tip__wrap{
-        height: 104px;
+        height: 106px;
     }
     .tip__text{
         -webkit-line-clamp:2;
