@@ -619,7 +619,14 @@
         "contact_width_me": "Contact width me",
         "download_app": "Download the app on your phone",
         "address_company": "BEAUTYX CO.,LTD - BEAUTYX CO., LTD - 2nd Floor, Zeta Building, 117 - 119 Tran Nguyen Dan, Ward 03, Binh Thanh District, City. Ho Chi Minh City - Business Registration License: 0317876727, issued on: 09/06/2023, by Business Registration Office – Department of Planning and Investment of Ho Chi Minh City",
-        "policy": "Any copying is illegal without our written permission"
+        "policy": "Any copying is illegal without our written permission",
+        "manager_spa": "Spa management software",
+        "manager_clinic": "Clinic management software",
+        "manager_salon": "Hair salon management software",
+        "manager_nail": "Nail salon management software",
+        "manager_brandapp": "Brand App design - customer care",
+        "manager_miniapp": "Brand Mini App Design (Zalo)",
+        "product_of_myspa": "Other products of"
     },
     "account_guide": {
         "ac_gui_step": "Step",

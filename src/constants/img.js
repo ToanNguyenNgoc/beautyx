@@ -61,8 +61,12 @@ import flagVN from 'assets/image/vn.png'
 import qrCodeZalo from 'assets/image/qrCodeZalo.png'
 import bgTip from 'assets/image/bg-tip.jpg'
 import tip from 'assets/image/tips.png'
+import logoMyspa from 'assets/image/logo-myspa.png'
+import logoMyspaWhite from 'assets/image/logo-myspa-white.png'
 
 const img = {
+    logoMyspaWhite,
+    logoMyspa,
     tip,
     bgTip,
     flagUK,

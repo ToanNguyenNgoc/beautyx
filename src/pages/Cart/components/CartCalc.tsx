@@ -83,7 +83,6 @@ export function CartCalc(props: CartCalcType) {
         tracking.PAY_CONFIRM_CLICK(orgChoose.id, formatProductList(products))
         try {
             const res = await orderApi.postOrder(orgChoose.id, param)
-            resultLoad('')
             const state_payment = await { ...res.data.context, FINAL_AMOUNT: TOTAL_PAYMENT };
             if (state_payment.status !== 'PENDING') {
                 return resultLoad('Tạo đơn hàng thất bại!')
@@ -98,6 +97,7 @@ export function CartCalc(props: CartCalcType) {
                 search: state_payment.payment_gateway?.transaction_uuid,
                 state: { state_payment },
             });
+            // resultLoad('')
         } catch (error) {
             return resultLoad('Tạo đơn hàng thất bại!')
         }

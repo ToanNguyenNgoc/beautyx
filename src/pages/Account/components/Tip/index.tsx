@@ -48,7 +48,7 @@ export default function Tip() {
                     {isLoading ? (
                         <Skeleton
                             className={style.tip__loading}
-                            height={IS_MB ? 106 : 116}
+                            height={IS_MB ? 106 : 128}
                             variant="rectangular"
                             animation="wave"
                         />

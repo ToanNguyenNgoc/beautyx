@@ -244,6 +244,49 @@ function Footer() {
     },
   ];
 
+  const dataMyspa = [
+      {
+          id: 1,
+          link: "https://myspa.vn/phan-mem-quan-ly-spa",
+          text: `${t("footer.manager_spa")}`,
+      },
+      {
+          id: 2,
+          link: "https://myspa.vn/phan-mem-quan-ly-phong-kham",
+          text: `${t("footer.manager_clinic")}`,
+      },
+      {
+          id: 3,
+          link: "https://myspa.vn/phan-mem-quan-ly-salon-toc",
+          text: `${t("footer.manager_salon")}`,
+      },
+      {
+          id: 4,
+          link: "https://myspa.vn/phan-mem-quan-ly-tiem-nails",
+          text: `${t("footer.manager_nail")}`,
+      },
+      {
+          id: 5,
+          link: "https://myspa.vn/thiet-ke-app-thuong-hieu",
+          text: `${t("footer.manager_brandapp")}`,
+      },
+      {
+          id: 6,
+          link: "https://myspa.vn/thiet-ke-zalo-mini-app-thuong-hieu",
+          text: `${t("footer.manager_miniapp")}`,
+      },
+      {
+          id: 7,
+          link: "https://myspa.vn/mini-game-vong-quay-may-man",
+          text: "Lucky Wheel",
+      },
+      {
+          id: 8,
+          link: "https://myspa.vn/marketing-automation-zns",
+          text: "Marketing Automation ZNS",
+      },
+  ];
+
   const voucherInApp = [
     {
       id: 1,
@@ -270,6 +313,13 @@ function Footer() {
       img: icon.zalo,
     }
   ];
+  const gotoMyspa = (link: string) => {
+    window.open(
+      `${link}`,
+      "_blank",
+      "noopener,noreferrer"
+    );
+  };
   const gotoPolicy = (item: any) => {
     switch (item.type) {
       case "NUMBER":
@@ -336,20 +386,40 @@ function Footer() {
       <Container>
         <div className="footer-cnt">
           <div className="footer-left">
-            {data_footer.map((item, index) => (
-              <div key={index} className="wrap">
+            <div className="footer-left_top">
+              {data_footer.map((item, index) => (
+                <div key={index} className="wrap">
+                  <div className="footer-cnt__item">
+                    <div className="footer-cnt__item-title">{item.title}</div>
+                    <ul>
+                      {item.items.map((a: any, i: number) => (
+                        <li onClick={() => gotoPolicy(a)} key={i}>
+                          {a.title}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+              ))}
+            </div>
+            <div className="footer-left_bottom">
+              <div className="wrap">
                 <div className="footer-cnt__item">
-                  <div className="footer-cnt__item-title">{item.title}</div>
-                  <ul>
-                    {item.items.map((a: any, i: number) => (
-                      <li onClick={() => gotoPolicy(a)} key={i}>
-                        {a.title}
-                      </li>
-                    ))}
-                  </ul>
+                  <div className="row-center">
+                    <div className="footer-cnt__item-title">{t("footer.product_of_myspa")}</div>
+                    <img onClick={() => gotoMyspa("https://myspa.vn/")} className="logo-myspa" alt="logo-myspa" src={img.logoMyspaWhite}/>
+                  </div>
+                    <ul>
+                      {dataMyspa.map((item: any, index: number) => (
+                        <li key={index} onClick={() => gotoMyspa(item.link)}>
+                          {item.text}
+                        </li>
+                      ))}
+                    </ul>
                 </div>
               </div>
-            ))}
+            </div>
+          
           </div>
           <div className="footer-right">
             <div className="wrap">
