@@ -411,7 +411,10 @@
         "bonus": "Bonus",
         "benefit": "Benefit",
         "create_address":"Add new address",
-        "update_address":"Update address"
+        "update_address":"Update address",
+        "aswer_delete_address":"You want to delete the address ?",
+        "create_address_ok":"Create address successfully",
+        "limit_buy_service":"Limit 1 purchase per service"
     },
     "order": {
         "order_his": "Orders history",

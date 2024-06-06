@@ -341,6 +341,7 @@ const DetailQuantity = (props: DetailQuantityProps) => {
     });
     dispatch(clearAllServices());
   }
+  
 
   return (
     <div>
@@ -351,7 +352,7 @@ const DetailQuantity = (props: DetailQuantityProps) => {
         </p>
       }
       {
-        discount.limit &&
+        discount.limit > 0 &&
         <p className={style.price_warning}>
           Giới hạn lượt mua {discount.limit} lần/dịch vụ
         </p>

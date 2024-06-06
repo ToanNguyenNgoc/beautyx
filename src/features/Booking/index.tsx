@@ -34,7 +34,7 @@ import BookingMap from "./components/BookingMap";
 import { AUTH_LOCATION } from "api/authLocation";
 import PaymentMethod from "components/PaymentMethod";
 import { PLF_TYPE } from "constants/plat-form";
-import { BTX, PAY_ON_BTX, VIETTELPAY } from "common";
+import { BTX, MOMO, PAY_ON_BTX, VIETTELPAY } from "common";
 
 const date = dayjs();
 function Booking() {
@@ -89,7 +89,14 @@ function Booking() {
   }, [location.state]);
   const { servicesBook } = SERVICES_BOOK;
   const [open, setOpen] = useState(false);
-  const [paymentMethodId, setPaymentMethodId] = useState<any>();
+  const instancePaymentMethodId = () => {
+    let id = MOMO.id
+    if (FLAT_FORM === PLF_TYPE.VIETTEL) {
+      id = VIETTELPAY.id
+    }
+    return id
+  }
+  const [paymentMethodId, setPaymentMethodId] = useState<any>(instancePaymentMethodId());
   const [point, setPoint] = useState(0)
   const [bookTime, setBookTime] = useState({
     date: date.format("YYYY-MM-DD"),
@@ -199,12 +206,12 @@ function Booking() {
           search: transaction_uuid,
           state: { state_payment, actionAfter, listPayment },
         });
-        resultLoad('')
         if (FLAT_FORM === 'MOMO') localStorage.setItem('APP_INFO', JSON.stringify(actionAfter))
       } else {
         resultLoad(t('my_ser.create_order_fail'))
       }
       //setLoading(false);
+      resultLoad('')
     } catch (err) {
       console.log(err);
       resultLoad(t('my_ser.create_order_fail'))
@@ -213,12 +220,15 @@ function Booking() {
 
   function onRedirectVIETTELPAY(res: any) {
     if (
-      res?.payment_gateway?.extra_data?.payUrl &&
-      res?.payment_gateway?.extra_data?.qr_code_String
+      res?.payment_gateway?.extra_data?.payUrl
     ) {
-      window.location.assign(
-        `${res?.payment_gateway?.extra_data?.payUrl}`
-      );
+      if (IS_MB) {
+        window.location.assign(`${res?.payment_gateway?.extra_data?.deepLink}`);
+      } else {
+        window.location.assign(
+          `${res?.payment_gateway?.extra_data?.payUrl}`
+        );
+      }
     } else {
       return resultLoad("Tạo đơn hàng thất bại!");
     }
@@ -382,7 +392,7 @@ function Booking() {
               TYPE_PAGE === 'BOOK_NOW' &&
               <>
                 <div
-                  style={FLAT_FORM !== PLF_TYPE.BEAUTYX ? { display: 'none' } : {}}
+                  // style={FLAT_FORM !== PLF_TYPE.BEAUTYX ? { display: 'none' } : {}}
                   className={style.section_payment}
                 >
                   <PaymentMethod

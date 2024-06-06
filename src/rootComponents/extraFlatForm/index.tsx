@@ -9,8 +9,7 @@ import LoginFlatForm from '../loginFlatForm/LoginFlatForm';
 function ExtraFlatForm() {
     const location = useLocation();
     const params = extraParamsUrl();
-    const flatForm = location.pathname.split('/')[1];
-    // console.log(flatForm)
+    const flatForm = params?.merchant_code || location.pathname.split('/')[1];
     const FLAT_FORM = sessionStorage.getItem('FLAT_FORM');
     if (!FLAT_FORM) {
         switch (flatForm) {
@@ -31,6 +30,9 @@ function ExtraFlatForm() {
                 break
             case FLAT_FORM_TYPE.BEAUTYX_MOBILE:
                 sessionStorage.setItem('FLAT_FORM', FLAT_FORM_TYPE.BEAUTYX_MOBILE);
+                break
+            case FLAT_FORM_TYPE.VIETTEL:
+                sessionStorage.setItem('FLAT_FORM', FLAT_FORM_TYPE.VIETTEL);
                 break
             default:
                 sessionStorage.setItem('FLAT_FORM', 'BEAUTYX');

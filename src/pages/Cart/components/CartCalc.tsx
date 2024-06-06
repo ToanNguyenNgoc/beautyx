@@ -1,6 +1,6 @@
 import { BTXSelectPoint, XButton } from 'components/Layout';
 import icon from 'constants/icon';
-import { useCartReducer, useNoti, useUserAddress, useVoucher } from 'hooks';
+import { useCartReducer, useDeviceMobile, useNoti, useUserAddress, useVoucher } from 'hooks';
 import { IDiscountPar, IOrganization } from 'interface';
 import IStore from 'interface/IStore';
 import React, { Dispatch, useContext, useEffect, useState } from 'react';
@@ -105,15 +105,18 @@ export function CartCalc(props: CartCalcType) {
             return resultLoad('Tạo đơn hàng thất bại!')
         }
     }
-
+    const is_mobile = useDeviceMobile()
     function onRedirectVIETTELPAY(res: any) {
         if (
-            res?.payment_gateway?.extra_data?.payUrl &&
-            res?.payment_gateway?.extra_data?.qr_code_String
+            res?.payment_gateway?.extra_data?.payUrl
         ) {
-            window.location.assign(
-                `${res?.payment_gateway?.extra_data?.payUrl}`
-            );
+            if (is_mobile) {
+                window.location.assign(`${res?.payment_gateway?.extra_data?.deepLink}`);
+            } else {
+                window.location.assign(
+                    `${res?.payment_gateway?.extra_data?.payUrl}`
+                );
+            }
         } else {
             return resultLoad("Tạo đơn hàng thất bại!");
         }

@@ -42,7 +42,9 @@ const homePath = [
   "/",
   "/homepage/",
   "/homepage",
-  "/home"
+  "/home",
+  "/trang-chu/",
+  "/trang-chu",
 ];
 
 const pathHeader = [
@@ -54,6 +56,8 @@ const pathHeader = [
   "/",
   "/homepage/",
   "/homepage",
+  "/trang-chu/",
+  "/trang-chu",
   "/ket-qua-tim-kiem/dich-vu",
   "/ket-qua-tim-kiem/san-pham",
   "/ket-qua-tim-kiem/cua-hang",

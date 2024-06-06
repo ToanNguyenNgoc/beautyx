@@ -4,9 +4,10 @@ import "../../ResetPassword/style.css";
 import { formatTelephone } from "../../ResetPassword";
 import { authentication, RecaptchaVerifier, signInWithPhoneNumber } from "../../../firebase";
 import FormTelephone from "../../ResetPassword/components/FormTelephone";
+import { Alert } from "components/Layout";
 
 function SignVeriOtp(props: any) {
-    const { open, setOpen, setDataOtp, prevUrl,setActiveTabSign } = props;
+    const { open, setOpen, setDataOtp, prevUrl, setActiveTabSign } = props;
     const [load, setLoad] = useState(false);
     const generateRecaptcha = () => {
         try {
@@ -45,6 +46,10 @@ function SignVeriOtp(props: any) {
             .catch((err) => {
                 console.log(err);
                 setLoad(false)
+                Alert.open({
+                    message: "Có lỗi xảy ra, vui lòng thử lại",
+                    actions: [{ text: "Đóng", onPress: () => generateRecaptcha() }]
+                })
             });
     };
     return (

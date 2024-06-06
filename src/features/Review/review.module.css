@@ -16,7 +16,40 @@
     overflow-y: scroll;
     padding-bottom: 70px;
 }
-
+.tip_cnt{
+    display: flex;
+    align-items: center;
+    background-color: #FFE3D2;
+    padding: 10px 8px;
+    margin-bottom: 12px;
+    border-radius: 8px;
+}
+.tip_cnt img{
+    width: 32px;
+    height: 32px;
+    margin-right: 8px;
+}
+.tip_cnt span{
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-black);
+}
+.tip_media{
+    padding: 10px 0px;
+    display: flex;
+    align-items: center;
+}
+.tip_media img{
+    width: 28px;
+    height: 28px;
+    margin-right: 6px;
+    margin: 6px 0px;
+}
+.tip_media span{
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-black);
+}
 .org_name {
     font-weight: 700;
     font-size: 14px;

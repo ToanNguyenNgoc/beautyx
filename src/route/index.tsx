@@ -33,6 +33,7 @@ import Head from "components/Head";
 import { AssistantButton } from "components/Layout"
 import CateTree from "pages/CateTree";
 import PayUrl from "rootComponents/momo/PayUrl";
+import { RegisterAppAlert } from "components/RegisterAppAlert/RegisterAppAlert";
 
 //community page
 const PostDetail = lazy(() => import("pages/Community/pages/PostDetail"));
@@ -56,6 +57,7 @@ const Rewards = lazy(() => import("pages/Rewards"));
 const Messenger = lazy(() => import("pages/Messenger"))
 const Seller = lazy(() => import("pages/SellerCenter"))
 const OrganizationsApprove = lazy(() => import("pages/OrganizationsApprove"))
+
 
 function RouterConfig() {
   const routes = [
@@ -106,6 +108,10 @@ function RouterConfig() {
     // END mini app share link
     {
       path: `/home`,
+      component: <HomePage />,
+    },
+    {
+      path: `/trang-chu`,
       component: <HomePage />,
     },
     {
@@ -261,12 +267,12 @@ function RouterConfig() {
       component: <PageNotFound />,
     },
     {
-      path:'/doanh-nghiep-moi-tham-gia',
-      component:<OrganizationsApprove/>
+      path: '/doanh-nghiep-moi-tham-gia',
+      component: <OrganizationsApprove />
     },
     {
-      path:'/checkout-payment',
-      component:<PayUrl/>
+      path: '/checkout-payment',
+      component: <PayUrl />
     }
   ];
   const routesPrivate = [
@@ -311,8 +317,8 @@ function RouterConfig() {
       component: <Messenger />
     },
     {
-      path:'/ket-qua-thanh-toan',
-      component:<PaymentStatus/>
+      path: '/ket-qua-thanh-toan',
+      component: <PaymentStatus />
     }
   ];
   logEvent(analytics, "page_view", {
@@ -325,7 +331,7 @@ function RouterConfig() {
       <Router>
         <Head />
         <Switch>
-          <Redirect exact from="/" to="homepage" />
+          <Redirect exact from="/" to="trang-chu" />
           {routes.map((item, index: number) => (
             <Route key={index} path={item.path}>
               <Suspense fallback={<LoadProgress />}>
@@ -346,6 +352,7 @@ function RouterConfig() {
         <AssistantButton />
         <Footer />
         <Bottom />
+        <RegisterAppAlert />
       </Router>
     </BrowserRouter>
   );

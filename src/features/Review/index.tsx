@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { onErrorImg } from "utils";
 import icon from "constants/icon";
 import HeadMobile from "features/HeadMobile";
-import { RateStar, XButton } from "components/Layout";
+import { AlertAppSnack, RateStar, XButton } from "components/Layout";
 import { useComment, useDeviceMobile, useNoti, usePostMedia } from "hooks";
 import { IOrganization, ItemReviewed } from "interface";
 import style from './review.module.css'
@@ -18,6 +18,7 @@ import {
   onRemoveMediaServiceOrder,
   onUpdateOrderReviewed
 } from "redux/order-has-review/OrderHasReviewSlice";
+import img from "constants/img";
 
 
 
@@ -31,7 +32,7 @@ interface ReviewProps {
 }
 
 function Review(props: ReviewProps) {
-  const { open, onClose = () => { }, itemsReviews, org, order_id, point } = props;
+  const { open, onClose = () => { }, itemsReviews, org, order_id, point = 0 } = props;
   const IS_MB = useDeviceMobile();
   const dispatch = useDispatch()
   const { resultLoad, noti, onCloseNoti } = useNoti()
@@ -43,28 +44,30 @@ function Review(props: ReviewProps) {
 
   const { mutatePostCommentOrder } = useComment()
   const { bodyComment } = useSelector((state: any) => state.ORDER_HAS_REVIEW)
+  const services = bodyComment.services.filter((i: any) => (i.body.trim() !== ""))
+  const bodyServices = services.map((ser: any) => ({ ...ser, media_ids: ser.media_ids.map((i: any) => i.model_id) }))
+  const has_media = bodyServices.map((i: any) => i.media_ids).flat().filter(Boolean).length > 0
   const onSubmitComment = () => {
-    const services = bodyComment.services.filter((i: any) => (i.body.trim() !== "" || i.media_ids.length > 0))
     if (services.length !== itemsReviews.length) {
-      return resultLoad('Vui lòng đánh giá tất cả dịch vụ của đơn hàng')
+      return AlertAppSnack.open({ title: 'Vui lòng đánh giá tất cả dịch vụ của đơn hàng', type: 'warning', autoHideDuration: 3000 })
     }
-    const bodyServices = services.map((ser: any) => ({ ...ser, media_ids: ser.media_ids.map((i: any) => i.model_id) }))
     const body = {
       ...bodyComment,
       commentable_type: "ORDER",
       services: bodyServices,
       commentable_id: order_id,
       organization_id: org.id,
-      media_ids: []
+      has_media,
     }
+
     mutatePostCommentOrder.mutateAsync(body)
       .then(() => {
         resultLoad("POINT");
         dispatch(onUpdateOrderReviewed(order_id))
-        if (point) dispatch(onUserUpdatePoint(point))
+        if (point) dispatch(onUserUpdatePoint(has_media ? point * 3 : point))
       })
       .catch(() => {
-        resultLoad('Có lỗi xảy ra. Vui lòng thử lại')
+        AlertAppSnack.open({ title: 'Có lỗi xảy ra. Vui lòng thử lại', type: 'error', autoHideDuration: 3000 })
       })
   };
   return (
@@ -82,10 +85,24 @@ function Review(props: ReviewProps) {
         )}
         <div className={style.container}>
           <div className={style.body}>
+            {
+              point &&
+              <div className={style.tip_cnt}>
+                <img src={icon.coins} alt="" />
+                <span>Đánh giá để nhận ngay <span style={{ color: 'var(--orange)' }}>{point}</span> BTX Points</span>
+              </div>
+            }
             <p className={style.org_name}>{org?.name}</p>
             <div>
               <RateStar value={bodyComment.rate} onRateStar={star => dispatch(onChangeRateOrder(star))} />
             </div>
+            {
+              point &&
+              <div className={style.tip_media}>
+                <img src={img.tip} alt="" />
+                <span>Thêm hình ảnh để nhận thêm <span style={{ color: 'var(--orange)' }}>{point * 2}</span> BTX Points </span>
+              </div>
+            }
             <ul className={style.list}>
               {
                 itemsReviews.map((item: ItemReviewed) => ((
@@ -105,7 +122,7 @@ function Review(props: ReviewProps) {
             />
           </div>
         </div>
-        <PopupBtxReward open={noti.openAlert && noti.message === "POINT"} onClose={onClose} btxPoint={Number(point)} />
+        <PopupBtxReward open={noti.openAlert && noti.message === "POINT"} onClose={onClose} btxPoint={Number(has_media ? point * 3 : point)} />
         <PopupNotification content={noti.message} open={noti.openAlert && noti.message !== "POINT"} setOpen={onCloseNoti} />
       </Dialog>
     </>

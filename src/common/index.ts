@@ -26,7 +26,7 @@ export const MOMO = {
 export const VIETTELPAY = {
   id: 7,
   name_key: "VIETTELPAY",
-  content: "Thanh toán qua VIETTELPAY",
+  content: "Thanh toán qua VIETTEL MONEY",
   icon: icon.viettelpay,
 };
 export const OTHER = {

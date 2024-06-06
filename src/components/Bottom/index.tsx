@@ -18,6 +18,8 @@ const paths = [
     "/",
     "/homepage/",
     "/homepage",
+    "/trang-chu/",
+    "/trang-chu",
     "/tai-khoan",
     "/lich-hen",
     "/-danh-muc",
@@ -34,7 +36,7 @@ function Bottom() {
             title: t("Home.location"),
             icon: ICON.home,
             iconAct: ICON.homeAct,
-            path: "/homepage",
+            path: "/trang-chu",
             params: "",
             badge: 0
         },

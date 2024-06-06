@@ -1,6 +1,7 @@
 import icon from "./icon"
 
 export const mailSales = "sales@myspa.vn";
+export const reward_percent_order = 0.02
 export const mailSupport = "support@beautyx.vn";
 export const phoneSupport = "0343131003";
 export const phoneHotline = "0899310908";
@@ -28,3 +29,7 @@ export const LIST_METHOD = [
 ] as Array<{ name_key: string, content: string, icon: string }>
 
 export const hidden_orgs = ['nganthang', 'musa']
+
+export const storage_keys = {
+  local_pm_method:'local_pm_method'
+}

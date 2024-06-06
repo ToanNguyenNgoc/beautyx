@@ -1,7 +1,7 @@
 
 import { Container } from '@mui/system';
 import { EXTRA_FLAT_FORM } from 'api/extraFlatForm';
-import { EmptyRes, XButton } from 'components/Layout';
+import { Alert, EmptyRes, XButton } from 'components/Layout';
 import PaymentMethod from 'components/PaymentMethod';
 import icon from 'constants/icon';
 import { PLF_TYPE } from 'constants/plat-form';
@@ -14,11 +14,11 @@ import IStore from 'interface/IStore';
 import UserPaymentInfo from 'pages/Account/components/UserPaymentInfo';
 import React, { useContext, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { clearByCheck } from 'redux/cart';
 import { clst, unique } from 'utils';
 import style from './cart.module.css'
 import { CartCalc, CartOrgItem } from './components';
-import { MOMO } from 'common';
+import { MOMO, VIETTELPAY } from 'common';
+import { clearByCheck } from 'redux/cart';
 
 interface ItemType { id: number, quantity: number }
 
@@ -51,18 +51,33 @@ function Cart() {
       cartItemsOrg: cartItemsOrg
     }
   })
-  const { cart_confirm } = useCartReducer()
+  const { cart_confirm, products } = useCartReducer()
   const orgChoose = cart_confirm[0]?.org
+
+  const instancePaymentMethodId = () => {
+    let id = MOMO.id
+    if (platForm === PLF_TYPE.VIETTEL) {
+      id = VIETTELPAY.id
+    }
+    return id
+  }
 
   const [order, setOrder] = useState<PostOrderType>({
     user_address_id: null,
     branch_id: null,
-    payment_method_id: MOMO.id
+    payment_method_id: instancePaymentMethodId()
   })
   const removeItemByCheck = () => {
-    dispatch(clearByCheck())
+    if (cart_confirm.length > 0) {
+      Alert.open({
+        message: "Bạn có muốn xóa khỏi giỏ hàng không?",
+        actions: [
+          { text: 'Hủy', onPress: () => { } },
+          { text: 'Xác nhận', onPress: () => dispatch(clearByCheck()) }
+        ]
+      })
+    }
   }
-
 
   return (
     <>
@@ -116,18 +131,19 @@ function Cart() {
               </div>
               <div className={style.right}>
                 <div className={style.right_section}>
-                  <UserPaymentInfo />
+                  <UserPaymentInfo
+                    disableAddress={products.length === 0}
+                  />
                 </div>
                 <div
-                  style={platForm === PLF_TYPE.BEAUTYX ? {} : {
-                    display: 'none'
-                  }}
+                  // style={platForm === PLF_TYPE.BEAUTYX ? {} : {
+                  //   display: 'none'
+                  // }}
                   className={style.right_section}
                 >
                   <PaymentMethod
                     onSetPaymentMethod={(method) =>
                       setOrder({ ...order, payment_method_id: method.id })
-                      // setOrder({ ...order, payment_method_id: 7 })
                     }
                   />
                 </div>

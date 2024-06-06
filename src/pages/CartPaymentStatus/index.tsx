@@ -22,6 +22,7 @@ import { useCartReducer, useCountDown, useSwr } from "hooks";
 
 import style from './payment.module.css'
 import { IOrderV2 } from "interface";
+import { reward_percent_order } from "../../constants";
 
 const initOpen = {
     content: "",
@@ -109,7 +110,7 @@ function CartPaymentStatus() {
         const res = await orderApi.getOrderById(order_id)
         // const btx_reward = await res?.data?.context?.btx_reward?.reward_points
         const orderDetail: IOrderV2 = await res.data?.context
-        const btx_reward = orderDetail?.payment_gateway?.amount / 100
+        const btx_reward = orderDetail?.payment_gateway?.amount * reward_percent_order
         if (btx_reward && btx_reward >= 0) {
             setOpenBtx({ open: true, btx_point: btx_reward })
         }
