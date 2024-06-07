@@ -204,6 +204,7 @@ const ServicePage = ({ type }: Page) => {
                   <SerProItem
                     changeStyle={mb}
                     type={type} item={item} org={org}
+                    hideAddress
                   />
                 </li>
               ))

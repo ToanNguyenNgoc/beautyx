@@ -20,11 +20,12 @@ interface SerProItemProps {
   item: any,
   org?: IOrganization,
   type: "SERVICE" | "PRODUCT" | "COMBO",
-  changeStyle?: boolean
+  changeStyle?: boolean,
+  hideAddress?: boolean
 }
 
 export function SerProItem(props: SerProItemProps) {
-  const { item, org, type, changeStyle } = props;
+  const { item, org, type, changeStyle, hideAddress = false } = props;
   const org_dis = {
     id: org?.id ?? item.org_id,
     name: org?.name ?? item.org_name,
@@ -126,10 +127,13 @@ export function SerProItem(props: SerProItemProps) {
               <h5>{formatDistance(item._geoDistance)}</h5>
             </div>
           }
-          <div className={style.item_address}>
-            <img src={icon.pinMapRed} alt="" />
-            <span>{address}</span>
-          </div>
+          {
+            !hideAddress &&
+            <div className={style.item_address}>
+              <img src={icon.pinMapRed} alt="" />
+              <span>{address}</span>
+            </div>
+          }
         </div>
       </div>
     </Link>

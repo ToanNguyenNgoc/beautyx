@@ -77,6 +77,7 @@ export const ServiceSection = ({ type }: { type: 'SERVICE' | 'PRODUCT' | 'COMBO'
                     item={item}
                     type={type}
                     changeStyle={mb}
+                    hideAddress
                   />
                 </li>
               ))

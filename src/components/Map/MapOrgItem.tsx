@@ -39,7 +39,8 @@ export default function MapTagsOrgItem(props: IProps) {
                     <p>{item?.name}</p>
                 </div>
                 <div className="map-item__address">
-                    <p>{item?.address ? item?.address : item?.full_address}</p>
+                    {/* <p>{item?.address ? item?.address : item?.full_address}</p> */}
+                    <p>{item?.full_address}</p>
                 </div>
                 <div className="map-item__evaluate">
                     <div className="evaluate-item">

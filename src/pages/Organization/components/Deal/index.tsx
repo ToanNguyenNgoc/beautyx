@@ -49,6 +49,7 @@ export const Deal = () => {
                       item={item}
                       type="SERVICE"
                       changeStyle={mb}
+                      hideAddress
                     />
                   </li>
                 ))
