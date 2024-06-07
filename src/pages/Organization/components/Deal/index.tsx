@@ -72,6 +72,7 @@ export const Deal = () => {
                       item={item}
                       type='PRODUCT'
                       changeStyle={mb}
+                      hideAddress
                     />
                   </li>
                 ))
