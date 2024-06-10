@@ -16,9 +16,9 @@ export const HomeCurrentLocation:FC=()=> {
     if (response && response?.features?.length > 0) {
         const context = response?.features[0]?.context
         const txt1 = parseInt(context[0]?.text_vi) ? '' : context[0]?.text_vi
-        const txt2 = parseInt(context[1]?.text_vi) ? '' : context[1]?.text_vi
-        const txt3 = context[2]?.text_vi ?? ''
-        place = `: ${txt1},${txt2},${txt3}`
+        const txt2 = parseInt(context[1]?.text_vi) ? '' : `, ${context[1]?.text_vi}`
+        const txt3 = parseInt(context[2]?.text_vi) ? '' : `, ${context[2]?.text_vi}`;
+        place = `: ${txt1}${txt2}${txt3}`
     }
     return (
         <Link
