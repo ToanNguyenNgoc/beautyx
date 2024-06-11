@@ -183,12 +183,12 @@ export function CartCalc(props: CartCalcType) {
                 iconSize={14}
                 className={style.open_voucher_bnt}
             />
-            <BTXSelectPoint
+            {/* <BTXSelectPoint
                 totalOrigin={cartAmount - cartAmountDiscount}
                 className={style.calc_pont}
                 valuePoint={order.point}
                 onChangePoint={(e) => setOrder({ ...order, point: e })}
-            />
+            /> */}
             <div className={style.calc_body}>
                 <div className={style.calc_body_row}>
                     <span className={style.calc_body_row_label}>{t('pm.temporary')}</span>
