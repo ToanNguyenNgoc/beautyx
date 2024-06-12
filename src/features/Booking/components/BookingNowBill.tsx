@@ -86,12 +86,12 @@ function BookingNowBill(props: BookingNowBillProps) {
                     icon={icon.cardDiscountOrange}
                 />
             </div>
-            {/* <BTXSelectPoint
+            <BTXSelectPoint
                 className={style.booking_cnt_bot_point}
                 totalOrigin={finalAmount - totalVoucherValue}
                 valuePoint={point}
                 onChangePoint={(e) => setPoint(Number(e))}
-            /> */}
+            />
             <div className={style.booking_cnt_bot_bill}>
                 <div className={style.booking_calc_item}>
                     <span className={style.booking_calc_item_left}>{t('cart.total_payment')}</span>
