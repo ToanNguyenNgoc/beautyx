@@ -98,7 +98,7 @@ export const paramOrderService = {
 }
 export const paramOrder: ParamOrder = {
     "limit": 8,
-    "filter[platform]": 'BEAUTYX|BEAUTYX MOBILE|ZALO|MOMO',
+    "filter[platform]": 'BEAUTYX|BEAUTYX MOBILE|ZALO|MOMO|VIETTEL',
     "filter[status]": "",
     "filter[withServicesSold]": true,
     "filter[productable]": true,
