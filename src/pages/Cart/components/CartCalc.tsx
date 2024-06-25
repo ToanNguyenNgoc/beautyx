@@ -110,16 +110,17 @@ export function CartCalc(props: CartCalcType) {
         if (
             res?.payment_gateway?.extra_data?.payUrl
         ) {
-            window.location.assign(
-                `${res?.payment_gateway?.extra_data?.payUrl}`
-            );
-            // if (is_mobile) {
-            //     window.location.assign(`${res?.payment_gateway?.extra_data?.deepLink}`);
-            // } else {
-            //     window.location.assign(
-            //         `${res?.payment_gateway?.extra_data?.payUrl}`
-            //     );
-            // }
+            if (is_mobile) {
+                if(PLAT_FORM === PLF_TYPE.VIETTEL){
+                    window.location.assign(`${res?.payment_gateway?.extra_data?.payUrl}`);
+                }else{
+                    window.location.assign(`${res?.payment_gateway?.extra_data?.deepLink}`);
+                }
+            } else {
+                window.location.assign(
+                    `${res?.payment_gateway?.extra_data?.payUrl}`
+                );
+            }
         } else {
             return resultLoad("Tạo đơn hàng thất bại!");
         }
