@@ -195,9 +195,9 @@ function Booking() {
           quantity: services[0]?.quantity,
         };
         if (
-          response?.data?.context?.payment_method?.name_key === VIETTELPAY.name_key
+          state_payment?.payment_method?.name_key === VIETTELPAY.name_key
         ) {
-          return onRedirectVIETTELPAY(response?.data?.context, actionAfter, listPayment);
+          return onRedirectVIETTELPAY(state_payment, actionAfter, listPayment);
         }
         history.push({
           pathname: `/trang-thai-don-hang/`,

@@ -91,9 +91,7 @@ export function CartCalc(props: CartCalcType) {
                 return resultLoad('Tạo đơn hàng thất bại!')
             }
             if (res?.data?.context?.payment_method?.name_key === VIETTELPAY.name_key) {
-                return onRedirectVIETTELPAY(
-                    res?.data?.context
-                );
+                return onRedirectVIETTELPAY(state_payment);
             }
             history.push({
                 pathname: `/trang-thai-don-hang/`,
