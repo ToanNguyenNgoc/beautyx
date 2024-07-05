@@ -22,6 +22,7 @@ function PaymentInfo(props: any) {
   const [items,] = useState(orderItems)
   const [servicesOrder,] = useState(items?.filter((i: ICart) => i.is_type === 'SERVICE'))
   const EX_PAYMENT = EXTRA_PAYMENT(data.res);
+
   const FLAT_FORM = EXTRA_FLAT_FORM();
   const deepLink = EX_PAYMENT?.deepLink;
   const EXTRA_PAYMENT_ID = EX_PAYMENT?.EXTRA_PAYMENT_ID;
@@ -35,6 +36,8 @@ function PaymentInfo(props: any) {
     if (FLAT_FORM) {
       switch (FLAT_FORM) {
         case FLAT_FORM_TYPE.MOMO:
+          return window.location.assign(EX_PAYMENT?.deepLink);
+        case FLAT_FORM_TYPE.VIETTEL:
           return window.location.assign(EX_PAYMENT?.deepLink);
         case FLAT_FORM_TYPE.TIKI:
           return openPaymentPlatformTiki()
@@ -201,8 +204,8 @@ function PaymentInfo(props: any) {
       {
         !action &&
         <div className={style.section_guide}>
-        <span>Bạn cần đặt hẹn sau khi thanh toán thành công nhé! Cửa hàng sẽ liên hệ với bạn sớm nhất có thể</span>
-      </div>
+          <span>Bạn cần đặt hẹn sau khi thanh toán thành công nhé! Cửa hàng sẽ liên hệ với bạn sớm nhất có thể</span>
+        </div>
       }
       <div className={style.section_bottom}>
         <div className={style.bottom_bill}>

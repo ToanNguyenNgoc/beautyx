@@ -33,6 +33,13 @@ export const EXTRA_PAYMENT = (res: any) => {
                 EXTRA_PAYMENT_DATA: res?.payment_gateway?.extra_data
             }
             break;
+        case FLAT_FORM_TYPE.VIETTEL:
+            EX_PAYMENT = {
+                deepLink: res?.payment_gateway?.extra_data?.payUrl,
+                qrCode: res?.payment_gateway?.extra_data?.payUrl,
+                EXTRA_PAYMENT_ID: null
+            }
+            break;
         default:
             break
     }

@@ -2,7 +2,7 @@
 import { IOrderV2, IPaymentMethod } from "interface";
 import { FC, memo, useEffect, useRef } from "react";
 import img from "constants/img";
-import { MOMO, OTHER, PAY_ON_BTX } from "common";
+import { MOMO, OTHER, PAY_ON_BTX, VIETTELPAY } from "common";
 import { XButton } from "components/Layout";
 import style from "../payment.module.css"
 import { useCancelByTime, openWindowPayon } from "pages/CartPaymentStatus";
@@ -14,7 +14,7 @@ interface PaymentProps {
   pay_url: string,
   payment_method: IPaymentMethod,
   res: IOrderV2,
-  orderStatus:any
+  orderStatus: any
 }
 
 const PaymentRender: FC<PaymentProps> = ({ pay_url, payment_method, res, orderStatus }) => {
@@ -22,8 +22,10 @@ const PaymentRender: FC<PaymentProps> = ({ pay_url, payment_method, res, orderSt
     switch (payment_method.name_key) {
       case MOMO.name_key:
         return <MomoRender pay_url={pay_url} />;
+      case VIETTELPAY.name_key:
+        return <MomoRender pay_url={pay_url} />;
       case PAY_ON_BTX.name_key:
-        return <PayonRender pay_url={pay_url}/>;
+        return <PayonRender pay_url={pay_url} />;
       case OTHER.name_key:
         return <OtherRender res={res} />
       default:
@@ -91,7 +93,7 @@ const MomoRender = ({ pay_url }: { pay_url: string }) => {
   )
 }
 const PayonRender = ({ pay_url }: { pay_url: string }) => {
-  
+
   useEffect(() => {
     const timer = setTimeout(() => {
       openWindowPayon(pay_url)
@@ -104,7 +106,7 @@ const PayonRender = ({ pay_url }: { pay_url: string }) => {
         Thực hiện theo hướng dẫn sau để thanh toán
       </span>
       <div className={style.payment_left_open_payment}>
-        <XButton className={style.open_payment_btn} onClick={()=>openWindowPayon(pay_url)}>
+        <XButton className={style.open_payment_btn} onClick={() => openWindowPayon(pay_url)}>
           Thanh toán
         </XButton>
       </div>

@@ -186,14 +186,7 @@ function Booking() {
       const response = await order.postOrder(org?.id, params);
       const state_payment = await { ...response.data.context, FINAL_AMOUNT: finalAmount };
 
-      if (
-        response?.data?.context?.payment_method?.name_key === VIETTELPAY.name_key
-      ) {
-        return onRedirectVIETTELPAY(response?.data?.context);
-      }
-
-      const transaction_uuid =
-        state_payment.payment_gateway.transaction_uuid;
+      const transaction_uuid = state_payment.payment_gateway.transaction_uuid;
       if (response.data.context.status !== "CANCELED") {
         const actionAfter = {
           ...action,
@@ -201,12 +194,17 @@ function Booking() {
           order_id: response.data.context.id,
           quantity: services[0]?.quantity,
         };
+        if (
+          response?.data?.context?.payment_method?.name_key === VIETTELPAY.name_key
+        ) {
+          return onRedirectVIETTELPAY(response?.data?.context, actionAfter, listPayment);
+        }
         history.push({
           pathname: `/trang-thai-don-hang/`,
           search: transaction_uuid,
           state: { state_payment, actionAfter, listPayment },
         });
-        if (FLAT_FORM === 'MOMO') localStorage.setItem('APP_INFO', JSON.stringify(actionAfter))
+        if (FLAT_FORM === PLF_TYPE.MOMO || FLAT_FORM === PLF_TYPE.VIETTEL) localStorage.setItem('APP_INFO', JSON.stringify(actionAfter))
       } else {
         resultLoad(t('my_ser.create_order_fail'))
       }
@@ -218,12 +216,20 @@ function Booking() {
     }
   }
 
-  function onRedirectVIETTELPAY(res: any) {
+  function onRedirectVIETTELPAY(res: any, actionAfter: any, listPayment: any) {
     if (
       res?.payment_gateway?.extra_data?.payUrl
     ) {
       if (IS_MB) {
-        window.location.assign(`${res?.payment_gateway?.extra_data?.deepLink}`);
+        if (FLAT_FORM === PLF_TYPE.VIETTEL) {
+          history.push({
+            pathname: `/trang-thai-don-hang/`,
+            search: res.payment_gateway.transaction_uuid,
+            state: { state_payment: res, actionAfter, listPayment },
+          });
+        } else {
+          window.location.assign(`${res?.payment_gateway?.extra_data?.deepLink}`);
+        }
       } else {
         window.location.assign(
           `${res?.payment_gateway?.extra_data?.payUrl}`

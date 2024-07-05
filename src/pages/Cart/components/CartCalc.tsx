@@ -111,9 +111,13 @@ export function CartCalc(props: CartCalcType) {
             res?.payment_gateway?.extra_data?.payUrl
         ) {
             if (is_mobile) {
-                if(PLAT_FORM === PLF_TYPE.VIETTEL){
-                    window.location.assign(`${res?.payment_gateway?.extra_data?.payUrl}`);
-                }else{
+                if (PLAT_FORM === PLF_TYPE.VIETTEL) {
+                    history.push({
+                        pathname: `/trang-thai-don-hang/`,
+                        search: res.payment_gateway?.transaction_uuid,
+                        state: { state_payment:res },
+                    });
+                } else {
                     window.location.assign(`${res?.payment_gateway?.extra_data?.deepLink}`);
                 }
             } else {

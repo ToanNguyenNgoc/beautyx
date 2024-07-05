@@ -93,6 +93,7 @@ function PaymentQr(props: any) {
                     </div>
                 );
             default:
+                <PaymentRender orderStatus={orderStatus} payment_method={res.payment_method} pay_url={pay_url} res={res} />;
                 break;
         }
     }
