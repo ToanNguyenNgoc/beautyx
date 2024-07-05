@@ -1,4 +1,4 @@
-import {axiosClient} from "config";
+import { axiosClient } from "config";
 
 class Provinces {
       getAll = () => {
@@ -9,6 +9,9 @@ class Provinces {
                   include: 'media'
             }
             return axiosClient.get(url, { params })
+      }
+      getProvinces = () => {
+            return axiosClient.get('/provinces')
       }
       //get list district by province code
       getDistricts = (province_code: number | null) => {

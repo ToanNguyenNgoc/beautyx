@@ -6,9 +6,12 @@ import { useDeviceMobile } from "hooks";
 import { handleCallingPhone, handleChat } from "utils";
 import icon from "constants/icon";
 import img from "constants/img";
+import { EXTRA_FLAT_FORM } from "api/extraFlatForm";
+import { PLF_TYPE } from "constants/plat-form";
 
 export const AssistantButton = () => {
     const location: any = useLocation();
+    const platform = EXTRA_FLAT_FORM()
     const originPath = location.pathname.split('/')[1]
     const viewDisable = ["trang-thai-don-hang", "chat", "map-box", "ban-do", "messages"];
     let disable = false;
@@ -71,7 +74,8 @@ export const AssistantButton = () => {
                     ref={refAssisBtn}
                     className="assistantBtn-wrap"
                 >
-                    {is_mb === true ? (
+                    {(is_mb === true) ? (
+                        platform === PLF_TYPE.BEAUTYX &&
                         <div
                             onTouchStart={() => handleChat()}
                             className="btn1 buttons"

@@ -1,4 +1,4 @@
-import { useAuth, useSwrInfinite } from "hooks";
+import { useAuth, useDebounce, useSwrInfinite } from "hooks";
 import { ITopic } from "interface";
 import { paramsTopic } from "params-query";
 import { useState } from "react";
@@ -14,11 +14,20 @@ function Messenger() {
   const { USER } = useAuth()
   const [query,] = useState(paramsTopic)
   const location = useLocation()
+  const { onSetDebounceKeyword } = useDebounce()
+  const [keyword, setKeyword] = useState('')
+  const handleChangeSearch = (txt: string) => {
+    onSetDebounceKeyword({
+      text: txt,
+      callback: (text) => setKeyword(text)
+    })
+  }
+
   const topic_id = location.pathname.split("/")[2]
   const { resData, onLoadMore, totalItem } = useSwrInfinite({
     API_URL: "topics",
     enable: USER,
-    params: query,
+    params: Object.assign(query, { s: keyword }),
     dedupingInterval: 0
   })
   const more = () => { if (resData.length < totalItem) { onLoadMore() } }
@@ -32,7 +41,7 @@ function Messenger() {
           </div>
           <div className={style.left_head_bot}>
             <img src={icon.searchGray} alt="" />
-            <input type="text" placeholder="Tìm kiếm trong tin nhắn..." />
+            <input type="text" placeholder="Tìm kiếm trong tin nhắn..." onChange={e => handleChangeSearch(e.target.value)} />
           </div>
         </div>
         <div className={style.left_body}>

@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { AppContext, AppContextType } from 'context/AppProvider';
 import { HeadTitle } from 'pages/Account';
@@ -7,13 +7,16 @@ import { useUserAddress } from 'hooks';
 import icon from 'constants/icon';
 import style from './address.module.css'
 import { Radio } from '@mui/material';
+import { IUserAddress } from 'interface';
+import userAddressApi from 'api/userAddressApi';
 
 function Address() {
   const history = useHistory();
   const { t } = useContext(AppContext) as AppContextType
   const { addresses, deleteAddress, updateAddress } = useUserAddress()
+  const [idLoad, setIdLoad] = useState()
   const onUpdateDefault = (id: number | string) => {
-    updateAddress({ id: id, body: { is_default: true } })
+    updateAddress({ id: id, body: { is_default: true }, onlyUpdateDefault: true })
   }
   const onDeleteAddress = (id: number | string) => {
     Alert.open({
@@ -23,6 +26,19 @@ function Address() {
         { text: t("contact_form.confirm"), onPress() { deleteAddress({ id }) } }
       ]
     })
+  }
+  const onUpdateAddress = async (item: IUserAddress) => {
+    setIdLoad(item.id)
+    if (item.address) {
+      const { province_data, district_data, ward_data, addressText } = await userAddressApi.getProvinceCodeFromAddress(item.address)
+      history.push(`/tai-khoan/dia-chi?id=${item.id}`, {
+        item: Object.assign(item, { addressText }),
+        province_data: Object.assign(province_data, { txt: province_data.name, code: province_data.province_code }),
+        district_data: Object.assign(district_data, { txt: district_data.name, code: district_data.district_code }),
+        ward_data: Object.assign(ward_data, { txt: ward_data.name, code: ward_data.district_code }),
+      })
+    }
+    setIdLoad(undefined)
   }
   return (
     <>
@@ -58,10 +74,15 @@ function Address() {
                   <span className={style.address_name}>{item.address}</span>
                 </div>
                 <div className={style.address_item_right}>
-                  {/* <XButton
-                                        iconSize={12}
-                                        icon={icon.editWhite}
-                                    /> */}
+                  <XButton
+                    iconSize={12}
+                    icon={icon.editWhite}
+                    onClick={e => {
+                      e.stopPropagation()
+                      onUpdateAddress(item)
+                    }}
+                    loading={item.id === idLoad}
+                  />
                   {
                     !item.is_default &&
                     <XButton

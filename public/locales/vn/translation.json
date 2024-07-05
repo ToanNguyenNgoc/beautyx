@@ -410,7 +410,9 @@
         "update_address":"Cập nhật địa chỉ",
         "aswer_delete_address":"Bạn có muốn xóa địa chỉ không ?",
         "create_address_ok":"Tạo mới địa chỉ thành công",
-        "limit_buy_service":"Giới hạn lượt mua 1 lần / 1 dịch vụ"
+        "update_address_ok":"Cập nhật địa chỉ thành công",
+        "limit_buy_service":"Giới hạn lượt mua 1 lần / 1 dịch vụ",
+         "warning_cancel_address_default":"Để hủy bỏ địa chỉ, vui lòng chọn một địa chỉ khác làm địa chỉ mặc định"
     },
     "order": {
         "order_his": "Lịch sử đơn hàng",

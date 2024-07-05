@@ -116,7 +116,7 @@
 }
 
 .item_name_ch {
-    -webkit-line-clamp: 2;
+    -webkit-line-clamp: 1;
     font-size: 13px;
     line-height: 14px;
 }

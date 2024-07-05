@@ -29,7 +29,9 @@
     height: 100%;
     top: 0;
     left: 0;
-    padding-top: 4px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .btn-loading img {

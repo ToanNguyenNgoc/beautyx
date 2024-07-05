@@ -45,8 +45,8 @@ const Form = ({ USER }: { USER: User }) => {
   const PLAT_FORM = EXTRA_FLAT_FORM()
   const formik = useFormik({
     initialValues: {
-      fullname: USER.fullname ?? '',
-      email: USER?.email ?? ''
+      fullname: USER.fullname || '',
+      email: USER?.email || ''
     },
     validationSchema: Yup.object({
       fullname: Yup.string()

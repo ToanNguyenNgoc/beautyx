@@ -2,7 +2,6 @@ import { useSWRInfinite } from "swr";
 import { pickBy, identity } from "lodash";
 import { SWROptions } from './useSwr';
 import * as Sentry from "@sentry/react"
-import { useEffect } from "react";
 
 interface SWRInOptions extends SWROptions {
     keyPage?: 'p' | 'page'

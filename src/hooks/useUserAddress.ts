@@ -26,7 +26,8 @@ export type DeletePost = Omit<PostAddress, 'body'> & {
 }
 export type UpdatePost = Omit<PostAddress, 'body'> & {
   id: number | string;
-  body?: AddressType
+  body?: AddressType;
+  onlyUpdateDefault?: boolean
 }
 
 export function useUserAddress() {
@@ -76,27 +77,33 @@ export function useUserAddress() {
       if (onError) { onError(err) }
     }
   }
-  const updateAddress = async ({ id, body, cb, onError }: UpdatePost) => {
+  const updateAddress = async ({ id, body, cb, onError, onlyUpdateDefault }: UpdatePost) => {
     try {
       await userAddressApi.updateAddress({
         id: id,
-        address: body?.address
-      })
-      if (body?.is_default === true) {
-        addresses[addresses.findIndex(i => i.is_default === true)].is_default = false
-      }
-      addresses[addresses.findIndex(i => i.id === id)] = {
-        ...addresses[addresses.findIndex(i => i.id === id)],
-        ...body
-      }
-      const mutateData: AxiosResponse<ContextAddress> = {
-        ...data,
-        data: {
-          context: addresses,
-          updated_at: dayjs()
+        body: {
+          address: body?.address,
+          is_default: body?.is_default
         }
+      })
+      if (onlyUpdateDefault) {
+        if (body?.is_default === true) {
+          addresses[addresses.findIndex(i => i.is_default === true)].is_default = false
+        }
+        addresses[addresses.findIndex(i => i.id === id)] = {
+          ...addresses[addresses.findIndex(i => i.id === id)],
+          ...body
+        }
+        const mutateData: AxiosResponse<ContextAddress> = {
+          ...data,
+          data: {
+            context: addresses,
+            updated_at: dayjs()
+          }
+        }
+        mutate(mutateData, false)
       }
-      mutate(mutateData, false)
+      if (cb) cb(data)
     } catch (error) {
       const err = error as AxiosError
       if (onError) { onError(err) }

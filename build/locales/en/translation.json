@@ -414,7 +414,9 @@
         "update_address":"Update address",
         "aswer_delete_address":"You want to delete the address ?",
         "create_address_ok":"Create address successfully",
-        "limit_buy_service":"Limit 1 purchase per service"
+        "update_address_ok":"Update address successfully",
+        "limit_buy_service":"Limit 1 purchase per service",
+        "warning_cancel_address_default":"To cancel an address, please select another address as the default address"
     },
     "order": {
         "order_his": "Orders history",

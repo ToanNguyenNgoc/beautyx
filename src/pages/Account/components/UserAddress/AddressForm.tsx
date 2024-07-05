@@ -1,12 +1,13 @@
 import { AppContext, AppContextType } from 'context/AppProvider';
 import { HeadTitle } from 'pages/Account';
-import { useContext, useRef, useState, MouseEvent } from 'react';
+import { useContext, useRef, useState, MouseEvent, KeyboardEvent } from 'react';
 import style from './address.module.css'
 import { useSelector } from 'react-redux';
 import { IDistrict, IProvince, IWard } from 'interface';
 import { useNoti, useSwr, useUserAddress } from 'hooks';
-import { AlertSnack, XButton } from 'components/Layout';
-import { useHistory } from 'react-router-dom';
+import { AlertAppSnack, AlertSnack, XButton } from 'components/Layout';
+import { useHistory, useLocation } from 'react-router-dom';
+import { extraParamsUrl } from 'utils';
 
 interface Address {
   province: { txt: string, code: number | null } | null;
@@ -18,14 +19,21 @@ interface Address {
 function AddressForm() {
   const { t } = useContext(AppContext) as AppContextType
   const history = useHistory()
-  const { postAddress, load } = useUserAddress()
+  const location = useLocation()
+  const params = extraParamsUrl() as { id?: string }
+  const { postAddress, load, updateAddress } = useUserAddress()
   const refProvince = useRef<HTMLDivElement>(null)
   const refDistrict = useRef<HTMLDivElement>(null)
   const refWard = useRef<HTMLDivElement>(null)
   const refInput = useRef<HTMLInputElement>(null)
   const refCheckbox = useRef<HTMLInputElement>(null)
   const { provinces } = useSelector((state: any) => state.HOME)
-  const [address, setAddress] = useState<Address>({ province: null, district: null, ward: null, text: null })
+  const [address, setAddress] = useState<Address>({
+    province: location.state?.province_data || null,
+    district: location.state?.district_data || null,
+    ward: location.state?.ward_data || null,
+    text: location.state?.item?.addressText || null
+  })
 
   const onTriggerOpen = (key: 'pro' | 'dis' | 'ward' | 'none', toggle?: boolean) => {
     const listRef = [
@@ -91,22 +99,41 @@ function AddressForm() {
   const { noti, resultLoad, onCloseNoti } = useNoti()
   const onSaveAddress = () => {
     if (address.ward && address.text) {
-      postAddress({
-        body: {
-          address: `${address.text}, ${address.ward?.txt}, ${address.district?.txt}, ${address.province?.txt}`,
-          is_default: refCheckbox.current?.checked
-        },
-        cb: () => {
-          resultLoad(t('acc.create_address_ok'))
-          setTimeout(() => { history.goBack() }, 3000)
-        }
-      })
+      if (params?.id) {
+        updateAddress({
+          id: params.id,
+          body: {
+            address: `${address.text}, ${address.ward?.txt}, ${address.district?.txt}, ${address.province?.txt}`,
+            is_default: location?.state?.item?.is_default === true ? undefined : refCheckbox.current?.checked
+          },
+          cb: () => {
+            resultLoad(t('acc.update_address_ok'))
+            setTimeout(() => { history.goBack() }, 3000)
+          }
+        })
+      } else {
+        postAddress({
+          body: {
+            address: `${address.text}, ${address.ward?.txt}, ${address.district?.txt}, ${address.province?.txt}`,
+            is_default: refCheckbox.current?.checked
+          },
+          cb: () => {
+            resultLoad(t('acc.create_address_ok'))
+            setTimeout(() => { history.goBack() }, 3000)
+          }
+        })
+      }
     }
   }
+  const handleKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
+    if (event.code === "Enter" || event?.nativeEvent.keyCode === 13) {
+      onSaveAddress();
+    }
+  };
   return (
     <>
       <HeadTitle
-        title={t('acc.create_address')}
+        title={params?.id ? t('acc.update_address') : t('acc.create_address')}
       />
       <AlertSnack
         open={noti.openAlert} onClose={onCloseNoti} title={noti.message} status='SUCCESS'
@@ -195,16 +222,32 @@ function AddressForm() {
               value={address.text ?? ''}
               className={style.input_address}
               onChange={(e) => setAddress({ ...address, text: e.target.value })}
+              onKeyDown={handleKeyDown}
             />
           </div>
           <div className={style.form_bot}>
-            <div className={style.form_bot_check}>
-              <input type='checkbox' ref={refCheckbox} defaultChecked />
-              <span>Đặt làm mặc định</span>
+            <div
+              className={style.form_bot_check}
+              onClick={() => {
+                if (location.state?.item?.is_default) {
+                  AlertAppSnack.open({ title: t('acc.warning_cancel_address_default'), type: 'warning' })
+                }
+              }}
+            >
+              <input
+                id="form_address_checkbox"
+                type='checkbox' ref={refCheckbox}
+                defaultChecked={!!location?.state?.item?.is_default}
+                style={{ accentColor: 'var(--purple)' }}
+                disabled={!!location.state?.item?.is_default}
+              />
+              <span>
+                <label htmlFor='form_address_checkbox'>Đặt làm mặc định</label>
+              </span>
             </div>
             <XButton
               className={style.form_bot_btn}
-              title='Thêm mới'
+              title={params?.id ? t('acc.update_address') : t('acc.create_address')}
               onClick={onSaveAddress}
               loading={load.create}
             />

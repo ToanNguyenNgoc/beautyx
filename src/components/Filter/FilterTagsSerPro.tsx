@@ -20,7 +20,6 @@ export function FilterTagsSerPro(props: FilterTagsSerProProps) {
     const onChangeTagPar = (tagName: string) => {
         if (onChange) onChange(tagName)
     }
-    console.log(result.media[0])
 
     return (
         <div className={style.tag_ser_container}>

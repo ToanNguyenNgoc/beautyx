@@ -49,7 +49,7 @@ export function XButton(props: IProps) {
             {
                 loading === true &&
                 <div className="loading-cnt">
-                    <CircularProgress size="25px" color="primary" />
+                    <CircularProgress size="24px" color="primary" />
                 </div>
             }
             {title}

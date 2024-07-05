@@ -52,7 +52,7 @@
   border-radius: 6px;
 }
 
-.address_item_right button:nth-child(1) {
+.address_item_right button:nth-child(2) {
   margin-left: 6px;
   background-color: var(--red_2);
 }
@@ -71,6 +71,11 @@
 .form_row_label {
   font-size: 13px;
   font-weight: 500;
+}
+.form_row_label textarea{
+  resize: none;
+  width: 100%;
+  min-height: 150px;
 }
 
 .input_address {
