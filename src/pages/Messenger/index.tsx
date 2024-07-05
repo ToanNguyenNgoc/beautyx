@@ -1,7 +1,7 @@
 import { useAuth, useDebounce, useSwrInfinite } from "hooks";
 import { ITopic } from "interface";
 import { paramsTopic } from "params-query";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Link, Route, Switch, useLocation } from "react-router-dom";
 import { Loader, Right } from "./components"
 import style from "./message.module.css"
@@ -9,8 +9,11 @@ import icon from "constants/icon";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { formatDateFromNow, onErrorAvatar, unique } from "utils";
 import AuthRoute from "route/AuthRoute";
+import { EmptyRes } from "components/Layout";
+import { AppContext, AppContextType } from "context";
 
 function Messenger() {
+  const { t } = useContext(AppContext) as AppContextType
   const { USER } = useAuth()
   const [query,] = useState(paramsTopic)
   const location = useLocation()
@@ -24,7 +27,7 @@ function Messenger() {
   }
 
   const topic_id = location.pathname.split("/")[2]
-  const { resData, onLoadMore, totalItem } = useSwrInfinite({
+  const { resData, onLoadMore, totalItem, isValidating } = useSwrInfinite({
     API_URL: "topics",
     enable: USER,
     params: Object.assign(query, { s: keyword }),
@@ -45,6 +48,7 @@ function Messenger() {
           </div>
         </div>
         <div className={style.left_body}>
+          {(!isValidating && resData.length === 0) && <EmptyRes isRecommend={false} title={t('Search_result.emty_message')} />}
           <InfiniteScroll
             hasMore={true}
             height={`calc(100vh - 172px)`}

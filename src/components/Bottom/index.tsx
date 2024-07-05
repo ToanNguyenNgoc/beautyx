@@ -24,7 +24,8 @@ const paths = [
     "/lich-hen",
     "/-danh-muc",
     "/danh-muc",
-    "/xu-huong"
+    "/xu-huong",
+    "/messages"
 ];
 
 function Bottom() {

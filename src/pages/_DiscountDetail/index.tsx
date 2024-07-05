@@ -341,7 +341,7 @@ const DetailQuantity = (props: DetailQuantityProps) => {
     });
     dispatch(clearAllServices());
   }
-  
+
 
   return (
     <div>
@@ -360,19 +360,22 @@ const DetailQuantity = (props: DetailQuantityProps) => {
       <div className={style.detail_cart}>
         <div className={style.detail_quantity}>
           <span className={style.detail_quantity_title}>{t('pr.quantity')}</span>
-          <div className={style.detail_quantity_calc}>
-            <XButton
-              title='-'
-              className={style.detail_quantity_btn}
-              onClick={onDescQuantity}
-            />
-            <span className={style.quantity}>{quantity}</span>
-            <XButton
-              title='+'
-              className={style.detail_quantity_btn}
-              onClick={onAscQuantity}
-            />
-          </div>
+          {
+            (!discount.limit || discount.limit > 1) &&
+            <div className={style.detail_quantity_calc}>
+              <XButton
+                title='-'
+                className={style.detail_quantity_btn}
+                onClick={onDescQuantity}
+              />
+              <span className={style.quantity}>{quantity}</span>
+              <XButton
+                title='+'
+                className={style.detail_quantity_btn}
+                onClick={onAscQuantity}
+              />
+            </div>
+          }
         </div>
         <div className={style.add_cart}>
           {detail.type === 'SERVICE' &&

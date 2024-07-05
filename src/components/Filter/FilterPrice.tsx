@@ -52,9 +52,9 @@ export function FilterPrice(props: FilterPriceProps) {
     }
     return (
         <div className={style.container}>
-            <span className={style.filter_title}>{t('home_2.price')}</span>
+            {/* <span className={style.filter_title}>{t('home_2.price')}</span> */}
             <div className={style.body}>
-                <span className={style.body_title}>{t('home_2.Choose a price range')}</span>
+                {/* <span className={style.body_title}>{t('home_2.Choose a price range')}</span>
                 <div className={style.price_cnt}>
                     <div className={style.price_item}>
                         <Input type="number" value={value.min_price} onChange={onChangeMin} placeholder={t('se.from')} />
@@ -68,7 +68,7 @@ export function FilterPrice(props: FilterPriceProps) {
                     <div className={style.price_invalid}>
                         {t('se.Please enter the appropriate price range')}
                     </div>
-                }
+                } */}
                 {/* <ul className={style.price_list_cnt}>
                     {
                         pricesList.map((item:PriceList)=>(

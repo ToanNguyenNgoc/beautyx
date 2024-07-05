@@ -154,7 +154,8 @@
         "room": "Room",
         "capacity": "Capacity",
         "no_result_title": "No matching results were found",
-        "sorry": "We're sorry, we couldn't find a beauty salon that matched your preferences. \nTry looking for another option!"
+        "sorry": "We're sorry, we couldn't find a beauty salon that matched your preferences. \nTry looking for another option!",
+        "emty_message":"There are no messages !"
     },
     "Mer_de": {
         "address": "Address",

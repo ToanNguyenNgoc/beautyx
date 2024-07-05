@@ -157,11 +157,14 @@
     min-height: 28px;
     color: var(--text-hover);
     transition: var(--trans);
+    opacity: 0.5;
 }
 
 .chile_name_act {
     color: var(--text-black);
+    font-weight: bold;
     transition: var(--trans);
+    opacity: 1;
 }
 
 .right_org_cnt {

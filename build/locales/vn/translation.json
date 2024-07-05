@@ -147,7 +147,8 @@
         "room": "Phòng",
         "capacity": "Sức chứa",
         "no_result_title": "Không tìm thấy kết quả phù hợp",
-        "sorry": " Thành thật xin lỗi, chúng tôi không tìm thấy cơ sở làm đẹp phù hợp với tùy chọn của bạn. \nHãy thử tìm kiếm tùy chọn khác nhé!"
+        "sorry": " Thành thật xin lỗi, chúng tôi không tìm thấy cơ sở làm đẹp phù hợp với tùy chọn của bạn. \nHãy thử tìm kiếm tùy chọn khác nhé!",
+        "emty_message":"Không có đoạn tin nhắn nào !"
     },
     "Mer_de": {
         "address": "Địa chỉ",
