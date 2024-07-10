@@ -149,120 +149,127 @@ function AddressForm() {
         open={noti.openAlert} onClose={onCloseNoti} title={noti.message} status='SUCCESS'
       />
       <div className={style.container}>
-        <div className={style.form}>
-          <div className={style.form_row}>
-            <label className={style.form_row_label}>{t('acc.province')}</label>
-            <div
-              onClick={(e) => { e.stopPropagation(); onTriggerOpen('pro', true) }}
-              className={style.input_address}
-            >
-              {address.province?.txt ?? 'Chọn Tỉnh/thành phố'}
-            </div>
-            <div ref={refProvince} className={style.input_select}>
-              <div className={style.input_select_cnt}>
-                <ul className={style.input_select_list}>
-                  {
-                    provinces.map((item: IProvince) => (
-                      <li
-                        style={item.name === address.province?.txt ? { color: 'var(--purple)', fontWeight: 600 } : {}}
-                        onClick={(e) => onChangeProvince(item, e)}
-                        key={item.province_code} className={style.input_select_item}
-                      >{item.name}</li>
-                    ))
-                  }
-                </ul>
+        <form onSubmit={e => {
+          e.preventDefault();
+          onSaveAddress()
+        }}>
+          <div className={style.form}>
+            <div className={style.form_row}>
+              <label className={style.form_row_label}>{t('acc.province')}</label>
+              <div
+                onClick={(e) => { e.stopPropagation(); onTriggerOpen('pro', true) }}
+                className={style.input_address}
+              >
+                {address.province?.txt ?? 'Chọn Tỉnh/thành phố'}
+              </div>
+              <div ref={refProvince} className={style.input_select}>
+                <div className={style.input_select_cnt}>
+                  <ul className={style.input_select_list}>
+                    {
+                      provinces.map((item: IProvince) => (
+                        <li
+                          style={item.name === address.province?.txt ? { color: 'var(--purple)', fontWeight: 600 } : {}}
+                          onClick={(e) => onChangeProvince(item, e)}
+                          key={item.province_code} className={style.input_select_item}
+                        >{item.name}</li>
+                      ))
+                    }
+                  </ul>
+                </div>
               </div>
             </div>
-          </div>
-          <div className={style.form_row}>
-            <label className={style.form_row_label}>{t('acc.district')}</label>
-            <button
-              disabled={!address.province}
-              onClick={(e) => { e.stopPropagation(); onTriggerOpen('dis', true) }}
-              className={style.input_address}
-            >
-              {address.district?.txt ?? 'Chọn Quận/huyện'}
-            </button>
-            <div ref={refDistrict} className={style.input_select}>
-              <div className={style.input_select_cnt}>
-                <ul className={style.input_select_list}>
-                  {
-                    districts.map((item: IDistrict) => (
-                      <li
-                        style={item.name === address.district?.txt ? { color: 'var(--purple)', fontWeight: 600 } : {}}
-                        onClick={(e) => onChangeDistrict(item, e)}
-                        key={item.district_code} className={style.input_select_item}
-                      >{item.name}</li>
-                    ))
-                  }
-                </ul>
+            <div className={style.form_row}>
+              <label className={style.form_row_label}>{t('acc.district')}</label>
+              <button
+                disabled={!address.province}
+                onClick={(e) => { e.stopPropagation(); onTriggerOpen('dis', true) }}
+                className={style.input_address}
+              >
+                {address.district?.txt ?? 'Chọn Quận/huyện'}
+              </button>
+              <div ref={refDistrict} className={style.input_select}>
+                <div className={style.input_select_cnt}>
+                  <ul className={style.input_select_list}>
+                    {
+                      districts.map((item: IDistrict) => (
+                        <li
+                          style={item.name === address.district?.txt ? { color: 'var(--purple)', fontWeight: 600 } : {}}
+                          onClick={(e) => onChangeDistrict(item, e)}
+                          key={item.district_code} className={style.input_select_item}
+                        >{item.name}</li>
+                      ))
+                    }
+                  </ul>
+                </div>
               </div>
             </div>
-          </div>
-          <div className={style.form_row}>
-            <label className={style.form_row_label}>{t('acc.ward')}</label>
-            <button
-              disabled={!address.district}
-              onClick={(e) => { e.stopPropagation(); onTriggerOpen('ward', true) }}
-              className={style.input_address}
-            >
-              {address.ward?.txt ?? 'Chọn Xã/phường'}
-            </button>
-            <div ref={refWard} className={style.input_select}>
-              <div className={style.input_select_cnt}>
-                <ul className={style.input_select_list}>
-                  {
-                    wards.map((item: IWard) => (
-                      <li
-                        style={item.name === address.ward?.txt ? { color: 'var(--purple)', fontWeight: 600 } : {}}
-                        onClick={(e) => onChangeWard(item, e)}
-                        key={item.ward_code} className={style.input_select_item}
-                      >{item.name}</li>
-                    ))
-                  }
-                </ul>
+            <div className={style.form_row}>
+              <label className={style.form_row_label}>{t('acc.ward')}</label>
+              <button
+                disabled={!address.district}
+                onClick={(e) => { e.stopPropagation(); onTriggerOpen('ward', true) }}
+                className={style.input_address}
+              >
+                {address.ward?.txt ?? 'Chọn Xã/phường'}
+              </button>
+              <div ref={refWard} className={style.input_select}>
+                <div className={style.input_select_cnt}>
+                  <ul className={style.input_select_list}>
+                    {
+                      wards.map((item: IWard) => (
+                        <li
+                          style={item.name === address.ward?.txt ? { color: 'var(--purple)', fontWeight: 600 } : {}}
+                          onClick={(e) => onChangeWard(item, e)}
+                          key={item.ward_code} className={style.input_select_item}
+                        >{item.name}</li>
+                      ))
+                    }
+                  </ul>
+                </div>
               </div>
             </div>
-          </div>
-          <div className={style.form_row}>
-            <label className={style.form_row_label}>Chi tiết địa chỉ</label>
-            <textarea
-              disabled={!address.ward}
-              ref={refInput}
-              value={address.text ?? ''}
-              className={style.input_address}
-              onChange={e => onTextAreaChange(e.target.value)}
-              onKeyDown={handleKeyDown}
-            />
-          </div>
-          <div className={style.form_bot}>
-            <div
-              className={style.form_bot_check}
-              onClick={() => {
-                if (location.state?.item?.is_default) {
-                  AlertAppSnack.open({ title: t('acc.warning_cancel_address_default'), type: 'warning' })
-                }
-              }}
-            >
-              <input
-                id="form_address_checkbox"
-                type='checkbox' ref={refCheckbox}
-                defaultChecked={!!location?.state?.item?.is_default}
-                style={{ accentColor: 'var(--purple)' }}
-                disabled={!!location.state?.item?.is_default}
+            <div className={style.form_row}>
+              <label className={style.form_row_label}>Chi tiết địa chỉ</label>
+              <textarea
+                style={{height:'fit-content'}}
+                disabled={!address.ward}
+                ref={refInput}
+                value={address.text ?? ''}
+                className={style.input_address}
+                onChange={e => onTextAreaChange(e.target.value)}
+                onKeyDown={handleKeyDown}
               />
-              <span>
-                <label htmlFor='form_address_checkbox'>Đặt làm mặc định</label>
-              </span>
             </div>
-            <XButton
-              className={style.form_bot_btn}
-              title={params?.id ? t('acc.update_address') : t('acc.create_address')}
-              onClick={onSaveAddress}
-              loading={load.create}
-            />
+            <div className={style.form_bot}>
+              <div
+                className={style.form_bot_check}
+                onClick={() => {
+                  if (location.state?.item?.is_default) {
+                    AlertAppSnack.open({ title: t('acc.warning_cancel_address_default'), type: 'warning' })
+                  }
+                }}
+              >
+                <input
+                  id="form_address_checkbox"
+                  type='checkbox' ref={refCheckbox}
+                  defaultChecked={!!location?.state?.item?.is_default}
+                  style={{ accentColor: 'var(--purple)' }}
+                  disabled={!!location.state?.item?.is_default}
+                />
+                <span>
+                  <label htmlFor='form_address_checkbox'>Đặt làm mặc định</label>
+                </span>
+              </div>
+              <XButton
+                type='submit'
+                className={style.form_bot_btn}
+                title={params?.id ? t('acc.update_address') : t('acc.create_address')}
+                onClick={onSaveAddress}
+                loading={load.create}
+              />
+            </div>
           </div>
-        </div>
+        </form>
       </div>
     </>
   );
