@@ -127,7 +127,7 @@ export function ProductableItem(props: ProductableItemProps) {
                     )}
                     <div className={style.item_address}>
                         <img src={icon.pinMapRed} alt="" />
-                        <span>{org?.full_address}</span>
+                        <span>{org?.address}</span>
                     </div>
                 </div>
             </div>
