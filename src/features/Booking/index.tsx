@@ -35,6 +35,7 @@ import { AUTH_LOCATION } from "api/authLocation";
 import PaymentMethod from "components/PaymentMethod";
 import { PLF_TYPE } from "constants/plat-form";
 import { BTX, MOMO, PAY_ON_BTX, VIETTELPAY } from "common";
+import { isPlatformViettel } from "utils";
 
 const date = dayjs();
 function Booking() {
@@ -413,6 +414,7 @@ function Booking() {
                 <BookingNowBill point={point} org={org} setFinalAmount={setFinalAmount} setPoint={setPoint} />
               }
               <XButton
+              style={isPlatformViettel() ? {backgroundColor:'var(--purple)'}:{}}
                 className={style.post_btn}
                 title={
                   TYPE_PAGE === "BOOK_NOW"

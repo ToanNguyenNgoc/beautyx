@@ -73,7 +73,7 @@ function Cart() {
         message: "Bạn có muốn xóa khỏi giỏ hàng không?",
         actions: [
           { text: 'Hủy', onPress: () => { } },
-          { text: 'Xác nhận', onPress: () => dispatch(clearByCheck()) }
+          { text: 'Xác nhận', onPress: () => dispatch(clearByCheck()), type:'cancel' }
         ]
       })
     }

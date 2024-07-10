@@ -16,7 +16,7 @@ import IStore from "interface/IStore";
 import { AppContext } from "context/AppProvider";
 import Search from "features/Search";
 import { debounce } from "lodash";
-import { clst, extraParamsUrl } from "utils";
+import { clst, extraParamsUrl, isPlatformViettel } from "utils";
 import { XButton } from "components/Layout";
 import { onResetFilter } from "redux/filter-result";
 import Slider from "react-slick";
@@ -80,7 +80,7 @@ function Head(props: IProps) {
   const location: any = useLocation();
   const IS_MB = useDeviceMobile()
   const pathname = location.pathname;
-  
+
   let showRecommendKey = false;
   if (homePath.includes(pathname)) showRecommendKey = true;
   let changeStyle = false
@@ -178,7 +178,12 @@ function Head(props: IProps) {
                     </Link>
                     {/* <Link className={style.head_top_left_seller} to={'/seller'} >Kênh người bán</Link> */}
                   </div>
-                  <BackContainer iconBack={iconBack} changeStyle={changeStyle} />
+                  {
+                    !isPlatformViettel() ?
+                      <BackContainer iconBack={iconBack} changeStyle={changeStyle} />
+                      :
+                      null
+                  }
                   <button
                     className={style.head_top_left_search}
                     onFocus={() => onToggleSearch("show")}

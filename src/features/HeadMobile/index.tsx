@@ -6,7 +6,7 @@ import { XButton } from "components/Layout"
 import img from 'constants/img';
 import { Container } from '@mui/system';
 import { useDeviceMobile } from 'hooks';
-import { clst } from 'utils';
+import { clst, isPlatformViettel } from 'utils';
 
 interface IProps {
     title: string,
@@ -57,6 +57,7 @@ function HeadMobile(props: IProps) {
                         title={IS_MB ? "" : 'Trở lại'}
                         className={clst([style.button, classNameInput])}
                         onClick={onBackClick}
+                        style={isPlatformViettel() ? {opacity:0}:{}}
                     />
                     <img className={style.head_icon} src={img.beautyX} alt="" />
                     <span className={style.head_title}>{title}</span>

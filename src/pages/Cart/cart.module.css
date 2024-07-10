@@ -118,7 +118,7 @@
     padding: 0px 4px;
     border-radius: 6px;
     font-size: 13px;
-    font-weight: 500;
+    font-weight: 700;
     margin-left: 12px;
 }
 
@@ -462,8 +462,8 @@
     }
 
     .org_branch_btn {
-        color: var(--purple);
-        background-color: transparent;
+        /* color: var(--purple); */
+        /* background-color: transparent; */
         margin: 0px;
         font-size: 12px;
     }

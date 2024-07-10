@@ -3,7 +3,7 @@ import { createRef, forwardRef, useImperativeHandle, useState } from "react";
 import style from './app-alert.module.css'
 
 interface AppAlertProps { }
-interface Action { text: string; onPress: () => void }
+interface Action { text: string; onPress: () => void, type?:'cancel'|'success' }
 interface OpenProps {
   title?: string;
   message?: string;
@@ -60,7 +60,7 @@ export const AppAlert = forwardRef<AppAlertHandle, AppAlertProps>((props, ref) =
               <Button
                 key={index}
                 variant="contained"
-                style={{ background: 'var(--purple)', textTransform: "none", margin: '0px 6px' }}
+                style={{ background: i.type === 'cancel' ? '#ff8583':'var(--purple)', textTransform: "none", margin: '0px 6px' }}
                 onClick={() => {
                   i.onPress();
                   setOpen(false)

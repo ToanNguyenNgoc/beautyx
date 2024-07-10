@@ -1063,10 +1063,14 @@
         font-size: 14px;
         font-weight: bold;
     }
-
+    .map .map-list__mobile .item-content__distance{
+        color: var(--orange);
+        font-size: 12px;
+        font-weight: 600;
+    }
     .map .map-list__mobile .item-content__address {
         display: -webkit-box;
-        -webkit-line-clamp: 3;
+        -webkit-line-clamp: 2;
         -webkit-box-orient: vertical;
         overflow: hidden;
         text-overflow: ellipsis;

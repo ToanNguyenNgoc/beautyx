@@ -23,6 +23,7 @@ import { clearAllServices } from 'redux/booking';
 import { AppContext } from 'context/AppProvider';
 import { ChatButton } from "../../pages/Organization/components/ChatButton";
 import { IUSER } from "redux/profile/userSlice";
+import { isPlatformViettel } from 'utils';
 
 function DiscountDetail() {
   const IS_MB = useDeviceMobile()
@@ -237,6 +238,7 @@ const DetailBottom = (
             className={style.botton_btn}
           />
           <XButton
+            style={isPlatformViettel() ? { backgroundColor: 'var(--purple)' } : {}}
             title={detail.type === 'SERVICE' ? t('pm.booking_now') : t('cart.payment_now')}
             onClick={() => setDra({ open: true, type: 'NOW' })}
           />
@@ -370,6 +372,7 @@ const DetailQuantity = (props: DetailQuantityProps) => {
               />
               <span className={style.quantity}>{quantity}</span>
               <XButton
+                style={isPlatformViettel() ? { backgroundColor: 'var(--purple)' } : {}}
                 title='+'
                 className={style.detail_quantity_btn}
                 onClick={onAscQuantity}
@@ -380,7 +383,7 @@ const DetailQuantity = (props: DetailQuantityProps) => {
         <div className={style.add_cart}>
           {detail.type === 'SERVICE' &&
             <XButton
-              style={draType === "NOW" ? { display: 'flex' } : {}}
+              style={draType === "NOW" ? { display: 'flex', backgroundColor: isPlatformViettel() ? 'var(--purple)' : 'var(--pr-green)' } : {}}
               title={t('pm.booking_now')}
               className={style.add_cart_btn}
               onClick={onBookingNow}

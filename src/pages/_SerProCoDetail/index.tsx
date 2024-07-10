@@ -12,7 +12,7 @@ import { Container } from '@mui/system';
 import { Drawer, Rating } from '@mui/material';
 import Slider, { Settings } from 'react-slick';
 import icon from 'constants/icon';
-import { checkMediaType, clst, extractImageUrls, formatDistance, onErrorImg, scrollTop } from 'utils';
+import { checkMediaType, clst, extractImageUrls, formatDistance, isPlatformViettel, onErrorImg, scrollTop } from 'utils';
 import { formatRouterLinkOrg } from 'utils/formatRouterLink/formatRouter';
 import { AUTH_LOCATION } from 'api/authLocation';
 import { formatAddCart } from 'utils/cart/formatAddCart';
@@ -342,6 +342,7 @@ export const Head = () => {
       <XButton
         onClick={() => history.goBack()}
         icon={icon.chevronLeft}
+        style={isPlatformViettel() ? {opacity:0}:{}}
       />
       <div className={style.head_right}>
         <XButton
@@ -526,7 +527,7 @@ export const DetailOrgCard = ({ org }: { org: IOrganization }) => {
         >
           {t('app.details')}
         </Link>
-        <XButton
+        {/* <XButton
           style={favoriteSt.is_favorite ? {
             backgroundColor: 'var(--red-cl)',
             color: 'var(--bg-white)'
@@ -534,7 +535,14 @@ export const DetailOrgCard = ({ org }: { org: IOrganization }) => {
           title={favoriteSt.is_favorite ? t('pr.liked') : t('pr.like')}
           className={clst([style.detail_org_right_btn, style.detail_org_link])}
           onClick={onToggleFavorite}
-        />
+        /> */}
+        <XButton
+        style={{marginTop:'6px'}}
+                            className={style.right_btn}
+                            icon={favoriteSt.is_favorite ? icon.heart : icon.unHeart}
+                            iconSize={20}
+                            onClick={onToggleFavorite}
+                          />
       </div>
     </div>
   )
@@ -747,6 +755,7 @@ const DetailBottom = (
                 className={style.botton_btn}
               />
               <XButton
+                style={isPlatformViettel() ? {backgroundColor:'var(--purple)'}:{}}
                 title={detail.type === 'SERVICE' ? t('detail_item.booking_now') : t('cart.payment_now')}
                 onClick={() => setDra({ open: true, type: 'NOW' })}
               />
@@ -871,13 +880,14 @@ const DetailQuantity = (
             title='+'
             className={style.detail_quantity_btn}
             onClick={() => setQuantity(quantity + 1)}
+            style={isPlatformViettel() ? {backgroundColor:'var(--purple)'}:{}}
           />
         </div>
       </div>
       <div className={style.add_cart}>
         {detail.type === 'SERVICE' &&
           <XButton
-            style={draType === "NOW" ? { display: 'flex' } : {}}
+            style={draType === "NOW" ? { display: 'flex', backgroundColor:isPlatformViettel() ? 'var(--purple)':'var(--pr-green)' } : {}}
             title={t('detail_item.booking_now')}
             className={style.add_cart_btn}
             onClick={onBookingNow}

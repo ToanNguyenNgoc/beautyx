@@ -28,6 +28,7 @@ import { useSelector } from "react-redux";
 import { STATUS } from "redux/status";
 import style from "./home.module.css";
 import PortDeal from "components/PortalDeal";
+import { isPlatformViettel } from "utils";
 
 export default function HomePage() {
   const IS_MB = useDeviceMobile();
@@ -65,7 +66,7 @@ export default function HomePage() {
           <HomeProvince />
           {IS_MB ? <></> : <HomeTrends />}
           <HomePartners />
-          <HomeTrafficData />
+          {!isPlatformViettel() ? <HomeTrafficData /> : null}
           <HomeLocation />
           <HomeStatisticsCustomer />
         </Container>

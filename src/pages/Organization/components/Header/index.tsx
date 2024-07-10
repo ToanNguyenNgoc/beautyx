@@ -14,6 +14,7 @@ import { useSwrInfinite } from 'hooks'
 import API_ROUTE from 'api/_api'
 import { paramsProductsOrg, paramsServicesOrg } from 'params-query'
 import { Service } from 'interface'
+import { isPlatformViettel } from 'utils'
 
 export const Header = () => {
   const refHeader = useRef<HTMLDivElement>(null)
@@ -39,6 +40,7 @@ export const Header = () => {
           icon={icon.chevronLeft}
           iconSize={20}
           onClick={() => history.goBack()}
+          style={isPlatformViettel() ? {opacity:0}:{}}
         />
       </div>
       <div className={style.right}>

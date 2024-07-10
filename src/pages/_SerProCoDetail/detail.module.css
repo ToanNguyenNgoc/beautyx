@@ -317,6 +317,9 @@
 
 .detail_org_right {
     width: 110px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .detail_org_right_btn {

@@ -49,6 +49,7 @@ function HeadNoti({ changeStyle }: { changeStyle?: boolean }) {
                 refNoti={refNoti}
                 appointment_today={appointment_today}
                 order_app={order_app}
+                onCloseNoti={()=>onToggleNoti("hide")}
             />
             {notiCount > 0 && (
                 <span className={style.head_top_right_badge} >
@@ -69,11 +70,12 @@ interface HeadNotificationProps {
     appointment_today: AppointmentNoti[];
     order_app: IServiceUser[];
     refNoti: any;
+    onCloseNoti?:()=>void
 }
 
 const HeadNotification = (props: HeadNotificationProps) => {
     const { t, order_not_review } = useContext(AppContext) as AppContextType
-    const { refNoti, appointment_today, order_app } = props;
+    const { refNoti, appointment_today, order_app, onCloseNoti=()=>{} } = props;
     const { USER } = useSelector((state: IStore) => state.USER);
     const history = useHistory();
     const noti = appointment_today.length + order_app.length + order_not_review.length;
@@ -111,7 +113,10 @@ const HeadNotification = (props: HeadNotificationProps) => {
             }}
             ref={refNoti} className={style.head_noti}
         >
-            <div className={style.head_menu_title}>{t('Header.noti')}</div>
+            <div className={style.head_menu_title}>
+                {t('Header.noti')}
+                <img src={icon.closeBlack} alt="" onClick={onCloseNoti} />
+            </div>
             {!USER && (
                 <div className={style.head_required_sign}>
                     Đăng nhập để xem thông báo

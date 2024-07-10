@@ -12,7 +12,7 @@ import style from '../cart.module.css'
 import { InputVoucher } from 'features/InputVoucher';
 import { useHistory } from 'react-router-dom';
 import { EXTRA_FLAT_FORM } from 'api/extraFlatForm';
-import { checkPhoneValid } from 'utils';
+import { checkPhoneValid, isPlatformViettel } from 'utils';
 import { PopupNotification } from 'components/Notification';
 import { orderApi } from 'api/orderApi';
 import tracking from 'api/trackApi';
@@ -235,6 +235,7 @@ export function CartCalc(props: CartCalcType) {
                     title={t('cart.checkout')}
                     onClick={onPostOrder}
                     loading={noti.load}
+                    style={isPlatformViettel() ? {backgroundColor:'var(--purple)'}:{}}
                 />
             </div>
             <InputVoucher

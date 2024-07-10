@@ -2,7 +2,7 @@ import icon from "constants/icon";
 import img from "constants/img";
 import { IOrganization } from "interface";
 import React, { useState } from "react";
-import { onErrorImg } from "utils";
+import { formatDistance, onErrorImg } from "utils";
 import MapOrgItemDetailMb from "./MapOrgItemDetailMb";
 
 interface IProps {
@@ -37,6 +37,7 @@ export default function MapTagsItemMB(props: IProps) {
                         <div className="item-content__name">
                             <p>{item?.name}</p>
                         </div>
+                        {item.distance && <p className="item-content__distance">{formatDistance(item.distance)}</p>}
                         <div className="item-content__address">
                             <p>{item?.full_address}</p>
                         </div>
