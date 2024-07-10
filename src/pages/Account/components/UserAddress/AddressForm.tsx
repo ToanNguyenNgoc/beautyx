@@ -25,7 +25,7 @@ function AddressForm() {
   const refProvince = useRef<HTMLDivElement>(null)
   const refDistrict = useRef<HTMLDivElement>(null)
   const refWard = useRef<HTMLDivElement>(null)
-  const refInput = useRef<HTMLInputElement>(null)
+  const refInput = useRef<HTMLTextAreaElement>(null)
   const refCheckbox = useRef<HTMLInputElement>(null)
   const { provinces } = useSelector((state: any) => state.HOME)
   const [address, setAddress] = useState<Address>({
@@ -125,11 +125,21 @@ function AddressForm() {
       }
     }
   }
-  const handleKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
+  const handleKeyDown = (event: KeyboardEvent<HTMLTextAreaElement>) => {
     if (event.code === "Enter" || event?.nativeEvent.keyCode === 13) {
+      event.preventDefault();
       onSaveAddress();
     }
   };
+  const onTextAreaChange = (text: string) => {
+    setAddress({ ...address, text })
+    if (refInput.current) {
+      refInput.current.style.height = "auto";
+      if (text.length > 0) {
+        refInput.current.style.height = refInput.current.scrollHeight + "px";
+      }
+    }
+  }
   return (
     <>
       <HeadTitle
@@ -216,12 +226,12 @@ function AddressForm() {
           </div>
           <div className={style.form_row}>
             <label className={style.form_row_label}>Chi tiết địa chỉ</label>
-            <input
+            <textarea
               disabled={!address.ward}
               ref={refInput}
               value={address.text ?? ''}
               className={style.input_address}
-              onChange={(e) => setAddress({ ...address, text: e.target.value })}
+              onChange={e => onTextAreaChange(e.target.value)}
               onKeyDown={handleKeyDown}
             />
           </div>

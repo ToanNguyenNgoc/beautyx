@@ -72,11 +72,6 @@
   font-size: 13px;
   font-weight: 500;
 }
-.form_row_label textarea{
-  resize: none;
-  width: 100%;
-  min-height: 150px;
-}
 
 .input_address {
   width: 100%;
@@ -94,6 +89,11 @@
   cursor: pointer;
   margin-top: 6px;
   text-align: start;
+}
+.form_row_label textarea{
+  resize: none;
+  width: 100%;
+  min-height: 150px;
 }
 
 .input_select {
