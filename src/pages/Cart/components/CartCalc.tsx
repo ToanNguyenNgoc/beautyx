@@ -113,7 +113,7 @@ export function CartCalc(props: CartCalcType) {
                     history.push({
                         pathname: `/trang-thai-don-hang/`,
                         search: res.payment_gateway?.transaction_uuid,
-                        state: { state_payment:res },
+                        state: { state_payment: res },
                     });
                 } else {
                     window.location.assign(`${res?.payment_gateway?.extra_data?.deepLink}`);
@@ -160,6 +160,7 @@ export function CartCalc(props: CartCalcType) {
             return resultLoad('Tạo đơn hàng thất bại!')
         }
     }
+    const [load, setLoad] = useState(false)
     const onPostOrder = async () => {
         let param: PostOrderType = {
             ...order,
@@ -169,6 +170,8 @@ export function CartCalc(props: CartCalcType) {
             services: services_id,
             coupon_code: listCouponCode,
         }
+        setLoad(true)
+        await orderApi.onCancelPrevOrder().then(() => setLoad(false)) //Cancel all order in 'PENDING' status for voucher use
         if (Number(order.point) > 0) {
             param.payment_method_second_id = BTX.id
         }
@@ -234,8 +237,8 @@ export function CartCalc(props: CartCalcType) {
                     className={style.checkout_out_amount_btn}
                     title={t('cart.checkout')}
                     onClick={onPostOrder}
-                    loading={noti.load}
-                    style={isPlatformViettel() ? {backgroundColor:'var(--purple)'}:{}}
+                    loading={noti.load || load}
+                    style={isPlatformViettel() ? { backgroundColor: 'var(--purple)' } : {}}
                 />
             </div>
             <InputVoucher

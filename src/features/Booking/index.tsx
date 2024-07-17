@@ -9,7 +9,7 @@ import { addServiceBookNow, clearAllServices } from "redux/booking";
 import icon from "constants/icon";
 import BookingTime from "./components/BookingTime";
 import dayjs from "dayjs";
-import order from "api/orderApi";
+import order, { orderApi } from "api/orderApi";
 import { pickBy, identity } from "lodash";
 import HeadMobile from "../HeadMobile";
 import { EXTRA_FLAT_FORM } from "api/extraFlatForm";
@@ -182,6 +182,7 @@ function Booking() {
       params.payment_method_id = BTX.id
     }
     firstLoad()
+    await orderApi.onCancelPrevOrder() //Cancel all order in 'PENDING' status for voucher use
     try {
       //tracking.PAY_CONFIRM_CLICK(org?.id, formatProductList(params.products))
       const response = await order.postOrder(org?.id, params);
@@ -414,7 +415,7 @@ function Booking() {
                 <BookingNowBill point={point} org={org} setFinalAmount={setFinalAmount} setPoint={setPoint} />
               }
               <XButton
-              style={isPlatformViettel() ? {backgroundColor:'var(--purple)'}:{}}
+                style={isPlatformViettel() ? { backgroundColor: 'var(--purple)' } : {}}
                 className={style.post_btn}
                 title={
                   TYPE_PAGE === "BOOK_NOW"
