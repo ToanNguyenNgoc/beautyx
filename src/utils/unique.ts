@@ -32,3 +32,5 @@ export const _unique = (arr: any) => {
     })
     return result
 }
+//@ts-ignore
+export const uniqueArray = (a: any) => [...new Set(a.map((o: any) => JSON.stringify(o)))].map((s: any) => JSON.parse(s))

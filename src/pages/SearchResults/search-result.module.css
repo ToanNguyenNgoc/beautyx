@@ -115,6 +115,9 @@
 .bottom_btn:hover{
     opacity: 1;
 }
+.productableGroupItem{
+    padding: 12px;
+}
 
 
 @media only screen and (max-width: 1023px) {
@@ -382,5 +385,8 @@
     }
     .bottom{
         display: none;
+    }
+    .productableGroupItem{
+        padding: 0px;
     }
 }

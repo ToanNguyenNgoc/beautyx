@@ -153,13 +153,6 @@
     height: 83px;
 }
 
-.body_right_list {
-    padding: 24px 0px;
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    grid-gap: 12px;
-}
-
 @media only screen and (max-width: 1023px) {
     .container {
         margin-top: 44px;

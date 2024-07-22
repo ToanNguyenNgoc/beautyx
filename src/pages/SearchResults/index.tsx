@@ -16,6 +16,8 @@ import TabProductProductable from "./TabProductProductable";
 import TabServiceProductable from "./TabServiceProductable";
 import { BackTopButton } from "components/Layout";
 import TabOrg from "./TabOrg";
+import TabServiceGroup from "./TabServiceGroup";
+import TabServiceProductableGroup from "./TabServiceProductableGroup";
 
 function SearchResults() {
     const { t } = useContext(AppContext) as any
@@ -48,8 +50,8 @@ function SearchResults() {
     //
     // let tabService = <TabService keyword={keyword} />
     // if (IS_MB) tabService = <TabServiceGroup keyword={keyword} />
-    let tabService = <TabServiceProductable keyword={keyword} />
-    if (IS_MB) tabService = <TabServiceProductable keyword={keyword} />
+    let tabService = <TabServiceProductableGroup keyword={keyword} />
+    // if (IS_MB) tabService = <TabServiceProductable keyword={keyword} />
     return (
         <>
             <Container>
