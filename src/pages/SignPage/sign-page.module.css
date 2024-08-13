@@ -60,7 +60,7 @@
     align-items: center;
 }
 
-.input_column > div:first-child {
+.input_column>div:first-child {
     width: 50%;
 }
 
@@ -144,39 +144,107 @@
 .input {
     border-radius: 18px !important;
 }
+
 /* login social */
-.social{
+.social {
     width: 100%;
     margin: 12px 0px;
 }
-.social_title{
+
+.social_title {
     text-align: center;
     font-size: 14px;
     line-height: 16px;
     font-weight: 500;
 }
-.social_list_btn{
+
+.social_list_btn {
     display: flex;
     align-items: center;
     justify-content: center;
     margin-top: 12px;
 }
-.social_list_btn button{
+
+.social_list_btn button {
     padding: 0px;
-    margin:6px;
+    margin: 6px;
     background-color: transparent;
 }
-.opt_count_down{
+
+.opt_count_down {
     margin: 0px 0px 24px 8px;
     font-size: 14px;
     line-height: 16px;
     font-weight: 500;
 }
 
+/* sign zalo */
+.zaloCnt {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.zaloName {
+    color: #0067FF;
+    font-size: 40px;
+    font-weight: bold;
+}
+
+.zaloContent {
+    display: block;
+    margin-bottom: 18px;
+    color: #333;
+    font-size: 1em;
+    font-weight: 600;
+    text-align: center;
+    margin: 12px 0px;
+}
+.zaloQrCnt{
+    margin-top: 12px;
+    width: 30%;
+    aspect-ratio: 1/1;
+    background-color: var(--bg-white);
+    box-shadow: var(--box-shadow);
+    border-radius: 6px;
+}
+.zaloQrCnt{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    padding: 18px;
+}
+.zaloQrTitle{
+    font-size: 20px;
+    font-weight: bold;
+}
+.zaloQrGuide{
+    font-size: 14px;
+    font-weight: 500;
+}
+.zaloQr{
+    width: 90%;
+    aspect-ratio: 1/1;
+}
+.zaloLoadAll{
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 10;
+}
+
+
 @media only screen and (max-width: 1023px) {
     .input_wrapper_icon_show {
         width: 18px;
     }
+
     .container {
         height: fit-content;
         flex-direction: column;

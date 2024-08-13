@@ -44,6 +44,8 @@ export const AppSnackBar = forwardRef<AppSnackHandler, AppSnackProps>((props, re
     },
     close: () => {
       setOpen(false)
+      setTitle("Title")
+      setColor('success')
     }
   }))
 

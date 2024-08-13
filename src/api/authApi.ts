@@ -1,4 +1,4 @@
-import {axiosClient} from "config";
+import { axiosClient } from "config";
 import { identity, pickBy } from "lodash";
 import { paramsUserProfile } from "params-query";
 import { ParamsForgotSms } from "interface"
@@ -12,13 +12,16 @@ class Auth {
     }
     return axiosClient.post(url, params);
   };
+  loginZalo = (values: { access_token: string, code: string }) => {
+    return axiosClient.post('/auth/zalo', values)
+  };
   register = (params: any) => {
     const url = `/auth/register`;
     return axiosClient.post(url, params);
   };
   getUserProfile = (token?: string) => {
     const url = `/users/profile`
-    return axiosClient.get(url, {params:paramsUserProfile})
+    return axiosClient.get(url, { params: paramsUserProfile })
   };
   forgotPassword = (values: any) => {
     const url = `/auth/forgot`;
