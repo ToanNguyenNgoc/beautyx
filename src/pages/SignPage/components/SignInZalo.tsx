@@ -77,8 +77,8 @@ export const SignInZalo: FC = () => {
             <QRCode
               size={256}
               className={style.zaloQr}
-              // value={`${DEEP_LINK_ZALO_MINI_APP}?app_code=${appCode}?platform=BEAUTYX`}
-              value={`https://zalo.me/s/458502586636539333/dang-nhap-app?env=TESTING&version=62&app_code=${appCode}?platform=BEAUTYX`}
+              value={`${DEEP_LINK_ZALO_MINI_APP}&app_code=${appCode}&platform=BEAUTYX`}
+              // value={`https://zalo.me/s/458502586636539333/dang-nhap-app?env=TESTING&version=62&app_code=${appCode}?platform=BEAUTYX`}
               viewBox={`0 0 256 256`}
             />
             <p className={style.zaloQrGuide}>
