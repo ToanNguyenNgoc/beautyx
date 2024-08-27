@@ -1,0 +1,125 @@
+.header {
+    width: 100%;
+    margin: 0 auto;
+    background-color: var(--bgWhite);
+}
+.headerContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 0;
+}
+.headerLeft {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+}
+
+.logo {
+    height: 40px;
+    width: 146px;
+    flex-shrink: 0;
+}
+.logo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* selector */
+.locationSelector {
+    display: flex;
+    align-items: center;
+    padding: 12px 13px;
+    border-radius: 18px;
+    background: var(--gray-header-cl);
+    gap: 10px;
+}
+.location,
+.selectBox {
+    color: var(--black-cl);
+    font-size: 16px;
+    line-height: 20px; /* 125% */
+}
+
+.selectBox {
+    font-weight: bold;
+}
+/* clas selector */
+
+.buttonGroup {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.secondaryButton {
+    background-color: white;
+    color: var(--black-cl);
+    border: 1px solid var(--black-cl);
+    font-size: 16px;
+    line-height: 20px; /* 125% */
+}
+
+.primaryButton {
+    font-size: 16px;
+    line-height: 20px; /* 125% */
+}
+
+/* button group login   */
+.toggleContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.toggle {
+    display: flex;
+    justify-content: space-between;
+    border-radius: 50px;
+    border: 1px solid #7d5fb2;
+    background-color: #ffffff;
+    cursor: pointer;
+}
+
+.option {
+    padding: 7px 20px;
+    font-size: 16px;
+    line-height: 20px; /* 125% */
+    transition: background-color 0.3s ease, color 0.3s ease;
+    border-radius: 50px;
+    font-weight: bold;
+}
+
+.active {
+    background-color: #7d5fb2;
+    color: #ffffff;
+    border-radius: 50px;
+}
+.changeLang {
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+    margin: 9px;
+}
+.changeLang img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* close button group login   */
+
+.cartIcon {
+    display: flex;
+    align-items: center;
+    background-color: var(--black-cl);
+    color: #fff;
+    font-size: 16px;
+    line-height: 20px; /* 125% */
+    gap: 8px;
+}
+
+.cartIcon img {
+    height: 24px;
+}

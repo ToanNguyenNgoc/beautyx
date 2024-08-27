@@ -34,6 +34,8 @@ import { AssistantButton } from "components/Layout"
 import CateTree from "pages/CateTree";
 import PayUrl from "rootComponents/momo/PayUrl";
 import { RegisterAppAlert } from "components/RegisterAppAlert/RegisterAppAlert";
+import HomeVer3 from "pages/HomeVer3";
+import HeaderVer3 from "components/HeaderVer3";
 
 //community page
 const PostDetail = lazy(() => import("pages/Community/pages/PostDetail"));
@@ -106,6 +108,10 @@ function RouterConfig() {
       component: <Organization />,
     },
     // END mini app share link
+    {
+      path: `/home-ver3`,
+      component: <HomeVer3 />,
+    },
     {
       path: `/home`,
       component: <HomePage />,
@@ -329,7 +335,8 @@ function RouterConfig() {
   return (
     <BrowserRouter>
       <Router>
-        <Head />
+        {/* <Head /> */}
+        <HeaderVer3 />
         <Switch>
           <Redirect exact from="/" to="trang-chu" />
           {routes.map((item, index: number) => (

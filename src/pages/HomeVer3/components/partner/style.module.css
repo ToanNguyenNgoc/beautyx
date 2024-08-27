@@ -1,0 +1,29 @@
+.partner {
+    padding: 80px 0;
+}
+.partner h2 {
+    font-family: Inter;
+    font-size: 32px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 120%; /* 38.4px */
+}
+.partner__wrap {
+    display: flex;
+    gap: 20px;
+}
+.partner__left {
+    width: 212px;
+}
+
+.partner__right {
+    width: calc(100% - 212px);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.partner__img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
