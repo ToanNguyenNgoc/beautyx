@@ -1,8 +1,7 @@
-import React from "react";
 import styles from "./style.module.css";
 import { Container } from "@mui/material";
 import img from "constants/img";
-export default function Partner() {
+export function Partner() {
     return (
         <div className={styles.partner}>
             <Container maxWidth="md">

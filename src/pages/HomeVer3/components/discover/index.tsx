@@ -2,8 +2,7 @@ import React, { useState } from "react";
 import styles from "./style.module.css";
 import { Container } from "@mui/material";
 
-export default function Discover() {
-    // Định nghĩa type cho thành phố
+export function Discover() {
     const [activeCity, setActiveCity] = useState<string>("TP. Hồ Chí Minh");
 
     const cities: string[] = [

@@ -1,16 +1,14 @@
-import React from "react";
 import styles from "./style.module.css";
 import icon from "constants/icon";
 import { Container } from "@mui/material";
-import { array } from "yup";
 export function Recommend() {
     return (
         <div className={styles.recommend}>
             <Container maxWidth="md">
                 <h2 className={styles.title}>Gợi ý spa dành cho bạn</h2>
                 <div className={styles.recommend__list}>
-                    {[...Array(4)].map(() => (
-                        <div className={styles.recommend__item}>
+                    {[...Array(4)].map((_, index) => (
+                        <div key={index} className={styles.recommend__item}>
                             <div className={styles.recommend__item__img}>
                                 <img
                                     src="https://images.pexels.com/photos/979248/pexels-photo-979248.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"

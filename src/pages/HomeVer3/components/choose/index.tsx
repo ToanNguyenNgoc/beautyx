@@ -4,7 +4,7 @@ import img from "constants/img";
 import { Container } from "@mui/material";
 import Slider from "react-slick";
 
-export default function Choose() {
+export function Choose() {
     const settings = {
         speed: 3000,
         autoplay: true,
