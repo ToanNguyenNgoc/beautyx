@@ -14,6 +14,7 @@ export function Opinion() {
         slidesToScroll: 1,
         autoplay: true,
         autoplaySpeed: 3000,
+        arrows: false,
     };
 
     // Cấu hình cho Slider của CEO
@@ -25,6 +26,7 @@ export function Opinion() {
         slidesToScroll: 1,
         autoplay: true,
         autoplaySpeed: 3000,
+        arrows: false,
     };
 
     return (
@@ -32,12 +34,14 @@ export function Opinion() {
             <Container maxWidth="md">
                 <div className={styles.opinion__wrap}>
                     <div className={styles.opinion__left}>
+                        <div className={styles.opinion__circle__wrap}>
+                            <div className={styles.opinion__circle}></div>
+                        </div>
                         <Slider
                             {...customerSettings}
                             className={styles.slider__customer}
                         >
                             <div className={styles.slider__customer__item}>
-                                <div className={styles.opinion__circle}></div>
                                 <h2 className={styles.title}>
                                     Ý kiến từ Khách hàng
                                 </h2>
@@ -92,7 +96,6 @@ export function Opinion() {
                                 </div>
                             </div>
                             <div className={styles.slider__customer__item}>
-                                <div className={styles.opinion__circle}></div>
                                 <h2 className={styles.title}>
                                     Ý kiến từ Khách hàng
                                 </h2>
@@ -147,7 +150,6 @@ export function Opinion() {
                                 </div>
                             </div>
                             <div className={styles.slider__customer__item}>
-                                <div className={styles.opinion__circle}></div>
                                 <h2 className={styles.title}>
                                     Ý kiến từ Khách hàng
                                 </h2>
@@ -204,9 +206,11 @@ export function Opinion() {
                         </Slider>
                     </div>
                     <div className={styles.opinion__right}>
+                        <div className={styles.opinion__circle__wrap}>
+                            <div className={styles.opinion__circle}></div>
+                        </div>
                         <Slider {...ceoSettings} className={styles.slider__ceo}>
                             <div className={styles.slider__ceo__item}>
-                                <div className={styles.opinion__circle}></div>
                                 <div className={styles.opinion__ceo}>
                                     <img src={img.ceoPMT} alt="CEO" />
                                 </div>
@@ -238,7 +242,6 @@ export function Opinion() {
                                 </div>
                             </div>
                             <div className={styles.slider__ceo__item}>
-                                <div className={styles.opinion__circle}></div>
                                 <div className={styles.opinion__ceo}>
                                     <img src={img.ceoPMT} alt="CEO" />
                                 </div>
@@ -270,7 +273,6 @@ export function Opinion() {
                                 </div>
                             </div>
                             <div className={styles.slider__ceo__item}>
-                                <div className={styles.opinion__circle}></div>
                                 <div className={styles.opinion__ceo}>
                                     <img src={img.ceoPMT} alt="CEO" />
                                 </div>
