@@ -21,7 +21,7 @@ class Auth {
   };
   getUserProfile = (token?: string) => {
     const url = `/users/profile`
-    return axiosClient.get(url, { params: paramsUserProfile })
+    return axiosClient.get(url, { params: paramsUserProfile }).then().catch(() => axiosClient.get(url))
   };
   forgotPassword = (values: any) => {
     const url = `/auth/forgot`;
