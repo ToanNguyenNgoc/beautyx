@@ -19,39 +19,43 @@
     width: calc(50% - 32px);
     position: relative;
 }
-.slider__customer__item,
-.slider__ceo__item {
+
+.slider__ceo__item ,.slider__customer__item{
     position: relative;
     overflow: hidden;
-    padding: 24px 36px 48px 36px;
+    padding: 24px 50px 61.5px 50px;
+    background-image: url("../../../../assets/image/home-V3/deccor_opi.png");
+    background-repeat: no-repeat;
+    background-position: bottom;
+    background-size: cover;
+    /* height: 314px; */
+}
+.slider__customer__item{
+    background-image: url("../../../../assets/image/home-V3/deccor_opi_left.png");
 }
 .opinion__vote__list {
     display: flex;
     align-items: center;
     gap: 8px;
 }
-.opinion__circle__wrap {
-    height: 100%;
-    width: 100%;
-    overflow: hidden;
-    position: absolute;
-}
 .opinion__vote__item {
     width: 24px;
     height: 24px;
+
 }
 .opinion__vote__item img {
     width: 100%;
     height: 100%;
     object-fit: cover;
 }
-.opinion__customer__name,
-.comment__desc {
-    font-size: 16px;
-    color: var(--text-gray);
-    font-weight: bold;
+.opinion__customer__name {
     margin-top: 10px;
-    line-height: 1.3;
+    color: var(--text-gray);
+    font-family: Quicksand;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 120%; /* 21.6px */
 }
 .comment__desc {
     display: -webkit-box;
@@ -60,59 +64,62 @@
     overflow: hidden;
     text-overflow: ellipsis;
     word-break: break-word;
+    font-family: Quicksand;
+    font-size: 17px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 120%;
 }
 .opinion__content {
     display: flex;
     flex-direction: column;
-    gap: 36px;
+    gap: 56px;
     z-index: 2;
     position: relative;
     margin-top: 24px;
 }
 .comment__title {
-    font-size: 20px;
-    font-weight: bold;
-    margin-bottom: 8px;
+    font-family: Quicksand;
+    font-size: 22px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 120%; /* 26.4px */
+    margin-bottom: 14px;
 }
-.opinion__circle {
-    position: absolute;
-    width: 360px;
-    height: 360px;
-    border-radius: 100rem;
-    bottom: 0;
-    left: 0;
-    transform: translate(-25%, 42%);
-    background-color: var(--bg-gray);
-}
+
 .opinion__right {
     padding-bottom: 0;
 }
-.opinion__right .opinion__circle {
-    right: 0;
-    left: unset;
-    transform: translate(25%, 42%);
-}
-.opinion__right .opinion__content h3 {
-    font-size: 24px;
-    font-weight: bold;
-}
 
-.opinion__right__desc,
-.opinion__right__comment {
-    font-size: 16px;
-    color: var(--text-gray);
-    font-weight: bold;
-    line-height: 1.3;
-}
+
 .opinion__right__desc {
-    margin-top: 10px;
+    font-size: 16px;
+    font-family: Quicksand;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 120%; /* 21.6px */
+    color: #6B6660;
 }
-.opinion__right__comment {
-    width: 70%;
+.opinion__right .comment__title{
+    margin-bottom: 0;
+}
+.opinion__right .opinion__content{
+    gap: 41.52px;
+    margin-top: 61px;
+}
+.opinion__right .comment__desc{
+    width: 358px;
+    display:-webkit-box;
+    -webkit-line-clamp:4;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    word-break: break-word;
 }
 .opinion__ceo {
     position: absolute;
-    bottom: 0;
+    bottom: 10px;
     right: 0;
 }
 .opinion__ceo {
@@ -126,4 +133,37 @@
 .opinion__left .slider__customer,
 .opinion__right .slider__ceo {
     position: unset;
+}
+
+/* custom dots slider */
+.slickDots{
+    display: flex;
+    justify-content: center;
+    gap: 4px;
+}
+.slickDots li{
+    margin: 0;
+    display: block;
+    width: 7px;
+    height: 7px;
+}
+.slickDots li button{
+    background-color: #b8b8b8;
+    opacity: 0.8;
+    width: 7px;
+    height: 7px;
+    padding: 0;
+    border-radius: 100rem;
+
+}
+.active__dot{
+    background-color: var(--purple) !important;
+    opacity: 1 !important;
+}
+.slickDots li button:before{
+    font-size: 0;
+    content: unset;
+}
+.slickList div:nth-child(2){
+    bottom: -14px;
 }

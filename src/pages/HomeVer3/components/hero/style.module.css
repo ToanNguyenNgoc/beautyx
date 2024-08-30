@@ -1,5 +1,5 @@
 .hero {
-    margin: 20px 0 40px 0;
+    margin: 20px 0 100px 0;
     position: relative;
     background-color: var(--bg-white);
 }
@@ -8,9 +8,9 @@
 }
 .hero__title {
     position: absolute;
-    top: 50%;
+    top: 167px;
     left: 50%;
-    transform: translate(-50%, -50%);
+    transform: translateX(-50%);
 }
 .hero__title h1 {
     color: var(--white-cl);

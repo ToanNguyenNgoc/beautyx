@@ -17,7 +17,6 @@
 
 .logo {
     height: 40px;
-    width: 146px;
     flex-shrink: 0;
 }
 .logo img {
@@ -57,13 +56,6 @@
     background-color: white;
     color: var(--black-cl);
     border: 1px solid var(--black-cl);
-    font-size: 16px;
-    line-height: 20px; /* 125% */
-}
-
-.primaryButton {
-    font-size: 16px;
-    line-height: 20px; /* 125% */
 }
 
 /* button group login   */
@@ -76,19 +68,22 @@
 .toggle {
     display: flex;
     justify-content: space-between;
-    border-radius: 50px;
+    border-radius: 17px;
     border: 1px solid #7d5fb2;
     background-color: #ffffff;
     cursor: pointer;
 }
 
 .option {
-    padding: 7px 20px;
-    font-size: 16px;
-    line-height: 20px; /* 125% */
+    padding: 6px 19px;
     transition: background-color 0.3s ease, color 0.3s ease;
     border-radius: 50px;
-    font-weight: bold;
+    font-weight: 500;
+    font-family: Quicksand;
+    font-size: 16px;
+    font-style: normal;
+    line-height: 20px; /* 125% */
+    border: 0;
 }
 
 .active {
@@ -107,19 +102,25 @@
     height: 100%;
     object-fit: cover;
 }
+.locationSelector__img{
+    width: 10px;
+}
 
 /* close button group login   */
 
 .cartIcon {
-    display: flex;
-    align-items: center;
     background-color: var(--black-cl);
-    color: #fff;
-    font-size: 16px;
-    line-height: 20px; /* 125% */
+    display: flex;
     gap: 8px;
 }
-
+.cartIcon__img{
+    height: 16px;
+    width: 16px;
+    
+}
 .cartIcon img {
-    height: 24px;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    margin: 0;
 }

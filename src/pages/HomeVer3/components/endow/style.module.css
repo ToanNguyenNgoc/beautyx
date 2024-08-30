@@ -63,6 +63,7 @@
     transition: all 0.4s;
     cursor: pointer;
     position: relative;
+    padding: 20px 0;
     /* box-shadow: var(--box-shadow); */
 }
 

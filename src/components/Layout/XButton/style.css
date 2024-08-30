@@ -1,20 +1,21 @@
 .btn-loading {
-    padding: 7px 18px;
-    background-color: var(--purple);
-    border: none;
+    padding: 6px 19px;
+    border: 1px solid transparent ;
     outline: none;
     cursor: pointer;
     background-color: var(--purple);
     color: var(--bgWhite);
-    font-size: 16px;
-    line-height: 20px;
-    font-weight: 700;
-    border-radius: 20px;
+    border-radius: 18px;
     transition: all 0.3s;
     position: relative;
     display: flex;
     align-items: center;
     justify-content: center;
+    font-family: Quicksand;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 20px; /* 125% */
 }
 
 .btn-loading:hover {

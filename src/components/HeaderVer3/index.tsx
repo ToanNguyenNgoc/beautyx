@@ -1,5 +1,4 @@
 import { Badge, Container } from "@mui/material";
-import icon from "constants/icon";
 import { ICON } from "constants/icon2";
 import img from "constants/img";
 import { Link } from "react-router-dom";
@@ -11,10 +10,10 @@ import { styled } from "@mui/material/styles";
 export default function HeaderVer3() {
     const SmallBadge = styled(Badge)(({ theme }) => ({
         "& .MuiBadge-badge": {
-            fontSize: "10px", // Giảm kích thước font chữ của đếm
-            height: "16px", // Giảm kích thước chiều cao của badge
-            minWidth: "16px", // Giảm kích thước chiều rộng tối thiểu của badge
-            padding: "0 4px", // Thêm padding cho badge
+            fontSize: "10px",
+            height: "16px",
+            minWidth: "16px",
+            padding: "0 4px",
         },
     }));
 
@@ -33,7 +32,11 @@ export default function HeaderVer3() {
                             <span className={styles.selectBox}>
                                 Hồ Chí Minh
                             </span>
-                            <img src={ICON.arrDownBlack} alt="" />
+                            <img
+                                className={styles.locationSelector__img}
+                                src={ICON.arrDownBlack}
+                                alt=""
+                            />
                         </div>
                     </div>
 
@@ -68,12 +71,14 @@ export default function HeaderVer3() {
                                     badgeContent={100}
                                     max={99}
                                 >
-                                    <img
-                                        width={16}
-                                        height={16}
-                                        src={ICON.shoppingCart}
-                                        alt="Shopping Cart"
-                                    />
+                                    <div className={styles.cartIcon__img}>
+                                        <img
+                                            width={16}
+                                            height={16}
+                                            src={ICON.shoppingCart}
+                                            alt="Shopping Cart"
+                                        />
+                                    </div>
                                 </SmallBadge>
                                 Giỏ hàng
                             </XButton>

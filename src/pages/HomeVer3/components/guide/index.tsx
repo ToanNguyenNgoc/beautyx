@@ -20,7 +20,7 @@ export function Guide() {
                     <div className={styles.guide__item}>
                         <div className={styles.guide__step}>Bước 2</div>
                         <p className={styles.guide__step__desc}>
-                            Tìm địa điểm, dịch vụ phù hợp
+                            Mua dịch vụ và thanh toán
                         </p>
                         <div className={styles.guide__item__img}>
                             <img src={img.guide_2} alt="" />
@@ -29,7 +29,7 @@ export function Guide() {
                     <div className={styles.guide__item}>
                         <div className={styles.guide__step}>Bước 3</div>
                         <p className={styles.guide__step__desc}>
-                            Tìm địa điểm, dịch vụ phù hợp
+                            Đặt lịch sau khi mua thành công
                         </p>
                         <div className={styles.guide__item__img}>
                             <img src={img.guide_3} alt="" />
@@ -38,7 +38,7 @@ export function Guide() {
                     <div className={styles.guide__item}>
                         <div className={styles.guide__step}>Bước 4</div>
                         <p className={styles.guide__step__desc}>
-                            Tìm địa điểm, dịch vụ phù hợp
+                            Đến Spa checkin và sử dụng dịch vụ
                         </p>
                         <div className={styles.guide__item__img}>
                             <img src={img.guide_4} alt="" />
