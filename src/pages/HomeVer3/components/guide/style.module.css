@@ -44,7 +44,7 @@
 .guide__list::before {
     content: "";
     position: absolute;
-    top: 20px;
+    top: 40px;
     width: 80%;
     height: 2px;
     border-top: 1px dashed #ccc;

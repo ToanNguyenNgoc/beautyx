@@ -1,0 +1,226 @@
+.footer {
+    width: 100%;
+    background-color: var( --black-btn);
+    padding-bottom: 42px;
+    color: #f3f3f3;
+}
+.footerCnt {
+    display: flex;
+    width: 100%;
+    align-items: flex-start;
+}
+.footerLeftBottom {
+    margin-top: 24px;
+}
+.footerLeft {
+    width: 50%;
+    padding: 42px 0px;
+}
+.footerCnt .wrap {
+    width: 100%;
+}
+.footerCntItemTitle {
+    font-family: Quicksand;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 160%; /* 22.4px */
+    color: #f3f3f3;
+    font-weight: 700;
+}
+.footerCntItem ul {
+    margin-top: 12px;
+}
+.footerCntItem ul li {
+    color: #f3f3f3;
+    cursor: pointer;
+    margin: 4px 0px;
+    font-family: Quicksand;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 160%; /* 19.2px */
+}
+.address {
+    text-align: center;
+    margin-top: 32px;
+    font-size: 10px;
+    line-height: 14px;
+    color: #f3f3f3;
+    cursor: pointer;
+}
+.footerRight {
+    width: 50%;
+    padding: 42px 0px;
+    display: flex;
+    flex-direction: row;
+    gap: 40px;
+}
+
+.socialList {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(36px, 1fr));
+    grid-gap: 16px;
+    margin-top: 16px;
+}
+.rowCenter {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.footerLeft li:hover {
+    /* color: #81c12e; */
+    text-decoration: underline;
+}
+.logoMyspa {
+    width: 100px;
+    /* filter: drop-shadow(0 0 0.01rem black); */
+    cursor: pointer;
+}
+.socialItem {
+    cursor: pointer;
+    border-radius: 4px;
+    overflow: hidden;
+    width: 36px;
+    height: 36px;
+}
+.socialItemMethod {
+    background-color: #f3f3f3;
+    border-radius: 6px;
+    overflow: hidden;
+}
+.socialItemImg {
+    width: 36px;
+    height: 36px;
+}
+.socialItemImg img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.downApp {
+    margin-top: 18px;
+    display: flex;
+    align-items: center;
+    grid-gap: 0 12px;
+}
+.downAppQr {
+    width: 40%;
+    border-radius: 4px;
+    background-color: #f3f3f3;
+}
+
+.downAppQr img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.downAppWrap {
+    width: 60%;
+    display: flex;
+    flex-direction: column;
+    grid-gap: 12px 0;
+}
+.downAppBtn {
+    cursor: pointer;
+}
+.downAppBtn img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.footerCopyRight {
+    width: 100%;
+    text-align: center;
+    margin-top: 6px;
+    font-size: 10px;
+    line-height: 12px;
+    font-weight: 500;
+    color: var(--white);
+}
+/* popup qr code mini app */
+.footerPopChild {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.footerPopChildTitle {
+    display: flex;
+    align-items: flex-end;
+}
+.footerPopChildTitle span {
+    font-size: 16px;
+    line-height: 18px;
+    font-weight: 600;
+}
+.footerPopChildTitle img {
+    width: 36px;
+    height: 36px;
+    margin-left: 6px;
+}
+.footerPopChildQrCode {
+    width: 250px;
+    height: 250px;
+    object-fit: cover;
+    margin-top: 16px;
+}
+.awsStarups {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+}
+.awsStartupsImg {
+    width: 150px;
+}
+.awsStarups > p {
+    margin-bottom: 12px;
+    color: #f3f3f3;
+    font-size: 12px;
+}
+
+.footerLeftTop {
+    display: flex;
+    gap: 40px;
+}
+.connect_size{
+    font-family: Quicksand;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 160%; /* 28.8px */
+}
+.dowload_size{
+    font-family: Quicksand;
+    font-family: Quicksand;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 160%; /* 32px */
+    margin-top: 40px;
+}
+/* Mobile */
+@media only screen and (max-width: 769px) {
+    .footer {
+        display: none;
+    }
+    .footerCnt {
+        flex-direction: column;
+        padding: 24px 0px;
+    }
+    .footerCntItemTitle {
+        width: 100%;
+        text-align: center;
+        margin-top: 12px;
+    }
+    .footerCnt .wrap {
+        width: 100%;
+    }
+    .footerCntItem ul {
+        margin-top: 12px;
+    }
+    .footerCntItem ul li {
+        text-align: center;
+    }
+}

@@ -101,7 +101,14 @@ import momo from "assets/image/home-V3/momo.png";
 import vcb from "assets/image/home-V3/vcb.png";
 import mb_bank from "assets/image/home-V3/mbbank.png";
 
+import vietel_money from "assets/image/viettel_mony.png";
+import livwell from "assets/image/livwell.png";
+import fpt_blue from "assets/image/fpt_blue.png";
+
 const img = {
+    vietel_money,
+    livwell,
+    fpt_blue,
     about_1,
     about_2,
     qr,
