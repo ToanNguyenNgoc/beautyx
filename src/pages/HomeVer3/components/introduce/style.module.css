@@ -8,7 +8,6 @@
 .introduce__left,
 .introduce__right {
     width: 50%;
-    border-radius: 12px;
     display: flex;
     flex-direction: column;
 }
@@ -32,10 +31,22 @@
 .introduce__btn {
     width: max-content;
     margin: 0 auto;
+    padding: 12px 25px;
     background-color: var(--momo-cl);
+    border-radius: 24px;
+    color: #FFF;
+    text-align: center;
+    font-family: Quicksand;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 20px; /* 125% */
 }
 .introduce__left .introduce__btn {
     background-color: var(--green);
+}
+.introduce__right .introduce__btn {
+    width: 158.69px;
 }
 .introduce__content h2 {
     font-family: Inter;

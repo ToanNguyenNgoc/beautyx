@@ -149,6 +149,9 @@ function Head(props: IProps) {
       // header.style.backgroundColor = `rgb(230 77 74 / ${scrolled}%)`
     }
   })
+  if (window.location.pathname === "/home-ver3") {
+    return <></>
+  }
   return (
     showHeader ?
       <>

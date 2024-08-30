@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/static/css/main.dcdab63b.css",
-    "main.js": "/static/js/main.0d375fea.js",
+    "main.css": "/static/css/main.7fccd6ca.css",
+    "main.js": "/static/js/main.256eeab2.js",
     "static/css/397.c66ec7e9.chunk.css": "/static/css/397.c66ec7e9.chunk.css",
     "static/js/397.be40ad52.chunk.js": "/static/js/397.be40ad52.chunk.js",
     "static/css/393.853b2f6c.chunk.css": "/static/css/393.853b2f6c.chunk.css",
@@ -135,20 +135,25 @@
     "static/media/step_4.png": "/static/media/step_4.62871a4cd3baa6e3dadb.png",
     "static/media/guide_2.png": "/static/media/guide_2.450cdc945a81b861f551.png",
     "static/media/product1.png": "/static/media/product1.3e0b4caf9f205ab8768c.png",
-    "static/media/Quicksand-SemiBold.woff": "/static/media/Quicksand-SemiBold.66199d9b3d31279c0f57.woff",
     "static/media/topic1.png": "/static/media/topic1.4d9d6d8aa4e6deb9162e.png",
-    "static/media/Quicksand-Medium.woff": "/static/media/Quicksand-Medium.1e506261bf8e27690a27.woff",
-    "static/media/Quicksand-Regular.woff": "/static/media/Quicksand-Regular.31d0ec71679cb47853ca.woff",
+    "static/media/Quicksand-SemiBold.woff": "/static/media/Quicksand-SemiBold.acf110216dba87b75c87.woff",
+    "static/media/Quicksand-Medium.woff": "/static/media/Quicksand-Medium.c51cbac09cc045c43c73.woff",
+    "static/media/Quicksand-Regular.woff": "/static/media/Quicksand-Regular.48d22155f7b78ad405ba.woff",
     "static/media/zalo.png": "/static/media/zalo.2ccab36d61e55a06f6c6.png",
-    "static/media/Quicksand-Bold.woff": "/static/media/Quicksand-Bold.81630c88ffba8f095bad.woff",
-    "static/media/Quicksand-Light.woff": "/static/media/Quicksand-Light.2c40ef785fc90b0e68d7.woff",
+    "static/media/Quicksand-Bold.woff": "/static/media/Quicksand-Bold.9a3845e5a5772abd10d6.woff",
+    "static/media/Quicksand-Light.woff": "/static/media/Quicksand-Light.92151f18ab6dcf9ccf7e.woff",
     "static/media/instagram.png": "/static/media/instagram.79535458a8a6d88f81d4.png",
     "static/media/guide_3.png": "/static/media/guide_3.ae11e914b73a614ba1ec.png",
     "static/media/partner.png": "/static/media/partner.6d210e2faabbaf55cbb9.png",
     "static/media/group2.png": "/static/media/group2.dad6872c1de616227698.png",
     "static/media/viettelpay.png": "/static/media/viettelpay.f85b0cbb337dfedf660a.png",
+    "static/media/Quicksand-SemiBold.woff2": "/static/media/Quicksand-SemiBold.eee7001445e18dce9066.woff2",
+    "static/media/Quicksand-Regular.woff2": "/static/media/Quicksand-Regular.e18ddaccce2a801c0042.woff2",
     "static/media/loginReq.svg": "/static/media/loginReq.4cda8994e7c5dd850bcb632a6f358088.svg",
+    "static/media/Quicksand-Medium.woff2": "/static/media/Quicksand-Medium.f57734659c86a65177d9.woff2",
     "static/media/movie.png": "/static/media/movie.9ffb741a7a8e50a3d245.png",
+    "static/media/Quicksand-Bold.woff2": "/static/media/Quicksand-Bold.e06b4643f25ef872819e.woff2",
+    "static/media/Quicksand-Light.woff2": "/static/media/Quicksand-Light.0cafd1419198b55ed5ee.woff2",
     "static/media/group1.png": "/static/media/group1.5a0d4e788f5b92936198.png",
     "static/media/guide_1.png": "/static/media/guide_1.0b9693542370e560156e.png",
     "static/media/logo_cong_ty.svg": "/static/media/logo_cong_ty.3f44f9b0b081791f4259fbc598ca5b4f.svg",
@@ -468,8 +473,8 @@
     "static/media/chevronRightBlack.svg": "/static/media/chevronRightBlack.c39dae4207cf3143d43967d7a2c5c8be.svg",
     "static/media/ellipse _109.svg": "/static/media/ellipse _109.c8867b3ef723d8134d92b4c3e3c67e50.svg",
     "static/media/onedot.svg": "/static/media/onedot.e21b279ff39ac73cd10efc592b130093.svg",
-    "main.dcdab63b.css.map": "/static/css/main.dcdab63b.css.map",
-    "main.0d375fea.js.map": "/static/js/main.0d375fea.js.map",
+    "main.7fccd6ca.css.map": "/static/css/main.7fccd6ca.css.map",
+    "main.256eeab2.js.map": "/static/js/main.256eeab2.js.map",
     "397.c66ec7e9.chunk.css.map": "/static/css/397.c66ec7e9.chunk.css.map",
     "397.be40ad52.chunk.js.map": "/static/js/397.be40ad52.chunk.js.map",
     "393.853b2f6c.chunk.css.map": "/static/css/393.853b2f6c.chunk.css.map",
@@ -512,7 +517,7 @@
     "246.26d8b7f1.chunk.js.map": "/static/js/246.26d8b7f1.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.dcdab63b.css",
-    "static/js/main.0d375fea.js"
+    "static/css/main.7fccd6ca.css",
+    "static/js/main.256eeab2.js"
   ]
 }

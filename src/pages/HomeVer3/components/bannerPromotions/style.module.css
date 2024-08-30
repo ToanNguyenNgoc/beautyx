@@ -1,5 +1,5 @@
 .BannerPromotions {
-    padding: 80px 0;
+    padding: 108.5px 0;
     background-color: var(--bg-white);
 }
 .slide_btn {
@@ -41,4 +41,37 @@
 
 .BannerPromotions .slickList {
     margin: 0 -10px !important;
+}
+
+/* custom dots slider */
+.slickDots{
+    display: flex;
+    justify-content: center;
+    gap: 4px;
+}
+.slickDots li{
+    margin: 0;
+    display: block;
+    width: 7px;
+    height: 7px;
+}
+.slickDots li button{
+    background-color: #b8b8b8;
+    opacity: 0.8;
+    width: 7px;
+    height: 7px;
+    padding: 0;
+    border-radius: 100rem;
+
+}
+.active__dot{
+    background-color: var(--purple) !important;
+    opacity: 1 !important;
+}
+.slickDots li button:before{
+    font-size: 0;
+    content: unset;
+}
+.slickList div:nth-child(2){
+    bottom: -14px;
 }
