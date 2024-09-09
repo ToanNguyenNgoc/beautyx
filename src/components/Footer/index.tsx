@@ -298,7 +298,7 @@ function Footer() {
     },
     {
       id: 2,
-      img: img.iconVinID,
+      img: img.oneU,
     },
     {
       id: 3,
