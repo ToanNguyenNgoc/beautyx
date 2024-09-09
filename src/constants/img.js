@@ -104,8 +104,10 @@ import mb_bank from "assets/image/home-V3/mbbank.png";
 import vietel_money from "assets/image/viettel_mony.png";
 import livwell from "assets/image/livwell.png";
 import fpt_blue from "assets/image/fpt_blue.png";
+import oneU from "assets/image/OneU.jpg";
 
 const img = {
+    oneU,
     vietel_money,
     livwell,
     fpt_blue,
