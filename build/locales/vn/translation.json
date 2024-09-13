@@ -640,5 +640,9 @@
         "ac_gui_desc2": "Kiểm tra giỏ hàng",
         "ac_gui_desc3": "Chọn button \"Đặt hẹn ngay\" để đặt hẹn sau khi thanh toán",
         "ac_gui_desc4": "Lưu trữ thông tin và nhắc hẹn khi đến lịch"
+    },
+    "alert":{
+        "txtError":"Có lỗi xảy ra. Vui lòng thử lại !",
+        "txtSentZalo":"Mã xác thực đã được gửi đến tin nhắn Zalo của bạn"
     }
 }

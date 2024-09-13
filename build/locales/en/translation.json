@@ -645,5 +645,9 @@
         "ac_gui_desc2": "Check cart",
         "ac_gui_desc3": "Select the button \"Make an appointment now\" to book an appointment after payment",
         "ac_gui_desc4": "Store information and remind appointments when scheduled"
+    },
+    "alert":{
+        "txtError": "An error occurred. Please try again!",
+        "txtSentZalo": "The verification code has been sent to your Zalo message"
     }
 }

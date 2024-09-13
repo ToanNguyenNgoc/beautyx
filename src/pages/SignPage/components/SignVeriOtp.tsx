@@ -5,6 +5,7 @@ import { formatTelephone } from "../../ResetPassword";
 import { authentication, RecaptchaVerifier, signInWithPhoneNumber } from "../../../firebase";
 import FormTelephone from "../../ResetPassword/components/FormTelephone";
 import { Alert } from "components/Layout";
+import { auth } from "api/authApi";
 
 function SignVeriOtp(props: any) {
     const { open, setOpen, setDataOtp, prevUrl, setActiveTabSign } = props;
@@ -29,28 +30,43 @@ function SignVeriOtp(props: any) {
             console.log(err)
         }
     }
-    const handlePostTelephone = (telephone: string) => {
-        const phoneNumber: any = formatTelephone(telephone);
-        if (phoneNumber === "") return;
-        generateRecaptcha()
-        setLoad(true)
-        signInWithPhoneNumber(authentication, phoneNumber, window.recaptchaVerifier)
-            .then((result) => {
-                setDataOtp({
-                    telephone: telephone,
-                    verification_id: result?.verificationId,
-                });
-                setOpen(false);
-                setLoad(false)
-            })
-            .catch((err) => {
-                console.log(err);
-                setLoad(false)
-                Alert.open({
-                    message: "Có lỗi xảy ra, vui lòng thử lại",
-                    actions: [{ text: "Đóng", onPress: () => generateRecaptcha() }]
-                })
+    const handlePostTelephone = async (telephone: string) => {
+        // const phoneNumber: any = formatTelephone(telephone);
+        // if (phoneNumber === "") return;
+        // generateRecaptcha()
+        // setLoad(true)
+        // signInWithPhoneNumber(authentication, phoneNumber, window.recaptchaVerifier)
+        //     .then((result) => {
+        //         setDataOtp({
+        //             telephone: telephone,
+        //             verification_id: result?.verificationId,
+        //         });
+        //         setOpen(false);
+        //         setLoad(false)
+        //     })
+        //     .catch((err) => {
+        //         console.log(err);
+        //         setLoad(false)
+        //         Alert.open({
+        //             message: "Có lỗi xảy ra, vui lòng thử lại",
+        //             actions: [{ text: "Đóng", onPress: () => generateRecaptcha() }]
+        //         })
+        //     });
+        try {
+            await auth.loginOtpZms({ telephone })
+            setDataOtp({
+                telephone: telephone,
             });
+            setOpen(false);
+            setLoad(false)
+        } catch (error) {
+            console.log(error);
+            setLoad(false)
+            Alert.open({
+                message: "Có lỗi xảy ra, vui lòng thử lại",
+                actions: [{ text: "Đóng", onPress: () => generateRecaptcha() }]
+            })
+        }
     };
     return (
         <Dialog open={open} fullScreen>

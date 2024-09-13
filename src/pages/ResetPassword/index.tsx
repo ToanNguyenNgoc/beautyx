@@ -1,10 +1,13 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Container } from '@mui/material';
 import './style.css';
 import FormTelephone from './components/FormTelephone';
 import FormOtp from './components/FormOtp';
 import { authentication, RecaptchaVerifier, signInWithPhoneNumber } from '../../firebase';
 import FormHead from './components/FormHead';
+import { AlertAppSnack } from 'components/Layout';
+import { AppContext, AppContextType } from 'context';
+import { auth } from 'api/authApi';
 
 declare global {
     interface Window {
@@ -18,6 +21,7 @@ export const formatTelephone = (telephone: string) => {
     return "+84" + telephone.toString().slice(1);
 }
 function ResetPassword() {
+    const { t } = useContext(AppContext) as AppContextType
     const [values, setValues] = useState({
         telephone: '',
         new_password: '',
@@ -74,12 +78,30 @@ function ResetPassword() {
             setLoad(false)
         }
     }
-    const handlePostTelephone = (telephone: string, isRecaptcha: boolean) => {
+    const handleSendOtpZms = async (telephone: string) => {
         setLoad(true)
-        const phoneNumber = formatTelephone(telephone)
-        if (phoneNumber === "") return;
-        isRecaptcha === true && generateRecaptcha()
-        handleSignWithPhone(phoneNumber, isRecaptcha, telephone);
+        try {
+            await auth.loginOtpZms({telephone})
+            setValues({
+                ...values,
+                telephone: telephone
+            })
+            setStep(2)
+            setLoad(false)
+            AlertAppSnack.open({ title: t('alert.txtSentZalo'),type:'success' })
+        } catch (error) {
+            console.log(error)
+            setLoad(false)
+            AlertAppSnack.open({ title: t('alert.txtError'),type:'error' })
+        }
+    }
+    const handlePostTelephone = (telephone: string, isRecaptcha: boolean) => {
+        // 
+        // const phoneNumber = formatTelephone(telephone)
+        // if (phoneNumber === "") return;
+        // isRecaptcha === true && generateRecaptcha()
+        // handleSignWithPhone(phoneNumber, isRecaptcha, telephone);
+        handleSendOtpZms(telephone)
     }
     const onSwitchStep = () => {
         switch (step) {

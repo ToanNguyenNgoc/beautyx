@@ -8,7 +8,7 @@ import { AppContext } from 'context/AppProvider';
 import authentication from 'api/authApi';
 import validateForm from 'utils/validateForm';
 import icon from 'constants/icon';
-import { BackButton, Input, XButton } from 'components/Layout'
+import { AlertAppSnack, BackButton, Input, XButton } from 'components/Layout'
 import { PopupNotification } from 'components/Notification'
 import { useHistory } from 'react-router-dom';
 
@@ -20,7 +20,7 @@ function SignUps(props: any) {
     const { setActiveTabSign } = props;
     const history = useHistory()
     const { firstLoad, resultLoad, noti, onCloseNoti } = useNoti()
-    const { sec, setSec } = useCountDown(120)
+    const { sec, setSec } = useCountDown(180)
     const [show, setShow] = useState({ pass: false, confirm: false })
     const [versionOtp, setVersionOtp] = useState<"v1" | "v2">("v1")
     const [openOtp, setOpenOtp] = useState(true);
@@ -144,11 +144,17 @@ function SignUps(props: any) {
         }
     })
     const onReSendOtp = async () => {
-        await authentication.forgotVoiceSms({
-            telephone: dataOtp.telephone
-        })
-        setSec(60)
-        setVersionOtp("v2")
+        try {
+            // await authentication.forgotVoiceSms({
+            //     telephone: dataOtp.telephone
+            // })
+            await authentication.loginOtpZms({telephone:dataOtp.telephone})
+            setSec(180)
+            setVersionOtp("v2")
+            AlertAppSnack.open({ title: t('alert.txtSentZalo'),type:'success' })
+        } catch (error) {
+            AlertAppSnack.open({ title: t('alert.txtError'),type:'error' })
+        }
     }
     return (
         <>

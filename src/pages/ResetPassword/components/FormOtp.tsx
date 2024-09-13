@@ -59,7 +59,7 @@ function FormOtp(props: any) {
                 case 501:
                     return resultLoad('Mã xác thực không chính xác')
                 default:
-                    resultLoad('Có lỗi xảu ra')
+                    resultLoad('Có lỗi xảy ra')
                     break
             }
         }
@@ -85,6 +85,7 @@ function FormOtp(props: any) {
                 .oneOf([Yup.ref("new_password"), null], t("form.password_confirm_invalid")),
         }),
         onSubmit: (values) => {
+            console.log(values)
             const params = {
                 telephone: `${data.telephone}`,
                 code: `${values.otp}`,
@@ -133,7 +134,9 @@ function FormOtp(props: any) {
                         name="otp"
                         value={formikTelephone.values.otp}
                         onChange={formikTelephone.handleChange}
-                        type="number" pattern="[0-9]*" inputMode="numeric"
+                        // type="number" 
+                        pattern="[0-9]*" 
+                        inputMode="numeric"
                         style={{ textAlign: 'center' }}
                         className="for-pass-cnt__phone-ip"
                         placeholder={t("form.verification_code")}

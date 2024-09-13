@@ -42,6 +42,9 @@ class Auth {
       'refresh_token': token,
       'platform': 'BEAUTYX'
     })
+  };
+  loginOtpZms = (params: { telephone: string }) => {
+    return axiosClient.post('/auth/login/otp', params)
   }
 
 }
