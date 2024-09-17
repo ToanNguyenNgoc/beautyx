@@ -9,6 +9,10 @@
   align-items: center;
   height: 100%;
 }
+.left{
+  display: flex;
+  align-items: center;
+}
 
 .back_btn {
   padding: 4px;
@@ -29,4 +33,25 @@
 .title{
   font-size: 18px;
   font-weight: 600;
+}
+
+@media only screen and (max-width: 1023px) {
+  .wrapper{
+    border: none;
+  }
+  .left{
+    padding: 0px 12px;
+    justify-content: space-between;
+    width: 100%;
+  }
+  .title{
+    width: 34px;
+  }
+  .back_btn{
+    display: block;
+    border-radius: 100%;
+  }
+  .head_top_left_img{
+    margin: 90px 0px 0px 0px;
+  }
 }

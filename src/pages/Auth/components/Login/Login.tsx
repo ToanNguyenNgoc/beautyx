@@ -14,6 +14,7 @@ export const Login: FC = () => {
   const { t } = useContext(AppContext) as AppContextType;
   const history = useHistory()
   const { mutationLogin } = useDoAuth({
+    remember: true,
     callBackLoginSuccess: () => history.goBack()
   })
   const [showPass, setShowPass] = useState(false)
@@ -32,7 +33,7 @@ export const Login: FC = () => {
       mutationLogin.mutateAsync({
         email: values.email,
         password: values.password
-      }).then().catch()
+      })
     },
   });
   return (

@@ -266,6 +266,7 @@ import copyWhite from "assets/icon/copyWhite.svg"
 import creditCard from "assets/icon/credit-card-black.svg"
 import zalo from "assets/icon/zalo-icon.png"
 import viettelpay from "assets/icon/viettelpay.png";
+import letterPurple from "assets/icon/letter-purple.svg"
 
 const icon = {
   viettelpay,
@@ -527,6 +528,7 @@ const icon = {
   imageWhite, thumbUpWhite, chatSupport, tag,
   addFileWhite, planPaperWhite,creditCard,
   copyWhite,
-  zalo
+  zalo,
+  letterPurple
 };
 export default icon;

@@ -36,12 +36,23 @@ export const AuthPage: FC = () => {
           </div>
           <div className={style.right}>
             <div className={style.tab_cnt}>
-              <Link to={path.auth()} className={`${style.tab_item} ${(!params?.ref || params.ref === 'login') ? style.tab_item_act : ''}`}>
-                Đăng nhập
-              </Link>
-              <Link to={path.auth('register')} className={`${style.tab_item} ${(params?.ref === 'register') ? style.tab_item_act : ''}`}>
-                Đăng ký
-              </Link>
+              {
+                params?.ref === 'forgot' ?
+                  <>
+                    <span className={`${style.tab_item} ${style.tab_item_act}`}>
+                      Quên mật khẩu
+                    </span>
+                  </>
+                  :
+                  <>
+                    <Link replace={true} to={path.auth()} className={`${style.tab_item} ${(!params?.ref || params.ref === 'login') ? style.tab_item_act : ''}`}>
+                      Đăng nhập
+                    </Link>
+                    <Link replace={true} to={path.auth('register')} className={`${style.tab_item} ${(params?.ref === 'register') ? style.tab_item_act : ''}`}>
+                      Đăng ký
+                    </Link>
+                  </>
+              }
             </div>
             {renderPage()}
           </div>

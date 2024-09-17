@@ -41,6 +41,11 @@ export const AppSnackBar = forwardRef<AppSnackHandler, AppSnackProps>((props, re
       if (options.title) setTitle(options.title);
       if (options.type) setColor(options.type);
       if (options.autoHideDuration) setAutoHideDuration(options.autoHideDuration)
+      setTimeout(() => {
+        setOpen(false)
+        setTitle("Title")
+        setColor('success')
+      }, autoHideDuration)
     },
     close: () => {
       setOpen(false)

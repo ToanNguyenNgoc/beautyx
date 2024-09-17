@@ -1,0 +1,21 @@
+.count_down_cnt{
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: flex-end;
+}
+.form_submit_btn {
+  display: flex;
+  justify-content: center;
+  margin: 12px 0;
+}
+.form_submit_btn button{
+  min-width: 25%;
+}
+@media only screen and (max-width: 1023px) {
+  .form_submit_btn{
+    margin-top: 46px;
+  }
+  .form_submit_btn button{
+    width: 100%;
+  }
+}

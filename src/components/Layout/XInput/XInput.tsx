@@ -33,9 +33,14 @@ export const XInput = forwardRef<HTMLInputElement, XInputProps>((props, ref) => 
         className={style.input_box}
         style={{ height: inputHeight, borderRadius: inputHeight / 2 }}
       >
-        <div className={style.input_icon}>
-          <img src={icon} alt="" style={{ width: iconSize, height: iconSize }} />
-        </div>
+        {
+          icon ?
+            <div className={style.input_icon}>
+              <img src={icon} alt="" style={{ width: iconSize, height: iconSize }} />
+            </div>
+            :
+            null
+        }
         <input
           className={style.input_text}
           ref={ref}

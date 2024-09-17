@@ -1,0 +1,9 @@
+.container{
+  font-size: 14px;
+  font-weight: 500;
+}
+.txt_value{
+  font-weight: 600;
+  cursor: pointer;
+  color: var(--purple);
+}

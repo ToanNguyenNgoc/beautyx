@@ -17,3 +17,11 @@
 .form_submit_btn button{
   width: 25%;
 }
+@media only screen and (max-width: 1023px) {
+  .form_submit_btn{
+    margin-top: 46px;
+  }
+  .form_submit_btn button{
+    width: 100%;
+  }
+}

@@ -12,6 +12,11 @@
   width: calc(40% - 16px);
   display: flex;
   justify-content: center;
+  height: 100%;
+}
+.left img{
+  width: 100%;
+  object-fit: cover;
 }
 
 .right {
@@ -39,4 +44,18 @@
   color: var(--purple);
   border-bottom: solid 1px var(--purple);
   transition: var(--trans); 
+}
+
+@media only screen and (max-width: 1023px) {
+  .body{
+    padding-top: 64px;
+  }
+  .left{
+    display: none;
+  }
+  .right{
+    width: 100%;
+    padding: 0px 12px;
+    box-shadow: none;
+  }
 }

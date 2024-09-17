@@ -17,7 +17,7 @@ class Auth {
   };
   register = (params: any) => {
     const url = `/auth/register`;
-    return axiosClient.post(url, params);
+    return axiosClient.post(url, Object.assign({platform:'BEAUTYX'},params));
   };
   getUserProfile = (token?: string) => {
     const url = `/users/profile`
