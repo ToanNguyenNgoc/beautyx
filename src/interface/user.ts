@@ -7,5 +7,7 @@ export interface User {
       telephone: string
       token: string
       token_expired_at: string,
+      refresh_token:string,
       btx_points:number
 }
+

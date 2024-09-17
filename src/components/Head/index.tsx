@@ -28,6 +28,7 @@ import HeadCart from "./HeadCart";
 import HeadMenu from "./HeadMenu";
 import HeadNoti from "./HeadNoti";
 import HeadLanguage from "./HeadLanguage";
+import { path } from "route/path";
 
 interface IProps {
   title?: string,
@@ -71,7 +72,8 @@ const notPathHeader = [
   '/doi-mat-khau',
   '/trang-thai-don-hang/',
   '/ban-do',
-  '/ket-qua-thanh-toan'
+  '/ket-qua-thanh-toan',
+  '/auth'
 ]
 
 
@@ -281,7 +283,7 @@ function Head(props: IProps) {
                       />
                       <XButton
                         onClick={() =>
-                          history.push("/sign-in?1")
+                          history.push(path.auth())
                         }
                         className={style.head_sign_btn}
                         title={t("Home.Sign_in")}

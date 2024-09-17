@@ -1,0 +1,32 @@
+.wrapper {
+  height: 86px;
+  background-color: var(--white);
+  border-bottom: solid 1px var(--bgGray);
+}
+
+.container {
+  display: flex !important;
+  align-items: center;
+  height: 100%;
+}
+
+.back_btn {
+  padding: 4px;
+  background-color: var(--white);
+  border: solid 1px var(--purple);
+  display: none;
+}
+
+.head_top_left_home {
+  margin-right: 12px;
+  display: block;
+}
+
+.head_top_left_img {
+  height: 42px;
+  margin-right: 12px;
+}
+.title{
+  font-size: 18px;
+  font-weight: 600;
+}

@@ -34,6 +34,8 @@ import { AssistantButton } from "components/Layout";
 import CateTree from "pages/CateTree";
 import PayUrl from "rootComponents/momo/PayUrl";
 import { RegisterAppAlert } from "components/RegisterAppAlert/RegisterAppAlert";
+import { AuthPage } from "pages";
+import { path } from "./path";
 // import HomeVer3 from "pages/HomeVer3";
 // import HeaderVer3 from "components/HeaderVer3";
 
@@ -279,6 +281,10 @@ function RouterConfig() {
             path: "/checkout-payment",
             component: <PayUrl />,
         },
+        {
+            path:'/auth',
+            component:<AuthPage/>
+        }
     ];
     const routesPrivate = [
         {
