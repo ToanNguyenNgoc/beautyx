@@ -59,8 +59,8 @@ export function useDoAuth(options?: UseDoAuthOptions) {
         sessionStorage.setItem(storage_keys._WEB_TK_EX, token_expired_at)
         sessionStorage.setItem(storage_keys._WEB_TK_RE, refresh_token)
       }
-      const response = await dispatch(fetchAsyncUser(token));
-      if (response?.payload && options?.callBackLoginSuccess) {
+      await dispatch(fetchAsyncUser(token));
+      if (options?.callBackLoginSuccess) {
         options.callBackLoginSuccess()
       }
     },
