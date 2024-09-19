@@ -8,13 +8,17 @@ import * as Yup from "yup";
 import style from './forgot.module.css'
 import { CountDown } from "../CountDown/CountDown";
 
-export const Forgot: FC = () => {
+interface ForgotProps {
+  telephone?: string
+}
+
+export const Forgot: FC<ForgotProps> = (props) => {
   const { mutationZnsZaloOtp, mutationForgot } = useDoAuth()
   const [show, setShow] = useState({ password: false, confirm_password: false })
   const [verificationId, setVerificationId] = useState<string>()
   const formik = useFormik({
     initialValues: {
-      telephone: "",
+      telephone: props?.telephone || '',
       code: "",
       new_password: "",
       confirm_password: ""
@@ -49,7 +53,11 @@ export const Forgot: FC = () => {
           .mutateAsync({ telephone: values.telephone })
           .then(() => setVerificationId('zalo'))
       } else {
-        mutationForgot.mutate({ telephone, code, new_password, verification_id: verificationId })
+        mutationForgot.mutate({
+          telephone, code, new_password,
+          verification_id: verificationId,
+          type: props?.telephone ? 'CHANGE' : 'FORGOT'
+        })
       }
     },
   });
@@ -67,12 +75,13 @@ export const Forgot: FC = () => {
         icon={icon.Phone}
         iconSize={22}
         textError={(formik.errors.telephone && formik.touched.telephone) ? formik.errors.telephone : undefined}
-        disabled={!!verificationId}
-        componentRight={verificationId ? <img src={icon.closeCircle} style={{ width: 22, height: 22 }} alt="" /> : undefined}
+        disabled={!!verificationId || !!props.telephone}
+        componentRight={(verificationId && !props.telephone) ? <img src={icon.closeCircle} style={{ width: 22, height: 22 }} alt="" /> : undefined}
         onClickRight={() => {
           setVerificationId(undefined)
           formik.resetForm()
         }}
+        autoComplete="off"
       />
       {
         verificationId ?
@@ -118,7 +127,7 @@ export const Forgot: FC = () => {
               iconSize={22}
               type={show.confirm_password ? 'text' : 'password'}
               componentRight={(<img src={show.confirm_password ? icon.eyeCrossPurple : icon.eye} style={{ width: 22, height: 22 }} alt="" />)}
-              onClickRight={() => setShow({ ...show, password: !show.confirm_password })}
+              onClickRight={() => setShow({ ...show, confirm_password: !show.confirm_password })}
               textError={(formik.errors.confirm_password && formik.touched.confirm_password) ? formik.errors.confirm_password : undefined}
             />
           </>

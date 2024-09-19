@@ -8,7 +8,6 @@ import "./style.css";
 import { IDataOtp, IPropOtp } from './_model'
 // end
 import { authentication, signInWithPhoneNumber, RecaptchaVerifier } from "../../firebase";
-import FormTelephone from "../../pages/ResetPassword/components/FormTelephone";
 import { AlertSnack } from "components/Layout";
 
 declare global {
@@ -124,13 +123,6 @@ function RenderRecatpcha(props: IPropOtp) {
                 onClose={handleClose}
                 anchor="bottom"
             >
-                <div className="form-otp__cnt">
-                    <FormTelephone
-                        title="Nhập số điện thoại để nhận mã OTP"
-                        handlePostTelephone={handleTelephone}
-                        isDialog={true}
-                    />
-                </div>
             </Drawer>
             <AlertSnack
                 open={notiWarning.open}
@@ -173,12 +165,7 @@ export function FieldOtps(props: any) {
             anchor="bottom"
         >
             <div className="form-otp__cnt">
-                <FormTelephone
-                    title="Nhập mã OTP"
-                    handlePostTelephone={handleTelephone}
-                    isDialog={true}
-                    load={false}
-                />
+               
             </div>
         </Drawer>
     )

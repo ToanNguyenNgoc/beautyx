@@ -14,11 +14,12 @@ export interface ParamsPostRegister {
   code: string,
   verification_id: string
 }
-export interface ParamsPostForgot{
+export interface ParamsPostForgot {
   telephone: string,
   new_password: string,
   code: string,
-  verification_id: string
+  verification_id: string,
+  type?: 'CHANGE' | 'FORGOT'
 }
 export interface ParamsForgotSms {
   telephone: string;

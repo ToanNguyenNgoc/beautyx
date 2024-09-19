@@ -278,7 +278,7 @@ function Head(props: IProps) {
                         className={style.head_sign_btn}
                         title={t("Home.Sign_up")}
                         onClick={() =>
-                          history.push("/sign-up?2")
+                          history.push(path.auth('register'))
                         }
                       />
                       <XButton

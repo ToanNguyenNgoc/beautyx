@@ -9,6 +9,7 @@ import { Checkbox } from "@mui/material";
 import { Link, useHistory } from "react-router-dom";
 import { path } from "route/path";
 import { useDoAuth } from "hooks";
+import { LoginZalo } from "../LoginZalo/LoginZalo";
 
 export const Login: FC = () => {
   const { t } = useContext(AppContext) as AppContextType;
@@ -87,6 +88,12 @@ export const Login: FC = () => {
           type="submit"
           loading={mutationLogin.isLoading}
         />
+      </div>
+      <div className={style.login_social_cnt}>
+        <p className={style.login_social_title}>Hoặc đăng nhập với</p>
+        <div className={style.login_social_btn}>
+          <LoginZalo />
+        </div>
       </div>
     </form>
   )

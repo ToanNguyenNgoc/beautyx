@@ -95,10 +95,10 @@ export function useDoAuth(options?: UseDoAuthOptions) {
   })
   const mutationForgot = useMutation<any, any, ParamsPostForgot>({
     mutationFn: body => authentication.forgotPassword(body).then(res => res.data),
-    onSuccess: () => {
+    onSuccess: (data, variables) => {
       Alert.open({
         message: t("form.change_password_successfully"),
-        actions: [
+        actions: variables.type === 'CHANGE' ? [] : [
           {
             text: t('form.back_to_sign_in_page'),
             onPress: () => history.replace(path.auth('login'))
@@ -107,15 +107,6 @@ export function useDoAuth(options?: UseDoAuthOptions) {
       })
     },
     onError: (err) => {
-      Alert.open({
-        message: t("form.change_password_successfully"),
-        actions: [
-          {
-            text: t('form.back_to_sign_in_page'),
-            onPress: () => history.replace(path.auth('login'))
-          }
-        ]
-      })
       const error = err as AxiosError<any>
       switch (error?.response?.status) {
         case 403:
@@ -129,7 +120,7 @@ export function useDoAuth(options?: UseDoAuthOptions) {
   })
   const mutationRegister = useMutation<any, any, ParamsPostRegister>({
     mutationFn: body => authentication.register(body).then(res => res.data),
-    onSuccess: () => {
+    onSuccess: (data) => {
       Alert.open({
         message: t('form.register_success'),
         actions: [

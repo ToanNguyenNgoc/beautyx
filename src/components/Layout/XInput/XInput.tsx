@@ -10,6 +10,7 @@ interface XInputProps extends DetailedHTMLProps<InputHTMLAttributes<HTMLInputEle
   textError?: string;
   componentRight?: JSX.Element;
   onClickRight?: () => void;
+  mode?: 'flat' | 'outlined'
 }
 
 export const XInput = forwardRef<HTMLInputElement, XInputProps>((props, ref) => {
@@ -22,15 +23,23 @@ export const XInput = forwardRef<HTMLInputElement, XInputProps>((props, ref) => 
     textError,
     componentRight,
     onClickRight = () => { },
+    mode = 'flat',
     ...res
   } = props
+  const generateClassInput = ()=>{
+    let classNameInput = style.input_box
+    if(mode === 'outlined'){
+      classNameInput = style.input_box_outlined
+    }
+    return classNameInput
+  }
   return (
     <div
       className={`${style.input_cnt} ${classNameContainer}`}
       style={Object.assign({ height: inputHeight + 22 }, styleContainer)}
     >
       <div
-        className={style.input_box}
+        className={generateClassInput()}
         style={{ height: inputHeight, borderRadius: inputHeight / 2 }}
       >
         {
