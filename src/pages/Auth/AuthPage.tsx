@@ -35,7 +35,7 @@ export const AuthPage: FC = () => {
     <div className={style.container}>
       <AuthHeader />
       {
-        FLAT_FORM === PLF_TYPE.BEAUTYX ?
+        (FLAT_FORM === PLF_TYPE.BEAUTYX || FLAT_FORM === PLF_TYPE.TAPTAP) ?
           <Container>
             <div className={style.body}>
               <div className={style.left}>

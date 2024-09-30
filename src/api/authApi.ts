@@ -2,13 +2,15 @@ import { axiosClient } from "config";
 import { identity, pickBy } from "lodash";
 import { paramsUserProfile } from "params-query";
 import { ParamsForgotSms } from "interface"
+import { EXTRA_FLAT_FORM } from "./extraFlatForm";
 
 class Auth {
+  private platform = EXTRA_FLAT_FORM()
   login = (values: any) => {
     const url = `/auth/login`;
     const params = {
       ...values,
-      "platform": "BEAUTYX"
+      "platform": this.platform
     }
     return axiosClient.post(url, params);
   };
@@ -17,7 +19,7 @@ class Auth {
   };
   register = (params: any) => {
     const url = `/auth/register`;
-    return axiosClient.post(url, Object.assign({platform:'BEAUTYX'},params));
+    return axiosClient.post(url, Object.assign({platform:this.platform},params));
   };
   getUserProfile = (token?: string) => {
     const url = `/users/profile`
@@ -40,7 +42,7 @@ class Auth {
     const url = '/auth/refresh'
     return axiosClient.post(url, {
       'refresh_token': token,
-      'platform': 'BEAUTYX'
+      'platform': this.platform
     })
   };
   loginOtpZms = (params: { telephone: string }) => {
