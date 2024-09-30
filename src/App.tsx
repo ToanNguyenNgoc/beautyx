@@ -19,16 +19,6 @@ const theme = createTheme({
             },
         },
     },
-    // palette: {
-    //     primary: {
-    //         main: "#7161ba",
-    //         contrastText: "#fff",
-    //     },
-    //     secondary: {
-    //         main: "#7fc128",
-    //         contrastText: "#fff",
-    //     },
-    // },
 });
 
 function App() {
