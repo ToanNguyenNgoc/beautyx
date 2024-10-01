@@ -72,7 +72,6 @@
     margin-top: 12px;
 }
 .form_row{
-    margin-bottom: 20px;
     width: 100%;
     position: relative;
 }
@@ -103,6 +102,20 @@
     font-weight: 600;
     cursor: pointer;
     color: var(--purple);
+}
+.policy{
+    margin-bottom: 12px;
+    font-size: 15px;
+    font-weight: 400;
+}
+.policy a{
+    font-weight: 600;
+    color: var(--purple);
+}
+.policy_error{
+    font-size: 12px;
+    color: var(--red-cl);
+    margin-left: 14px;
 }
 @media only screen and (max-width: 1023px) {
     .container{

@@ -59,6 +59,7 @@ export const AssistantButton = () => {
         }
     }, [overLay]);
     const checkoutPageSearch = location.pathname === "/ket-qua-tim-kiem/";
+    return <></>
     return disable === true ? (
         <></>
     ) : (

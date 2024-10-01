@@ -40,6 +40,7 @@ export const BTXSelectPoint: FC<BTXSelectPointProps> = (props) => {
   }
   useEffect(() => { onChangePoint(0) }, [totalOrigin])
   const disable = !USER?.btx_points || Number(USER?.btx_points) === 0 || totalOrigin === 0
+  return <></>
   return (
     <div
       {...omit(props, ['onChangePoint', 'valuePoint', 'totalOrigin'])}

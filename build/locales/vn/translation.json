@@ -353,7 +353,13 @@
         "an_error": "Có lỗi xảy ra. Vui lòng thử lại",
         "code": " Mã xác thực",
         "get_code": "Lấy mã",
-        "verification_code_has_been_sent_to": "Mã xác thực đã được gửi đến"
+        "verification_code_has_been_sent_to": "Mã xác thực đã được gửi đến",
+        "txt_enter_business_name":"Vui lòng nhập tên doanh nghiệp",
+        "txt_tax_code":"Mã số thuế",
+        "txt_enter_tax_code":"Vui lòng nhập mã số thuế",
+        "txt_tax_code_address":"Nơi cấp mã số thuế",
+        "txt_accept_policy":"Bằng việc đăng ký đối tác, đồng nghĩa với việc bạn đồng ý với",
+        "txt_please_accept_policy":"Vui lòng đồng ý chính sách bảo mật"
     },
     "partner": {
         "online_business": "Nền tảng kinh doanh online ngành làm đẹp",

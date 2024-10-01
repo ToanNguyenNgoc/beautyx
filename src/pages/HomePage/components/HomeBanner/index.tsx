@@ -46,10 +46,10 @@ const NextButton = (props: any) => {
 export function HomeBanner() {
   const { t } = useContext(AppContext) as any
   const features = [
-    { title: t('Home.community'), icon: icon.communityPurple, func: "COM", dot: false },
+    // { title: t('Home.community'), icon: icon.communityPurple, func: "COM", dot: false },
     { title: t('Home.appointment'), icon: icon.calendarGreen, func: "CAL", dot: false },
     { title: t('Home.coupon_code'), icon: icon.ticketRed, func: "DIS", dot: false },
-    { title: "Rewards", icon: icon.rewardOrange, func: "REW", dot: false },
+    // { title: "Rewards", icon: icon.rewardOrange, func: "REW", dot: false },
   ];
   const { banners } = useSelector((state: any) => state.HOME);
   const [popup, setPopup] = useState<PopupProps>({

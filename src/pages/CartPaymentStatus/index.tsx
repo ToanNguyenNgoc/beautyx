@@ -222,11 +222,11 @@ function CartPaymentStatus() {
                 open={open.open}
                 children={open.children}
             />
-            <PopupBtxReward
+            {/* <PopupBtxReward
                 open={openBtx.open}
                 onClose={() => setOpenBtx({ ...openBtx, open: false })}
                 btxPoint={openBtx.btx_point}
-            />
+            /> */}
         </>
     );
 }

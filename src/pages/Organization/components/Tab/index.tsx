@@ -40,13 +40,13 @@ export const Tab = ({
       path: "dich-vu",
       ref: refService,
     },
-    {
-      open: org?.is_momo_ecommerce_enable,
-      id: 3,
-      title: t("Mer_de.products"),
-      path: "san-pham",
-      ref: refProduct,
-    },
+    // {
+    //   open: org?.is_momo_ecommerce_enable,
+    //   id: 3,
+    //   title: t("Mer_de.products"),
+    //   path: "san-pham",
+    //   ref: refProduct,
+    // },
     {
       open: org?.is_momo_ecommerce_enable,
       id: 4,

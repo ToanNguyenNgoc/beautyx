@@ -63,9 +63,9 @@ const Body = () => {
             <div ref={refService} className={style.body_section}>
               <ServiceSection type="SERVICE" />
             </div>
-            <div ref={refProduct} className={style.body_section}>
+            {/* <div ref={refProduct} className={style.body_section}>
               <ServiceSection type="PRODUCT" />
-            </div>
+            </div> */}
             <div ref={refCombo} className={style.body_section}>
               <ServiceSection type="COMBO" />
             </div>
