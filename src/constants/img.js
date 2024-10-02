@@ -106,7 +106,49 @@ import livwell from "assets/image/livwell.png";
 import fpt_blue from "assets/image/fpt_blue.png";
 import oneU from "assets/image/OneU.jpg";
 
+// about page
+import btxBooking from "assets/image/about/btx-booking.png";
+import btxDownload from "assets/image/about/btx-download.png";
+import btxLocation from "assets/image/about/btx-location.png";
+import btxRating from "assets/image/about/btx-rating.png";
+import btxService from "assets/image/about/btx-service.png";
+import btxUser from "assets/image/about/btx-user.png";
+import btxDevice from "assets/image/about/btx.png";
+import aboutFooter from "assets/image/about/footer.png";
+import aboutHero1 from "assets/image/about/hero-1.jpg";
+import aboutHero2 from "assets/image/about/hero-2.jpg";
+import aboutHero3 from "assets/image/about/hero-3.jpg";
+import aboutHero from "assets/image/about/hero.png";
+import aboutOpinion1 from "assets/image/about/opinion-1.png";
+import aboutOpinion2 from "assets/image/about/opinion-2.png";
+import aboutOpinion3 from "assets/image/about/opinion-3.png";
+import aboutStory from "assets/image/about/story.png";
+import fingerprint from "assets/image/about/finger.svg";
+import aboutBgHero from "assets/image/about/bg-hero.png";
+import aboutBgStory from "assets/image/about/bg-story.png";
+import aboutLogo from "assets/image/about/about-logo.png";
+
 const img = {
+    aboutLogo,
+    aboutBgStory,
+    aboutBgHero,
+    aboutHero1,
+    fingerprint,
+    aboutStory,
+    aboutOpinion3,
+    aboutHero,
+    aboutHero3,
+    aboutOpinion2,
+    aboutOpinion1,
+    aboutHero2,
+    aboutFooter,
+    btxDevice,
+    btxUser,
+    btxService,
+    btxRating,
+    btxLocation,
+    btxDownload,
+    btxBooking,
     oneU,
     vietel_money,
     livwell,

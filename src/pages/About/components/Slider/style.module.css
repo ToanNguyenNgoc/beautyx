@@ -1,0 +1,8 @@
+.slider {
+    padding: 80px 0;
+}
+.slider_list {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
