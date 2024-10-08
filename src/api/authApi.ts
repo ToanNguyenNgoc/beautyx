@@ -5,12 +5,11 @@ import { ParamsForgotSms } from "interface"
 import { EXTRA_FLAT_FORM } from "./extraFlatForm";
 
 class Auth {
-  private platform = EXTRA_FLAT_FORM()
   login = (values: any) => {
     const url = `/auth/login`;
     const params = {
       ...values,
-      "platform": this.platform
+      "platform": EXTRA_FLAT_FORM()
     }
     return axiosClient.post(url, params);
   };
@@ -19,7 +18,7 @@ class Auth {
   };
   register = (params: any) => {
     const url = `/auth/register`;
-    return axiosClient.post(url, Object.assign({platform:this.platform},params));
+    return axiosClient.post(url, Object.assign({platform:EXTRA_FLAT_FORM()},params));
   };
   getUserProfile = (token?: string) => {
     const url = `/users/profile`
@@ -42,7 +41,7 @@ class Auth {
     const url = '/auth/refresh'
     return axiosClient.post(url, {
       'refresh_token': token,
-      'platform': this.platform
+      'platform': EXTRA_FLAT_FORM()
     })
   };
   loginOtpZms = (params: { telephone: string }) => {
