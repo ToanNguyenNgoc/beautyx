@@ -211,7 +211,8 @@ function Account() {
                   </p>
                 </div>
               </div>
-              {/* <div className={style.user_coin}>
+              {/* BTX POINT */}
+              <div className={style.user_coin}>
                 <span className={style.user_coin_label}>BEAUTYX COIN</span>
                 <div className={style.coin_cnt}>
                   <img className={style.icon_left} src={icon.coins} alt="" />
@@ -224,7 +225,7 @@ function Account() {
                     </div>
                   </div>
                 </div>
-              </div> */}
+              </div>
               <Tip/>
             </div>
             <div className={style.left_cnt_link}>

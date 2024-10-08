@@ -1,6 +1,6 @@
 import { Accordion, AccordionDetails, AccordionSummary, Avatar } from '@mui/material';
 import commentsApi from 'api/commentsApi';
-import { RenderStar, XButton } from 'components/Layout';
+import { FullImage, RenderStar, XButton } from 'components/Layout';
 import icon from 'constants/icon';
 import { BodyComment, IComment, ICommentChild } from 'interface';
 import IStore from 'interface/IStore';
@@ -22,6 +22,12 @@ interface CommentParItemProps {
   mixed?: boolean,
   layout?: 'column' | 'row',
   all?: boolean
+}
+
+type FullImageType = {
+  src: string[];
+  open: boolean;
+  index: number
 }
 
 function CommentParItem(props: CommentParItemProps) {
@@ -62,150 +68,181 @@ function CommentParItem(props: CommentParItemProps) {
   let replyBtnDis = false
   if (!mixed) replyBtnDis = true
   if (mixed && replyCount > 0) replyBtnDis = true
+  const [fullImage, setFullImage] = useState<FullImageType>({
+    src: [],
+    open: false,
+    index: 0
+  })
   return (
-    <div
-      className={clst([
-        style.comment_item_cnt,
-        style.comment_item_cnt_par,
-        layout === "column" ? style.comment_item_cnt_ch : "",
-      ])}
-    >
-      <div className={style.comment_item_head}>
-        <div className={style.user}>
-          <Avatar src={comment.user?.avatar} alt="" />
-          <span className={style.user_fullname}>{comment.user?.fullname}</span>
-        </div>
-        {(body?.includes("‭") || comment.is_order === 1) && (
-          <div className={style.bought_cnt}>
-            <img src={icon.checkFlowGreen} alt="" /> Đã mua hàng
+    <>
+      <FullImage
+        src={fullImage.src}
+        open={fullImage.open}
+        index={fullImage.index}
+        setOpen={() => setFullImage({ src: [], index: 0, open: false })}
+      />
+      <div
+        className={clst([
+          style.comment_item_cnt,
+          style.comment_item_cnt_par,
+          layout === "column" ? style.comment_item_cnt_ch : "",
+        ])}
+      >
+        <div className={style.comment_item_head}>
+          <div className={style.user}>
+            <Avatar src={comment.user?.avatar} alt="" />
+            <span className={style.user_fullname}>{comment.user?.fullname}</span>
           </div>
-        )}
-      </div>
-      <div className={style.comment_body}>
-        <div className={style.comment_body_start_origin_cnt}>
-          {
-            // (comment.rate && body?.includes("‭")) ? <RenderStar point={comment.rate.point} /> : <div></div>
-            comment.rate ? <RenderStar point={comment.rate.point} /> : <div></div>
-          }
-          {all && <RedirectOrigin comment={comment} />}
-        </div>
-        {
-          (body?.replace('‭', '') !== '' || comment.media_url.length > 0) &&
-          <div className={style.comment_body_txt}>
-            {body}
-            <div className={style.comment_body_media_list}>
-              {comment.media_url?.map((i) => (
-                <div key={i} className={style.comment_body_media}>
-                  <img src={i} alt="" />
-                </div>
-              ))}
+          {(body?.includes("‭") || comment.is_order === 1) && (
+            <div className={style.bought_cnt}>
+              <img src={icon.checkFlowGreen} alt="" /> Đã mua hàng
             </div>
+          )}
+        </div>
+        <div className={style.comment_body}>
+          <div className={style.comment_body_start_origin_cnt}>
+            {
+              // (comment.rate && body?.includes("‭")) ? <RenderStar point={comment.rate.point} /> : <div></div>
+              comment.rate ? <RenderStar point={comment.rate.point} /> : <div></div>
+            }
+            {all && <RedirectOrigin comment={comment} />}
           </div>
-        }
-        <span className={style.created_at}>
-          {/* {formatDateFromNow(comment.created_at)} */}
-          {formatTimeComment(comment.created_at)}
-        </span>
-        <div
-          className={clst([
-            style.reply_cnt,
-            layout === "column" ? style.reply_cnt_ch : "",
-          ])}
-        >
-          <Accordion
-            defaultExpanded={comment.children.length > 0}
-          >
-            {replyBtnDis && (
-              <AccordionSummary
-                aria-controls="panel1a-content"
-                id="panel1a-header"
-              >
-                <span className={style.cmt_reply_open}>
-                  {replyCount > 0 && replyCount} Phản hồi
-                </span>
-              </AccordionSummary>
-            )}
-            <AccordionDetails>
-              {comment.children.map((child: ICommentChild, i: number) => (
-                <div
-                  key={i}
-                  style={{ marginBottom: "6px" }}
-                  className={clst([
-                    style.comment_item_cnt,
-                    layout === "column" ? style.comment_item_cnt_ch : "",
-                  ])}
-                >
-                  <div className={style.comment_item_head}>
-                    <div className={style.user}>
-                      <Avatar src={child.user?.avatar} alt="" />
-                      <span className={style.user_fullname}>
-                        {child.user?.fullname}
-                      </span>
-                    </div>
-                    {child.body?.includes("‭") && (
-                      <div className={style.bought_cnt}>
-                        <img src={icon.checkFlowGreen} alt="" /> Đã mua hàng
-                      </div>
-                    )}
-                  </div>
-                  <div className={style.comment_body}>
-                    <div
-                      style={{ backgroundColor: "#c1dbe9" }}
-                      className={style.comment_body_txt}
-                    >
-                      {child.body}
-                      <div className={style.comment_body_media_list}>
-                        {child.media_url?.map((i) => (
-                          <div key={i} className={style.comment_body_media}>
-                            <img src={i} alt="" />
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                    <span className={style.created_at}>
-                      {/* {formatDateFromNow(
-                        mixed ? comment.created_at : child.created_at || ""
-                      )} */}
-                      {formatTimeComment(
-                        mixed ? comment.created_at : child.created_at || ""
-                      )}
-                    </span>
-                  </div>
-                </div>
-              ))}
-              {!mixed && (
-                <div className={style.reply_input_cnt}>
-                  <div className={style.user}>
-                    <Avatar src={USER?.avatar} alt={USER?.fullname} />
-                  </div>
-                  <div className={style.reply_input}>
-                    <input
-                      value={value.body}
-                      onChange={(e) =>
-                        setValue((prev) => {
-                          return { ...prev, body: e.target.value };
+          {
+            (body?.replace('‭', '') !== '' || comment.media_url.length > 0) &&
+            <div className={style.comment_body_txt}>
+              {body}
+              <div className={style.comment_body_media_list}>
+                {comment.media_url?.map((i, indexP) => (
+                  <div key={i} className={style.comment_body_media}>
+                    <img
+                      src={i} alt=""
+                      onClick={() => {
+                        setFullImage({
+                          src: comment.media_url || [],
+                          open: true,
+                          index: indexP
                         })
-                      }
-                      type="text"
-                      placeholder={t("detail_item.write_a_comment")}
-                      onKeyDown={(e) => {
-                        e.code === "Enter" && handlePostCmtReply();
                       }}
                     />
-                    <XButton
-                      onClick={handlePostCmtReply}
-                      loading={isLoading}
-                      icon={icon.planPaperWhite}
-                      iconSize={18}
-                    />
                   </div>
-                </div>
+                ))}
+              </div>
+            </div>
+          }
+          <span className={style.created_at}>
+            {/* {formatDateFromNow(comment.created_at)} */}
+            {formatTimeComment(comment.created_at)}
+          </span>
+          <div
+            className={clst([
+              style.reply_cnt,
+              layout === "column" ? style.reply_cnt_ch : "",
+            ])}
+          >
+            <Accordion
+              defaultExpanded={comment.children.length > 0}
+            >
+              {replyBtnDis && (
+                <AccordionSummary
+                  aria-controls="panel1a-content"
+                  id="panel1a-header"
+                >
+                  <span className={style.cmt_reply_open}>
+                    {replyCount > 0 && replyCount} Phản hồi
+                  </span>
+                </AccordionSummary>
               )}
-            </AccordionDetails>
-          </Accordion>
+              <AccordionDetails>
+                {comment.children.map((child: ICommentChild, i: number) => (
+                  <div
+                    key={i}
+                    style={{ marginBottom: "6px" }}
+                    className={clst([
+                      style.comment_item_cnt,
+                      layout === "column" ? style.comment_item_cnt_ch : "",
+                    ])}
+                  >
+                    <div className={style.comment_item_head}>
+                      <div className={style.user}>
+                        <Avatar src={child.user?.avatar} alt="" />
+                        <span className={style.user_fullname}>
+                          {child.user?.fullname}
+                        </span>
+                      </div>
+                      {child.body?.includes("‭") && (
+                        <div className={style.bought_cnt}>
+                          <img src={icon.checkFlowGreen} alt="" /> Đã mua hàng
+                        </div>
+                      )}
+                    </div>
+                    <div className={style.comment_body}>
+                      <div
+                        style={{ backgroundColor: "#c1dbe9" }}
+                        className={style.comment_body_txt}
+                      >
+                        {child.body}
+                        <div className={style.comment_body_media_list}>
+                          {child.media_url?.map((i, indexChild) => (
+                            <div key={i} className={style.comment_body_media}>
+                              <img
+                                src={i} alt=""
+                                onClick={() => {
+                                  setFullImage({
+                                    src: child.media_url || [],
+                                    open: true,
+                                    index: indexChild
+                                  })
+                                }}
+                              />
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                      <span className={style.created_at}>
+                        {/* {formatDateFromNow(
+                        mixed ? comment.created_at : child.created_at || ""
+                      )} */}
+                        {formatTimeComment(
+                          mixed ? comment.created_at : child.created_at || ""
+                        )}
+                      </span>
+                    </div>
+                  </div>
+                ))}
+                {!mixed && (
+                  <div className={style.reply_input_cnt}>
+                    <div className={style.user}>
+                      <Avatar src={USER?.avatar} alt={USER?.fullname} />
+                    </div>
+                    <div className={style.reply_input}>
+                      <input
+                        value={value.body}
+                        onChange={(e) =>
+                          setValue((prev) => {
+                            return { ...prev, body: e.target.value };
+                          })
+                        }
+                        type="text"
+                        placeholder={t("detail_item.write_a_comment")}
+                        onKeyDown={(e) => {
+                          e.code === "Enter" && handlePostCmtReply();
+                        }}
+                      />
+                      <XButton
+                        onClick={handlePostCmtReply}
+                        loading={isLoading}
+                        icon={icon.planPaperWhite}
+                        iconSize={18}
+                      />
+                    </div>
+                  </div>
+                )}
+              </AccordionDetails>
+            </Accordion>
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }
 export default CommentParItem

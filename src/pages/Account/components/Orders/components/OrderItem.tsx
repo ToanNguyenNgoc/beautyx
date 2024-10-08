@@ -129,7 +129,8 @@ function OrderItem(props: IProp) {
           </div>
         </div>
         <div className={style.bottom}>
-          {/* {
+          {/* BTX POINT */}
+          {
             (order.status === 'PAID') &&
             <>
               {
@@ -157,7 +158,7 @@ function OrderItem(props: IProp) {
                   />
               }
             </>
-          } */}
+          }
           <XButton
             onClick={() => setOpen(true)}
             className={style.bottom_detail_btn}
