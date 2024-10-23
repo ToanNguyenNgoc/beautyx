@@ -20,7 +20,7 @@ import { clst, extraParamsUrl, isPlatformViettel } from "utils";
 import { XButton } from "components/Layout";
 import { onResetFilter } from "redux/filter-result";
 import Slider from "react-slick";
-import { useDeviceMobile } from "hooks";
+import { useDeviceMobile, useGetConfig } from "hooks";
 import HeadTitle from "features/HeadTitle";
 import { searchKeyRecommend } from 'pages/HomePage/data'
 import { postHistorySearch } from "user-behavior";
@@ -78,6 +78,7 @@ const notPathHeader = [
 
 
 function Head(props: IProps) {
+  useGetConfig()
   const { title, iconBack } = props;
   const location: any = useLocation();
   const IS_MB = useDeviceMobile()

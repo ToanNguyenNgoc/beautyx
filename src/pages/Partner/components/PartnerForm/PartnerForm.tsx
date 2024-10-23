@@ -11,7 +11,8 @@ import { PopupNotification } from "components/Notification";
 
 interface PartnerFormProps {
   open?: boolean;
-  onClose?: () => void
+  onClose?: () => void;
+  onSubmitForm?:(e:string)=>void
 }
 
 interface ValuesProp {
@@ -29,7 +30,8 @@ interface ValuesProp {
 
 export const PartnerForm: FC<PartnerFormProps> = ({
   open = false,
-  onClose = () => { }
+  onClose = () => { },
+  onSubmitForm=()=>{}
 }) => {
   const { t } = useContext(AppContext) as any
   const { firstLoad, resultLoad, noti, onCloseNoti } = useNoti()
@@ -57,6 +59,7 @@ export const PartnerForm: FC<PartnerFormProps> = ({
       firstLoad()
       setTimeout(() => {
         resultLoad('Đăng ký thành công ! Nhân viên sẽ liên hệ với bạn sớm nhất.')
+        // onSubmitForm(JSON.stringify(values))
       }, 5000)
 
     },

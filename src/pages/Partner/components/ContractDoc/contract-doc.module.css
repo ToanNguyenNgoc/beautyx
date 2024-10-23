@@ -1,0 +1,16 @@
+.cnt {
+  height: calc(100dvh - 24px);
+  aspect-ratio: 1/1.4142;
+  position: relative;
+}
+.contract_body{
+  width: 100%;
+  aspect-ratio: 1/1.4142;
+  padding: 24px;
+}
+.bottom{
+  position: absolute;
+  z-index: 10;
+  width: 100%;
+  bottom: 0;
+}

@@ -4,10 +4,12 @@ import { Container } from "@mui/material";
 import assets_partner from "./assets";
 import { XButton } from "components/Layout";
 import { clst } from "utils";
-import { PartnerForm } from "./components";
+import { ContractDoc, PartnerForm } from "./components";
 
 const Partner: FC = () => {
   const [open, setOpen] = useState(false)
+  const [openContract, setOpenContract] = useState(false)
+  const [data, setData] = useState('{}')
   const benefit_list = [
     { content: 'Bán sản phẩm, dịch vụ ngay trên nền tảng, chủ động tiếp cận khách hàng', icon: assets_partner.benefit1 },
     { content: 'Khách hàng tự đặt lịch liệu trình, hạn chế sai sót thông tin đặt hẹn', icon: assets_partner.benefit2 },
@@ -16,6 +18,7 @@ const Partner: FC = () => {
     { content: 'Đơn giản hóa cập nhật trạng thái trước, trong và sau khi khách hàng sử dụng dịch vụ', icon: assets_partner.benefit5 },
     { content: 'Đăng tải hình ảnh, thông tin, đánh giá thúc đẩy quảng bá cho thương hiệu', icon: assets_partner.benefit6 },
   ]
+  console.log(data)
   return (
     <>
       <Container>
@@ -48,7 +51,10 @@ const Partner: FC = () => {
                   <img src={assets_partner.arrowRight} alt="" />
                   Chiết khấu hấp dẫn
                 </span>
-                <XButton onClick={() => setOpen(true)} className={style.banner_content_btn} >
+                <XButton
+                  onClick={() => setOpen(true)} className={style.banner_content_btn} 
+                  // onClick={() => setOpenContract(true)} className={style.banner_content_btn}
+                >
                   Đăng ký ngay
                 </XButton>
               </div>
@@ -121,7 +127,14 @@ const Partner: FC = () => {
           </div>
         </Container>
       </div>
-      <PartnerForm open={open} onClose={() => setOpen(false)} />
+      <PartnerForm
+        open={open} onClose={() => setOpen(false)}
+        onSubmitForm={e => {
+          setOpenContract(true)
+          setData(e)
+        }}
+      />
+      <ContractDoc open={openContract} onClose={() => setOpenContract(false)} jsonData={data} />
     </>
   )
 }

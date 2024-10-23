@@ -18,7 +18,7 @@ import { orderApi } from "api/orderApi";
 import tracking from "api/trackApi";
 import { formatProductList } from "utils/tracking";
 import { XButton } from "components/Layout";
-import { useCartReducer, useCountDown, useSwr } from "hooks";
+import { useCartReducer, useCountDown, useGetConfig, useSwr } from "hooks";
 
 import style from './payment.module.css'
 import { IOrderV2 } from "interface";
@@ -190,6 +190,7 @@ function CartPaymentStatus() {
         }
     }, [responseTiki]);
     const dataCartInfo = { res, orderStatus, services };
+    const {is_agency} = useGetConfig()
     return (
         <>
             <HeadTitle
@@ -224,7 +225,7 @@ function CartPaymentStatus() {
             />
             {/* BTX POINT */}
             <PopupBtxReward
-                open={openBtx.open}
+                open={openBtx.open && !is_agency}
                 onClose={() => setOpenBtx({ ...openBtx, open: false })}
                 btxPoint={openBtx.btx_point}
             />

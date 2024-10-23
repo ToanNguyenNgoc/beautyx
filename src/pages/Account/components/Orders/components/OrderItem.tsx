@@ -18,10 +18,11 @@ import { useSelector } from "react-redux";
 
 interface IProp {
   order: IOrderV2;
+  is_agency?: boolean
 }
 
 function OrderItem(props: IProp) {
-  const { order } = props;
+  const { order, is_agency } = props;
   const IS_MB = useDeviceMobile()
   const { t } = useContext(AppContext) as AppContextType
   const [openQr, setOpenQr] = useState(false);
@@ -131,7 +132,7 @@ function OrderItem(props: IProp) {
         <div className={style.bottom}>
           {/* BTX POINT */}
           {
-            (order.status === 'PAID') &&
+            (order.status === 'PAID' && !is_agency) &&
             <>
               {
                 // (order.is_review === 0 || !ordersHasReview.includes(order.id)) ?
