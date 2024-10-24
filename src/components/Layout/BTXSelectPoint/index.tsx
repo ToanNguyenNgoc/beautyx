@@ -8,6 +8,7 @@ import icon from "constants/icon";
 import formatPrice from "utils/formatPrice";
 import { XSwitch } from "../Switch";
 import { omit } from "lodash";
+import { useGetConfig } from "hooks";
 
 interface BTXSelectPointProps extends DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
   totalOrigin?: number;
@@ -16,14 +17,15 @@ interface BTXSelectPointProps extends DetailedHTMLProps<HTMLAttributes<HTMLDivEl
 }
 
 export const BTXSelectPoint: FC<BTXSelectPointProps> = (props) => {
+  const { is_agency } = useGetConfig()
   const { totalOrigin = 0, valuePoint = 0, onChangePoint = () => { } } = props
   const dispatch = useDispatch()
-  useEffect(()=>{
-    const timer = setTimeout(()=>{
+  useEffect(() => {
+    const timer = setTimeout(() => {
       dispatch(fetchAsyncUser())
-    },500)
+    }, 500)
     return () => clearTimeout(timer)
-  },[])
+  }, [])
   const { USER } = useSelector((state: IStore) => state.USER)
   let savePrice = Number(USER?.btx_points)
   if (savePrice > totalOrigin) { savePrice = totalOrigin }
@@ -40,6 +42,7 @@ export const BTXSelectPoint: FC<BTXSelectPointProps> = (props) => {
   }
   useEffect(() => { onChangePoint(0) }, [totalOrigin])
   const disable = !USER?.btx_points || Number(USER?.btx_points) === 0 || totalOrigin === 0
+  if (is_agency) return <></>
   return (
     <div
       {...omit(props, ['onChangePoint', 'valuePoint', 'totalOrigin'])}

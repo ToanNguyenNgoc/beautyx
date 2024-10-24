@@ -2,13 +2,14 @@ import { axiosClient } from "config";
 import { identity, pickBy } from "lodash";
 import { paramsUserProfile } from "params-query";
 import { ParamsForgotSms } from "interface"
+import { EXTRA_FLAT_FORM } from "./extraFlatForm";
 
 class Auth {
   login = (values: any) => {
     const url = `/auth/login`;
     const params = {
       ...values,
-      "platform": "BEAUTYX"
+      "platform": EXTRA_FLAT_FORM()
     }
     return axiosClient.post(url, params);
   };
@@ -17,11 +18,11 @@ class Auth {
   };
   register = (params: any) => {
     const url = `/auth/register`;
-    return axiosClient.post(url, params);
+    return axiosClient.post(url, Object.assign({platform:EXTRA_FLAT_FORM()},params));
   };
   getUserProfile = (token?: string) => {
     const url = `/users/profile`
-    return axiosClient.get(url, { params: paramsUserProfile })
+    return axiosClient.get(url, { params: paramsUserProfile }).then().catch(() => axiosClient.get(url))
   };
   forgotPassword = (values: any) => {
     const url = `/auth/forgot`;
@@ -40,8 +41,11 @@ class Auth {
     const url = '/auth/refresh'
     return axiosClient.post(url, {
       'refresh_token': token,
-      'platform': 'BEAUTYX'
+      'platform': EXTRA_FLAT_FORM()
     })
+  };
+  loginOtpZms = (params: { telephone: string }) => {
+    return axiosClient.post('/auth/login/otp', params)
   }
 
 }

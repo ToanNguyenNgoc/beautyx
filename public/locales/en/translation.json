@@ -360,7 +360,13 @@
         "an_error": "An error occurred. Please try again!",
         "code": "Code",
         "get_code": "Get code",
-        "verification_code_has_been_sent_to": "Verification code has been sent to"
+        "verification_code_has_been_sent_to": "Verification code has been sent to",
+        "txt_enter_business_name":"Please enter your business name",
+        "txt_tax_code":"Tax code",
+        "txt_enter_tax_code":"Please enter tax code",
+        "txt_tax_code_address":"Place of tax identification number issuance",
+        "txt_accept_policy":"By registering as a partner, you agree to",
+        "txt_please_accept_policy":"Please accept"
     },
     "partner": {
         "online_business": "Online business platform for the beauty industry",
@@ -645,5 +651,9 @@
         "ac_gui_desc2": "Check cart",
         "ac_gui_desc3": "Select the button \"Make an appointment now\" to book an appointment after payment",
         "ac_gui_desc4": "Store information and remind appointments when scheduled"
+    },
+    "alert":{
+        "txtError": "An error occurred. Please try again!",
+        "txtSentZalo": "The verification code has been sent to your Zalo message"
     }
 }

@@ -10,7 +10,7 @@ import { Container } from "@mui/system";
 import IStore from "interface/IStore";
 import { clst, formatPhoneNumber, onErrorImg } from "utils";
 import icon from "constants/icon";
-import { useAuth, useDeviceMobile, usePostMedia } from "hooks";
+import { useAuth, useDeviceMobile, useGetConfig, usePostMedia } from "hooks";
 import { updateAsyncUser } from "redux/profile/userSlice";
 import { ICON } from "constants/icon2";
 import { FullImage, XButton } from "components/Layout";
@@ -156,6 +156,7 @@ function Account() {
   const [openP, setOpenP] = useState(false);
   const [openCard, setOpenCard] = useState(false);
   const onOpenAvatar = () => IS_MB && setOpenImg(true);
+  const {is_agency} = useGetConfig()
 
   return (
     <>
@@ -211,20 +212,24 @@ function Account() {
                   </p>
                 </div>
               </div>
-              <div className={style.user_coin}>
-                <span className={style.user_coin_label}>BEAUTYX COIN</span>
-                <div className={style.coin_cnt}>
-                  <img className={style.icon_left} src={icon.coins} alt="" />
-                  <div className={style.coin_value}>
-                    <p className={style.coin_value_label}>BTX</p>
-                    <div className={style.coin_value_count}>
-                      <span>
-                        {USER?.btx_points}
-                      </span>
+              {/* BTX POINT */}
+              {
+                !is_agency &&
+                <div className={style.user_coin}>
+                  <span className={style.user_coin_label}>BEAUTYX COIN</span>
+                  <div className={style.coin_cnt}>
+                    <img className={style.icon_left} src={icon.coins} alt="" />
+                    <div className={style.coin_value}>
+                      <p className={style.coin_value_label}>BTX</p>
+                      <div className={style.coin_value_count}>
+                        <span>
+                          {USER?.btx_points}
+                        </span>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
+              }
               <Tip/>
             </div>
             <div className={style.left_cnt_link}>

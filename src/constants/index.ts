@@ -32,5 +32,8 @@ export const LIST_METHOD = [
 export const hidden_orgs = ['nganthang', 'musa']
 
 export const storage_keys = {
-  local_pm_method:'local_pm_method'
+  _WEB_TK: '_WEB_TK',
+  _WEB_TK_RE:'_WEB_TK_RE',
+  _WEB_TK_EX:'_WEB_TK_EX',
+  local_pm_method: 'local_pm_method'
 }

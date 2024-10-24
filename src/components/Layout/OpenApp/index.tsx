@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import style from './open-app.module.css'
 import { XButton } from 'components/Layout'
-import { EXTRA_FLAT_FORM } from 'api/extraFlatForm';
+// import { EXTRA_FLAT_FORM } from 'api/extraFlatForm';
 import { useDeviceMobile } from 'hooks';
 import { Drawer } from '@mui/material';
 import img from 'constants/img';
+import { extraParamsUrl } from 'utils';
 
 interface OpenAppProps {
     type: 'product' | 'service' | 'org' | 'discount' | 'none',
@@ -14,13 +15,16 @@ interface OpenAppProps {
 }
 
 export function OpenApp(props: OpenAppProps) {
+    const params = extraParamsUrl() as {deeplink?:string}
     const config = sessionStorage.getItem('config')
     const [open, setOpen] = useState(config ? JSON.parse(config).open : true)
     const { type, item_id, org_id, id } = props
-    const PLATFORM = EXTRA_FLAT_FORM()
+    // const PLATFORM = EXTRA_FLAT_FORM()
     const IS_MB = useDeviceMobile()
     let show = false
-    // if (PLATFORM === "BEAUTYX" && IS_MB) show = true
+    if (params?.deeplink && IS_MB){
+        show = true
+    }
     let deepLink = `https://beautyx.page.link/?link=https://beautyx.page.link/myspa?${type}%3D${id}%26merchant%3D${org_id}&apn=com.myspa.beautyx&amv=18&isi=1614767784&ibi=com.myspa.beautyx&imv=18&cid=3028181755793109443&_osl=https://beautyx.page.link/MoBKVqvvHTrirbCG6&_icp=1`
     if (type === "discount") {
         deepLink = `https://beautyx.page.link/?link=https://beautyx.page.link/myspa?discount%3D${id}%26merchant%3D${org_id}%26service%3D${item_id}&apn=com.myspa.beautyx&amv=18&isi=1614767784&ibi=com.myspa.beautyx&imv=18&cid=3028181755793109443&_osl=https://beautyx.page.link/MoBKVqvvHTrirbCG6&_icp=1`
@@ -29,6 +33,7 @@ export function OpenApp(props: OpenAppProps) {
         deepLink = `https://beautyx.page.link/?link=https://beautyx.page.link/myspa?org%3D${org_id}&apn=com.myspa.beautyx&amv=18&isi=1614767784&ibi=com.myspa.beautyx&imv=18&cid=3028181755793109443&_osl=https://beautyx.page.link/MoBKVqvvHTrirbCG6&_icp=1`
     }
     if (type === "none") deepLink = 'https://beautyx.page.link/myspa'
+    if(params?.deeplink) deepLink = params.deeplink
     const onOpenDeepLink = () => {
         const newWindow = window.open(deepLink, '_blank', 'noopener,noreferrer');
         if (newWindow) newWindow.opener = null
@@ -40,7 +45,7 @@ export function OpenApp(props: OpenAppProps) {
     return (
         show ?
             <Drawer
-                open={open} onClose={onClosePopup}
+                open={open}
                 anchor="top"
             >
                 <div className={style.wrapper}>
@@ -53,11 +58,11 @@ export function OpenApp(props: OpenAppProps) {
                                 Mở app BeautyX để có trải nghiệm tốt hơn nhé !
                             </span>
                             <div className={style.right_bot}>
-                                <XButton
+                                {/* <XButton
                                     className={style.right_btn}
                                     title='Sử dụng bản Web'
                                     onClick={onClosePopup}
-                                />
+                                /> */}
                                 <XButton
                                     className={style.right_btn}
                                     title='Mở App'

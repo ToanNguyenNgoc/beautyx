@@ -6,12 +6,13 @@ import React, { FC, memo, useContext } from "react";
 import OrderItem from "./OrderItem";
 import { EmptyRes } from "components/Layout";
 import Skeleton from "react-loading-skeleton";
-import { useGetOrder } from "hooks";
+import { useGetConfig, useGetOrder } from "hooks";
 import style from '../order.module.css'
 import { useDispatch } from "react-redux";
 import { onSetOrderHasReview } from "redux/order-has-review/OrderHasReviewSlice";
 
 export const TabOrderPaid: FC = memo(() => {
+  const {is_agency} = useGetConfig()
   const { t } = useContext(AppContext) as any
   const dispatch = useDispatch()
   const { orders, totalItem, fetchNextPage, loading, allowNextPage, isFetchingNextPage } = useGetOrder({
@@ -30,7 +31,7 @@ export const TabOrderPaid: FC = memo(() => {
       <ul>
         {orders.map((order: IOrderV2, index: number) => (
           <li key={order.id} style={{ margin: '6px 0px' }}>
-            <OrderItem key={index} order={order} />
+            <OrderItem is_agency={is_agency} key={index} order={order} />
           </li>
         ))}
       </ul>

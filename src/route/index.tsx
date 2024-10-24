@@ -18,7 +18,6 @@ import Footer from "components/Footer";
 import Organization from "pages/Organization";
 import { analytics, logEvent } from "../firebase";
 import { LoadProgress } from "components/LoadingSketion";
-import ResetPassword from "pages/ResetPassword";
 import SearchResults from "pages/SearchResults";
 import DiscountDetail from "pages/_DiscountDetail";
 import Discounts from "pages/Discounts";
@@ -27,15 +26,15 @@ import ServicesUser from "features/ServiceUser";
 import Account from "pages/Account";
 import Calendar from "pages/Calendar";
 import Cart from "pages/Cart";
-import SignPage from "pages/SignPage";
 import Bottom from "components/Bottom";
 import Head from "components/Head";
 import { AssistantButton } from "components/Layout";
 import CateTree from "pages/CateTree";
 import PayUrl from "rootComponents/momo/PayUrl";
 import { RegisterAppAlert } from "components/RegisterAppAlert/RegisterAppAlert";
-import HomeVer3 from "pages/HomeVer3";
 import AboutPage from "pages/About";
+import { AuthPage } from "pages";
+// import HomeVer3 from "pages/HomeVer3";
 // import HeaderVer3 from "components/HeaderVer3";
 
 //community page
@@ -109,10 +108,10 @@ function RouterConfig() {
             component: <Organization />,
         },
         // END mini app share link
-        {
-            path: `/home-ver3`,
-            component: <HomeVer3 />,
-        },
+        // {
+        //     path: `/home-ver3`,
+        //     component: <HomeVer3 />,
+        // },
         {
             path: `/home`,
             component: <HomePage />,
@@ -154,10 +153,6 @@ function RouterConfig() {
             component: <Otp />,
         },
         {
-            path: "/doi-mat-khau",
-            component: <ResetPassword />,
-        },
-        {
             path: "/ket-qua-tim-kiem/:tab",
             component: <SearchResults />,
         },
@@ -176,14 +171,6 @@ function RouterConfig() {
         {
             path: "/dich-vu/",
             component: <SerProCoDetail />,
-        },
-        {
-            path: "/sign-up",
-            component: <SignPage />,
-        },
-        {
-            path: "/sign-in",
-            component: <SignPage />,
         },
         {
             path: "/cua-hang/:subdomain",
@@ -285,6 +272,10 @@ function RouterConfig() {
             path: "/about",
             component: <AboutPage />,
         },
+        {
+            path: '/auth',
+            component: <AuthPage/>
+        }
     ];
     const routesPrivate = [
         {

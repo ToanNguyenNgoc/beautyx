@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import IStore from 'interface/IStore';
 import { User } from 'interface';
 import * as Yup from "yup";
-import { Input, XButton } from 'components/Layout'
+import { XInput, XButton } from 'components/Layout'
 import { clst } from 'utils';
 import { useNoti, usePostMedia } from 'hooks'
 import { PopupNotification } from 'components/Notification'
@@ -18,6 +18,7 @@ import icon from 'constants/icon';
 import { EXTRA_FLAT_FORM } from 'api/extraFlatForm';
 import { FLAT_FORM_TYPE } from 'rootComponents/flatForm';
 import { AppContext } from 'context/AppProvider';
+import { useHistory } from 'react-router-dom';
 
 function Information() {
   const { t } = useContext(AppContext) as any
@@ -41,6 +42,7 @@ interface IValues {
 const Form = ({ USER }: { USER: User }) => {
   const { t } = useContext(AppContext) as any
   const dispatch = useDispatch()
+  const history = useHistory()
   const { noti, firstLoad, resultLoad, onCloseNoti } = useNoti()
   const PLAT_FORM = EXTRA_FLAT_FORM()
   const formik = useFormik({
@@ -94,9 +96,8 @@ const Form = ({ USER }: { USER: User }) => {
     })
   }
   const onNavigateChangePass = () => {
-    window.location.assign('/tai-khoan/doi-mat-khau')
+    history.push('/tai-khoan/doi-mat-khau')
   }
-  // console.log(noti)
 
   return (
     <div className={style.form_cnt}>
@@ -126,42 +127,33 @@ const Form = ({ USER }: { USER: User }) => {
       >
         <div className={style.form_row}>
           <span className={style.form_row_labe}>{t('pm.full_name')}</span>
-          <Input
+          <XInput
+            classNameContainer={style.form_row_input}
             autoFocus={true}
             value={formik.values.fullname}
             name='fullname'
             onChange={formik.handleChange}
             placeholder={t('pm.full_name')}
+            textError={formik.errors.fullname}
           />
-          {formik.errors.fullname && formik.touched.fullname && (
-            <p
-              className={style.form_row_error}
-            >
-              {formik.errors.fullname}
-            </p>
-          )}
         </div>
         <div className={style.form_row}>
           <span className={style.form_row_labe}>Email</span>
-          <Input
+          <XInput
+            classNameContainer={style.form_row_input}
             value={formik.values.email}
             name='email'
             onChange={formik.handleChange}
             placeholder='Email...'
+            textError={formik.errors.email}
           />
-          {formik.errors.email && formik.touched.email && (
-            <p
-              className={style.form_row_error}
-            >
-              {formik.errors.email}
-            </p>
-          )}
         </div>
         <div className={style.form_row}>
           <span className={style.form_row_labe}>{t('pm.phone_number')}</span>
-          <Input
+          <XInput
+            classNameContainer={style.form_row_input}
             value={USER.telephone}
-            disable={true}
+            disabled={true}
           />
         </div>
         <div className={style.form_bot}>

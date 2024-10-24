@@ -57,7 +57,7 @@ export const Deal = () => {
             </ul>
           </div>
         }
-        {
+        {/* {
           productsSpecial.length > 0 &&
           <div className={style.section_item}>
             <div className={style.section_item_title}>
@@ -79,7 +79,7 @@ export const Deal = () => {
               }
             </ul>
           </div>
-        }
+        } */}
       </Container>
     </div>
   )

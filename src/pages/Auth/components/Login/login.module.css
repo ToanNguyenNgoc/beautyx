@@ -1,0 +1,38 @@
+.sign_check {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-weight: 500;
+}
+
+.sign_check_forgot {
+  color: var(--purple);
+}
+
+.form_submit_btn {
+  display: flex;
+  justify-content: center;
+  margin: 12px 0;
+}
+.form_submit_btn button{
+  width: 25%;
+}
+.login_social_cnt{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 18px;
+}
+.login_social_title{
+ margin-bottom: 18px;
+ font-size: 16px;
+ font-weight: 500;
+}
+@media only screen and (max-width: 1023px) {
+  .form_submit_btn{
+    margin-top: 46px;
+  }
+  .form_submit_btn button{
+    width: 100%;
+  }
+}

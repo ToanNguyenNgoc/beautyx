@@ -1,0 +1,40 @@
+.cnt {
+  width: 35vw;
+  max-width: 650px;
+  padding: 32px;
+}
+
+.title {
+  font-size: 26px;
+  font-weight: 600;
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.policy {
+  margin-bottom: 12px;
+  font-size: 15px;
+  font-weight: 400;
+}
+
+.policy a {
+  font-weight: 600;
+  color: var(--purple);
+}
+
+.policy_error {
+  font-size: 12px;
+  color: var(--red-cl);
+  margin-left: 14px;
+}
+.form_bottom{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.form_submit_btn{
+  width: 100%;
+  border-radius: 6px;
+}

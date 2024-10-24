@@ -88,7 +88,7 @@ function TrendsDetail() {
                                 ))
                             }
                         </div>
-                        <div className={style.trend_interactive}>
+                        {/* <div className={style.trend_interactive}>
                             <div className={style.interactive_item}>
                                 <XButton icon={icon.eyeBoldBlack} iconSize={16} />{formatCountTrends(trend.tiktok?.play_count)}
                             </div>
@@ -104,9 +104,9 @@ function TrendsDetail() {
                             <div className={style.interactive_item}>
                                 <XButton icon={icon.shareBoldBlack} iconSize={16} />{trend.tiktok?.share_count || 1}
                             </div>
-                        </div>
+                        </div> */}
                     </div>
-                    <div className={style.trend_cmt_cnt}>
+                    {/* <div className={style.trend_cmt_cnt}>
                         <div className={style.cmt_box}>
                             <Comment
                                 commentable_type='ORGANIZATION'
@@ -118,7 +118,7 @@ function TrendsDetail() {
                                 layout="column"
                             />
                         </div>
-                    </div>
+                    </div> */}
                 </div>
             </div>
             :

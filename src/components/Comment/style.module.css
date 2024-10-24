@@ -218,6 +218,7 @@
   object-fit: cover;
   z-index: 1;
   border-radius: 8px;
+  cursor: pointer;
 }
 
 .created_at {

@@ -33,7 +33,7 @@ export const AppSnackBar = forwardRef<AppSnackHandler, AppSnackProps>((props, re
   const [open, setOpen] = useState(false)
   const [title, setTitle] = useState('Title')
   const [color, setColor] = useState<AlertColor>('success')
-  const [autoHideDuration, setAutoHideDuration] = useState(3500)
+  const [autoHideDuration, setAutoHideDuration] = useState(7000)
 
   useImperativeHandle(ref, () => ({
     open: (options) => {
@@ -41,6 +41,11 @@ export const AppSnackBar = forwardRef<AppSnackHandler, AppSnackProps>((props, re
       if (options.title) setTitle(options.title);
       if (options.type) setColor(options.type);
       if (options.autoHideDuration) setAutoHideDuration(options.autoHideDuration)
+      setTimeout(() => {
+        setOpen(false)
+        setTitle("Title")
+        setColor('success')
+      }, autoHideDuration)
     },
     close: () => {
       setOpen(false)

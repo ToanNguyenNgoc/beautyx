@@ -4,5 +4,6 @@ export const PLF_TYPE = {
     TIKI: "TIKI",
     MB: "MBBANK",
     ZALO: "ZALO",
-    VIETTEL:"VIETTEL"
+    VIETTEL:"VIETTEL",
+    TAPTAP:"TAPTAP"
 }
