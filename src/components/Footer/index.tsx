@@ -5,6 +5,7 @@ import slugify from "utils/formatUrlString";
 import img, { paymentMethod, social } from "constants/img";
 import icon from "constants/icon";
 import { AppContext } from "context/AppProvider";
+import dayjs from 'dayjs';
 import {
   phoneSupport,
   mailSales,
@@ -552,7 +553,7 @@ function Footer() {
         </div>
         <div className="footer-copy-right">{t("footer.policy")}</div>
         <div className="footer-copy-right">
-          © 2023 Copyright BeautyX | ProductX team.
+          © {dayjs().year()} Copyright BeautyX | ProductX team.
         </div>
       </Container>
     </div>
