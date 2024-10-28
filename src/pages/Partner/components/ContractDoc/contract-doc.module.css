@@ -3,14 +3,55 @@
   aspect-ratio: 1/1.4142;
   position: relative;
 }
-.contract_body{
+
+.contract_body {
   width: 100%;
   aspect-ratio: 1/1.4142;
   padding: 24px;
 }
-.bottom{
+
+.bottom {
   position: absolute;
   z-index: 10;
   width: 100%;
   bottom: 0;
+}
+
+.doc_control {
+  position: absolute;
+  z-index: 10000;
+  right: 12px;
+  top: 12px;
+  background-color: var(--white);
+  padding: 6px 12px;
+  border-radius: 12px;
+}
+.doc_control_hide{
+  display: none;
+}
+
+.doc_control button {
+  width: 100%;
+  margin: 6px 0px;
+}
+
+.sign_cnt {
+  padding: 12px;
+}
+
+.sign_cnt_title {
+  font-size: 16px;
+  font-weight: 600;
+  text-align: center;
+  margin-bottom: 8px;
+}
+
+.sign_cnt_control {
+  display: flex;
+  justify-content: center;
+}
+
+.sign_cnt_control button {
+  width: 33.33%;
+  margin: 12px 6px 0px 6px;
 }

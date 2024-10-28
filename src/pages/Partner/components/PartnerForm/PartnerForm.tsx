@@ -58,9 +58,10 @@ export const PartnerForm: FC<PartnerFormProps> = ({
       console.log(values)
       firstLoad()
       setTimeout(() => {
-        resultLoad('Đăng ký thành công ! Nhân viên sẽ liên hệ với bạn sớm nhất.')
-        // onSubmitForm(JSON.stringify(values))
-      }, 5000)
+        resultLoad('')
+        // resultLoad('Đăng ký thành công ! Nhân viên sẽ liên hệ với bạn sớm nhất.')
+        onSubmitForm(JSON.stringify(values))
+      }, 2000)
 
     },
   })
@@ -168,12 +169,12 @@ export const PartnerForm: FC<PartnerFormProps> = ({
           </div>
         </form>
       </div>
-      <PopupNotification
+      {/* <PopupNotification
         title="Thông báo"
         content={noti.message}
         open={noti.openAlert}
         setOpen={handleCloseAll}
-      />
+      /> */}
     </Dialog>
   )
 }

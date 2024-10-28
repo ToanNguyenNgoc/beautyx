@@ -19,6 +19,10 @@ const Partner: FC = () => {
     { content: 'Đăng tải hình ảnh, thông tin, đánh giá thúc đẩy quảng bá cho thương hiệu', icon: assets_partner.benefit6 },
   ]
   console.log(data)
+  const onGetSignature = (signature: string) => {
+    const objData = JSON.parse(data)
+    setData(JSON.stringify(Object.assign(objData, { signature })))
+  }
   return (
     <>
       <Container>
@@ -52,8 +56,8 @@ const Partner: FC = () => {
                   Chiết khấu hấp dẫn
                 </span>
                 <XButton
-                  onClick={() => setOpen(true)} className={style.banner_content_btn} 
-                  // onClick={() => setOpenContract(true)} className={style.banner_content_btn}
+                  onClick={() => setOpen(true)} className={style.banner_content_btn}
+                // onClick={() => setOpenContract(true)} className={style.banner_content_btn}
                 >
                   Đăng ký ngay
                 </XButton>
@@ -134,7 +138,12 @@ const Partner: FC = () => {
           setData(e)
         }}
       />
-      <ContractDoc open={openContract} onClose={() => setOpenContract(false)} jsonData={data} />
+      <ContractDoc
+        open={openContract}
+        onClose={() => setOpenContract(false)}
+        jsonData={data}
+        onGetSignature={onGetSignature}
+      />
     </>
   )
 }
