@@ -32,6 +32,7 @@ import { AssistantButton } from "components/Layout";
 import CateTree from "pages/CateTree";
 import PayUrl from "rootComponents/momo/PayUrl";
 import { RegisterAppAlert } from "components/RegisterAppAlert/RegisterAppAlert";
+import AboutPage from "pages/About";
 import { AuthPage } from "pages";
 // import HomeVer3 from "pages/HomeVer3";
 // import HeaderVer3 from "components/HeaderVer3";
@@ -58,6 +59,7 @@ const Rewards = lazy(() => import("pages/Rewards"));
 const Messenger = lazy(() => import("pages/Messenger"));
 const Seller = lazy(() => import("pages/SellerCenter"));
 const OrganizationsApprove = lazy(() => import("pages/OrganizationsApprove"));
+const About = lazy(() => import("pages/About"));
 
 function RouterConfig() {
     const routes = [
@@ -267,8 +269,12 @@ function RouterConfig() {
             component: <PayUrl />,
         },
         {
-            path:'/auth',
-            component:<AuthPage/>
+            path: "/about",
+            component: <AboutPage />,
+        },
+        {
+            path: '/auth',
+            component: <AuthPage/>
         }
     ];
     const routesPrivate = [

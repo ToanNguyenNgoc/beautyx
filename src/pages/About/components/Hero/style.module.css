@@ -1,0 +1,118 @@
+.hero_container {
+    margin: 24px 0 0 0;
+    background-repeat: no-repeat;
+    background-position: bottom;
+    background-size: cover;
+    padding-bottom: 120px;
+}
+.hero {
+    display: flex;
+    max-width: 1220px;
+    margin: 0 auto;
+    padding: 0 24px;
+    gap: 143px;
+}
+.hero_left {
+    width: 432px;
+    flex-shrink: 0;
+    position: relative;
+}
+.hero_left_finger {
+    position: absolute;
+    bottom: 24px;
+    right: 0;
+    transform: translateX(304px);
+    border-radius: 16px;
+    background: #f7fff0;
+}
+.hero_left img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.hero_right {
+    width: 100%;
+    margin-top: 17px;
+}
+.hero_right_img {
+    width: 185px;
+    flex-shrink: 0;
+    padding: 21px 25px;
+    background-color: #060404;
+    border-radius: 32px;
+}
+.hero_title {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+.hero_title p {
+    color: #000;
+    font-size: 45px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 120%; /* 54px */
+}
+.hero_imgs {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+}
+.hero_img {
+    width: 46px;
+}
+.hero_img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.hero_title:nth-child(1) {
+    margin-bottom: 15px;
+}
+.hero_desc {
+    color: #000;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 120%; /* 19.2px */
+    max-width: 549px;
+}
+.hero_desc:nth-child(2) {
+    margin: 35px 0 30px 0;
+}
+.hero_left_finger {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding: 5px 20px;
+}
+.finger_img {
+    width: 84.578px;
+    height: 102px;
+    margin: 15px 0;
+}
+.finger_img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.finger_content {
+    padding: 0 20px;
+}
+.finger_content p:nth-child(1) {
+    max-width: 212px;
+    color: #000;
+    font-family: Quicksand;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 120%; /* 19.2px */
+    margin-bottom: 10px;
+}
+.finger_content p:nth-child(2) {
+    color: #95bf70;
+    font-size: 30px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 120%; /* 36px */
+}

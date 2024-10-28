@@ -27,8 +27,10 @@ import cateSalon from "assets/icons/cate-salon.svg";
 import categoryGray from "assets/icons/category-gray.svg";
 import locationGray from "assets/icons/location-gray.svg";
 import searchGray from "assets/icons/search-gray.svg";
+import tickGreen from "assets/image/about/tick-green.svg";
 
 export const ICON = {
+    tickGreen,
     cateSpa,
     cateSalon,
     categoryGray,
