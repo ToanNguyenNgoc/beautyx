@@ -58,8 +58,7 @@ export const PartnerForm: FC<PartnerFormProps> = ({
       console.log(values)
       firstLoad()
       setTimeout(() => {
-        resultLoad('')
-        resultLoad('Đăng ký thành công ! Nhân viên sẽ liên hệ với bạn sớm nhất.')
+        resultLoad('Đăng ký thành công! Nhân viên sẽ liên hệ với anh/chị để tư vấn về thủ tục đăng ký và hợp đồng.')
         // onSubmitForm(JSON.stringify(values))
       }, 2000)
 
