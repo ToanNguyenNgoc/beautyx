@@ -23,6 +23,7 @@ import { useCartReducer, useCountDown, useGetConfig, useSwr } from "hooks";
 import style from './payment.module.css'
 import { IOrderV2 } from "interface";
 import { reward_percent_order } from "../../constants";
+import { LoggerOrderHelper } from "helpers";
 
 const initOpen = {
     content: "",
@@ -112,7 +113,7 @@ function CartPaymentStatus() {
         const orderDetail: IOrderV2 = await res.data?.context
         const btx_reward = orderDetail?.payment_gateway?.amount * reward_percent_order
         if (btx_reward && btx_reward >= 0) {
-            setOpenBtx({ open: true, btx_point: btx_reward })
+            setOpenBtx({ open: true, btx_point: btx_reward });
         }
     }
     useEffect(() => {
@@ -125,8 +126,9 @@ function CartPaymentStatus() {
         if (response?.status === "PAID") {
             dispatch(clearByCheck())
             closeWindowPayon()
-            if (action) handlePostApp()
-            if (response?.paymentable_id) onShowNotiBTXPoint(response?.paymentable_id)
+            if (action) handlePostApp();
+            if (response?.paymentable_id) onShowNotiBTXPoint(response?.paymentable_id);
+            if (res) LoggerOrderHelper.log(res);
         }
     }, [response?.status])
     useCancelByTime(handleCancelCallStatus)
@@ -158,39 +160,39 @@ function CartPaymentStatus() {
     };
 
     //cancel payment TIKI
-    const onGoBackCart = () => {
-        const payment_url = location?.pathname;
-        history.push({
-            pathname: "/gio-hang",
-            state: { payment_url },
-        });
-    };
-    const responseTiki = useGetMessageTiki();
-    useMemo(() => {
-        if (responseTiki?.requestId && responseTiki?.result.status === "fail") {
-            handleCancelCallStatus();
-            let title = `Thanh toán thất bại \n Bạn có muốn tiếp tục thanh toán không ?`;
-            if (action) {
-                title = `Thanh toán và đặt hẹn thất bại`;
-            }
-            setOpen({
-                content: title,
-                open: true,
-                children: <>
-                    <XButton
-                        title="Về trang chủ"
-                        onClick={() => history.push("")}
-                    />
-                    <XButton
-                        title="Tiếp tục"
-                        onClick={() => onGoBackCart()}
-                    />
-                </>
-            });
-        }
-    }, [responseTiki]);
+    // const onGoBackCart = () => {
+    //     const payment_url = location?.pathname;
+    //     history.push({
+    //         pathname: "/gio-hang",
+    //         state: { payment_url },
+    //     });
+    // };
+    // const responseTiki = useGetMessageTiki();
+    // useMemo(() => {
+    //     if (responseTiki?.requestId && responseTiki?.result.status === "fail") {
+    //         handleCancelCallStatus();
+    //         let title = `Thanh toán thất bại \n Bạn có muốn tiếp tục thanh toán không ?`;
+    //         if (action) {
+    //             title = `Thanh toán và đặt hẹn thất bại`;
+    //         }
+    //         setOpen({
+    //             content: title,
+    //             open: true,
+    //             children: <>
+    //                 <XButton
+    //                     title="Về trang chủ"
+    //                     onClick={() => history.push("")}
+    //                 />
+    //                 <XButton
+    //                     title="Tiếp tục"
+    //                     onClick={() => onGoBackCart()}
+    //                 />
+    //             </>
+    //         });
+    //     }
+    // }, [responseTiki]);
     const dataCartInfo = { res, orderStatus, services };
-    const {is_agency} = useGetConfig()
+    const { is_agency } = useGetConfig()
     return (
         <>
             <HeadTitle
