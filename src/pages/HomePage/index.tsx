@@ -29,7 +29,6 @@ import { STATUS } from "redux/status";
 import style from "./home.module.css";
 import PortDeal from "components/PortalDeal";
 import { isPlatformViettel } from "utils";
-import axios from "axios";
 
 export default function HomePage() {
   const IS_MB = useDeviceMobile();
@@ -38,14 +37,6 @@ export default function HomePage() {
     tracking.HOME_LOAD();
   }, []);
 
-
-  const test = ()=>{
-    axios.get('https://dev-taixe.bship.vn/api/user/save-address',{
-      headers:{
-        'accept_token':'ab33ecaa9e7672d8acfd3389ff006bb7'
-      }
-    }).then(res => console.log(res.data))
-  }
 
   return (
     <>
@@ -71,7 +62,6 @@ export default function HomePage() {
         <HomePrettier hidden={true} />
         <Container>
           <HomeOrgDistance />
-          <Button onClick={test}>sss</Button>
           <HomePromotions />
           <HomeApprove />
           <HomeWhyNot />
