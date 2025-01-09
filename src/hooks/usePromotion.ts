@@ -13,7 +13,7 @@ export function usePromotion() {
     }).then<ResponseType<Promotion[]>>(res => res.data),
     staleTime: STALE_TIME
   })
-  const data = res?.context.data || []
+  const data = res?.context.data?.filter(i => i.priority >= 0) || []
   return {
     data
   }

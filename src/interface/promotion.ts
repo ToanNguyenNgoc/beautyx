@@ -15,5 +15,6 @@ export interface Promotion {
   created_at: string,
   updated_at: string,
   discounts: IDiscountPar[],
-  productables: Array<{ id: number, productable: Productable, organization?: IOrganization }>
+  productables: Array<{ id: number, productable: Productable, organization?: IOrganization }>,
+  priority:number
 }

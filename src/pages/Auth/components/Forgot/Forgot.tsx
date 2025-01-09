@@ -110,7 +110,7 @@ export const Forgot: FC<ForgotProps> = (props) => {
             <>
               <div className={style.count_down_cnt}>
                 <CountDown
-                  seconds={180}
+                  seconds={10}
                   onClickTimeOut={() => {
                     mutationZnsZaloOtp
                       .mutateAsync({ telephone: formik.values.telephone, recaptcha })
