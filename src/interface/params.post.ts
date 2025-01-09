@@ -3,7 +3,8 @@ export interface ParamsPostLogin {
   password: string;
 }
 export interface ParamsPostZnsZaloOtp {
-  telephone: string
+  telephone: string;
+  recaptcha?: string
 }
 export interface ParamsPostRegister {
   fullname: string,
