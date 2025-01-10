@@ -1,12 +1,11 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useState, useEffect, useMemo } from "react";
+import React, { useState, useEffect } from "react";
 import HeadTitle from "features/HeadTitle";
 import { Container } from "@mui/material";
 import { useLocation } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import PaymentQr from "./components/PaymentQr";
 import PaymentInfo from "./components/PaymentInfo";
-import useGetMessageTiki from "rootComponents/useGetMessageTiki";
 import apointmentApi from "api/apointmentApi";
 import HeadMobile from "features/HeadMobile";
 import { PopupBtxReward, PopupNotification } from "components/Notification";
@@ -124,11 +123,12 @@ function CartPaymentStatus() {
             })
         }
         if (response?.status === "PAID") {
+            console.log("Sync log");
+            LoggerOrderHelper.log(res);
             dispatch(clearByCheck())
             closeWindowPayon()
             if (action) handlePostApp();
             if (response?.paymentable_id) onShowNotiBTXPoint(response?.paymentable_id);
-            if (res) LoggerOrderHelper.log(res);
         }
     }, [response?.status])
     useCancelByTime(handleCancelCallStatus)
