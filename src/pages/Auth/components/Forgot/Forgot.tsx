@@ -3,7 +3,7 @@ import { XButton, XInput } from "components/Layout";
 import icon from "constants/icon";
 import { useFormik } from "formik";
 import { useDoAuth, useRecaptcha } from "hooks";
-import { FC, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import validateForm from "utils/validateForm";
 import * as Yup from "yup";
 import style from './forgot.module.css'
@@ -73,6 +73,11 @@ export const Forgot: FC<ForgotProps> = (props) => {
       }
     },
   });
+  useEffect(() => {
+    if (recaptcha) {
+      window.postMessage(recaptcha)
+    }
+  }, [recaptcha])
   return (
     <GoogleReCaptchaProvider
       reCaptchaKey={recaptcha_key}
