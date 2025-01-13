@@ -3,7 +3,7 @@ import { XButton, XInput } from "components/Layout";
 import icon from "constants/icon";
 import { useFormik } from "formik";
 import { useDoAuth, useRecaptcha } from "hooks";
-import { FC, useEffect, useState } from "react";
+import { FC, useState } from "react";
 import validateForm from "utils/validateForm";
 import * as Yup from "yup";
 import style from './forgot.module.css'
@@ -13,6 +13,11 @@ import { GoogleReCaptcha, GoogleReCaptchaProvider } from "react-google-recaptcha
 interface ForgotProps {
   telephone?: string
 }
+
+// const testServe = (data: { recaptcha: string }) => {
+//   axios.post('http://192.168.1.45:8000/api/v1/ping', { recaptcha: data.recaptcha });
+//   return
+// }
 
 export const Forgot: FC<ForgotProps> = (props) => {
   const { mutationZnsZaloOtp, mutationForgot } = useDoAuth()
@@ -73,11 +78,6 @@ export const Forgot: FC<ForgotProps> = (props) => {
       }
     },
   });
-  useEffect(() => {
-    if (recaptcha) {
-      window.postMessage(recaptcha)
-    }
-  }, [recaptcha])
   return (
     <GoogleReCaptchaProvider
       reCaptchaKey={recaptcha_key}
@@ -119,7 +119,7 @@ export const Forgot: FC<ForgotProps> = (props) => {
                   onClickTimeOut={() => {
                     mutationZnsZaloOtp
                       .mutateAsync({ telephone: formik.values.telephone, recaptcha })
-                      .then().catch().finally(() => onRefreshRecaptcha())
+                      .then().catch().finally(() => onRefreshRecaptcha());
                   }}
                 />
               </div>

@@ -13,6 +13,7 @@ export function useRecaptcha() {
   const onRefreshRecaptcha = () => setRefreshReCaptcha(r => !r)
 
   useEffect(() => {
+    onRefreshRecaptcha()
     return () => {
       onRefreshRecaptcha()
     }
