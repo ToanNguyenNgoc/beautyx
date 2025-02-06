@@ -21,7 +21,7 @@ export const AUTH_HEADER_WS = () => {
   const local = localStorage.getItem("_WEB_TK")
   return {
     headers: {
-      "Authorization": `Bearer ${session ? session : local}`,
+      "Authorization": (local || session) ? `Bearer ${session ? session : local}`:'',
       "Content-Type": ''
     },
   }
@@ -32,7 +32,7 @@ export const AUTH_HEADER = (contentType?: 'application/json' | 'multipart/form-d
   const local = localStorage.getItem("_WEB_TK")
   return {
     headers: {
-      "Authorization": `Bearer ${session ? session : local}`,
+      "Authorization": (local || session) ? `Bearer ${session ? session : local}`:'',
       "Content-Type": contentType ? contentType : 'application/json'
     },
   }
