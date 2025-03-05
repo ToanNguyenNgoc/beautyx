@@ -1,4 +1,4 @@
-import { BTXSelectPoint, XButton } from 'components/Layout';
+import { BTXSelectPoint, CancelPrevOrder, XButton } from 'components/Layout';
 import icon from 'constants/icon';
 import { useCartReducer, useDeviceMobile, useNoti, useUserAddress, useVoucher } from 'hooks';
 import { IDiscountPar, IOrganization } from 'interface';
@@ -171,7 +171,6 @@ export function CartCalc(props: CartCalcType) {
             coupon_code: listCouponCode,
         }
         setLoad(true)
-        await orderApi.onCancelPrevOrder().then(() => setLoad(false)) //Cancel all order in 'PENDING' status for voucher use
         if (Number(order.point) > 0) {
             param.payment_method_second_id = BTX.id
         }
@@ -185,6 +184,7 @@ export function CartCalc(props: CartCalcType) {
 
     return (
         <>
+            <CancelPrevOrder />
             <XButton
                 title={t('pm.enter_coupon_code')}
                 icon={icon.cardDiscountOrange}
