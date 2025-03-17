@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React from 'react';
 import { policies } from '../../data/policies';
 import { extraParamsUrl } from '../../utils/extraParamsUrl';
 // import parser from 'html-react-parser';
@@ -6,6 +6,7 @@ import './policy.css';
 import { Container } from '@mui/material'
 import { useDeviceMobile } from 'hooks';
 import HeadMobile from 'features/HeadMobile';
+import { PdfViewer, regexPdf } from 'components/Layout';
 
 function Policy() {
     const params = extraParamsUrl();
@@ -14,34 +15,25 @@ function Policy() {
     const dataRender = policies.find((item: any) => item.id === Number(id))
     return (
         <>
-            {/* {IS_MB && <HeadMobile title={dataRender?.title ?? ''} />}
+            {IS_MB && <HeadMobile title={dataRender?.title ?? ''} />}
             {
-                id && dataRender &&
-                <Container>
-                    <div className="po-container">
-                        <div dangerouslySetInnerHTML={{ __html: dataRender.templateHtml }}>
-                        </div>
-                    </div>
-                </Container>
-            } */}
-            <PdfView
-                link='https://api.myspa.vn/media/1589954/3.-QUY-CHẾ-HOẠT-ĐỘNG.pdf?v=1742192368'
-                title='Quy chế hoạt động'
-            />
+                id && dataRender && (
+                    regexPdf(dataRender.templateHtml) ?
+                        <PdfViewer
+                            fileUrl={dataRender.templateHtml}
+                        />
+                        :
+                        <Container>
+                            <div className="po-container">
+                                <div dangerouslySetInnerHTML={{ __html: dataRender.templateHtml }}>
+                                </div>
+                            </div>
+                        </Container>
+                )
+
+            }
         </>
     );
 }
 
 export default Policy;
-
-const PdfView: FC<{ link: string, title: string }> = ({ link, title }) => {
-    return (
-        <Container>
-            <iframe
-                src={link}
-                title={title}
-                style={{ width: '500px', height: '1500px' }}
-            />
-        </Container>
-    )
-}

@@ -268,6 +268,17 @@ body > iframe {
     display: none !important;
 }
 
+.react-pdf__Document,
+.react-pdf__Page{
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+.react-pdf__Page__canvas{
+    width: 65% !important;
+    height: unset !important;
+}
+
 @media only screen and (max-width: 1023px) {
     body {
         min-height: 100vh;

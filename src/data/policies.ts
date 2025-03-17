@@ -1,4 +1,5 @@
 //tool convert to HTML : link: https://wordtohtml.net/
+
 export const policies = [
     {
         id: 15,
@@ -603,7 +604,7 @@ export const policies = [
     {
         id: 20,
         title: "Quy chế hoạt động",
-        templateHtml: `https://api.myspa.vn/media/1589954/3.-QUY-CHẾ-HOẠT-ĐỘNG.pdf?v=1742192368`,
+        templateHtml: 'https://api.beautyx.life/media/1742197431896_quy_che_hoat_dong.pdf',
     },
     {
         id: 23,
