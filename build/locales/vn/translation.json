@@ -614,7 +614,7 @@
         "return_and_refund": " Trả hàng và hoàn tiền",
         "protect_the_interests_of_customers": "Bảo vệ quyền lợi khách hàng",
         "myspa_company": "Về BeautyX ",
-        "operating_regulations": "Quy định hoạt động",
+        "operating_regulations": "Quy chế hoạt động",
         "general_rules": "Quy định chung",
         "commodity_trading_regulations": "Quy định giao dịch hàng hóa",
         "payment_process": "Quy trình thanh toán",
@@ -633,7 +633,8 @@
         "manager_nail": "Phần mềm quản lý tiệm nail",
         "manager_brandapp": "Thiết kế App thương hiệu - chăm sóc khách hàng",
         "manager_miniapp": "Thiết kế Mini App thương hiệu (Zalo)",
-        "product_of_myspa": "Giải pháp số hóa cho nghành làm đẹp"
+        "product_of_myspa": "Giải pháp số hóa cho nghành làm đẹp",
+        "acceptable_resolution_mechanism":"Cơ chế giải quyết tranh chấp"
     },
     "account_guide": {
         "ac_gui_step": "Bước",

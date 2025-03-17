@@ -80,6 +80,12 @@ function Footer() {
           type: "URL",
           url: "/",
         },
+        {
+          id: 18,
+          title: `${t("footer.acceptable_resolution_mechanism")}`,
+          type: "URL",
+          url: "/",
+        },
       ],
     },
     {

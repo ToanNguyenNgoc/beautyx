@@ -516,7 +516,7 @@ export default {
         "return_and_refund": " Trả hàng và hoàn tiền",
         "protect_the_interests_of_customers": "Bảo vệ quyền lợi khách hàng",
         "myspa_company": "Công ty MYSPA",
-        "operating_regulations": "Quy định hoạt động",
+        "operating_regulations": "Quy chế hoạt động",
         "general_rules": "Quy định chung",
         "commodity_trading_regulations": "Quy định giao dịch hàng hóa",
         "payment_process": "Quy trình thanh toán",

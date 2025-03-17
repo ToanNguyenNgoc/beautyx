@@ -1,2 +1,0 @@
-"use strict";(self.webpackChunkweb_booking=self.webpackChunkweb_booking||[]).push([[554],{63554:function(e,n,i){i.r(n);var s=i(9469),r=(i(27565),i(27929));n.default=function(){return(0,r.jsxs)(r.Fragment,{children:[(0,r.jsx)(s.A,{title:"\u01afu \u0111\xe3i v\u1edbi BTX"}),(0,r.jsx)("div",{children:"Rewardsl"})]})}}}]);
-//# sourceMappingURL=554.0b1daa76.chunk.js.map

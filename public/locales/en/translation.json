@@ -638,7 +638,8 @@
         "manager_nail": "Nail salon management software",
         "manager_brandapp": "Brand App design - customer care",
         "manager_miniapp": "Brand Mini App Design (Zalo)",
-        "product_of_myspa": "Digital solutions for beautiful work"
+        "product_of_myspa": "Digital solutions for beautiful work",
+        "acceptable_resolution_mechanism":"Acceptable resolution mechanism"
     },
     "account_guide": {
         "ac_gui_step": "Step",
