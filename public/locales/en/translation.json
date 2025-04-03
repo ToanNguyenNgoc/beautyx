@@ -142,7 +142,9 @@
         "location_":"Location",
         "services":"Services",
         "congratulations": "Congratulations",
-        "new_member" : "just became a member of BeautyX!"
+        "new_member" : "just became a member of BeautyX!",
+        "org_notfound":"Oops! No merchant information found.",
+        "continue_use_app":"Continue exploring beauty services"
     },
     "Search_result": {
         "text_result": "search results",

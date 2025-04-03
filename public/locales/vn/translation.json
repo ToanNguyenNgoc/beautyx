@@ -135,7 +135,9 @@
         "location_": "địa điểm",
         "services": "dịch vụ",
         "congratulations": "Chúc mừng",
-        "new_member": "vừa trở thành thành viên BeautyX!"
+        "new_member": "vừa trở thành thành viên BeautyX!",
+        "org_notfound":"oops! Không tìm thấy thông tin doanh nghiệp",
+        "continue_use_app":"Tiếp tục khám phá dịch vụ làm đẹp"
     },
     "Search_result": {
         "text_result": "kết quả tìm kiếm",
