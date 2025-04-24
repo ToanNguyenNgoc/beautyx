@@ -305,11 +305,11 @@ const InputChat = ({ doMessage = () => null, doTyping = () => null, topic_id, on
         media_urls: msg.medias.map(i => i.original_url),
         media_ids: msg.medias.map(i => i.model_id)
       })
+      doTyping({ topic_id, typing: false })
       setMsg(initMsg)
       await chatApi.postMessage({ msg: msg.msg, media_ids: msg.medias.map(i => i.model_id), topic_id })
       textAreaRef.current?.blur()
       onScrollBottom()
-      doTyping({ topic_id, typing: false })
     }
   }
   const handleKeyDown = (event: KeyboardEvent<HTMLTextAreaElement>) => {
