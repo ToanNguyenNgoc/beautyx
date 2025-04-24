@@ -32,4 +32,5 @@ export interface ParamsPostMessage {
   topic_id: string;
   reply_id?: string;
   media_ids?: number[] | string[];
+  media_urls?: number[] | string[];
 }

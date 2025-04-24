@@ -80,7 +80,7 @@
         "react-swipeable-list": "^1.5.1",
         "redux-toolkit": "^1.1.2",
         "slick-carousel": "^1.8.1",
-        "socket.io-client": "^4.6.0",
+        "socket.io-client": "^4.8.1",
         "swr": "^0.5.7",
         "typescript": "^4.7.4",
         "use-supercluster": "^0.4.0",
