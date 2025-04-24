@@ -60,7 +60,6 @@ export const MessengerChat: FC<MessengerChatProps> = memo(({ _id, topicProp, mor
   const [msges, setMsges] = useState<IMessage[]>([])
   const [isTyping, setIsTyping] = useState(false)
   //[] handle messages
-  useEffect(() => setMsges([]), [topic_id]);
   useEffect(() => {
     const onListener = async () => {
       await connect();
@@ -70,7 +69,7 @@ export const MessengerChat: FC<MessengerChatProps> = memo(({ _id, topicProp, mor
         }
       });
       onListenerTyping((data: TypingType) => {
-        if (data?.user && data.user.id !== user.id && data.topic === topic_id) {
+        if (data?.user && data.user.id !== user.id && data.topic_id === topic_id) {
           setIsTyping(data.typing)
         }
       })
@@ -78,7 +77,10 @@ export const MessengerChat: FC<MessengerChatProps> = memo(({ _id, topicProp, mor
     if (user && topic_ids.length > 0) {
       onListener()
     }
-  }, [user, topic_ids.length])
+    return ()=>{
+      setMsges([]);
+    }
+  }, [user, topic_ids.length, topic_id])
 
   return (
     <div className={style.container}>
