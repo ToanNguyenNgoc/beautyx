@@ -1,4 +1,4 @@
-import { useAuth, useDebounce ,useSwrInfinite } from "hooks";
+import { useAuth, useDebounce, useListenerRefresh, useSwrInfinite } from "hooks";
 import { ITopic } from "interface";
 import { paramsTopic } from "params-query";
 import { useContext, useState } from "react";
@@ -28,13 +28,18 @@ function Messenger() {
   }
 
   const topic_id = location.pathname.split("/")[2]
-  const { resData, onLoadMore, totalItem, isValidating } = useSwrInfinite({
+  const { resData, onLoadMore, totalItem, isValidating, revalidate } = useSwrInfinite({
     API_URL: "topics",
     enable: USER,
     params: Object.assign(query, { s: keyword }),
     dedupingInterval: 0
   })
-  const more = () => { if (resData.length < totalItem) { onLoadMore() } }
+  const more = () => { if (resData.length < totalItem) { onLoadMore() } };
+  useListenerRefresh({
+    onListenerMsg: (msg) => {
+      revalidate();
+    }
+  })
   return (
     <div className={style.container}>
       <div className={topic_id ? `${style.left} ${style.left_ch}` : style.left}>

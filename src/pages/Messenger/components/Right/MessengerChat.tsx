@@ -61,26 +61,30 @@ export const MessengerChat: FC<MessengerChatProps> = memo(({ _id, topicProp, mor
   const [isTyping, setIsTyping] = useState(false)
   //[] handle messages
   useEffect(() => {
+    let unsubscribeMessage: (() => void) | undefined;
+    let unsubscribeTyping: (() => void) | undefined;
     const onListener = async () => {
       await connect();
-      onListenerMessage((msg: IMessage) => {
-        if(topic_id === msg.topic_id){
-          setMsges(prev => [msg, ...prev])
+      unsubscribeMessage = onListenerMessage((msg: IMessage) => {
+        if (msg.topic_id === topic_id) {
+          setMsges(prev => [msg, ...prev]);
         }
       });
-      onListenerTyping((data: TypingType) => {
-        if (data?.user && data.user.id !== user.id && data.topic_id === topic_id) {
-          setIsTyping(data.typing)
+      unsubscribeTyping = onListenerTyping((data: TypingType) => {
+        if (data.topic_id === topic_id && data?.user?.id !== user?.id) {
+          setIsTyping(data.typing);
         }
-      })
+      });
+    };
+    if (user && topic_ids?.length > 0) {
+      onListener();
     }
-    if (user && topic_ids.length > 0) {
-      onListener()
-    }
-    return ()=>{
+    return () => {
       setMsges([]);
-    }
-  }, [user, topic_ids.length, topic_id])
+      unsubscribeMessage?.();
+      unsubscribeTyping?.();
+    };
+  }, [user, topic_ids?.length, topic_id]);
 
   return (
     <div className={style.container}>

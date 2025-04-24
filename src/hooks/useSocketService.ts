@@ -3,7 +3,7 @@ import { useEffect, useRef } from "react";
 import { useAuth } from "./useAuth";
 import { useGetAllTopic } from "./useGetAllTopic";
 import { io, Socket } from "socket.io-client";
-import { ParamsPostMessage } from "interface";
+import { IMessage, ParamsPostMessage } from "interface";
 
 const Events = {
   SUB: 'SUB',
@@ -16,7 +16,7 @@ export type DoTypingType = { typing: boolean, topic_id: string }
 export type TypingType = { topic_id: string, typing: boolean, user: any }
 
 export function useSocketService() {
-  const {USER:user} = useAuth();
+  const { USER: user } = useAuth();
   const { topic_ids, isValidating } = useGetAllTopic();
   const socketRef = useRef<Socket | null>(null);
   const connect = async () => {
@@ -24,7 +24,6 @@ export function useSocketService() {
     return new Promise<Socket>((resolve, reject) => {
       try {
         socketRef.current = io(String(process.env.REACT_APP_SOCKET_URL), {
-          // socketRef.current = io('ws://localhost:3004', {
           extraHeaders: {
             Authorization: `Bearer`,
           },
@@ -53,14 +52,23 @@ export function useSocketService() {
       connect()
   }, [user, isValidating, topic_ids.length])
 
+  const disconnect = () => {
+    if (socketRef.current) {
+      socketRef.current.disconnect();
+      socketRef.current = null;
+    }
+  };
+
 
   const onListenerMessage = (cb: (data: any) => void) => {
     if (!socketRef.current) return;
-    socketRef.current.on(Events.LISTENER_MSG, cb)
+    socketRef.current.on(Events.LISTENER_MSG, cb);
+    return () => socketRef.current?.off(Events.LISTENER_MSG, cb);
   }
   const onListenerTyping = (cb: (data: TypingType) => void) => {
     if (!socketRef.current) return;
-    socketRef.current.on(Events.TYPING, cb)
+    socketRef.current.on(Events.TYPING, cb);
+    return () => socketRef.current?.off(Events.TYPING, cb);
   }
   const doMessage = (data: ParamsPostMessage) => {
     if (!socketRef.current) return;
@@ -82,6 +90,52 @@ export function useSocketService() {
     doMessage,
     onListenerMessage,
     doTyping,
-    onListenerTyping
+    onListenerTyping,
+    disconnect
   }
+}
+
+type ListenerSocketGlobalOptions = {
+  onListenerMsg?: (msg: IMessage) => void;
+  dependencies?: any[]
+}
+export function useListenerSocketGlobal(options?: ListenerSocketGlobalOptions) {
+  const { user, topic_ids, connect, onListenerMessage } = useSocketService();
+  const dependencies = options?.dependencies || [];
+  useEffect(() => {
+    let unsubscribeMessage: (() => void) | undefined;
+    const onListener = async () => {
+      await connect();
+      unsubscribeMessage = onListenerMessage((msg: IMessage) => {
+        options?.onListenerMsg?.(msg);
+      });
+    };
+    if (user && topic_ids?.length > 0) {
+      onListener();
+    }
+    return () => {
+      unsubscribeMessage?.();
+    };
+  }, [user, topic_ids?.length, ...dependencies]);
+  return
+}
+
+export function useListenerRefresh(options?: ListenerSocketGlobalOptions) {
+  const { user, topic_ids, connect, onListenerMessage } = useSocketService();
+  useEffect(() => {
+    let unsubscribeMessage: (() => void) | undefined;
+    const onListener = async () => {
+      await connect();
+      unsubscribeMessage = onListenerMessage((msg: IMessage) => {
+        options?.onListenerMsg?.(msg);
+      });
+    };
+    if (user && topic_ids?.length > 0) {
+      onListener();
+    }
+    return () => {
+      unsubscribeMessage?.();
+    };
+  }, [user, topic_ids?.length]);
+  return
 }
