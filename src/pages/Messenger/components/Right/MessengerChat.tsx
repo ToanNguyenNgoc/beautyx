@@ -65,10 +65,12 @@ export const MessengerChat: FC<MessengerChatProps> = memo(({ _id, topicProp, mor
     const onListener = async () => {
       await connect();
       onListenerMessage((msg: IMessage) => {
-        setMsges(prev => [msg, ...prev])
+        if(topic_id === msg.topic_id){
+          setMsges(prev => [msg, ...prev])
+        }
       });
       onListenerTyping((data: TypingType) => {
-        if (data?.user && data.user.id !== user.id) {
+        if (data?.user && data.user.id !== user.id && data.topic === topic_id) {
           setIsTyping(data.typing)
         }
       })
