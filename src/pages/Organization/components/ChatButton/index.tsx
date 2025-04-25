@@ -37,9 +37,7 @@ export const ChatButton: FC<{ org?: IOrganization, customPosition?: boolean }> =
         org: org.id,
         group_name: org.name
       })
-      if (mb) return history.push({ pathname: `/messages/${res.context._id}`, state: res.context })
-      setTopic(res.context)
-      onToggleBox('show')
+      return history.push({ pathname: `/messages/${res.context._id}`, state: res.context })
     }
   }
   return (

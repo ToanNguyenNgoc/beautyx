@@ -1,4 +1,4 @@
-import { useAuth, useDebounce, useListenerRefresh, useSwrInfinite } from "hooks";
+import { useAuth, useDebounce, useGetMessageChatGlobal, useSwrInfinite } from "hooks";
 import { ITopic } from "interface";
 import { paramsTopic } from "params-query";
 import { useContext, useState } from "react";
@@ -35,10 +35,8 @@ function Messenger() {
     dedupingInterval: 0
   })
   const more = () => { if (resData.length < totalItem) { onLoadMore() } };
-  useListenerRefresh({
-    onListenerMsg: (msg) => {
-      revalidate();
-    }
+  useGetMessageChatGlobal({
+    onListenerMsg:(msg)=> revalidate(),
   })
   return (
     <div className={style.container}>

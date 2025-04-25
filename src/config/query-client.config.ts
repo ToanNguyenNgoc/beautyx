@@ -30,5 +30,6 @@ export const QR_KEY = {
   ORDER_ALL: 'ORDER_ALL',
   ORDER_PAID: 'ORDER_PAID',
   ORDER_COUNT: 'ORDER_COUNT',
-  TIP: 'TIP'
+  TIP: 'TIP',
+  TOPIC:'TOPIC'
 }

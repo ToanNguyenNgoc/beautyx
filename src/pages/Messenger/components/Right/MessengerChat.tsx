@@ -5,11 +5,9 @@ import style from "./right.module.css"
 import { XButton, XButtonFile } from "components/Layout"
 import icon from "constants/icon"
 import { checkMediaType, formatDateFromNow, linkify, onErrorAvatar, unique, uniqueArr } from "utils"
-import { DoTypingType, TypingType, useAuth, useElementOnScreen, usePostMedia, useSocketService, useSwr, useSwrInfinite } from "hooks"
+import { DoTypingType, TypingType, useAuth, useElementOnScreen, useGetTopicDetail, usePostMedia, useSocketService, useSwrInfinite } from "hooks"
 import InfiniteScroll from "react-infinite-scroll-component"
 import { useEffect, useRef, useState, KeyboardEvent, FC, ChangeEvent, memo } from "react"
-import API_ROUTE from "api/_api"
-import { CACHE_TIME } from "common"
 import { chatApi } from "api"
 import { Avatar, CircularProgress, Tooltip } from "@mui/material"
 
@@ -24,7 +22,7 @@ export const MessengerChat: FC<MessengerChatProps> = memo(({ _id, topicProp, mor
   const location = useLocation()
   const history = useHistory()
   const topic_id = _id || location.pathname.split("/")[2]
-  const topic: ITopic | undefined = topicProp || location.state
+  const {topic} = useGetTopicDetail(topic_id);
   const botRef = useRef<HTMLDivElement>(null)
 
   const { topic_ids, connect, doMessage, onListenerMessage, doTyping, onListenerTyping } = useSocketService();
@@ -34,11 +32,6 @@ export const MessengerChat: FC<MessengerChatProps> = memo(({ _id, topicProp, mor
       botRef.current.scrollIntoView({ behavior: "smooth" })
     }
   }
-  const { response: org } = useSwr({
-    API_URL: API_ROUTE.ORG(topic?.organization_id ?? 0),
-    enable: topic?.organization_id,
-    dedupingInterval: CACHE_TIME
-  })
   const users_name = unique(topic?.topic_user?.map(i => i.user?.fullname) ?? [])
   let name = topic?.name
   if (topic?.name?.trim().length === 0 || !topic?.name) {
@@ -76,7 +69,7 @@ export const MessengerChat: FC<MessengerChatProps> = memo(({ _id, topicProp, mor
         }
       });
     };
-    if (user && topic_ids?.length > 0) {
+    if (user && topic_id) {
       onListener();
     }
     return () => {
@@ -133,14 +126,14 @@ export const MessengerChat: FC<MessengerChatProps> = memo(({ _id, topicProp, mor
               <div key={index} className={style.message}>
                 <Message
                   item={item}
-                  change={item.user_id === user.id}
+                  change={item.user_id === user?.id}
                   topicProp={topicProp}
                   nameUser={name}
                 />
               </div>
             ))}
           {
-            msges.length > 0 ?
+            (msges.length === 0 && resData.length === 0) ?
               <div className={style.message_default}>
                 <div className={style.message_info_MC}>
                   <Avatar sx={{ width: 80, height: 80 }} src={topic?.organization?.image_url} />
@@ -186,7 +179,7 @@ export const MessengerChat: FC<MessengerChatProps> = memo(({ _id, topicProp, mor
         topic_id={topic_id}
         onScrollBottom={onScrollBottom}
         isInScreen={isInScreen}
-        org={org}
+        org={topic?.organization}
         moreBtn={moreBtn}
       />
     </div>
@@ -303,7 +296,8 @@ const InputChat = ({ doMessage = () => null, doTyping = () => null, topic_id, on
         topic_id,
         reply_id: undefined,
         media_urls: msg.medias.map(i => i.original_url),
-        media_ids: msg.medias.map(i => i.model_id)
+        media_ids: msg.medias.map(i => i.model_id),
+        org_id: org?.id
       })
       doTyping({ topic_id, typing: false })
       setMsg(initMsg)

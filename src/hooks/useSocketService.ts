@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useAuth } from "./useAuth";
 import { useGetAllTopic } from "./useGetAllTopic";
 import { io, Socket } from "socket.io-client";
@@ -7,6 +7,7 @@ import { IMessage, ParamsPostMessage } from "interface";
 
 const Events = {
   SUB: 'SUB',
+  SUB_TOPIC: 'SUB_TOPIC',
   SEND_MSG: 'SEND_MSG',
   LISTENER_MSG: 'LISTENER_MSG',
   TYPING: 'TYPING'
@@ -24,6 +25,7 @@ export function useSocketService() {
     return new Promise<Socket>((resolve, reject) => {
       try {
         socketRef.current = io(String(process.env.REACT_APP_SOCKET_URL), {
+        // socketRef.current = io('http://localhost:3004', {
           extraHeaders: {
             Authorization: `Bearer`,
           },
@@ -48,9 +50,16 @@ export function useSocketService() {
     });
   };
   useEffect(() => {
-    if (user && !isValidating && topic_ids.length > 0)
+    if (user && !isValidating) {
       connect()
+    }
   }, [user, isValidating, topic_ids.length])
+  //
+  useEffect(() => {
+    if (socketRef.current && socketRef.current.connected) {
+      socketRef.current.emit(Events.SUB, { user, topic_ids });
+    }
+  }, [topic_ids]);
 
   const disconnect = () => {
     if (socketRef.current) {
@@ -70,11 +79,16 @@ export function useSocketService() {
     socketRef.current.on(Events.TYPING, cb);
     return () => socketRef.current?.off(Events.TYPING, cb);
   }
+  //
+  const doSubscribeTopic = (topic_id: string) => {
+    if (!socketRef.current) return;
+    socketRef.current.emit(Events.SUB_TOPIC, { user, topic_id });
+  }
   const doMessage = (data: ParamsPostMessage) => {
     if (!socketRef.current) return;
     socketRef.current.emit(Events.SEND_MSG, {
       user,
-      message: { msg: data.msg, topic_id: data.topic_id, media_ids: data.media_ids, media_urls: data.media_urls }
+      message: { msg: data.msg, topic_id: data.topic_id, media_ids: data.media_ids, media_urls: data.media_urls, org_id: data.org_id }
     });
   };
   const doTyping = (data: DoTypingType) => {
@@ -89,53 +103,38 @@ export function useSocketService() {
     connect,
     doMessage,
     onListenerMessage,
+    doSubscribeTopic,
     doTyping,
     onListenerTyping,
     disconnect
   }
 }
 
-type ListenerSocketGlobalOptions = {
+type GetMessageChatGlobalOptions = {
   onListenerMsg?: (msg: IMessage) => void;
-  dependencies?: any[]
 }
-export function useListenerSocketGlobal(options?: ListenerSocketGlobalOptions) {
-  const { user, topic_ids, connect, onListenerMessage } = useSocketService();
-  const dependencies = options?.dependencies || [];
+export function useGetMessageChatGlobal(options?: GetMessageChatGlobalOptions) {
+  const [message, setMessage] = useState<IMessage>();
+  const { user, topic_ids, connect, onListenerMessage, disconnect } = useSocketService();
   useEffect(() => {
     let unsubscribeMessage: (() => void) | undefined;
     const onListener = async () => {
       await connect();
       unsubscribeMessage = onListenerMessage((msg: IMessage) => {
         options?.onListenerMsg?.(msg);
+        setMessage(msg);
       });
     };
-    if (user && topic_ids?.length > 0) {
+    if (user?.id && topic_ids?.length > 0) {
       onListener();
     }
     return () => {
       unsubscribeMessage?.();
     };
-  }, [user, topic_ids?.length, ...dependencies]);
-  return
-}
-
-export function useListenerRefresh(options?: ListenerSocketGlobalOptions) {
-  const { user, topic_ids, connect, onListenerMessage } = useSocketService();
-  useEffect(() => {
-    let unsubscribeMessage: (() => void) | undefined;
-    const onListener = async () => {
-      await connect();
-      unsubscribeMessage = onListenerMessage((msg: IMessage) => {
-        options?.onListenerMsg?.(msg);
-      });
-    };
-    if (user && topic_ids?.length > 0) {
-      onListener();
-    }
-    return () => {
-      unsubscribeMessage?.();
-    };
-  }, [user, topic_ids?.length]);
-  return
+  }, [user?.id, topic_ids?.length]);
+  return {
+    disconnect,
+    message,
+    setMessage
+  }
 }
