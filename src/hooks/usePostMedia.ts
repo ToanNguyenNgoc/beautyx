@@ -44,7 +44,7 @@ export function usePostMedia() {
           let res: any
           res = await mediaApi.postMedia(formData).then(res => res.data.context)
           if (res) {
-            resMedia = { ...resMedia, model_id: res.model_id }
+            resMedia = { ...resMedia, model_id: res.model_id, original_url: res.original_url }
           }
           mediaList.push(resMedia)
         }

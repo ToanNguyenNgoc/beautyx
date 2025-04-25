@@ -276,7 +276,7 @@ const initMsg = {
   medias: []
 }
 const InputChat = ({ doMessage = () => null, doTyping = () => null, topic_id, onScrollBottom, isInScreen, org, moreBtn }: InputProps) => {
-  const { handlePostMedia } = usePostMedia()
+  const { handlePostMedia, isLoading:isLoadingMedia } = usePostMedia()
   const [msg, setMsg] = useState<IMessage>(initMsg)
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
   const resizeTextArea = () => {
@@ -290,6 +290,7 @@ const InputChat = ({ doMessage = () => null, doTyping = () => null, topic_id, on
   };
   useEffect(resizeTextArea, [msg]);
   const onSubmit = async () => {
+    if(isLoadingMedia) return; 
     if (msg.msg.trim().length > 0 || msg.medias.length > 0) {
       doMessage({
         ...msg,
