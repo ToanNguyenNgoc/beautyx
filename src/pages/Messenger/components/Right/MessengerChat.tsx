@@ -69,7 +69,7 @@ export const MessengerChat: FC<MessengerChatProps> = memo(({ _id, topicProp, mor
         }
       });
     };
-    if (user && topic_id) {
+    if (user?.id && topic_id) {
       onListener();
     }
     return () => {
@@ -77,7 +77,7 @@ export const MessengerChat: FC<MessengerChatProps> = memo(({ _id, topicProp, mor
       unsubscribeMessage?.();
       unsubscribeTyping?.();
     };
-  }, [user, topic_ids?.length, topic_id]);
+  }, [user?.id, topic_ids?.length, topic_id]);
 
   return (
     <div className={style.container}>

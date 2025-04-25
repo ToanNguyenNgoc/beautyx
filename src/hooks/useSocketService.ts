@@ -50,10 +50,10 @@ export function useSocketService() {
     });
   };
   useEffect(() => {
-    if (user && !isValidating) {
+    if (user?.id && !isValidating) {
       connect()
     }
-  }, [user, isValidating, topic_ids.length])
+  }, [user?.id, isValidating, topic_ids.length])
   //
   useEffect(() => {
     if (socketRef.current && socketRef.current.connected) {
