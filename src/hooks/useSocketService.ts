@@ -99,7 +99,7 @@ export function useSocketService() {
     })
   }
   return {
-    user, topic_ids,
+    user, topic_ids, isValidating,
     connect,
     doMessage,
     onListenerMessage,
@@ -115,7 +115,7 @@ type GetMessageChatGlobalOptions = {
 }
 export function useGetMessageChatGlobal(options?: GetMessageChatGlobalOptions) {
   const [message, setMessage] = useState<IMessage>();
-  const { user, connect, onListenerMessage, disconnect } = useSocketService();
+  const { user, connect, onListenerMessage, disconnect, topic_ids, isValidating } = useSocketService();
   useEffect(() => {
     let unsubscribeMessage: (() => void) | undefined;
     const onListener = async () => {
@@ -125,13 +125,13 @@ export function useGetMessageChatGlobal(options?: GetMessageChatGlobalOptions) {
         setMessage(msg);
       });
     };
-    if (user?.id) {
+    if (user?.id && !isValidating) {
       onListener();
     }
     return () => {
       unsubscribeMessage?.();
     };
-  }, [user?.id]);
+  }, [user?.id, topic_ids.length, isValidating]);
   return {
     disconnect,
     message,
