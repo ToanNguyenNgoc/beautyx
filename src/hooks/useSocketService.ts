@@ -25,7 +25,7 @@ export function useSocketService() {
     return new Promise<Socket>((resolve, reject) => {
       try {
         socketRef.current = io(String(process.env.REACT_APP_SOCKET_URL), {
-        // socketRef.current = io('http://localhost:3004', {
+          // socketRef.current = io('http://localhost:3004', {
           extraHeaders: {
             Authorization: `Bearer`,
           },
@@ -115,7 +115,7 @@ type GetMessageChatGlobalOptions = {
 }
 export function useGetMessageChatGlobal(options?: GetMessageChatGlobalOptions) {
   const [message, setMessage] = useState<IMessage>();
-  const { user, topic_ids, connect, onListenerMessage, disconnect } = useSocketService();
+  const { user, connect, onListenerMessage, disconnect } = useSocketService();
   useEffect(() => {
     let unsubscribeMessage: (() => void) | undefined;
     const onListener = async () => {
@@ -125,13 +125,13 @@ export function useGetMessageChatGlobal(options?: GetMessageChatGlobalOptions) {
         setMessage(msg);
       });
     };
-    if (user?.id && topic_ids?.length > 0) {
+    if (user?.id) {
       onListener();
     }
     return () => {
       unsubscribeMessage?.();
     };
-  }, [user?.id, topic_ids?.length]);
+  }, [user?.id]);
   return {
     disconnect,
     message,
