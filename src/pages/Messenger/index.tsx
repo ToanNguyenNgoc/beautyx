@@ -1,4 +1,4 @@
-import { useAuth, useDebounce, useGetMessageChatGlobal, useSwrInfinite } from "hooks";
+import { useAuth, useDebounce, useSwrInfinite } from "hooks";
 import { ITopic } from "interface";
 import { paramsTopic } from "params-query";
 import { useContext, useState } from "react";
@@ -10,7 +10,7 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import { formatDateFromNow, onErrorAvatar, unique } from "utils";
 import AuthRoute from "route/AuthRoute";
 import { EmptyRes } from "components/Layout";
-import { AppContext, AppContextType } from "context";
+import { AppContext, AppContextType, useMessengerProvider } from "context";
 import { MessengerChat } from "./components/Right/MessengerChat";
 
 function Messenger() {
@@ -35,9 +35,11 @@ function Messenger() {
     dedupingInterval: 0
   })
   const more = () => { if (resData.length < totalItem) { onLoadMore() } };
-  useGetMessageChatGlobal({
-    onListenerMsg:(msg)=> revalidate(),
+  
+  useMessengerProvider({
+    onListenerMsg:(msg) => revalidate(),
   })
+
   return (
     <div className={style.container}>
       <div className={topic_id ? `${style.left} ${style.left_ch}` : style.left}>

@@ -86,6 +86,18 @@ function Footer() {
           type: "URL",
           url: "/",
         },
+        {
+          id: 19,
+          title: `Tiếp nhận phản ánh của Tổ chức xã hội`,
+          type: "URL",
+          url: "/",
+        },
+        {
+          id: 20,
+          title: `Danh sách phản ánh của Tổ chức xã hội`,
+          type: "URL",
+          url: "/",
+        },
       ],
     },
     {
@@ -555,7 +567,8 @@ function Footer() {
             window.open(`${url_map}`, "_blank", "noopener,noreferrer")
           }
         >
-          {t("footer.address_company")}
+          {t("footer.address_company")} <br/>
+          {t("footer.address_company_2")}
         </div>
         <div className="footer-copy-right">{t("footer.policy")}</div>
         <div className="footer-copy-right">

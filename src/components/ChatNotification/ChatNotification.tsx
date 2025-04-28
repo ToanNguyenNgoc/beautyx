@@ -1,18 +1,17 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { Popup } from "components/Notification";
-import { useGetMessageChatGlobal } from "hooks";
+import { useMessengerProvider } from "context";
 import { memo, useEffect } from "react";
 import { useHistory, useLocation } from "react-router-dom";
 
 export const ChatNotification = memo(() => {
   const location = useLocation();
   const history = useHistory();
-  const { message, setMessage, disconnect } = useGetMessageChatGlobal();
+  const { message, onDeleteMessage, disconnect } = useMessengerProvider();
   useEffect(() => {
     const isExcludedPath = location.pathname.includes('messages') || location.pathname.includes('cua-hang');
-
     if (!message || isExcludedPath) {
-      if (message) setMessage(undefined);
+      if (message) onDeleteMessage();
       return;
     }
     Popup.open({
@@ -24,13 +23,13 @@ export const ChatNotification = memo(() => {
       `,
       onClick: () => {
         history.push(`/messages/${message.topic_id}`);
-        setMessage(undefined);
+        onDeleteMessage();
       },
-      onClose: () => setMessage(undefined)
+      onClose: () => onDeleteMessage()
     });
 
     return () => {
-      setMessage(undefined);
+      onDeleteMessage();
       disconnect();
     };
   }, [location.pathname, message]);

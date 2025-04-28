@@ -6,12 +6,12 @@ class Media {
         return axiosClient.post(url, formData, {
             headers: { 'Content-Type': 'multipart/form-data' },
             onUploadProgress: (progressEvent) => {
-                const progress = (progressEvent.loaded / (progressEvent.total || 1)) * 50;
-                console.log(10, progressEvent);
+                // const progress = (progressEvent.loaded / (progressEvent.total || 1)) * 50;
+                // console.log(10, progressEvent);
             },
             onDownloadProgress: (progressEvent) => {
-                const progress = 50 + (progressEvent.loaded / (progressEvent.total || 1)) * 50;
-                console.log(16, progress);
+                // const progress = 50 + (progressEvent.loaded / (progressEvent.total || 1)) * 50;
+                // console.log(16, progress);
             },
         })
     }

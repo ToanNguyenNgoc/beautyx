@@ -4,12 +4,14 @@ import { IMessage, ITopic, ParamsPostMessage } from "interface"
 import style from "./right.module.css"
 import { XButton, XButtonFile } from "components/Layout"
 import icon from "constants/icon"
-import { checkMediaType, formatDateFromNow, linkify, onErrorAvatar, unique, uniqueArr } from "utils"
-import { DoTypingType, TypingType, useAuth, useElementOnScreen, useGetTopicDetail, usePostMedia, useSocketService, useSwrInfinite } from "hooks"
+import { acceptImageVideo, checkMediaType, formatDateFromNow, linkify, onErrorAvatar, unique, uniqueArr } from "utils"
+import { useAuth, useElementOnScreen, useGetTopicDetail, usePostMedia, useSwrInfinite } from "hooks"
 import InfiniteScroll from "react-infinite-scroll-component"
 import { useEffect, useRef, useState, KeyboardEvent, FC, ChangeEvent, memo } from "react"
 import { chatApi } from "api"
 import { Avatar, CircularProgress, Tooltip } from "@mui/material"
+import { DoTypingType, TypingType, useMessengerProvider } from "context"
+import { RenderMedia } from "components"
 
 interface MessengerChatProps {
   _id?: string;
@@ -22,10 +24,9 @@ export const MessengerChat: FC<MessengerChatProps> = memo(({ _id, topicProp, mor
   const location = useLocation()
   const history = useHistory()
   const topic_id = _id || location.pathname.split("/")[2]
-  const {topic} = useGetTopicDetail(topic_id);
+  const { topic } = useGetTopicDetail(topic_id);
   const botRef = useRef<HTMLDivElement>(null)
-
-  const { topic_ids, connect, doMessage, onListenerMessage, doTyping, onListenerTyping } = useSocketService();
+  const { isConnected, onListenerMessage, onListenerTyping, doMessage, doTyping } = useMessengerProvider();
 
   const onScrollBottom = () => {
     if (botRef.current) {
@@ -33,10 +34,7 @@ export const MessengerChat: FC<MessengerChatProps> = memo(({ _id, topicProp, mor
     }
   }
   const users_name = unique(topic?.topic_user?.map(i => i.user?.fullname) ?? [])
-  let name = topic?.name
-  if (topic?.name?.trim().length === 0 || !topic?.name) {
-    name = users_name.join(", ")
-  }
+  let name = topic?.name || topic?.organization?.name;
   const { resData, onLoadMore, totalItem } = useSwrInfinite({
     API_URL: "messages",
     enable: user && topic_id,
@@ -57,7 +55,6 @@ export const MessengerChat: FC<MessengerChatProps> = memo(({ _id, topicProp, mor
     let unsubscribeMessage: (() => void) | undefined;
     let unsubscribeTyping: (() => void) | undefined;
     const onListener = async () => {
-      await connect();
       unsubscribeMessage = onListenerMessage((msg: IMessage) => {
         if (msg.topic_id === topic_id) {
           setMsges(prev => [msg, ...prev]);
@@ -69,7 +66,7 @@ export const MessengerChat: FC<MessengerChatProps> = memo(({ _id, topicProp, mor
         }
       });
     };
-    if (user?.id && topic_id) {
+    if (isConnected && topic_id) {
       onListener();
     }
     return () => {
@@ -77,7 +74,7 @@ export const MessengerChat: FC<MessengerChatProps> = memo(({ _id, topicProp, mor
       unsubscribeMessage?.();
       unsubscribeTyping?.();
     };
-  }, [user?.id, topic_ids?.length, topic_id]);
+  }, [isConnected, topic_id]);
 
   return (
     <div className={style.container}>
@@ -201,7 +198,7 @@ const Message = ({ item, change = false, topicProp, nameUser }: { item: IMessage
                 alt=""
               />
             </div>
-            <span className={style.user_name}>{nameUser}</span>
+            <span className={style.user_name}>{item.user?.fullname}</span>
           </>
         )}
         <span className={style.create}>
@@ -276,7 +273,7 @@ const initMsg = {
   medias: []
 }
 const InputChat = ({ doMessage = () => null, doTyping = () => null, topic_id, onScrollBottom, isInScreen, org, moreBtn }: InputProps) => {
-  const { handlePostMedia, isLoading:isLoadingMedia } = usePostMedia()
+  const { handlePostMedia, isLoading: isLoadingMedia } = usePostMedia()
   const [msg, setMsg] = useState<IMessage>(initMsg)
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
   const resizeTextArea = () => {
@@ -290,7 +287,7 @@ const InputChat = ({ doMessage = () => null, doTyping = () => null, topic_id, on
   };
   useEffect(resizeTextArea, [msg]);
   const onSubmit = async () => {
-    if(isLoadingMedia) return; 
+    if (isLoadingMedia) return;
     if (msg.msg.trim().length > 0 || msg.medias.length > 0) {
       doMessage({
         ...msg,
@@ -316,8 +313,20 @@ const InputChat = ({ doMessage = () => null, doTyping = () => null, topic_id, on
   const onChangeMedia = (e: ChangeEvent<HTMLInputElement>) => {
     handlePostMedia({
       e,
-      callBack: (data) => setMsg({ ...msg, medias: data })
+      callBack: (data) => setMsg({ ...msg, medias: [...data, ...msg.medias] })
     })
+  }
+  const onPaste = (e: any) => {
+    const items = e.clipboardData.items;
+    for (let item of items) {
+      if (item.type.startsWith("image") || item.type.startsWith("video")) {
+        const files: any = [item.getAsFile()];
+        handlePostMedia({
+          files,
+          callBack: (data) => setMsg({ ...msg, medias: [...data, ...msg.medias] })
+        })
+      }
+    }
   }
   return (
     <div className={style.input_cnt}>
@@ -331,7 +340,7 @@ const InputChat = ({ doMessage = () => null, doTyping = () => null, topic_id, on
           {
             msg.medias?.map(img => (
               <div key={img.original_url} className={style.input_img_item_cnt}>
-                <img className={style.img_item} src={img.original_url} alt="" />
+                <RenderMedia fileUrl={img.original_url} modelType={img.model_type} />
                 {
                   img.model_id > 0 ?
                     <XButton
@@ -354,6 +363,7 @@ const InputChat = ({ doMessage = () => null, doTyping = () => null, topic_id, on
             <XButtonFile
               onChange={onChangeMedia} multiple iconSize={16}
               icon={icon.imageWhite} className={style.ip_ctl_btn}
+              accept={acceptImageVideo}
             />
           }
         </div>
@@ -365,6 +375,7 @@ const InputChat = ({ doMessage = () => null, doTyping = () => null, topic_id, on
             placeholder="Aa"
             rows={1}
             className={style.text_area}
+            onPaste={onPaste}
             onKeyDown={handleKeyDown}
             onFocus={() => doTyping({ topic_id, typing: true })}
             onBlur={() => doTyping({ topic_id, typing: false })}
