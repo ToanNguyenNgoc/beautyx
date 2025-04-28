@@ -8,7 +8,9 @@ export const searchApi = createApi({
     baseQuery: fetchBaseQuery({
         baseUrl: API_3RD.API_NODE,
         prepareHeaders(headers, api) {
-            headers.set('Authorization', `Bearer ${token}`)
+            if(token){
+                headers.set('Authorization', `Bearer ${token}`)
+            }
             return headers
         },
     }),

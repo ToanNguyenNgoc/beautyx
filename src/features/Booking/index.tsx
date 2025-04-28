@@ -20,7 +20,7 @@ import apointmentApi from "api/apointmentApi";
 import { Container } from "@mui/material";
 import { onClearApplyVoucher } from "redux/cart";
 import { IDiscountPar } from "interface/discount";
-import { XButton } from "components/Layout";
+import { CancelPrevOrder, XButton } from "components/Layout";
 import { PopupNotification } from "components/Notification";
 import { checkPhoneValid } from "utils/phoneUpdate";
 import UserPaymentInfo from "pages/Account/components/UserPaymentInfo";
@@ -182,7 +182,7 @@ function Booking() {
       params.payment_method_id = BTX.id
     }
     firstLoad()
-    await orderApi.onCancelPrevOrder() //Cancel all order in 'PENDING' status for voucher use
+    // await orderApi.onCancelPrevOrder() //Cancel all order in 'PENDING' status for voucher use
     try {
       //tracking.PAY_CONFIRM_CLICK(org?.id, formatProductList(params.products))
       const response = await order.postOrder(org?.id, params);
@@ -276,6 +276,7 @@ function Booking() {
   };
   return (
     <>
+      <CancelPrevOrder />
       <HeadTitle title={t('Header.booking')} />
       {IS_MB && <HeadMobile
         onBack={() => {

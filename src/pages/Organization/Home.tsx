@@ -1,21 +1,21 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { Container } from "@mui/material";
-import {Banner, Deal, Header, Loading, More, ServiceSection, Tab, About, ChatButton} from "./components";
-import { useContext, useRef } from "react";
+import { Banner, Deal, Header, Loading, More, ServiceSection, Tab, About, ChatButton } from "./components";
+import { Fragment, useContext, useRef } from "react";
 import { OrgContext, OrgContextType } from "context";
 import style from "./organization.module.css";
-import { BackTopButton } from "components/Layout";
+import { BackTopButton, OrgOffLayout } from "components/Layout";
 import { useAuth, useDeviceMobile } from "hooks";
 import { usePostAnalytics } from "pages/Organization/hooks";
 
 function Home() {
-  const { load } = useContext(OrgContext) as OrgContextType;
+  const { load, org } = useContext(OrgContext) as OrgContextType;
   const IS_MB = useDeviceMobile();
   const { USER } = useAuth();
   return (
     <div className={style.wrapper}>
       <div className={style.container}>
-        {load ? (
+        {(load) ? (
           <Container>
             {" "}
             <Loading />
@@ -23,13 +23,20 @@ function Home() {
         ) : (
           <>
             {IS_MB && <Header />}
-            <Container>
-              <Banner />
-            </Container>
-            <Body />
-            <More />
-            {!IS_MB && <BackTopButton />}
-            {USER && <ChatButton />}
+            {
+              org.is_momo_ecommerce_enable ?
+                <Fragment>
+                  <Container>
+                    <Banner />
+                  </Container>
+                  <Body />
+                  <More />
+                  {!IS_MB && <BackTopButton />}
+                  {USER && <ChatButton />}
+                </Fragment>
+                :
+                <OrgOffLayout />
+            }
           </>
         )}
       </div>
@@ -71,9 +78,14 @@ const Body = () => {
             </div>
           </>
         )}
-        <div ref={refDetail} className={style.body_section}>
-          <About />
-        </div>
+        {
+          org?.is_momo_ecommerce_enable ?
+            <div ref={refDetail} className={style.body_section}>
+              <About />
+            </div>
+            :
+            null
+        }
       </div>
     </>
   );

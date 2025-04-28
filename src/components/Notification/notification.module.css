@@ -36,6 +36,7 @@
     padding: 12px;
     display: flex;
     justify-content: flex-end;
+    cursor: pointer;
 }
 
 .message_container {
@@ -48,6 +49,7 @@
     padding: 8px;
     display: flex;
     justify-content: space-between;
+    box-shadow: var(--box-shadow);
 }
 
 .message_left {
@@ -76,7 +78,7 @@
 
 .message_right_content {
     font-size: 14px;
-    font-weight: 700;
+    font-weight: 600;
 }
 
 .message_right_bot {

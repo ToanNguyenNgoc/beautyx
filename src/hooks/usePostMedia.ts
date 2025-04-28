@@ -9,7 +9,8 @@ export type Media = {
 }
 
 type PostType = {
-  e: ChangeEvent<HTMLInputElement>,
+  e?: ChangeEvent<HTMLInputElement>,
+  files?: FileList,
   callBack?: (data: Media[]) => void,
   onError?: (error: AxiosError) => void
 }
@@ -17,34 +18,35 @@ type PostType = {
 export function usePostMedia() {
   const [medias, setMedias] = useState<Media[]>([])
   const [isLoading, setIsLoading] = useState(false)
-  const handlePostMedia = async ({ e, callBack, onError }: PostType) => {
-    if (e.target.files) {
+  const handlePostMedia = async ({ e, files, callBack, onError }: PostType) => {
+    const dataFiles = e?.target?.files || files || []
+    if (dataFiles) {
       setIsLoading(true)
       let tempImages: Media[] = []
-      for (var j = 0; j < e.target.files?.length; j++) {
+      for (var j = 0; j < dataFiles?.length; j++) {
         const item = {
           model_id: -j,
-          original_url: URL.createObjectURL(e.target.files[j]),
-          model_type: e.target.files[j].type
+          original_url: URL.createObjectURL(dataFiles[j]),
+          model_type: dataFiles[j].type
         }
         tempImages.push(item)
       }
       if (callBack) { callBack(tempImages) }
       try {
         const mediaList: Media[] = []
-        for (var i = 0; i < e.target.files?.length; i++) {
-          const fileItem = e.target.files[i]
+        for (var i = 0; i < dataFiles?.length; i++) {
+          const fileItem = dataFiles[i]
           let formData = new FormData()
           let resMedia = {
             original_url: URL.createObjectURL(fileItem),
             model_id: i,
-            model_type: e.target.files[i].type
+            model_type: dataFiles[i].type
           }
           formData.append('file', fileItem)
           let res: any
           res = await mediaApi.postMedia(formData).then(res => res.data.context)
           if (res) {
-            resMedia = { ...resMedia, model_id: res.model_id }
+            resMedia = { ...resMedia, model_id: res.model_id, original_url: res.original_url }
           }
           mediaList.push(resMedia)
         }

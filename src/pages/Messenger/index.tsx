@@ -3,14 +3,15 @@ import { ITopic } from "interface";
 import { paramsTopic } from "params-query";
 import { useContext, useState } from "react";
 import { Link, Route, Switch, useLocation } from "react-router-dom";
-import { Loader, Right } from "./components"
+import { Loader } from "./components"
 import style from "./message.module.css"
 import icon from "constants/icon";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { formatDateFromNow, onErrorAvatar, unique } from "utils";
 import AuthRoute from "route/AuthRoute";
 import { EmptyRes } from "components/Layout";
-import { AppContext, AppContextType } from "context";
+import { AppContext, AppContextType, useMessengerProvider } from "context";
+import { MessengerChat } from "./components/Right/MessengerChat";
 
 function Messenger() {
   const { t } = useContext(AppContext) as AppContextType
@@ -27,13 +28,18 @@ function Messenger() {
   }
 
   const topic_id = location.pathname.split("/")[2]
-  const { resData, onLoadMore, totalItem, isValidating } = useSwrInfinite({
+  const { resData, onLoadMore, totalItem, isValidating, revalidate } = useSwrInfinite({
     API_URL: "topics",
     enable: USER,
     params: Object.assign(query, { s: keyword }),
     dedupingInterval: 0
   })
-  const more = () => { if (resData.length < totalItem) { onLoadMore() } }
+  const more = () => { if (resData.length < totalItem) { onLoadMore() } };
+  
+  useMessengerProvider({
+    onListenerMsg:(msg) => revalidate(),
+  })
+
   return (
     <div className={style.container}>
       <div className={topic_id ? `${style.left} ${style.left_ch}` : style.left}>
@@ -75,7 +81,7 @@ function Messenger() {
               style={{ backgroundColor: 'var(--white)' }}
               className={topic_id ? `${style.right} ${style.right_ch}` : style.right}
             >
-              <Right />
+              <MessengerChat />
             </div>
           </Route>
         </AuthRoute>

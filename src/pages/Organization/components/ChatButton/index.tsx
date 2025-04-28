@@ -5,10 +5,10 @@ import Lottie from "lottie-react";
 import anmChat from "assets/anmChat.json"
 import { MessengerContext, MessengerCtxType, OrgContext, OrgContextType } from "context";
 import { chatApi } from "api";
-import { Right } from "pages/Messenger/components";
 import { IOrganization, ITopic } from "interface";
 import { useDeviceMobile } from "hooks";
 import { useHistory } from "react-router-dom";
+import { MessengerChat } from "pages/Messenger/components/Right/MessengerChat";
 
 export const ChatButton: FC<{ org?: IOrganization, customPosition?: boolean }> = (props) => {
   const { customPosition = true } = props;
@@ -37,9 +37,7 @@ export const ChatButton: FC<{ org?: IOrganization, customPosition?: boolean }> =
         org: org.id,
         group_name: org.name
       })
-      if (mb) return history.push({ pathname: `/messages/${res.context._id}`, state: res.context })
-      setTopic(res.context)
-      onToggleBox('show')
+      return history.push({ pathname: `/messages/${res.context._id}`, state: res.context })
     }
   }
   return (
@@ -55,7 +53,7 @@ export const ChatButton: FC<{ org?: IOrganization, customPosition?: boolean }> =
           <Lottie animationData={anmChat} />
         </XButton>
         <div ref={refBox} className={style.chat_box}>
-          {topic && <Right _id={topic._id} topicProp={topic} moreBtn={!mb} />}
+          {topic && <MessengerChat _id={topic._id} topicProp={topic} moreBtn={!mb} />}
         </div>
       </div>
     </div>

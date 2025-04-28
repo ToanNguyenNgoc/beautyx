@@ -135,7 +135,9 @@
         "location_": "địa điểm",
         "services": "dịch vụ",
         "congratulations": "Chúc mừng",
-        "new_member": "vừa trở thành thành viên BeautyX!"
+        "new_member": "vừa trở thành thành viên BeautyX!",
+        "org_notfound":"oops! Không tìm thấy thông tin doanh nghiệp",
+        "continue_use_app":"Tiếp tục khám phá dịch vụ làm đẹp"
     },
     "Search_result": {
         "text_result": "kết quả tìm kiếm",
@@ -614,7 +616,7 @@
         "return_and_refund": " Trả hàng và hoàn tiền",
         "protect_the_interests_of_customers": "Bảo vệ quyền lợi khách hàng",
         "myspa_company": "Về BeautyX ",
-        "operating_regulations": "Quy định hoạt động",
+        "operating_regulations": "Quy chế hoạt động",
         "general_rules": "Quy định chung",
         "commodity_trading_regulations": "Quy định giao dịch hàng hóa",
         "payment_process": "Quy trình thanh toán",
@@ -625,7 +627,8 @@
         "beautyx_is_on": "BeautyX đã có mặt trên",
         "contact_width_me": "Kết nối với chúng tôi",
         "download_app": "Tải ứng dụng trên điện thoại",
-        "address_company": "CÔNG TY TNHH BEAUTYX - Địa chỉ trụ sở: Lầu 2, Tòa nhà Zeta Building, 117 - 119 Trần Nguyên Đán, Phường 3, Quận Bình Thạnh, Thành phố Hồ Chí Minh, Việt Nam - Mã số thuế 0317876727 do Sở kế hoạch và Đầu tư Thành phố Hồ Chí Minh cấp ngày 09/06/2023, bởi Phòng Đăng ký kinh doanh – Sở kế hoạch và Đầu tư TP.HCM - Hotlline: 0899 31 0908 - Email: support@beautyx.vn - Người chịu trách nhiệm quản lý website: NGHIÊM XUÂN HIỆP",
+        "address_company": "CÔNG TY TNHH BEAUTYX - Địa chỉ trụ sở: Lầu 2, Tòa nhà Zeta Building, 117 - 119 Trần Nguyên Đán, Phường 3, Quận Bình Thạnh, Thành phố Hồ Chí Minh, Việt Nam - Mã số thuế 0317876727 do Sở kế hoạch và Đầu tư Thành phố Hồ Chí Minh cấp ngày 09/06/2023, bởi Phòng Đăng ký kinh doanh – Sở kế hoạch và Đầu tư TP.HCM - Hotlline: 0899 31 0908 - Email: support@beautyx.vn",
+        "address_company_2": "Đầu mối liên hệ, người đại diện được ủy quyền phối hợp với cơ quan nhà nước có thẩm quyền: Ông Nghiêm Xuân Hiệp - SĐT: 0899310908 - Email: bruno@beautyx.vn",
         "policy": "Mọi hành vi sao chép đều là phạm pháp nếu không có sự cho phép bằng văn bản của chúng tôi",
         "manager_spa": "Phần mềm quản lý spa",
         "manager_clinic": "Phần mềm quản lý phòng khám",
@@ -633,7 +636,8 @@
         "manager_nail": "Phần mềm quản lý tiệm nail",
         "manager_brandapp": "Thiết kế App thương hiệu - chăm sóc khách hàng",
         "manager_miniapp": "Thiết kế Mini App thương hiệu (Zalo)",
-        "product_of_myspa": "Giải pháp số hóa cho nghành làm đẹp"
+        "product_of_myspa": "Giải pháp số hóa cho nghành làm đẹp",
+        "acceptable_resolution_mechanism":"Cơ chế giải quyết tranh chấp"
     },
     "account_guide": {
         "ac_gui_step": "Bước",

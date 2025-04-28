@@ -158,3 +158,6 @@ body {
 .form-contact .sign-form__box {
     margin-top: 16px;
 }
+.MuiBackdrop-root{
+    background-color: rgba(0, 0, 0, 0.15) !important;
+}

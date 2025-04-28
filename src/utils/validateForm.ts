@@ -11,6 +11,7 @@ const validateForm = {
 //allow +84, 84, 03, ,04, 05, 07, 08, 09, 01
 export const vnPhoneCheck = /(((\+|)84)|0)(3|4|5|7|8|9|1)+([0-9]{8,9})/;
 export const acceptImage = 'image/png, image/gif, image/jpeg'
+export const acceptImageVideo = 'image/*, video/*'
 export const regexHTML = /<[^>]+>/g
 export const regexImage = /^image\/(jpg|jpeg|png|gif|bmp|svg)$/i;
 export const tesRegexHTML = (text: any) => regexHTML.test(text)

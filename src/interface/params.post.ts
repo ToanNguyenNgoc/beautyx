@@ -3,7 +3,8 @@ export interface ParamsPostLogin {
   password: string;
 }
 export interface ParamsPostZnsZaloOtp {
-  telephone: string
+  telephone: string;
+  recaptcha?: string
 }
 export interface ParamsPostRegister {
   fullname: string,
@@ -31,4 +32,6 @@ export interface ParamsPostMessage {
   topic_id: string;
   reply_id?: string;
   media_ids?: number[] | string[];
+  media_urls?: number[] | string[];
+  org_id?: number;
 }

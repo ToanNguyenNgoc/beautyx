@@ -6,24 +6,31 @@ import './policy.css';
 import { Container } from '@mui/material'
 import { useDeviceMobile } from 'hooks';
 import HeadMobile from 'features/HeadMobile';
+import { PdfViewer, regexPdf } from 'components/Layout';
 
 function Policy() {
     const params = extraParamsUrl();
     const IS_MB = useDeviceMobile()
     const id = params?.id
-    // eslint-disable-next-line eqeqeq
-    const dataRender = policies.find((item: any) => item.id == id)
+    const dataRender = policies.find((item: any) => item.id === Number(id))
     return (
         <>
             {IS_MB && <HeadMobile title={dataRender?.title ?? ''} />}
             {
-                id && dataRender &&
-                <Container>
-                    <div className="po-container">
-                        <div dangerouslySetInnerHTML={{ __html: dataRender.templateHtml }}>
-                        </div>
-                    </div>
-                </Container>
+                id && dataRender && (
+                    regexPdf(dataRender.templateHtml) ?
+                        <PdfViewer
+                            fileUrl={dataRender.templateHtml}
+                        />
+                        :
+                        <Container>
+                            <div className="po-container">
+                                <div dangerouslySetInnerHTML={{ __html: dataRender.templateHtml }}>
+                                </div>
+                            </div>
+                        </Container>
+                )
+
             }
         </>
     );

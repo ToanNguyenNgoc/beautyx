@@ -5,7 +5,7 @@ import { clst } from 'utils'
 
 interface XButtonFileProps {
     onChange?: (file: any) => void,
-    accept?: 'image/png, image/gif, image/jpeg',
+    accept?: string,
     icon?: string,
     iconSize?: number,
     className?: string,

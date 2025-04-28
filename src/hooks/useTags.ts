@@ -3,9 +3,11 @@ import { ITag } from "interface";
 import { useSelector } from "react-redux";
 import { unique } from "utils";
 
+const hiddenTagsChild = ['khác']
+
 export function useTags() {
     const tags: ITag[] = useSelector((state: any) => state.HOME.tags)
-    const tagsChildLevel2: ITag[] = tags.map(i => (i.children ?? [])).flat()
+    const tagsChildLevel2: ITag[] = tags.map(i => (i.children ?? [])).flat().filter(i => !hiddenTagsChild.includes(i.name))
     const tagsChildProductLevel2 = tagsChildLevel2.filter(i => i.group === 'PRODUCT')
     const tagsChildProductParentIdLevel2: number[] = unique(tagsChildProductLevel2.map(i => i.parent_id))
     const tagsProductLevel1 = tagsChildProductParentIdLevel2.map(id => {

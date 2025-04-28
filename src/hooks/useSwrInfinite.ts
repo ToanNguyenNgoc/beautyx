@@ -8,7 +8,7 @@ interface SWRInOptions extends SWROptions {
 }
 
 export function useSwrInfinite(options: SWRInOptions) {
-    const { params, enable, API_URL, revalidateOnFocus = false, dedupingInterval, keyPage = 'page', onSuccess } = options
+    const { params, enable, API_URL, revalidateOnFocus = false, dedupingInterval, keyPage = 'page', onSuccess,  } = options
     let paramsURL = "";
     if (params) {
         paramsURL = `&${new URLSearchParams(pickBy(params, identity)).toString()}`

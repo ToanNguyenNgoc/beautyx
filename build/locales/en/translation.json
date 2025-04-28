@@ -142,7 +142,9 @@
         "location_":"Location",
         "services":"Services",
         "congratulations": "Congratulations",
-        "new_member" : "just became a member of BeautyX!"
+        "new_member" : "just became a member of BeautyX!",
+        "org_notfound":"Oops! No merchant information found.",
+        "continue_use_app":"Continue exploring beauty services"
     },
     "Search_result": {
         "text_result": "search results",
@@ -638,7 +640,8 @@
         "manager_nail": "Nail salon management software",
         "manager_brandapp": "Brand App design - customer care",
         "manager_miniapp": "Brand Mini App Design (Zalo)",
-        "product_of_myspa": "Digital solutions for beautiful work"
+        "product_of_myspa": "Digital solutions for beautiful work",
+        "acceptable_resolution_mechanism":"Acceptable resolution mechanism"
     },
     "account_guide": {
         "ac_gui_step": "Step",

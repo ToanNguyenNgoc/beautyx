@@ -33,7 +33,8 @@ export const hidden_orgs = ['nganthang', 'musa']
 
 export const storage_keys = {
   _WEB_TK: '_WEB_TK',
-  _WEB_TK_RE:'_WEB_TK_RE',
-  _WEB_TK_EX:'_WEB_TK_EX',
+  _WEB_TK_RE: '_WEB_TK_RE',
+  _WEB_TK_EX: '_WEB_TK_EX',
   local_pm_method: 'local_pm_method'
 }
+export const recaptcha_key = String(process.env.REACT_APP_CLIENT_RECAPTCHA)

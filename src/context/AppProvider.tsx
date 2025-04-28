@@ -9,9 +9,9 @@ import { AUTH_LOCATION, getPosition } from "api/authLocation";
 import { useAppointment, useGetOrder, useGetOrderCount } from "hooks";
 import Echo from 'laravel-echo'
 import IStore from "interface/IStore";
-import { echoConfig } from "config";
+// import { echoConfig } from "config";
 import { LOCAL_TK } from "common"
-const Pusher = require('pusher-js')
+// const Pusher = require('pusher-js')
 
 export type AppContextType = {
     t: TFunction<"translation", undefined>,
@@ -36,14 +36,14 @@ export default function AppProvider({ children }: { children: any }) {
     const { USER } = useSelector((state: IStore) => state.USER)
     const [echo, setEcho] = useState<Echo | null>(null)
     const [orderPopupType, setOrderPopupType] = useState<'review' | 'detail'>()
-    useEffect(() => {
-        if (USER) {
-            setEcho(echoConfig())
-        } else {
-            echoConfig().disconnect()
-            setEcho(null)
-        }
-    }, [USER])
+    // useEffect(() => {
+    //     if (USER) {
+    //         setEcho(echoConfig())
+    //     } else {
+    //         echoConfig().disconnect()
+    //         setEcho(null)
+    //     }
+    // }, [USER])
 
     let lat; let long
     const location: any = AUTH_LOCATION()

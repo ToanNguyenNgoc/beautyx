@@ -28,6 +28,7 @@ export interface IMessage {
   updated_at: string,
   created_at: string,
   media_urls?:string[],
+  media_ids?:number[],
   medias:Media[]
   user?: {
     avatar: string | null;
