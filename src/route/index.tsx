@@ -35,6 +35,7 @@ import { RegisterAppAlert } from "components/RegisterAppAlert/RegisterAppAlert";
 import AboutPage from "pages/About";
 import { AuthPage } from "pages";
 import { ChatNotification } from "components/ChatNotification/ChatNotification";
+import ReflectSocialOrganization from "pages/ReflectSocialOrganization";
 // import HomeVer3 from "pages/HomeVer3";
 // import HeaderVer3 from "components/HeaderVer3";
 
@@ -50,6 +51,7 @@ const HomeListProvince = lazy(() => import("pages/Provinces"));
 const HomeMap = lazy(() => import("features/HomeMap"));
 const Partner = lazy(() => import("../pages/Partner"));
 const Policy = lazy(() => import("pages/Policy"));
+const Reflect = lazy(() => import("pages/ReflectSocialOrganization"));
 const SellerCenter = lazy(() => import("pages/SellerCenter"));
 const Otp = lazy(() => import("features/Otp"));
 const LandingPage = lazy(() => import("pages/LandingPage"));
@@ -184,6 +186,10 @@ function RouterConfig() {
         {
             path: "/chinh-sach/",
             component: <Policy />,
+        },
+        {
+            path: "/phan-anh-to-chuc-xa-hoi/",
+            component: <Reflect/>
         },
         {
             path: "/partner",
