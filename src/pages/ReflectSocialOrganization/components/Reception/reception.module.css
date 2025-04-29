@@ -25,13 +25,13 @@
     line-height: 1.6;
     color: #333;
 }
-.infoText{
-  font-weight: bold;
-  font-size: 16px;
+.infoText {
+    font-weight: bold;
+    font-size: 16px;
 }
-.infoText p{
-  font-weight: 500;
-  color: gray;
+.infoText p {
+    font-weight: 500;
+    color: gray;
 }
 
 .info h4 {
@@ -61,8 +61,8 @@
     color: #555;
     cursor: pointer;
 }
-.required{
-  color: red;
+.required {
+    color: red;
 }
 /* ========== Right column: Form ========== */
 .form {
@@ -210,4 +210,12 @@
     display: flex;
     align-items: center;
     justify-content: center;
+}
+@media screen and (max-width: 767.98px) {
+    .form {
+        margin-bottom: 48px;
+    }
+    .title {
+        font-size: 24px;
+    }
 }

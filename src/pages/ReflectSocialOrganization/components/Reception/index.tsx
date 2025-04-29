@@ -1,11 +1,10 @@
 import icon from "constants/icon";
 import styles from "./reception.module.css";
 import { Formik, Form, Field, ErrorMessage, FormikHelpers } from "formik";
-import { Media, usePostMedia, useRecaptcha } from "hooks";
+import { useRecaptcha,MediaThirdParty, usePostMediaThirdParty } from "hooks";
 import { useState } from "react";
 import * as Yup from "yup";
 import { AlertAppSnack, XButton } from "components/Layout";
-import { axiosClient } from "config";
 import API_3RD from "api/3rd-api";
 import {
     GoogleReCaptcha,
@@ -13,12 +12,13 @@ import {
 } from "react-google-recaptcha-v3";
 import { useMutation } from "@tanstack/react-query";
 import { useTranslation } from "react-i18next";
+import axios from "axios";
 interface FeedbackFormValues {
     organizationName: string;
     decisionNumber: string;
     email: string;
     content: string;
-    files: Media[];
+    files: MediaThirdParty[];
 }
 
 const initialValues: FeedbackFormValues = {
@@ -40,7 +40,7 @@ export interface FeedbackOrgSocialInput {
 
 export const receptionApi = {
     create: (data: FeedbackOrgSocialInput) => {
-        return axiosClient.post(
+        return axios.post(
             `${API_3RD.API_NODE}/feedback-org-socials`,
             data,
             {
@@ -57,8 +57,8 @@ export function useFeedbackOrgSocial() {
 }
 
 function Reception() {
-    const { handlePostMedia, isLoading } = usePostMedia();
-    const [previewImages, setPreviewImages] = useState<Media[]>([]);
+    const { handlePostMedia, isLoading } = usePostMediaThirdParty();
+    const [previewImages, setPreviewImages] = useState<MediaThirdParty[]>([]);
     const { mutate } = useFeedbackOrgSocial();
     const { t } = useTranslation();
 
@@ -87,7 +87,6 @@ function Reception() {
         onRefreshRecaptcha,
         verifyRecaptchaCallback,
     } = useRecaptcha();
-    console.log(recaptcha);
     const handleSubmit = async (
         values: FeedbackFormValues,
         { resetForm }: FormikHelpers<FeedbackFormValues>
@@ -135,7 +134,7 @@ function Reception() {
     const handleFilesChange = (
         event: React.ChangeEvent<HTMLInputElement>,
         setFieldValue: any,
-        currentMedias: Media[]
+        currentMedias: MediaThirdParty[]
     ) => {
         handlePostMedia({
             e: event,
@@ -150,7 +149,7 @@ function Reception() {
     const removeImage = (
         index: number,
         setFieldValue: any,
-        currentMedias: Media[]
+        currentMedias: MediaThirdParty[]
     ) => {
         const updatedMedias = [...currentMedias];
         updatedMedias.splice(index, 1);
