@@ -38,6 +38,7 @@ import { ChatNotification } from "components/ChatNotification/ChatNotification";
 import ReflectSocialOrganization from "pages/ReflectSocialOrganization";
 // import HomeVer3 from "pages/HomeVer3";
 // import HeaderVer3 from "components/HeaderVer3";
+import Messenger from "pages/Messenger";
 
 //community page
 const PostDetail = lazy(() => import("pages/Community/pages/PostDetail"));
@@ -59,10 +60,10 @@ const OtpMbPage = lazy(() => import("pages/OtpMbPage"));
 const Trends = lazy(() => import("pages/Trends"));
 const Community = lazy(() => import("pages/Community"));
 const Rewards = lazy(() => import("pages/Rewards"));
-const Messenger = lazy(() => import("pages/Messenger"));
+// const Messenger = lazy(() => import("pages/Messenger"));
 const Seller = lazy(() => import("pages/SellerCenter"));
 const OrganizationsApprove = lazy(() => import("pages/OrganizationsApprove"));
-const About = lazy(() => import("pages/About"));
+// const About = lazy(() => import("pages/About"));
 
 function RouterConfig() {
     const routes = [

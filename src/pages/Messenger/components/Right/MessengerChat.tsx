@@ -26,7 +26,8 @@ export const MessengerChat: FC<MessengerChatProps> = memo(({ _id, topicProp, mor
   const topic_id = _id || location.pathname.split("/")[2]
   const { topic } = useGetTopicDetail(topic_id);
   const botRef = useRef<HTMLDivElement>(null)
-  const { isConnected, onListenerMessage, onListenerTyping, doMessage, doTyping } = useMessengerProvider();
+  const context = useMessengerProvider();
+  const { connect, onListenerMessage, onListenerTyping, doMessage, doTyping } = context;
 
   const onScrollBottom = () => {
     if (botRef.current) {
@@ -55,6 +56,7 @@ export const MessengerChat: FC<MessengerChatProps> = memo(({ _id, topicProp, mor
     let unsubscribeMessage: (() => void) | undefined;
     let unsubscribeTyping: (() => void) | undefined;
     const onListener = async () => {
+      await connect();
       unsubscribeMessage = onListenerMessage((msg: IMessage) => {
         if (msg.topic_id === topic_id) {
           setMsges(prev => [msg, ...prev]);
@@ -66,7 +68,7 @@ export const MessengerChat: FC<MessengerChatProps> = memo(({ _id, topicProp, mor
         }
       });
     };
-    if (isConnected && topic_id) {
+    if (context?.isConnected && topic_id) {
       onListener();
     }
     return () => {
@@ -74,7 +76,7 @@ export const MessengerChat: FC<MessengerChatProps> = memo(({ _id, topicProp, mor
       unsubscribeMessage?.();
       unsubscribeTyping?.();
     };
-  }, [isConnected, topic_id]);
+  }, [context?.isConnected, topic_id, user?.id]);
 
   return (
     <div className={style.container}>
