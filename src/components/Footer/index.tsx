@@ -89,14 +89,14 @@ function Footer() {
         {
           id: 19,
           title: `Tiếp nhận phản ánh của Tổ chức xã hội`,
-          type: "URL",
+          type: "REFLECT",
           url: "/",
         },
         {
           id: 20,
           title: `Danh sách phản ánh của Tổ chức xã hội`,
-          type: "URL",
-          url: "/",
+          type: "REFLECT",
+          url: "/list",
         },
       ],
     },
@@ -349,6 +349,12 @@ function Footer() {
         return window.open(`tel:${item.url}`, "_seft");
       case "EMAIL":
         return window.open(`mailto:${item.url}`);
+      case "REFLECT":
+        return window.open(
+          `/phan-anh-to-chuc-xa-hoi${item.url}`,
+          "_blank",
+          "noopener,noreferrer"
+        );
       case "URL":
         // return history.push({
         //     pathname: `/chinh-sach/${slugify(item.title)}?id=${item.id}`,
@@ -419,9 +425,9 @@ function Footer() {
                   <div className="footer-cnt__item">
                     <div className="footer-cnt__item-title">{item.title}</div>
                     <ul>
-                      {item.items.map((a: any, i: number) => (
-                        <li onClick={() => gotoPolicy(a)} key={i}>
-                          {a.title}
+                      {item.items.map((item: any, i: number) => (
+                        <li onClick={() => gotoPolicy(item)} key={i}>
+                          {item.title}
                         </li>
                       ))}
                     </ul>

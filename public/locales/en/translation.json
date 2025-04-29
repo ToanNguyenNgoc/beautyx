@@ -659,5 +659,47 @@
     "alert":{
         "txtError": "An error occurred. Please try again!",
         "txtSentZalo": "The verification code has been sent to your Zalo message"
+    },
+    "reception":{
+        "headerTitle": "List of evaluations, complaints, and suggestions from social organizations participating in the protection of consumer rights or credit rating organizations as prescribed by law",
+        "theadCreatedDate": "CREATED DATE",
+        "theadOrgName": "SOCIAL ORGANIZATION NAME",
+        "theadOrgNumber": "ESTABLISHMENT DECISION NUMBER",
+        "theadContent": "CONTENT",
+        "loadingData": "Loading data...",
+        "errorLoadingData": "Error loading data.",
+        "noData": "No data available.",
+        "paginationPage": "Page"
+    },
+    "receptionList": {
+        "pageTitle": "Reception of evaluations, complaints, and suggestions from social organizations",
+        "companyName": "BeautyX Joint Stock Company",
+        "taxCode": "Tax Code",
+        "address": "Address",
+        "phone": "Phone",
+        "email": "Email",
+        "addressDetail": "2nd Floor, Zeta Building, 117 - 119 Tran Nguyen Dan, Ward 3, Binh Thanh District, Ho Chi Minh City",
+        "phoneNumber": "0899310908",
+        "emailAddress": "bruno@beautyx.vn",
+        "fieldOrganizationName": "Social Organization Name",
+        "placeholderOrganizationName": "Enter organization name",
+        "fieldDecisionNumber": "Establishment Decision Number",
+        "placeholderDecisionNumber": "Enter decision number",
+        "fieldEmail": "Email Address",
+        "placeholderEmail": "Example@gmail.com",
+        "fieldContent": "Contact Content",
+        "placeholderContent": "Enter contact content",
+        "fieldAttachImages": "Attach Images",
+        "submitButton": "Send",
+        "validateOrganizationNameRequired": "Please enter the organization name",
+        "validateDecisionNumberRequired": "Please enter the establishment decision number",
+        "validateEmailFormat": "Please enter a valid email address",
+        "validateEmailRequired": "Please enter an email address",
+        "validateContentRequired": "Please enter the contact content",
+        "validateFilesRequired": "Please upload at least 1 image",
+        "validateFilesMin": "Please upload at least 1 image",
+        "validateRecaptchaWarning": "Please wait for reCAPTCHA verification and try again.",
+        "submitSuccess": "Feedback submitted successfully!",
+        "submitError": "Failed to submit feedback!"
     }
 }

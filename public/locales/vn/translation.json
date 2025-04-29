@@ -654,5 +654,47 @@
     "alert":{
         "txtError":"Có lỗi xảy ra. Vui lòng thử lại !",
         "txtSentZalo":"Mã xác thực đã được gửi đến tin nhắn Zalo của bạn"
+    },
+    "reception":{
+        "headerTitle": "Danh sách các đánh giá, phản ánh, kiến nghị của tổ chức xã hội tham gia bảo vệ quyền lợi người tiêu dùng hoặc tổ chức đánh giá tín nhiệm theo quy định của pháp luật",
+        "theadCreatedDate": "NGÀY TẠO",
+        "theadOrgName": "TÊN TỔ CHỨC XÃ HỘI",
+        "theadOrgNumber": "SỐ QUYẾT ĐỊNH THÀNH LẬP",
+        "theadContent": "NỘI DUNG",
+        "loadingData": "Đang tải dữ liệu...",
+        "errorLoadingData": "Lỗi khi tải dữ liệu.",
+        "noData": "Không có dữ liệu.",
+        "paginationPage": "Trang"
+    },
+    "receptionList": {
+        "pageTitle": "Tiếp nhận đánh giá, phản ánh, kiến nghị của Tổ chức xã hội",
+        "companyName": "Công ty cổ phần BeautyX",
+        "taxCode": "Mã số thuế",
+        "address": "Địa chỉ",
+        "phone": "Phone",
+        "email": "Email",
+        "addressDetail": "Lầu 2, Tòa nhà Zeta Building, 117 - 119 Trần Nguyên Đán, Phường 3, Quận Bình Thạnh, Thành phố Hồ Chí Minh",
+        "phoneNumber": "0899310908",
+        "emailAddress": "bruno@beautyx.vn",
+        "fieldOrganizationName": "Tên tổ chức xã hội",
+        "placeholderOrganizationName": "Nhập tên tổ chức",
+        "fieldDecisionNumber": "Số quyết định thành lập",
+        "placeholderDecisionNumber": "Nhập số quyết định",
+        "fieldEmail": "Địa chỉ email",
+        "placeholderEmail": "Example@gmail.com",
+        "fieldContent": "Nội dung liên hệ",
+        "placeholderContent": "Nhập nội dung liên hệ",
+        "fieldAttachImages": "Ảnh đính kèm",
+        "submitButton": "Gửi",
+        "validateOrganizationNameRequired": "Vui lòng nhập tên tổ chức",
+        "validateDecisionNumberRequired": "Vui lòng nhập số quyết định",
+        "validateEmailFormat": "Vui lòng nhập địa chỉ email hợp lệ",
+        "validateEmailRequired": "Vui lòng nhập địa chỉ email",
+        "validateContentRequired": "Vui lòng nhập nội dung",
+        "validateFilesRequired": "Vui lòng tải lên ít nhất 1 ảnh",
+        "validateFilesMin": "Vui lòng tải lên ít nhất 1 ảnh",
+        "validateRecaptchaWarning": "Vui lòng chờ xác minh reCAPTCHA rồi thử lại.",
+        "submitSuccess": "Gửi đánh giá thành công!",
+        "submitError": "Gửi đánh giá thất bại!"
     }
 }

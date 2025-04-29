@@ -98,7 +98,7 @@
         "eject": "react-scripts eject",
         "deploy": "react-scripts build && firebase deploy",
         "dev:build-server": "NODE_ENV=development webpack --config webpack.server.js --mode=development -w",
-        "dev": "set PORT=4200 && react-scripts start",
+        "dev": "set PORT=3000 && react-scripts start",
         "ssr": "node server/index.js",
         "clean": "rm -rf node_modules && rm -rf package-lock.json && rm -rf yarn.lock"
     },
