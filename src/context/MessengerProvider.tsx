@@ -8,6 +8,7 @@ import { paramsTopic } from "params-query";
 const Events = {
   SUB: 'SUB',
   SUB_TOPIC: 'SUB_TOPIC',
+  SUB_CHAT_TOPIC: 'SUB_CHAT_TOPIC',
   SEND_MSG: 'SEND_MSG',
   LISTENER_MSG: 'LISTENER_MSG',
   TYPING: 'TYPING'

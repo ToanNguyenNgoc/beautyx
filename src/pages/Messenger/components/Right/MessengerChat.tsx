@@ -27,7 +27,7 @@ export const MessengerChat: FC<MessengerChatProps> = memo(({ _id, topicProp, mor
   const { topic } = useGetTopicDetail(topic_id);
   const botRef = useRef<HTMLDivElement>(null)
   const context = useMessengerProvider();
-  const { connect, onListenerMessage, onListenerTyping, doMessage, doTyping } = context;
+  const { connect, onListenerMessage, onListenerTyping, doMessage, doTyping, doSubscribeTopic } = context;
 
   const onScrollBottom = () => {
     if (botRef.current) {
@@ -70,6 +70,7 @@ export const MessengerChat: FC<MessengerChatProps> = memo(({ _id, topicProp, mor
     };
     if (context?.isConnected && topic_id) {
       onListener();
+      doSubscribeTopic(topic_id);
     }
     return () => {
       setMsges([]);
