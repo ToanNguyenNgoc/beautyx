@@ -7,7 +7,7 @@ import { DetailProp } from './detail.interface'
 import formatPrice, { formatSalePriceService } from 'utils/formatPrice';
 import { IDiscountPar, IOrganization } from 'interface';
 import API_ROUTE from 'api/_api';
-import { BackTopButton, BeautyxCare, FullImage, OpenApp, Seo, SerProItem, ShareSocial, XButton } from 'components/Layout';
+import { BackTopButton, BeautyxCare, FullImage, OpenApp, OrgOffLayout, Seo, SerProItem, ShareSocial, XButton } from 'components/Layout';
 import { Container } from '@mui/system';
 import { Drawer, Rating } from '@mui/material';
 import Slider, { Settings } from 'react-slick';
@@ -182,127 +182,132 @@ function SerProCoDetail() {
           <>
             <Seo title={DETAIL.name} imageCover={DETAIL.image_url} content={DETAIL.description} />
             <Head />
-            <Container>
-              <div className={style.wrapper} >
-                <div className={style.container}>
-                  <div className={style.container_head}>
-                    <div className={style.container_head_left}>
-                      <SliderImage detail={DETAIL} org={org} />
-                      <div className={style.container_head_img_thumb}>
-                        {!IS_MB && <ShareSocial url={location.pathname} />}
-                      </div>
-                    </div>
-                    <div className={style.container_head_right}>
-                      <div>
-                        {
-                          DETAIL.category &&
-                          <div className={style.detail_cate}>
-                            {t('pr.category')}: <span onClick={onNavigateCateList}>{DETAIL.category?.name}</span>
+            {
+              onCommerce ?
+                <Container>
+                  <div className={style.wrapper} >
+                    <div className={style.container}>
+                      <div className={style.container_head}>
+                        <div className={style.container_head_left}>
+                          <SliderImage detail={DETAIL} org={org} />
+                          <div className={style.container_head_img_thumb}>
+                            {!IS_MB && <ShareSocial url={location.pathname} />}
                           </div>
-                        }
-                        <span className={style.detail_name}>{DETAIL.name}</span>
-                        <div className={style.duration}>
-                          {
-                            DETAIL.duration > 0 &&
-                            <div className={style.duration_item}>
-                              <img src={icon.clockGray} className={style.duration_item_icon} alt="" />
-                              <span className={style.duration_item_text}>{DETAIL.duration} phút</span>
-                            </div>
-                          }
                         </div>
-                        <div className={style.detail_buy}>
-                          <div className={style.detail_price}>
-                            <div className={style.detail_price_left}>
-                              {
-                                DETAIL.SPECIAL_PRICE > 0 &&
-                                <span className={style.price_percent}>
-                                  -{PERCENT}%
-                                </span>
-                              }
-                              <div className={style.price}>
-                                {DETAIL.SPECIAL_PRICE > 0 && <span>{formatPrice(DETAIL.SPECIAL_PRICE)}đ</span>}
-                                <span>{formatPrice(DETAIL.PRICE)}đ</span>
-                              </div>
-                            </div>
-                            <div className={style.detail_price_right}>
-                              <XButton
-                                className={style.right_btn}
-                                icon={favoriteSt.is_favorite ? icon.heart : icon.unHeart}
-                                iconSize={20}
-                                onClick={onToggleFavorite}
-                              />
-                            </div>
-                          </div>
-                          <div className={style.detail_rate}>
-                            <div className={style.detail_rate_item}>
-                              <Rating name="read-only" value={5} readOnly />
-                            </div>
-                            <div className={style.detail_rate_item}>
-                              <span className={style.detail_rate_item_count}>{favoriteSt.favorite_count}</span>
-                              <img src={icon.heart} className={style.detail_rate_icon} alt="" />
-                            </div>
+                        <div className={style.container_head_right}>
+                          <div>
                             {
-                              DETAIL.bought_count &&
-                              <div className={style.detail_rate_item}>
-                                <span className={style.detail_rate_item_count}>
-                                  {DETAIL.bought_count} {t('detail_item.sold')}
-                                </span>
+                              DETAIL.category &&
+                              <div className={style.detail_cate}>
+                                {t('pr.category')}: <span onClick={onNavigateCateList}>{DETAIL.category?.name}</span>
                               </div>
                             }
+                            <span className={style.detail_name}>{DETAIL.name}</span>
+                            <div className={style.duration}>
+                              {
+                                DETAIL.duration > 0 &&
+                                <div className={style.duration_item}>
+                                  <img src={icon.clockGray} className={style.duration_item_icon} alt="" />
+                                  <span className={style.duration_item_text}>{DETAIL.duration} phút</span>
+                                </div>
+                              }
+                            </div>
+                            <div className={style.detail_buy}>
+                              <div className={style.detail_price}>
+                                <div className={style.detail_price_left}>
+                                  {
+                                    DETAIL.SPECIAL_PRICE > 0 &&
+                                    <span className={style.price_percent}>
+                                      -{PERCENT}%
+                                    </span>
+                                  }
+                                  <div className={style.price}>
+                                    {DETAIL.SPECIAL_PRICE > 0 && <span>{formatPrice(DETAIL.SPECIAL_PRICE)}đ</span>}
+                                    <span>{formatPrice(DETAIL.PRICE)}đ</span>
+                                  </div>
+                                </div>
+                                <div className={style.detail_price_right}>
+                                  <XButton
+                                    className={style.right_btn}
+                                    icon={favoriteSt.is_favorite ? icon.heart : icon.unHeart}
+                                    iconSize={20}
+                                    onClick={onToggleFavorite}
+                                  />
+                                </div>
+                              </div>
+                              <div className={style.detail_rate}>
+                                <div className={style.detail_rate_item}>
+                                  <Rating name="read-only" value={5} readOnly />
+                                </div>
+                                <div className={style.detail_rate_item}>
+                                  <span className={style.detail_rate_item_count}>{favoriteSt.favorite_count}</span>
+                                  <img src={icon.heart} className={style.detail_rate_icon} alt="" />
+                                </div>
+                                {
+                                  DETAIL.bought_count &&
+                                  <div className={style.detail_rate_item}>
+                                    <span className={style.detail_rate_item_count}>
+                                      {DETAIL.bought_count} {t('detail_item.sold')}
+                                    </span>
+                                  </div>
+                                }
+                              </div>
+                            </div>
+                            {!IS_MB && <DetailOrgCard org={org} />}
                           </div>
-                        </div>
-                        {!IS_MB && <DetailOrgCard org={org} />}
-                      </div>
-                      {
-                        !IS_MB &&
-                        <>
                           {
-                            onCommerce ? <DetailQuantity discounts={discounts} org={org} detail={DETAIL} />
-                              :
-                              <p className={style.detail_dis}>
-                                {t('pr.This product/service is not sold online yet')}
-                              </p>
+                            !IS_MB &&
+                            <>
+                              {
+                                onCommerce ? <DetailQuantity discounts={discounts} org={org} detail={DETAIL} />
+                                  :
+                                  <p className={style.detail_dis}>
+                                    {t('pr.This product/service is not sold online yet')}
+                                  </p>
+                              }
+                            </>
                           }
-                        </>
-                      }
+                        </div>
+                      </div>
                     </div>
+                    <DetailDesc
+                      onBookingNow={DETAIL.type === 'SERVICE' ? onBookingNow : onBuyNow}
+                      detail={DETAIL}
+                      org={org}
+                      PERCENT={PERCENT}
+                    />
+                    {
+                      IS_MB &&
+                      <div className={style.org_card_mb}>
+                        <DetailOrgCard org={org} />
+                      </div>
+                    }
+                    {
+                      DETAIL?.category && org &&
+                      <DetailRecommend detail={DETAIL} org={org} />
+                    }
+                    <div className={style.comment_cnt}>
+                      <Comment
+                        org_id={org?.id}
+                        commentable_id={DETAIL.id}
+                        commentable_type={DETAIL.type}
+                      />
+                      <Comment
+                        org_id={org?.id}
+                        commentable_id={org?.id}
+                        commentable_type="ORGANIZATION"
+                        hiddenInput
+                      />
+                    </div>
+                    {
+                      IS_MB &&
+                      <DetailBottom onCommerce={onCommerce} PERCENT={PERCENT} discounts={discounts} org={org} detail={DETAIL} USER={USER} />
+                    }
                   </div>
-                </div>
-                <DetailDesc
-                  onBookingNow={DETAIL.type === 'SERVICE' ? onBookingNow : onBuyNow}
-                  detail={DETAIL}
-                  org={org}
-                  PERCENT={PERCENT}
-                />
-                {
-                  IS_MB &&
-                  <div className={style.org_card_mb}>
-                    <DetailOrgCard org={org} />
-                  </div>
-                }
-                {
-                  DETAIL?.category && org &&
-                  <DetailRecommend detail={DETAIL} org={org} />
-                }
-                <div className={style.comment_cnt}>
-                  <Comment
-                    org_id={org?.id}
-                    commentable_id={DETAIL.id}
-                    commentable_type={DETAIL.type}
-                  />
-                  <Comment
-                    org_id={org?.id}
-                    commentable_id={org?.id}
-                    commentable_type="ORGANIZATION"
-                    hiddenInput
-                  />
-                </div>
-                {
-                  IS_MB &&
-                  <DetailBottom onCommerce={onCommerce} PERCENT={PERCENT} discounts={discounts} org={org} detail={DETAIL} USER={USER} />
-                }
-              </div>
-            </Container>
+                </Container>
+                :
+                <OrgOffLayout />
+            }
             <OpenApp
               type={DETAIL.type === "SERVICE" ? 'service' : 'product'}
               id={DETAIL.id}
@@ -342,7 +347,7 @@ export const Head = () => {
       <XButton
         onClick={() => history.goBack()}
         icon={icon.chevronLeft}
-        style={isPlatformViettel() ? {opacity:0}:{}}
+        style={isPlatformViettel() ? { opacity: 0 } : {}}
       />
       <div className={style.head_right}>
         <XButton
@@ -537,12 +542,12 @@ export const DetailOrgCard = ({ org }: { org: IOrganization }) => {
           onClick={onToggleFavorite}
         /> */}
         <XButton
-        style={{marginTop:'6px'}}
-                            className={style.right_btn}
-                            icon={favoriteSt.is_favorite ? icon.heart : icon.unHeart}
-                            iconSize={20}
-                            onClick={onToggleFavorite}
-                          />
+          style={{ marginTop: '6px' }}
+          className={style.right_btn}
+          icon={favoriteSt.is_favorite ? icon.heart : icon.unHeart}
+          iconSize={20}
+          onClick={onToggleFavorite}
+        />
       </div>
     </div>
   )
@@ -755,7 +760,7 @@ const DetailBottom = (
                 className={style.botton_btn}
               />
               <XButton
-                style={isPlatformViettel() ? {backgroundColor:'var(--purple)'}:{}}
+                style={isPlatformViettel() ? { backgroundColor: 'var(--purple)' } : {}}
                 title={detail.type === 'SERVICE' ? t('detail_item.booking_now') : t('cart.payment_now')}
                 onClick={() => setDra({ open: true, type: 'NOW' })}
               />
@@ -880,14 +885,14 @@ const DetailQuantity = (
             title='+'
             className={style.detail_quantity_btn}
             onClick={() => setQuantity(quantity + 1)}
-            style={isPlatformViettel() ? {backgroundColor:'var(--purple)'}:{}}
+            style={isPlatformViettel() ? { backgroundColor: 'var(--purple)' } : {}}
           />
         </div>
       </div>
       <div className={style.add_cart}>
         {detail.type === 'SERVICE' &&
           <XButton
-            style={draType === "NOW" ? { display: 'flex', backgroundColor:isPlatformViettel() ? 'var(--purple)':'var(--pr-green)' } : {}}
+            style={draType === "NOW" ? { display: 'flex', backgroundColor: isPlatformViettel() ? 'var(--purple)' : 'var(--pr-green)' } : {}}
             title={t('detail_item.booking_now')}
             className={style.add_cart_btn}
             onClick={onBookingNow}
