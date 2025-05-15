@@ -17,7 +17,6 @@ export const regexPdf = (fileUrl?: string) => /https?:\/\/.*\.pdf(\?.*)?$/i.test
 export const PdfViewer: FC<PdfViewerProps> = ({
   fileUrl
 }) => {
-  console.log(fileUrl)
   const [totalPage, setTotalPage] = useState(1)
   const [pageNumber, setPageNumber] = useState<number>(1);
   return (

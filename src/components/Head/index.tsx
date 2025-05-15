@@ -29,6 +29,7 @@ import HeadMenu from "./HeadMenu";
 import HeadNoti from "./HeadNoti";
 import HeadLanguage from "./HeadLanguage";
 import { path } from "route/path";
+import { HeadChat } from "./HeadChat";
 
 interface IProps {
   title?: string,
@@ -272,6 +273,7 @@ function Head(props: IProps) {
                         </span>
                       </Link>
                       <HeadNoti changeStyle={changeStyle} />
+                      <HeadChat changeStyle={changeStyle} />
                     </>
                   ) : (
                     <div className={style.head_top_right_auth}>

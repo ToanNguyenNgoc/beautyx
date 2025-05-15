@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { createContext, useContext, useEffect, useRef, useState, useCallback, useMemo, ReactNode } from "react";
 import { io, Socket } from "socket.io-client";
-import { useAuth, useGetAllTopic, useSwrInfinite } from "hooks";
+import { useAuth, useGetAllTopicIds, useGetSocketConfig, useSwrInfinite } from "hooks";
 import { IMessage, ITopic, ParamsPostMessage } from "interface";
 import { paramsTopic } from "params-query";
 
@@ -18,7 +18,7 @@ export type DoTypingType = { typing: boolean; topic_id: string };
 export type TypingType = { topic_id: string; typing: boolean; user: any };
 
 export type MessengerCtxType = {
-  connect: () => Socket<any, any>
+  connect: () => Socket<any, any> | undefined;
   isConnected: boolean;
   doSubscribeTopic: (topic_id: string) => void;
   doMessage: (data: ParamsPostMessage) => void;
@@ -33,14 +33,16 @@ export const MessengerContext = createContext<MessengerCtxType | null>(null);
 
 export function MessengerProvider({ children }: { children: ReactNode }) {
   const { USER } = useAuth();
-  const { topic_ids, isValidating } = useGetAllTopic();
+  const { config } = useGetSocketConfig();
+  const { topic_ids, isValidating } = useGetAllTopicIds();
   const socketRef = useRef<Socket | null>(null);
   const [isConnected, setIsConnected] = useState(false);
 
   const connect = useCallback(() => {
+    if (!config?.ws_host) return;
     if (socketRef.current) return socketRef.current;
 
-    const socket = io(String(process.env.REACT_APP_SOCKET_URL), {
+    const socket = io(String(config.ws_host), {
       extraHeaders: { Authorization: `Bearer` },
       reconnection: true,
       reconnectionAttempts: 100,
@@ -62,7 +64,7 @@ export function MessengerProvider({ children }: { children: ReactNode }) {
   }, [USER, topic_ids]);
 
   useEffect(() => {
-    if (USER?.id && !isValidating) {
+    if (config?.ws_host && USER?.id && !isValidating) {
       connect();
     }
     return () => {
@@ -70,7 +72,7 @@ export function MessengerProvider({ children }: { children: ReactNode }) {
       socketRef.current = null;
       setIsConnected(false);
     };
-  }, [USER?.id, isValidating, topic_ids.length]);
+  }, [config?.ws_host, USER?.id, isValidating, topic_ids.length]);
 
   const doSubscribeTopic = useCallback((topic_id: string) => {
     socketRef.current?.emit(Events.SUB_TOPIC, { user: USER, topic_id });

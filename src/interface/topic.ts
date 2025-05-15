@@ -9,6 +9,7 @@ export interface ReqTopic {
 
 export interface ITopic {
   _id: string,
+  id:string,
   type: string,
   organization_id: number,
   organization?:IOrganization,

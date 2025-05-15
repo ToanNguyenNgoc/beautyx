@@ -12,7 +12,8 @@ function Policy() {
     const params = extraParamsUrl();
     const IS_MB = useDeviceMobile()
     const id = params?.id
-    const dataRender = policies.find((item: any) => item.id === Number(id))
+    const dataRender = policies.find((item: any) => item.id === Number(id));
+    console.log(dataRender);
     return (
         <>
             {IS_MB && <HeadMobile title={dataRender?.title ?? ''} />}

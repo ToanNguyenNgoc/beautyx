@@ -31,7 +31,7 @@ function Messenger() {
   const { resData, onLoadMore, totalItem, isValidating, revalidate } = useSwrInfinite({
     API_URL: "topics",
     enable: USER,
-    params: Object.assign(query, { s: keyword }),
+    params: Object.assign(query, { s: keyword, sort:'-created_at' }),
     dedupingInterval: 0
   })
   const more = () => { if (resData.length < totalItem) { onLoadMore() } };
