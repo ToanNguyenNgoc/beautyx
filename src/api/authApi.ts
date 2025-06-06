@@ -13,7 +13,7 @@ class Auth {
     }
     return axiosClient.post(url, params);
   };
-  loginZalo = (values: { access_token: string, code: string }) => {
+  loginZalo = (values: { access_token: string, code: string, fullname?:string }) => {
     return axiosClient.post('/auth/zalo', values)
   };
   register = (params: any) => {

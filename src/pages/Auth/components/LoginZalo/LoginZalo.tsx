@@ -40,7 +40,7 @@ export const LoginZalo: FC = memo(() => {
         setAppCode(undefined)
         setLoadAll(true)
         try {
-          const response = await authentication.loginZalo({ access_token, code })
+          const response = await authentication.loginZalo({ access_token, code, fullname:data?.data?.data?.fullname  })
           if (response) {
             localStorage.setItem("_WEB_TK", response.data.context.token);
             localStorage.setItem("_WEB_TK_RE", response.data.context.refresh_token);
