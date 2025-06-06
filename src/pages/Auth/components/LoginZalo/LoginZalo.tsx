@@ -13,6 +13,7 @@ import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { fetchAsyncUser } from "redux/profile/userSlice";
 import style from './login-zalo.module.css'
+import { baseURL } from "config";
 
 export const LoginZalo: FC = memo(() => {
   const [loadAll, setLoadAll] = useState(false)
@@ -21,7 +22,7 @@ export const LoginZalo: FC = memo(() => {
   const dispatch = useDispatch()
   const handleLoginZalo = () => {
     const app_code = `beauty.vn_${new Date().getTime()}`
-    axios.post(`${API_3RD.API_NODE}/mobile-app`, {
+    axios.post(`${baseURL}mobile-apps`, {
       app_code
     }).then(() => {
       setAppCode(app_code)
@@ -29,7 +30,7 @@ export const LoginZalo: FC = memo(() => {
   }
   useQuery({
     queryKey: [appCode],
-    queryFn: () => axios.get(`${API_3RD.API_NODE}/mobile-app/${appCode}`),
+    queryFn: () => axios.get(`${baseURL}mobile-apps/${appCode}`),
     enabled: !!appCode,
     refetchInterval: 1000,
     onSuccess: async (data) => {
