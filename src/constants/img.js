@@ -127,6 +127,7 @@ import fingerprint from "assets/image/about/finger.svg";
 import aboutBgHero from "assets/image/about/bg-hero.png";
 import aboutBgStory from "assets/image/about/bg-story.png";
 import aboutLogo from "assets/image/about/about-logo.png";
+import bct from "assets/image/bct.png";
 
 const img = {
     aboutLogo,
@@ -220,6 +221,7 @@ const img = {
     qrCodeTiki,
     qrCodeMomo,
     qrCodeZalo,
+    bct
 };
 export const social = {
     facebook,

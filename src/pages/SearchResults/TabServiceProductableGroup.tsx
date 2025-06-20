@@ -39,7 +39,7 @@ function TabServiceProductableGroup({ keyword }: { keyword: string }) {
       "location": e.coords,
       "province_code": e.province?.province_code ?? "cur",
       "district_code": e.district?.district_code ?? "cur",
-      "sort": "location"
+      "sort": "distance"
     }))
   }
   const onChangePrice = (e: any) => {

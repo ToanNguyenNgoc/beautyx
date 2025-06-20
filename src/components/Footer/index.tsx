@@ -14,9 +14,9 @@ import {
 } from "constants/index";
 import { formatPhoneNumber } from "utils";
 import { PopupNotification } from "components/Notification";
-import { useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
-const pathsHide = ["messages","cong-dong","xu-huong"]
+const pathsHide = ["messages", "cong-dong", "xu-huong"]
 
 function Footer() {
   const url_map = `https://www.google.com/maps/@10.7968352,106.6920552,19.42z`;
@@ -195,20 +195,20 @@ function Footer() {
     //     img: paymentMethod.tikiPay,
     // },
     {
-        id: 2,
-        img: paymentMethod.visa,
+      id: 2,
+      img: paymentMethod.visa,
     },
     {
-        id: 3,
-        img: paymentMethod.masterCard,
+      id: 3,
+      img: paymentMethod.masterCard,
     },
     {
-        id: 4,
-        img: paymentMethod.jcb,
+      id: 4,
+      img: paymentMethod.jcb,
     },
     {
-        id: 5,
-        img: paymentMethod.atm,
+      id: 5,
+      img: paymentMethod.atm,
     },
     {
       id: 6,
@@ -235,13 +235,13 @@ function Footer() {
       img: paymentMethod.handPay,
     },
     {
-        id: 12,
-        img: icon.payon,
+      id: 12,
+      img: icon.payon,
     },
     {
       id: 13,
       img: paymentMethod.viettel,
-  },
+    },
   ];
   const app = [
     {
@@ -268,46 +268,46 @@ function Footer() {
   ];
 
   const dataMyspa = [
-      {
-          id: 1,
-          link: "https://myspa.vn/phan-mem-quan-ly-spa",
-          text: `${t("footer.manager_spa")}`,
-      },
-      {
-          id: 2,
-          link: "https://myspa.vn/phan-mem-quan-ly-phong-kham",
-          text: `${t("footer.manager_clinic")}`,
-      },
-      {
-          id: 3,
-          link: "https://myspa.vn/phan-mem-quan-ly-salon-toc",
-          text: `${t("footer.manager_salon")}`,
-      },
-      {
-          id: 4,
-          link: "https://myspa.vn/phan-mem-quan-ly-tiem-nails",
-          text: `${t("footer.manager_nail")}`,
-      },
-      {
-          id: 5,
-          link: "https://myspa.vn/thiet-ke-app-thuong-hieu",
-          text: `${t("footer.manager_brandapp")}`,
-      },
-      {
-          id: 6,
-          link: "https://myspa.vn/thiet-ke-zalo-mini-app-thuong-hieu",
-          text: `${t("footer.manager_miniapp")}`,
-      },
-      {
-          id: 7,
-          link: "https://myspa.vn/mini-game-vong-quay-may-man",
-          text: "Lucky Wheel",
-      },
-      {
-          id: 8,
-          link: "https://myspa.vn/marketing-automation-zns",
-          text: "Marketing Automation ZNS",
-      },
+    {
+      id: 1,
+      link: "https://myspa.vn/phan-mem-quan-ly-spa",
+      text: `${t("footer.manager_spa")}`,
+    },
+    {
+      id: 2,
+      link: "https://myspa.vn/phan-mem-quan-ly-phong-kham",
+      text: `${t("footer.manager_clinic")}`,
+    },
+    {
+      id: 3,
+      link: "https://myspa.vn/phan-mem-quan-ly-salon-toc",
+      text: `${t("footer.manager_salon")}`,
+    },
+    {
+      id: 4,
+      link: "https://myspa.vn/phan-mem-quan-ly-tiem-nails",
+      text: `${t("footer.manager_nail")}`,
+    },
+    {
+      id: 5,
+      link: "https://myspa.vn/thiet-ke-app-thuong-hieu",
+      text: `${t("footer.manager_brandapp")}`,
+    },
+    {
+      id: 6,
+      link: "https://myspa.vn/thiet-ke-zalo-mini-app-thuong-hieu",
+      text: `${t("footer.manager_miniapp")}`,
+    },
+    {
+      id: 7,
+      link: "https://myspa.vn/mini-game-vong-quay-may-man",
+      text: "Lucky Wheel",
+    },
+    {
+      id: 8,
+      link: "https://myspa.vn/marketing-automation-zns",
+      text: "Marketing Automation ZNS",
+    },
   ];
 
   const voucherInApp = [
@@ -406,7 +406,7 @@ function Footer() {
   if (window.location.pathname === "/home-ver3" || window.location.pathname === "/about") {
     return <></>
   }
-  
+
   return show ? (
     <div className="footer">
       <PopupNotification
@@ -440,19 +440,19 @@ function Footer() {
                 <div className="footer-cnt__item">
                   <div className="row-center">
                     <div className="footer-cnt__item-title">{t("footer.product_of_myspa")}</div>
-                    <img onClick={() => gotoMyspa("https://myspa.vn/")} className="logo-myspa" alt="logo-myspa" src={img.logoMyspaWhite}/>
+                    <img onClick={() => gotoMyspa("https://myspa.vn/")} className="logo-myspa" alt="logo-myspa" src={img.logoMyspaWhite} />
                   </div>
-                    <ul>
-                      {dataMyspa.map((item: any, index: number) => (
-                        <li key={index} onClick={() => gotoMyspa(item.link)}>
-                          {item.text}
-                        </li>
-                      ))}
-                    </ul>
+                  <ul>
+                    {dataMyspa.map((item: any, index: number) => (
+                      <li key={index} onClick={() => gotoMyspa(item.link)}>
+                        {item.text}
+                      </li>
+                    ))}
+                  </ul>
                 </div>
               </div>
             </div>
-          
+
           </div>
           <div className="footer-right">
             <div className="wrap">
@@ -555,16 +555,20 @@ function Footer() {
                     ))}
                   </div>
                 </div>
+                <div className="aws_starups" style={{marginTop:'24px'}}>
+                  <a target="blank" href="http://online.gov.vn/Home/WebDetails/130293" className="aws_startups_img">
+                    <img style={{ borderRadius: '6px' }} src={img.bct} alt="" />
+                  </a>
+                </div>
               </>
             </div>
           </div>
         </div>
 
         {/* <div className="aws_starups">
-          <div className="aws_startups_img">
-            <img src={img.awsStartups} alt="" />
-          </div>
-          <p>BeautyX has been accelerated by AWS Startup Program</p>
+          <a target="blank" href="http://online.gov.vn/Home/WebDetails/130293" className="aws_startups_img">
+            <img style={{borderRadius:'6px'}} src={img.bct} alt="" />
+          </a>
         </div> */}
 
         <div
@@ -573,7 +577,7 @@ function Footer() {
             window.open(`${url_map}`, "_blank", "noopener,noreferrer")
           }
         >
-          {t("footer.address_company")} <br/>
+          {t("footer.address_company")} <br />
           {t("footer.address_company_2")}
         </div>
         <div className="footer-copy-right">{t("footer.policy")}</div>
