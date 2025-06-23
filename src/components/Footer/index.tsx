@@ -19,7 +19,7 @@ import { Link, useLocation } from "react-router-dom";
 const pathsHide = ["messages", "cong-dong", "xu-huong"]
 
 function Footer() {
-  const url_map = `https://www.google.com/maps/@10.7968352,106.6920552,19.42z`;
+  const url_map = `https://www.google.com/maps/@10.7965948,106.702991`;
   const { t } = useContext(AppContext) as any;
   const [openPopup, setOpenPopup] = useState({
     open: false,
