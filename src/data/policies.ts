@@ -4,7 +4,7 @@ export const policies = [
     {
         id: 15,
         title: "Chính sách bảo mật",
-        templateHtml:'https://api.beautyx.life/media/1747282514418_chinh_sach_bao_mat.pdf'
+        templateHtml:'https://api-node-myspa.nntx.vn/media/1747282514418_chinh_sach_bao_mat.pdf'
         // templateHtml: `<ul style="list-style-type: undefined margin-left: -10px;">
         // <li><span style="font-family:Arial;font-size:16px;">-&nbsp;</span><strong><span style="line-height:114%;font-family:'Times New Roman';font-size:16px;">Mục đ&iacute;ch v&agrave; phạm vi thu thập th&ocirc;ng tin:</span></strong></li>
         // </ul>
@@ -605,8 +605,8 @@ export const policies = [
     {
         id: 20,
         title: "Quy chế hoạt động",
-        // templateHtml: 'https://api.beautyx.life/media/1742197431896_quy_che_hoat_dong.pdf',
-        templateHtml:'https://api.beautyx.life/media/1747282277729_quy_che_hoat_dong.pdf'
+        // templateHtml: 'https://api-node-myspa.nntx.vn/media/1742197431896_quy_che_hoat_dong.pdf',
+        templateHtml:'https://api-node-myspa.nntx.vn/media/1747282277729_quy_che_hoat_dong.pdf'
     },
     {
         id: 23,
