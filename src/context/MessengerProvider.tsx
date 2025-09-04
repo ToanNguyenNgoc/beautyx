@@ -44,7 +44,7 @@ export function MessengerProvider({ children }: { children: ReactNode }) {
 
     const socket = io(String(config.ws_host), {
       extraHeaders: { Authorization: `Bearer` },
-      reconnection: true,
+      reconnection: false,
       reconnectionAttempts: 100,
       reconnectionDelay: 2000,
     });
@@ -64,14 +64,14 @@ export function MessengerProvider({ children }: { children: ReactNode }) {
   }, [USER, topic_ids]);
 
   useEffect(() => {
-    if (config?.ws_host && USER?.id && !isValidating) {
-      connect();
-    }
-    return () => {
-      socketRef.current?.disconnect();
-      socketRef.current = null;
-      setIsConnected(false);
-    };
+    // if (config?.ws_host && USER?.id && !isValidating) {
+    //   connect();
+    // }
+    // return () => {
+    //   socketRef.current?.disconnect();
+    //   socketRef.current = null;
+    //   setIsConnected(false);
+    // };
   }, [config?.ws_host, USER?.id, isValidating, topic_ids.length]);
 
   const doSubscribeTopic = useCallback((topic_id: string) => {

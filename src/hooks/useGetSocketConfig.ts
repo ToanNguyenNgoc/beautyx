@@ -16,7 +16,8 @@ interface ResSocketConfig {
 export function useGetSocketConfig() {
   const { response, isValidating } = useSwr({
     API_URL: 'socket_configs_client',
-    enable: true,
+    // enable: true,
+    enable: false,
     dedupingInterval: 0
   });
   const config = response as ResSocketConfig|undefined;
