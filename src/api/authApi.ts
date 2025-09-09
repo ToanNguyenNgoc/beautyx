@@ -21,7 +21,8 @@ class Auth {
     return axiosClient.post(url, Object.assign({platform:EXTRA_FLAT_FORM()},params));
   };
   getUserProfile = (token?: string) => {
-    const url = `/users/profile`
+    // const url = `/users/profile`;
+    const url = `/auth/profile`;
     return axiosClient.get(url, { params: paramsUserProfile }).then().catch(() => axiosClient.get(url))
   };
   forgotPassword = (values: any) => {
