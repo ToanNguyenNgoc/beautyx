@@ -46,7 +46,7 @@ class Auth {
     })
   };
   loginOtpZms = (params: { telephone: string }) => {
-    return axiosClient.post('/auth/login/otp', params)
+    return axiosClient.post('/auth/login/zns-otp', params)
   }
 
 }
