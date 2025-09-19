@@ -66,7 +66,7 @@ export default function HomePage() {
           <HomeApprove />
           <HomeWhyNot />
           <HomeProvince />
-          {IS_MB ? <></> : <HomeTrends />}
+          {/* {IS_MB ? <></> : <HomeTrends />} */}
           <HomePartners />
           {!isPlatformViettel() ? <HomeTrafficData /> : null}
           <HomeLocation />

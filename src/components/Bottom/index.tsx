@@ -42,15 +42,15 @@ function Bottom() {
             params: "",
             badge: 0
         },
-        {
-            id: 2,
-            title: 'Review',
-            icon: ICON.trend,
-            iconAct: ICON.trendAct,
-            path: "/xu-huong",
-            params: "",
-            badge: 0
-        },
+        // {
+        //     id: 2,
+        //     title: 'Review',
+        //     icon: ICON.trend,
+        //     iconAct: ICON.trendAct,
+        //     path: "/xu-huong",
+        //     params: "",
+        //     badge: 0
+        // },
         {
             id: 3,
             title: t("Home.cate"),
